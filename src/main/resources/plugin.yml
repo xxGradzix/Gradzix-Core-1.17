@@ -1,0 +1,73 @@
+name: Gradzix-Core
+version: '${project.version}'
+main: me.xxgradzix.gradzixcore.Gradzix_Core
+api-version: 1.17
+authors: [xxGradzix]
+
+depend: [WorldGuard]
+
+commands:
+  givezdrapka:
+    description: Daje 1 zdrapke
+    permission: zdrapka.givezdrapka
+
+  zdrapka:
+    description: Pokazuje nagrody ze zdrapki
+
+  chatopcje:
+    description: Pokazuje opcje chatu
+
+  givefirework:
+    description: Daje 1 magiczna fajerwerke
+    permission: magicznafajerwerka.givefajerwerka
+
+  ustawienia:
+    description: otwiera okno ustawien automatycznej sprzedaży i auto wymiany
+
+  wymianaustawienia:
+    description: otwiera gui ustawien wymiany
+    permission: ustawienia.wymianaustawieniaitems
+
+  panel:
+    description: otwiera panel dla admina
+    permission: panel.panelPermission
+
+  umiejetnosci:
+    description: Otwiera okno umiejetnosci
+
+  modyfikatoryumiejetnosci:
+    description: ustawia modyfikatory umiejetnosci
+    permission: umiejetnosci.modyfikatoryumiejetnosci
+
+  ulepsz:
+    description: ulepsza zbroje za odlamki
+
+  ulepszconfig:
+    description: ustawia konfiguracje ulepszen
+    permission: ulepsz.ulepszconfig
+
+  giveodlamek:
+    description: daje odlamek
+    permission: umiejetnosci.giveodlamek
+
+  sprzedazustawienia:
+    description: Ustawia cene do autosprzedazy
+    permission: ustawienia.sprzedazustawienia
+
+  setserverdamagemultiplier:
+    description: ustawia serwerowe mnoznik damage
+    usage: /setserverdamagemultiplier [multiplier]
+    permission: serverConfig.damageConfig
+
+  resetumiejetnosci:
+    description: resetuje poziomy umiejetnosci wszystkich graczy
+    permission: umiejetnosci.resetumiejetnosci
+    usage: /resetumiejetnosci
+
+  bazarwystaw:
+    description: ma zastapic /bazar sell
+
+  setpriorities:
+    description: otwiera gui priorytetow
+    permission: serverConfig.setpriorities
+    usage: /setpriorities

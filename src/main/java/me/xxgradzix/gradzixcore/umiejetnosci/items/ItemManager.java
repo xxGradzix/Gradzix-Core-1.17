@@ -146,7 +146,7 @@ public class ItemManager {
         lore.add(ChatColor.RED + "Poziom III" + ChatColor.GRAY + ": " + ChatColor.DARK_RED + "Zwiększa obrażenia o " + ChatColor.RED + sila3Percent+ "%");
         lore.add(ChatColor.RED + "Poziom IV" + ChatColor.GRAY + ": " + ChatColor.DARK_RED + "Zwiększa obrażenia o " + ChatColor.RED  + sila4Percent+ "%");
         lore.add(" ");
-        lore.add(ChatColor.GRAY + "Cena: " + ChatColor.RED + "64x odłamki umiejętności");
+        lore.add(ChatColor.GRAY + "Cena: " + ChatColor.RED + "64x odłamki jaskiniowca");
 
         meta.setLore(lore);
         item.setItemMeta(meta);
@@ -168,7 +168,7 @@ public class ItemManager {
         lore.add(ChatColor.RED + "Poziom III" + ChatColor.GRAY + ": " + ChatColor.DARK_RED + "Zwiększa obrażenia o " + ChatColor.RED + sila3Percent+ "%");
         lore.add(ChatColor.RED + "Poziom IV" + ChatColor.GRAY + ": " + ChatColor.DARK_RED + "Zwiększa obrażenia o " + ChatColor.RED + sila4Percent+ "%");
         lore.add(" ");
-        lore.add(ChatColor.GRAY + "Cena: " + ChatColor.RED + "128x odłamki umiejętności");
+        lore.add(ChatColor.GRAY + "Cena: " + ChatColor.RED + "128x odłamki jaskiniowca");
 
         meta.setLore(lore);
         item.setItemMeta(meta);
@@ -189,7 +189,7 @@ public class ItemManager {
         lore.add(ChatColor.RED + "Poziom III" + ChatColor.GRAY + ": " + ChatColor.DARK_RED + "Zwiększa obrażenia o " + ChatColor.RED + sila3Percent+ "%");
         lore.add(ChatColor.RED + "Poziom IV" + ChatColor.GRAY + ": " + ChatColor.DARK_RED + "Zwiększa obrażenia o " + ChatColor.RED + sila4Percent+ "%");
         lore.add(" ");
-        lore.add(ChatColor.GRAY + "Cena: " + ChatColor.RED + "192x odłamki umiejętności");
+        lore.add(ChatColor.GRAY + "Cena: " + ChatColor.RED + "192x odłamki jaskiniowca");
 
         meta.setLore(lore);
         item.setItemMeta(meta);
@@ -210,7 +210,7 @@ public class ItemManager {
         lore.add(ChatColor.GREEN + "Poziom III" + ChatColor.GRAY + ": " + ChatColor.DARK_GREEN + "Zwiększa obrażenia o " + ChatColor.GREEN + sila3Percent+ "%");
         lore.add(ChatColor.RED + "Poziom IV" + ChatColor.GRAY + ": " + ChatColor.DARK_RED + "Zwiększa obrażenia o " + ChatColor.RED + sila4Percent+ "%");
         lore.add(" ");
-        lore.add(ChatColor.GRAY + "Cena: " + ChatColor.RED + "256x odłamki umiejętności");
+        lore.add(ChatColor.GRAY + "Cena: " + ChatColor.RED + "256x odłamki jaskiniowca");
 
         meta.setLore(lore);
         item.setItemMeta(meta);
@@ -259,7 +259,7 @@ public class ItemManager {
         lore.add(ChatColor.RED + "Poziom III" + ChatColor.GRAY + ": " + ChatColor.DARK_RED + "Zwiększa drop " + ChatColor.RED + "x" + drop3Mod);
         lore.add(ChatColor.RED + "Poziom IV" + ChatColor.GRAY + ": " + ChatColor.DARK_RED + "Zwiększa drop " + ChatColor.RED  + "x" + drop4Mod);
         lore.add(" ");
-        lore.add(ChatColor.GRAY + "Cena: " +  ChatColor.DARK_GRAY + "64x odłamki umiejętności");
+        lore.add(ChatColor.GRAY + "Cena: " +  ChatColor.DARK_GRAY + "64x odłamki jaskiniowca");
 
         meta.setLore(lore);
         item.setItemMeta(meta);
@@ -281,7 +281,7 @@ public class ItemManager {
         lore.add(ChatColor.RED + "Poziom III" + ChatColor.GRAY + ": " + ChatColor.DARK_RED + "Zwiększa drop " + ChatColor.RED + "x" + drop3Mod);
         lore.add(ChatColor.RED + "Poziom IV" + ChatColor.GRAY + ": " + ChatColor.DARK_RED + "Zwiększa drop " + ChatColor.RED  + "x" + drop4Mod);
         lore.add(" ");
-        lore.add(ChatColor.GRAY + "Cena: " +  ChatColor.DARK_GRAY + "128x odłamki umiejętności");
+        lore.add(ChatColor.GRAY + "Cena: " +  ChatColor.DARK_GRAY + "128x odłamki jaskiniowca");
 
         meta.setLore(lore);
         item.setItemMeta(meta);
@@ -302,7 +302,7 @@ public class ItemManager {
         lore.add(ChatColor.RED + "Poziom III" + ChatColor.GRAY + ": " + ChatColor.DARK_RED + "Zwiększa drop " + ChatColor.RED + "x" + drop3Mod);
         lore.add(ChatColor.RED + "Poziom IV" + ChatColor.GRAY + ": " + ChatColor.DARK_RED + "Zwiększa drop " + ChatColor.RED  + "x" + drop4Mod);
         lore.add(" ");
-        lore.add(ChatColor.GRAY + "Cena: " +  ChatColor.DARK_GRAY + "192x odłamki umiejętności");
+        lore.add(ChatColor.GRAY + "Cena: " +  ChatColor.DARK_GRAY + "192x odłamki jaskiniowca");
 
         meta.setLore(lore);
         item.setItemMeta(meta);
@@ -323,7 +323,7 @@ public class ItemManager {
         lore.add(ChatColor.GREEN + "Poziom III" + ChatColor.GRAY + ": " + ChatColor.DARK_GREEN + "Zwiększa drop " + ChatColor.GREEN + "x" + drop3Mod);
         lore.add(ChatColor.RED + "Poziom IV" + ChatColor.GRAY + ": " + ChatColor.DARK_RED + "Zwiększa drop " + ChatColor.RED  + "x" + drop4Mod);
         lore.add(" ");
-        lore.add(ChatColor.GRAY + "Cena: " +  ChatColor.DARK_GRAY + "256x odłamki umiejętności");
+        lore.add(ChatColor.GRAY + "Cena: " +  ChatColor.DARK_GRAY + "256x odłamki jaskiniowca");
 
         meta.setLore(lore);
         item.setItemMeta(meta);
@@ -373,7 +373,7 @@ public class ItemManager {
         lore.add(ChatColor.RED + "Poziom III" + ChatColor.GRAY + ": " + ChatColor.DARK_RED + "Zwiększa ranking o " + ChatColor.RED + rank3Mod+ "%");
         lore.add(ChatColor.RED + "Poziom IV" + ChatColor.GRAY + ": " + ChatColor.DARK_RED + "Zwiększa ranking o " + ChatColor.RED  + rank4Mod+ "%");
         lore.add(" ");
-        lore.add(ChatColor.GRAY + "Cena: " +  ChatColor.DARK_GRAY + "64x odłamki umiejętności");
+        lore.add(ChatColor.GRAY + "Cena: " +  ChatColor.DARK_GRAY + "64x odłamki jaskiniowca");
 
         meta.setLore(lore);
         item.setItemMeta(meta);
@@ -395,7 +395,7 @@ public class ItemManager {
         lore.add(ChatColor.RED + "Poziom III" + ChatColor.GRAY + ": " + ChatColor.DARK_RED + "Zwiększa ranking o " + ChatColor.RED + rank3Mod+ "%");
         lore.add(ChatColor.RED + "Poziom IV" + ChatColor.GRAY + ": " + ChatColor.DARK_RED + "Zwiększa ranking o " + ChatColor.RED  + rank4Mod+ "%");
         lore.add(" ");
-        lore.add(ChatColor.GRAY + "Cena: " +  ChatColor.DARK_GRAY + "128x odłamki umiejętności");
+        lore.add(ChatColor.GRAY + "Cena: " +  ChatColor.DARK_GRAY + "128x odłamki jaskiniowca");
 
         meta.setLore(lore);
         item.setItemMeta(meta);
@@ -416,7 +416,7 @@ public class ItemManager {
         lore.add(ChatColor.RED + "Poziom III" + ChatColor.GRAY + ": " + ChatColor.DARK_RED + "Zwiększa ranking o " + ChatColor.RED + rank3Mod+ "%");
         lore.add(ChatColor.RED + "Poziom IV" + ChatColor.GRAY + ": " + ChatColor.DARK_RED + "Zwiększa ranking o " + ChatColor.RED  + rank4Mod+ "%");
         lore.add(" ");
-        lore.add(ChatColor.GRAY + "Cena: " +  ChatColor.DARK_GRAY + "192x odłamki umiejętności");
+        lore.add(ChatColor.GRAY + "Cena: " +  ChatColor.DARK_GRAY + "192x odłamki jaskiniowca");
 
         meta.setLore(lore);
         item.setItemMeta(meta);
@@ -437,7 +437,7 @@ public class ItemManager {
         lore.add(ChatColor.GREEN + "Poziom III" + ChatColor.GRAY + ": " + ChatColor.DARK_GREEN + "Zwiększa ranking o " + ChatColor.GREEN + rank3Mod+ "%");
         lore.add(ChatColor.RED + "Poziom IV" + ChatColor.GRAY + ": " + ChatColor.DARK_RED + "Zwiększa ranking o " + ChatColor.RED  + rank4Mod+ "%");
         lore.add(" ");
-        lore.add(ChatColor.GRAY + "Cena: " +  ChatColor.DARK_GRAY + "256x odłamki umiejętności");
+        lore.add(ChatColor.GRAY + "Cena: " +  ChatColor.DARK_GRAY + "256x odłamki jaskiniowca");
 
         meta.setLore(lore);
         item.setItemMeta(meta);

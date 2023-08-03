@@ -28,17 +28,36 @@ public class WymianaGuiClose implements Listener {
 
             HashMap<ItemStack, ItemStack> itemMap = new HashMap<>();
 
+//            HashMap<ItemStack, Integer> itemKeysMap = new HashMap<>();
+//            HashMap<ItemStack, Integer> itemValuesMap = new HashMap<>();
+
+            ArrayList<ItemStack> itemKeys = new ArrayList<>();
+            ArrayList<ItemStack> itemValues = new ArrayList<>();
+            ArrayList<Integer> itemValuesAmounts = new ArrayList<>();
+
+
             for(Inventory inventory : inventories) {
                 for(int i = 0; i < 9; i++) {
                     if(inventory.getItem(i) == null || inventory.getItem(i+9) == null) continue;
                     ItemStack key = inventory.getItem(i);
                     ItemStack value = inventory.getItem(i+9);
 
-                    itemMap.put(key, value);
+                    int keyAmount = key.getAmount();
+                    int valueAmount = value.getAmount();
+
+//                    itemKeysMap.put(key, keyAmount);
+//                    itemValuesMap.put(value, valueAmount);
+
+//                    itemMap.put(key, value);
+                    itemKeys.add(key);
+                    itemValues.add(value);
+                    itemValuesAmounts.add(value.getAmount());
                 }
             }
 
-            WymianaUstawieniaItemsConfigFile.setItems(itemMap);
+//            WymianaUstawieniaItemsConfigFile.setItems(itemMap);
+            WymianaUstawieniaItemsConfigFile.setItems(itemKeys, itemValues, itemValuesAmounts);
+//            WymianaUstawieniaItemsConfigFile.setItems(itemKeysMap, itemValuesMap);
 
 
 

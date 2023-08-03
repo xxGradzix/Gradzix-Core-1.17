@@ -58,21 +58,6 @@ public class ZdrapkaCommand implements CommandExecutor {
             gui.setItem(czarne, blackGlass);
 
 
-//            ArrayList<Integer> zielone = new ArrayList<>();
-//
-//            zielone.add(3);
-//            zielone.add(5);
-//            zielone.add(9);
-//            zielone.add(17);
-//            zielone.add(27);
-//            zielone.add(35);
-//            zielone.add(39);
-//            zielone.add(41);
-//
-//            GuiItem greenGlass = new GuiItem(me.xxgradzix.gradzixcore.chatopcje.items.ItemManager.greenGlass);
-//
-//            gui.setItem(zielone, greenGlass);
-
             ArrayList<Integer> lime = new ArrayList<>();
 
             lime.add(0);
@@ -106,15 +91,6 @@ public class ZdrapkaCommand implements CommandExecutor {
                 } else break;
 
             }
-//            for(ItemStack itemStack : list) {
-//
-//                ItemStack copy = itemStack.clone();
-//
-//                GuiItem guiItem = ItemBuilder.from(copy).asGuiItem();
-//
-//                gui.addItem(guiItem);
-//
-//            }
             gui.open(p);
 
         }

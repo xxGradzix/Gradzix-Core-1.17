@@ -45,34 +45,112 @@ public class WymianaUstawieniaItemsConfigFile {
     }
 
 
-    public static Map<ItemStack, ItemStack> getAllItems() {
+//    public static Map<ItemStack, ItemStack> getAllItems() {
+//    public static ArrayList<ItemStack> getAllItems() {
+//
+//
+////        List<Map<?, ?>> items = getCustomFile().getMapList("items");
+////
+////        if(items == null || items.isEmpty()) return new HashMap<>();
+////
+////        Map<ItemStack, ItemStack> map = (Map<ItemStack, ItemStack>) items.get(0);
+////
+////        if(map == null || map.isEmpty()) {
+////            return new HashMap<>();
+////        }
+////
+////        return map;
+//
+//        return (ArrayList<ItemStack>) getCustomFile().getList("items");
+//
+//    }
+
+public static ArrayList<ItemStack> getAllItemKeys() {
+//public static HashMap<ItemStack, Integer> getAllItemKeys() {
 
 
-        List<Map<?, ?>> items = getCustomFile().getMapList("items");
+//    List<Map<?, ?>> items = getCustomFile().getMapList("items");
+//
+//    if(items == null || items.isEmpty()) return new HashMap<>();
+//
+////        Map<ItemStack, ItemStack> map = (Map<ItemStack, ItemStack>) items.get(0);
+//    HashMap<ItemStack, Integer> map = (HashMap<ItemStack, Integer>) items.get(0);
+//
+//    if(map == null || map.isEmpty()) {
+//        return new HashMap<>();
+//    }
+//
+//    return map;
+/////////////////////////////////////////////////////
+    return (ArrayList<ItemStack>) getCustomFile().getList("items.keys");
+////////////////////////////////////////////////////////////
 
-        if(items == null || items.isEmpty()) return new HashMap<>();
+}
+    public static ArrayList<ItemStack> getAllItemValues() {
+//    public static HashMap<ItemStack, Integer> getAllItemValues() {
 
-        Map<ItemStack, ItemStack> map = (Map<ItemStack, ItemStack>) items.get(0);
 
-        if(map == null || map.isEmpty()) {
-            return new HashMap<>();
+//        List<Map<?, ?>> items = getCustomFile().getMapList("items");
+//
+//        if(items == null || items.isEmpty()) return new HashMap<>();
+//
+////        Map<ItemStack, ItemStack> map = (Map<ItemStack, ItemStack>) items.get(0);
+//        HashMap<ItemStack, Integer> map = (HashMap<ItemStack, Integer>) items.get(1);
+//
+//        if(map == null || map.isEmpty()) {
+//            return new HashMap<>();
+//        }
+//
+//        return map;
+////////////////////////////////////////
+        ArrayList<ItemStack> items = (ArrayList<ItemStack>) getCustomFile().getList("items.values");
+        ArrayList<Integer> amounts = (ArrayList<Integer>) getCustomFile().getIntegerList("items.valuesAmounts");
+
+        if(items == null || items.isEmpty()) return new ArrayList<>();
+        for(int i = 0; i < items.size(); i++) {
+            ItemStack item = items.get(i);
+            item.setAmount(amounts.get(i));
+            items.set(i, item);
+
         }
 
-        return map;
+        return items;
+
+//        return (ArrayList<ItemStack>) getCustomFile().getList("items.values");
+////////////////////////////////////////////////////////////
+
+//        return (HashMap<ItemStack, Integer>) getCustomFile().getMapList("items").get(1);
     }
 
 
 
 
+//    public static void setItems(HashMap<ItemStack, ItemStack> items) {
+    public static void setItems(ArrayList<ItemStack> itemKeys, ArrayList<ItemStack> itemValues, ArrayList<Integer> itemValuesAmounts) {
+//    public static void setItems(HashMap<ItemStack, Integer> itemKeys, HashMap<ItemStack, Integer> itemValues) {
 
-    public static void setItems(HashMap<ItemStack, ItemStack> items) {
+//        ArrayList<HashMap<ItemStack, ItemStack>> list = new ArrayList<>();
+//
+//        list.add(items);
+//
+//        getCustomFile().set("items", list);
+//        save();
+//
+//
 
-        ArrayList<HashMap<ItemStack, ItemStack>> list = new ArrayList<>();
 
-        list.add(items);
-
-        getCustomFile().set("items", list);
+        getCustomFile().set("items.keys", itemKeys);
+        getCustomFile().set("items.values", itemValues);
+        getCustomFile().set("items.valuesAmounts", itemValuesAmounts);
         save();
+//        ArrayList<HashMap<ItemStack, Integer>> list = new ArrayList<>();
+//
+//        list.add(itemKeys);
+//        list.add(itemValues);
+//
+//        getCustomFile().set("items", list);
+//        save();
+
     }
 
     // sprzedaz

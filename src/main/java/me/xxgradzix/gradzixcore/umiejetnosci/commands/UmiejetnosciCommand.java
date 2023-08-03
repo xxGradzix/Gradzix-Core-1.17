@@ -28,7 +28,7 @@ public class UmiejetnosciCommand implements CommandExecutor {
 
 
             Gui gui = Gui.gui()
-                    .title(Component.text(ChatColor.YELLOW + ChatColor.BOLD.toString() + "UMIEJĘTNOŚCI " + ChatColor.GRAY + "(/umiejetnosci)"))
+                    .title(Component.text(ChatColor.GREEN + ChatColor.BOLD.toString() + "UMIEJĘTNOŚCI " + ChatColor.GRAY + "(/umiejetnosci)"))
                     .disableAllInteractions()
                     .rows(5)
                     .create();

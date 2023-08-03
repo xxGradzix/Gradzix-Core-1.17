@@ -9,26 +9,43 @@ import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class WymianaGui implements InventoryHolder {
 
     private Inventory[] inventory;
     private int currentPage;
     private int maxPage = 25;
-    private Map<ItemStack, ItemStack> itemMap;
+//    private Map<ItemStack, ItemStack> itemMap;
 
-    public WymianaGui(Map<ItemStack, ItemStack> itemMap) {
+    private ArrayList<ItemStack> itemListKeys;
+    private ArrayList<ItemStack> itemListValues;
 
-        ItemStack[] itemKeys;
-        if(itemMap.isEmpty() || itemMap == null) {
-            this.itemMap = new HashMap<>();
-            itemKeys = new ItemStack[9*maxPage];
+//    public WymianaGui(Map<ItemStack, ItemStack> itemMap) {
+    public WymianaGui(ArrayList<ItemStack> itemListKeys, ArrayList<ItemStack> itemListValues) {
+//    public WymianaGui(HashMap<ItemStack, Integer> itemListKeys, HashMap<ItemStack, Integer> itemListValues) {
+
+//        ItemStack[] itemKeys;
+//        if(itemMap == null || itemMap.isEmpty()) {
+//            this.itemMap = new HashMap<>();
+//            itemKeys = new ItemStack[9*maxPage];
+//        } else {
+//            this.itemMap = itemMap;
+//            itemKeys = itemMap.keySet().toArray(new ItemStack[9*maxPage]);
+//        }
+//        ItemStack[] itemKeys;
+//        ItemStack[] itemValues;
+        if(itemListKeys == null || itemListValues.isEmpty() ||
+        itemListValues == null || itemListValues.isEmpty()) {
+            this.itemListKeys = new ArrayList<>();
+            this.itemListValues = new ArrayList<>();
+//            itemKeys = new ItemStack[9*maxPage];
+//            itemValues = new ItemStack[9*maxPage];
         } else {
-            this.itemMap = itemMap;
-            itemKeys = itemMap.keySet().toArray(new ItemStack[9*maxPage]);
+            this.itemListKeys = itemListKeys;
+            this.itemListValues = itemListValues;
+//            itemKeys = itemListKeys.toArray(new ItemStack[9 * maxPage]);
+//            itemValues = itemListValues.keySet().toArray(new ItemStack[9 * maxPage]);
         }
 
 
@@ -71,12 +88,22 @@ public class WymianaGui implements InventoryHolder {
             inventory[i].setItem(33,ItemManager.greenGlass);
 
             for(int j = 0; j < 9; j++) {
-                if(itemKeys[key] == null) {
+                if(itemListKeys == null) break;
+                if(itemListKeys.size() <= key) break;
+                if(itemListKeys.get(key) == null ||
+                itemListValues.get(key)  == null) {
                     key++;
                     continue;
                 }
-                inventory[i].setItem(j, itemKeys[key]);
-                inventory[i].setItem((j+9), itemMap.get(itemKeys[key]));
+                ItemStack keyItem = itemListKeys.get(key);
+                ItemStack valueItem = itemListValues.get(key);
+
+//                keyItem.setAmount(itemListKeys.get(keyItem));
+//                valueItem.setAmount(itemListValues.get(valueItem));
+
+
+                inventory[i].setItem(j, keyItem);
+                inventory[i].setItem((j+9), valueItem);
                 key++;
             }
 

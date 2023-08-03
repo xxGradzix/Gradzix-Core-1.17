@@ -24,8 +24,8 @@ public class UstawieniaCommand implements CommandExecutor {
 
 
             Gui gui = Gui.gui()
-                    .title(Component.text(ChatColor.YELLOW + ChatColor.BOLD.toString() + "Ustawienia " + ChatColor.GRAY + "(/ustawienia)"))
-                    .rows(3)
+                    .title(Component.text(ChatColor.GREEN + ChatColor.BOLD.toString() + "USTAWIENIA " + ChatColor.GRAY + "(/ustawienia)"))
+                    .rows(5)
                     .disableAllInteractions()
                     .create();
 
@@ -33,47 +33,41 @@ public class UstawieniaCommand implements CommandExecutor {
 
             ArrayList<Integer> czarne = new ArrayList<>();
 
-            czarne.add(0);
-            czarne.add(1);
+
             czarne.add(2);
             czarne.add(3);
             czarne.add(4);
             czarne.add(5);
             czarne.add(6);
-            czarne.add(7);
-            czarne.add(8);
 
             czarne.add(18);
-            czarne.add(19);
-            czarne.add(20);
-            czarne.add(21);
-            czarne.add(22);
-            czarne.add(23);
-            czarne.add(24);
-            czarne.add(25);
             czarne.add(26);
+
+            czarne.add(38);
+            czarne.add(39);
+            czarne.add(40);
+            czarne.add(41);
+            czarne.add(42);
 
             GuiItem blackGlass = new GuiItem(me.xxgradzix.gradzixcore.chatopcje.items.ItemManager.blackGlass);
 
             gui.setItem(czarne, blackGlass);
 
-
-            ArrayList<Integer> zielone = new ArrayList<>();
-
-            zielone.add(9);
-            zielone.add(10);
-            zielone.add(11);
-            zielone.add(15);
-            zielone.add(16);
-            zielone.add(17);
-
-            GuiItem greenGlass = new GuiItem(me.xxgradzix.gradzixcore.chatopcje.items.ItemManager.greenGlass);
-
-            gui.setItem(zielone, greenGlass);
-
             ArrayList<Integer> lime = new ArrayList<>();
 
-            lime.add(13);
+            lime.add(0);
+            lime.add(1);
+            lime.add(7);
+            lime.add(8);
+            lime.add(9);
+            lime.add(17);
+
+            lime.add(27);
+            lime.add(35);
+            lime.add(36);
+            lime.add(37);
+            lime.add(43);
+            lime.add(44);
 
             GuiItem limeGlass = new GuiItem(me.xxgradzix.gradzixcore.chatopcje.items.ItemManager.limeGlass);
 
@@ -104,9 +98,9 @@ public class UstawieniaCommand implements CommandExecutor {
 
 
             if(UstawieniaOpcjeConfigFile.getAutoWymianaStatus(p)) {
-                gui.setItem(2, 4, wymianaButtonOff);
+                gui.setItem(3, 4, wymianaButtonOff);
             } else {
-                gui.setItem(2, 4, wymianaButtonOn);
+                gui.setItem(3, 4, wymianaButtonOn);
             }
 
 
@@ -134,9 +128,9 @@ public class UstawieniaCommand implements CommandExecutor {
 
 
             if(UstawieniaOpcjeConfigFile.getAutoSprzedazStatus(p)) {
-                gui.setItem(2, 6, sprzedazButtonOff);
+                gui.setItem(3, 6, sprzedazButtonOff);
             } else {
-                gui.setItem(2, 6, sprzedazButtonOn);
+                gui.setItem(3, 6, sprzedazButtonOn);
             }
 
 

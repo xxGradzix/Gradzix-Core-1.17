@@ -1,12 +1,11 @@
 package me.xxgradzix.gradzixcore.serverconfig.listeners;
 
 import me.xxgradzix.gradzixcore.serverconfig.files.ConfigServera;
-import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
@@ -40,6 +39,7 @@ public class PickUpPriority implements Listener {
 
 
         for (ItemStack itemStack : itemsToGive) {
+            if(itemStack.containsEnchantment(Enchantment.VANISHING_CURSE)) continue;
 
             if (priorytetyKopia.contains(itemStack)) {
                 priorytetyKopia.remove(itemStack);
@@ -55,36 +55,13 @@ public class PickUpPriority implements Listener {
 
 
         for (ItemStack itemStack : itemsAfterPriorities) {
+            if(itemStack.containsEnchantment(Enchantment.VANISHING_CURSE)) continue;
             if (inventory.firstEmpty() != -1) {
                 inventory.addItem(itemStack);
             } else {
                 player.getWorld().dropItem(player.getLocation(), itemStack);
             }
         }
-    }
-
-
-    private int getFreeSlots(Player player) {
-        Inventory inventory = player.getInventory();
-
-        ItemStack[] armor = player.getInventory().getArmorContents();
-
-
-
-        int freeSlots = 0;
-        for(ItemStack itemStack : inventory.getContents()) {
-
-            if(itemStack == null || itemStack.getType() == Material.AIR) {
-                freeSlots++;
-            }
-
-        }
-        for (ItemStack itemStack : armor) {
-            if (itemStack == null || itemStack.getType().isAir()) {
-                freeSlots--;
-            }
-        }
-        return freeSlots;
     }
 
 }

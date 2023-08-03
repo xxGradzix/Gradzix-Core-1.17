@@ -11,14 +11,22 @@ public class OsiagnieciaBlock implements Listener {
 
     @EventHandler
     public void onCommandPreprocess(PlayerCommandPreprocessEvent event) {
-        String message = event.getMessage();
+        String message = event.getMessage().toLowerCase();
 
         Player p = event.getPlayer();
 
         if(PanelAdminConfigFile.getOsiagnieciaStatus()) return;
 
         if(!PanelAdminConfigFile.getOsiagnieciaStatus()) {
+
             if (message.startsWith("/osiagniecia")) {
+
+                event.setCancelled(true);
+
+                p.sendMessage(ChatColor.RED + "Osiagniecia są aktualnie wyłączone");
+
+            }
+            if (message.startsWith("/boxpvp-ageplay:osiagniecia")) {
 
                 event.setCancelled(true);
 

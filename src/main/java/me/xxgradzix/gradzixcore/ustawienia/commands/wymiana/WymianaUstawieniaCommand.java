@@ -11,17 +11,24 @@ import org.jetbrains.annotations.NotNull;
 public class WymianaUstawieniaCommand implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
-        Player p = (Player) sender;
+
 
 //        if(!p.hasPermission("ustawienia.wymianaustawieniaitems")) return false;
 
         if(sender instanceof Player) {
+            Player p = (Player) sender;
+//            if(!p.getName().equals("xxGradzix") ||
+//            !p.getName().equals("MajkiToJa")) {
+//                p.sendMessage("tylko xxGradzix i MajkiToJa moze uzyc tej komendy w tym momencie");
+//                return true;
+//            }
+
 
             WymianaGui wymianaGui;
 
 
-            wymianaGui = new WymianaGui(WymianaUstawieniaItemsConfigFile.getAllItems());
-
+//            wymianaGui = new WymianaGui(WymianaUstawieniaItemsConfigFile.getAllItems());
+            wymianaGui = new WymianaGui(WymianaUstawieniaItemsConfigFile.getAllItemKeys(), WymianaUstawieniaItemsConfigFile.getAllItemValues());
 
 
 

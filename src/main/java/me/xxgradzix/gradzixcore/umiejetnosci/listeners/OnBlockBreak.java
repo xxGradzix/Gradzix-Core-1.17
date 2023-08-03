@@ -49,9 +49,13 @@ public class OnBlockBreak implements Listener {
         blockTypes.add(Material.COAL_ORE);
         blockTypes.add(Material.LAPIS_BLOCK);
         blockTypes.add(Material.LAPIS_ORE);
+        blockTypes.add(Material.ACACIA_LOG);
+        blockTypes.add(Material.ACACIA_PLANKS);
 
         blockTypes.add(Material.LIME_WOOL);
         blockTypes.add(Material.PINK_WOOL);
+        blockTypes.add(Material.COBWEB);
+        blockTypes.add(Material.COBWEB);
 
 
 //        com.sk89q.worldedit.util.Location location = BukkitAdapter.adapt(block.getLocation());
@@ -102,7 +106,12 @@ public class OnBlockBreak implements Listener {
             } else {
                 drop.setAmount((int) (baseAmount * multiplier));
             }
-            event.getBlock().getWorld().dropItemNaturally(event.getBlock().getLocation(), drop);
+            if (p.getInventory().firstEmpty() != -1) {
+                p.getInventory().addItem(drop);
+            } else {
+                event.getBlock().getWorld().dropItemNaturally(event.getBlock().getLocation(), drop);
+            }
+
         }
 
     }

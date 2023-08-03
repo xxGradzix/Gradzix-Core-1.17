@@ -14,9 +14,23 @@ public class BazarWystawCommand implements CommandExecutor {
         if (sender instanceof Player) {
             Player player = (Player) sender;
             if (command.getName().equalsIgnoreCase("bazarwystaw")) {
-                // Wywołaj komendę "/bazar sell" z innego pluginu
-                getServer().dispatchCommand(player, "bazar sell");
-                return true;
+
+                if(args.length == 1) {
+                    int price = Integer.parseInt(args[0]);
+                    getServer().dispatchCommand(player, "bazar sell " + price + " " + player.getInventory().getItemInOffHand());
+                    return true;
+
+                } else if(args.length == 2) {
+                    int price = Integer.parseInt(args[0]);
+                    int ilosc = Integer.parseInt(args[0]);
+                    getServer().dispatchCommand(player, "bazar sell " + price + " " + ilosc);
+                    return true;
+                } else {
+                    sender.sendMessage("Poprawne uzycie to");
+                    sender.sendMessage("/bazarwwystaw [CENA] [ILOSC]");
+                    return true;
+                }
+
             }
         }
         return false;

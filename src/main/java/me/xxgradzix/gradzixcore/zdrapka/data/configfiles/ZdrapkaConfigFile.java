@@ -1,4 +1,4 @@
-package me.xxgradzix.gradzixcore.zdrapka.files;
+package me.xxgradzix.gradzixcore.zdrapka.data.configfiles;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;

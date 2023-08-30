@@ -1,16 +1,12 @@
 package me.xxgradzix.gradzixcore.ustawienia.files;
 
-import me.xxgradzix.gradzixcore.chatopcje.files.ChatOpcjeConfigFile;
 import org.bukkit.Bukkit;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class UstawieniaOpcjeConfigFile {
 
@@ -59,23 +55,23 @@ public class UstawieniaOpcjeConfigFile {
 
 
 
-    public static List<String> getAutoWymianaStatusUUIDsList(boolean expectedValue) {
-        List<String> uuidList = new ArrayList<>();
-
-        ConfigurationSection playersSection = ChatOpcjeConfigFile.getCustomFile().getConfigurationSection("players");
-        if (playersSection != null) {
-            for (String key : playersSection.getKeys(false)) {
-                ConfigurationSection playerSection = playersSection.getConfigurationSection(key);
-                if (playerSection != null) {
-                    boolean autoWymiana = playerSection.getBoolean("autoWymiana");
-                    if (autoWymiana == expectedValue) {
-                        uuidList.add(key);
-                    }
-                }
-            }
-        }
-        return uuidList;
-    }
+//    public static List<String> getAutoWymianaStatusUUIDsList(boolean expectedValue) {
+//        List<String> uuidList = new ArrayList<>();
+//
+//        ConfigurationSection playersSection = ChatOpcjeConfigFile.getCustomFile().getConfigurationSection("players");
+//        if (playersSection != null) {
+//            for (String key : playersSection.getKeys(false)) {
+//                ConfigurationSection playerSection = playersSection.getConfigurationSection(key);
+//                if (playerSection != null) {
+//                    boolean autoWymiana = playerSection.getBoolean("autoWymiana");
+//                    if (autoWymiana == expectedValue) {
+//                        uuidList.add(key);
+//                    }
+//                }
+//            }
+//        }
+//        return uuidList;
+//    }
 
     // autosprzedaz
 

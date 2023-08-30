@@ -3,9 +3,9 @@ package me.xxgradzix.gradzixcore.zdrapka.listeners;
 import dev.triumphteam.gui.builder.item.ItemBuilder;
 import dev.triumphteam.gui.guis.Gui;
 import dev.triumphteam.gui.guis.GuiItem;
-import me.xxgradzix.gradzixcore.chatopcje.files.ChatOpcjeConfigFile;
-import me.xxgradzix.gradzixcore.panel.files.PanelAdminConfigFile;
-import me.xxgradzix.gradzixcore.zdrapka.files.ZdrapkaConfigFile;
+import me.xxgradzix.gradzixcore.chatopcje.Chatopcje;
+import me.xxgradzix.gradzixcore.chatopcje.data.database.entities.ChatOptionsEntity;
+import me.xxgradzix.gradzixcore.panel.data.DataManager;
 import me.xxgradzix.gradzixcore.zdrapka.items.ItemManager;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
@@ -20,9 +20,9 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.stream.Collectors;
 
 public class OnRightClick implements Listener {
 
@@ -45,12 +45,21 @@ public class OnRightClick implements Listener {
 
             if ((itemInMainHand != null && itemInMainHand.isSimilar(ItemManager.zdrapka)) || (itemInOffHand != null && itemInOffHand.isSimilar(ItemManager.zdrapka))) {
 
-                if(!PanelAdminConfigFile.getZdrapkaStatus()) {
+                if(!DataManager.getZdrapkaStatus()) {
                     p.sendMessage(ChatColor.RED + "Zdrapki są chwilowo wyłączone");
                     return;
                 }
 
-                List<ItemStack> items = (List<ItemStack>) ZdrapkaConfigFile.getCustomFile().get("items");
+//                List<ItemStack> items = (List<ItemStack>) ZdrapkaConfigFile.getCustomFile().get("items");
+                ItemStack[] itemStacks = Arrays.asList(me.xxgradzix.gradzixcore.zdrapka.data.DataManager.getScratchCardItems()).toArray(new ItemStack[0]);
+                List<ItemStack> items = new ArrayList<>();
+                for (ItemStack item : itemStacks) {
+                    if(item == null) continue;
+                    items.add(item);
+                }
+
+
+
 
                 if(items.isEmpty() || items == null) {
                     p.sendMessage(ChatColor.RED + "Chwilowo zdrapka jest nieczynna");
@@ -125,14 +134,23 @@ public class OnRightClick implements Listener {
                         p.getInventory().addItem(losowyPrzedmiot);
 
                     }
+                    List<ChatOptionsEntity> chatOptionsEntityList = Chatopcje.getChatOptionsEntityManager().getChatOptionsEntitiesWhereShowScratchCardMessageIs(false);
+                    List<UUID> list = chatOptionsEntityList.stream().map(ChatOptionsEntity::getUuid).collect(Collectors.toList());
+
                     for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
                         if (!onlinePlayer.equals(p)) {
 
                             // element powiązany z chatopcje
 
-                            List<String> list = ChatOpcjeConfigFile.getShowZdrapkaMessageStatusUUIDsList(true);
+//                            List<String> list = ChatOpcjeConfigFile.getShowZdrapkaMessageStatusUUIDsList(true);
 
-                            if (!list.contains(onlinePlayer.getUniqueId().toString())) {
+
+//                            for (ChatOptionsEntity chatOptionsEntity : chatOptionsEntityList) {
+//                                Bukkit.broadcastMessage(chatOptionsEntity.getPlayerName());
+//                            }
+
+
+                            if (!list.contains(onlinePlayer.getUniqueId())) {
 
                                 onlinePlayer.sendMessage(ChatColor.GOLD + p.getDisplayName() + " wylosował " + losowyPrzedmiot.getItemMeta().getDisplayName() + ChatColor.GOLD + " ze " + ChatColor.YELLOW + "Z" +
                                         ChatColor.RED + "d" +

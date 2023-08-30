@@ -1,6 +1,6 @@
 package me.xxgradzix.gradzixcore.panel.listeners;
 
-import me.xxgradzix.gradzixcore.panel.files.PanelAdminConfigFile;
+import me.xxgradzix.gradzixcore.panel.data.DataManager;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -15,9 +15,9 @@ public class KityBlock implements Listener {
 
         Player p = event.getPlayer();
 
-        if(PanelAdminConfigFile.getKityStatus()) return;
+        if(DataManager.getKitStatus()) return;
 
-        if(!PanelAdminConfigFile.getKityStatus()) {
+        if(!DataManager.getKitStatus()) {
 
 
             if (message.startsWith("/kit")) {
@@ -60,55 +60,7 @@ public class KityBlock implements Listener {
 
 
             }
-//            if (message.startsWith("/Kit")) {
-//
-//                if(!message.equals("/ekit gracz")) {
-//                    event.setCancelled(true);
-//
-//                    p.sendMessage(ChatColor.RED + "Kity są aktualnie wyłączone");
-//                }
-//            }
-//            if (message.startsWith("/KIt")) {
-//
-//                if(!message.equals("/ekit gracz")) {
-//                    event.setCancelled(true);
-//
-//                    p.sendMessage(ChatColor.RED + "Kity są aktualnie wyłączone");
-//                }
-//            }
-//            if (message.startsWith("/kIt")) {
-//
-//                if(!message.equals("/ekit gracz")) {
-//                    event.setCancelled(true);
-//
-//                    p.sendMessage(ChatColor.RED + "Kity są aktualnie wyłączone");
-//                }
-//            }
-//            if (message.startsWith("/kIT")) {
-//
-//                if(!message.equals("/ekit gracz")) {
-//                    event.setCancelled(true);
-//
-//                    p.sendMessage(ChatColor.RED + "Kity są aktualnie wyłączone");
-//                }
-//            }
-//            if (message.startsWith("/kiT")) {
-//
-//                if(!message.equals("/ekit gracz")) {
-//                    event.setCancelled(true);
-//
-//                    p.sendMessage(ChatColor.RED + "Kity są aktualnie wyłączone");
-//                }
-//            }
-//            if (message.startsWith("/KIT")) {
-//
-//                if(!message.equals("/ekit gracz")) {
-//                    event.setCancelled(true);
-//
-//                    p.sendMessage(ChatColor.RED + "Kity są aktualnie wyłączone");
-//                }
-//            }
-            /////////////////////////////
+
             if (message.startsWith("/ekit")) {
 
                 if(!message.equals("/ekit gracz")) {
@@ -118,117 +70,6 @@ public class KityBlock implements Listener {
                 }
 
             }
-//            if (message.startsWith("/Ekit")) {
-//
-//                if(!message.equals("/ekit gracz")) {
-//                    event.setCancelled(true);
-//
-//                    p.sendMessage(ChatColor.RED + "Kity są aktualnie wyłączone");
-//                }
-//
-//            }
-//            if (message.startsWith("/EKit")) {
-//                if(!message.equals("/ekit gracz")) {
-//                    event.setCancelled(true);
-//
-//                    p.sendMessage(ChatColor.RED + "Kity są aktualnie wyłączone");
-//                }
-//
-//
-//            }
-//            if (message.startsWith("/EKIt")) {
-//                if(!message.equals("/ekit gracz")) {
-//                    event.setCancelled(true);
-//
-//                    p.sendMessage(ChatColor.RED + "Kity są aktualnie wyłączone");
-//                }
-//
-//
-//            }
-//            if (message.startsWith("/eKit")) {
-//
-//                if(!message.equals("/ekit gracz")) {
-//                    event.setCancelled(true);
-//
-//                    p.sendMessage(ChatColor.RED + "Kity są aktualnie wyłączone");
-//                }
-//
-//            }
-//            if (message.startsWith("/eKIt")) {
-//
-//                if(!message.equals("/ekit gracz")) {
-//                    event.setCancelled(true);
-//
-//                    p.sendMessage(ChatColor.RED + "Kity są aktualnie wyłączone");
-//                }
-//
-//            }
-//            if (message.startsWith("/eKIT")) {
-//
-//                if(!message.equals("/ekit gracz")) {
-//                    event.setCancelled(true);
-//
-//                    p.sendMessage(ChatColor.RED + "Kity są aktualnie wyłączone");
-//                }
-//
-//            }
-//            if (message.startsWith("/ekIt")) {
-//
-//                if(!message.equals("/ekit gracz")) {
-//                    event.setCancelled(true);
-//
-//                    p.sendMessage(ChatColor.RED + "Kity są aktualnie wyłączone");
-//                }
-//            }
-//            if (message.startsWith("/ekIT")) {
-//
-//                if(!message.equals("/ekit gracz")) {
-//                    event.setCancelled(true);
-//
-//                    p.sendMessage(ChatColor.RED + "Kity są aktualnie wyłączone");
-//                }
-//
-//            }
-//            if (message.startsWith("/ekiT")) {
-//
-//                if(!message.equals("/ekit gracz")) {
-//                    event.setCancelled(true);
-//
-//                    p.sendMessage(ChatColor.RED + "Kity są aktualnie wyłączone");
-//                }
-//
-//
-//            }
-//            if (message.startsWith("/eKiT")) {
-//
-//                if(!message.equals("/ekit gracz")) {
-//                    event.setCancelled(true);
-//
-//                    p.sendMessage(ChatColor.RED + "Kity są aktualnie wyłączone");
-//                }
-//
-//            }
-//            if (message.startsWith("/EkIt")) {
-//
-//                if(!message.equals("/ekit gracz")) {
-//                    event.setCancelled(true);
-//
-//                    p.sendMessage(ChatColor.RED + "Kity są aktualnie wyłączone");
-//                }
-//
-//            }
-//
-//            if (message.startsWith("/EKIT")) {
-//
-//                if(!message.equals("/ekit gracz")) {
-//                    event.setCancelled(true);
-//
-//                    p.sendMessage(ChatColor.RED + "Kity są aktualnie wyłączone");
-//                }
-//            }
-            ////////////////////////////////////
-
-
         }
 
     }

@@ -3,7 +3,6 @@ package me.xxgradzix.gradzixcore.zdrapka.commands;
 import dev.triumphteam.gui.builder.item.ItemBuilder;
 import dev.triumphteam.gui.guis.Gui;
 import dev.triumphteam.gui.guis.GuiItem;
-import me.xxgradzix.gradzixcore.zdrapka.files.ZdrapkaConfigFile;
 import me.xxgradzix.gradzixcore.zdrapka.items.ItemManager;
 import net.kyori.adventure.text.Component;
 import org.bukkit.command.Command;
@@ -14,6 +13,7 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class ZdrapkaCommand implements CommandExecutor {
@@ -32,7 +32,14 @@ public class ZdrapkaCommand implements CommandExecutor {
                     .create();
 
 
-            List<ItemStack> list = (List<ItemStack>) ZdrapkaConfigFile.getCustomFile().get("items");
+//            List<ItemStack> list = (List<ItemStack>) ZdrapkaConfigFile.getCustomFile().get("items");
+
+            ItemStack[] itemStacks = Arrays.asList(me.xxgradzix.gradzixcore.zdrapka.data.DataManager.getScratchCardItems()).toArray(new ItemStack[0]);
+            List<ItemStack> list = new ArrayList<>();
+            for (ItemStack item : itemStacks) {
+                if(item == null) continue;
+                list.add(item);
+            }
             // szklo
 
             ArrayList<Integer> czarne = new ArrayList<>();

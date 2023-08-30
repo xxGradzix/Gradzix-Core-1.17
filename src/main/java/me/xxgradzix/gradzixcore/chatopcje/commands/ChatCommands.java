@@ -3,7 +3,8 @@ package me.xxgradzix.gradzixcore.chatopcje.commands;
 import dev.triumphteam.gui.builder.item.ItemBuilder;
 import dev.triumphteam.gui.guis.Gui;
 import dev.triumphteam.gui.guis.GuiItem;
-import me.xxgradzix.gradzixcore.chatopcje.files.ChatOpcjeConfigFile;
+import me.xxgradzix.gradzixcore.chatopcje.Chatopcje;
+import me.xxgradzix.gradzixcore.chatopcje.data.database.entities.ChatOptionsEntity;
 import me.xxgradzix.gradzixcore.chatopcje.items.ItemManager;
 import net.kyori.adventure.text.Component;
 import org.bukkit.ChatColor;
@@ -79,9 +80,20 @@ public class ChatCommands implements CommandExecutor {
                 gui.setItem(lime, limeGlass);
 
 
+                ChatOptionsEntity chatOptionsEntity = Chatopcje.getChatOptionsEntityManager().getChatOptionsEntityById(p.getUniqueId());
 
+                if(chatOptionsEntity == null) {
+                    chatOptionsEntity = new ChatOptionsEntity(p.getUniqueId(),
+                            p.getName(),
+                            true,
+                            true,
+                            true,
+                            true);
+                    Chatopcje.getChatOptionsEntityManager().createChatOptionsEntity(chatOptionsEntity);
+                }
+
+                ChatOptionsEntity finalChatOptionsEntity = chatOptionsEntity;
                 // smierc
-
 
                 GuiItem deathButtonOff = ItemBuilder.from(ItemManager.deathButtonOff).asGuiItem();
 
@@ -89,9 +101,12 @@ public class ChatCommands implements CommandExecutor {
 
                 // TODO kolor itp wiadomosci
 
+
+
                 deathButtonOn.setAction((action) -> {
 
-                    ChatOpcjeConfigFile.setShowDeathMessage(p, false);
+//                    ChatOpcjeConfigFile.setShowDeathMessage(p, false);
+                    finalChatOptionsEntity.setShowDeathMessages(true);
 
                     p.sendMessage(ChatColor.RED + "Włączyłeś wiadomości o śmierci");
 
@@ -100,7 +115,8 @@ public class ChatCommands implements CommandExecutor {
 
                 deathButtonOff.setAction((action) -> {
 
-                    ChatOpcjeConfigFile.setShowDeathMessage(p, true);
+//                    ChatOpcjeConfigFile.setShowDeathMessage(p, true);
+                    finalChatOptionsEntity.setShowDeathMessages(false);
 
 
                     p.sendMessage(ChatColor.RED + "Wyłączyłeś wiadomości o śmierci");
@@ -108,10 +124,11 @@ public class ChatCommands implements CommandExecutor {
                     gui.updateItem(action.getSlot(), deathButtonOn);
                 });
 
-                if(ChatOpcjeConfigFile.getShowDeathMessageStatus(p)) {
-                    gui.setItem(2, 2, deathButtonOn);
-                } else {
+//                if(ChatOpcjeConfigFile.getShowDeathMessageStatus(p)) {
+                if(chatOptionsEntity.isShowDeathMessages()) {
                     gui.setItem(2, 2, deathButtonOff);
+                } else {
+                    gui.setItem(2, 2, deathButtonOn);
                 }
 
 
@@ -126,7 +143,8 @@ public class ChatCommands implements CommandExecutor {
 
                 zdrapkaButtonOn.setAction((action) -> {
 
-                    ChatOpcjeConfigFile.setShowZdrapkaMessage(p, false);
+//                    ChatOpcjeConfigFile.setShowZdrapkaMessage(p, false);
+                    finalChatOptionsEntity.setShowScratchCardMessages(true);
 
                     p.sendMessage(ChatColor.RED + "Włączyłeś wiadomości o dropie ze zdrapki");
 
@@ -135,7 +153,9 @@ public class ChatCommands implements CommandExecutor {
 
                 zdrapkaButtonOff.setAction((action) -> {
 
-                    ChatOpcjeConfigFile.setShowZdrapkaMessage(p, true);
+//                    ChatOpcjeConfigFile.setShowZdrapkaMessage(p, true);
+                    finalChatOptionsEntity.setShowScratchCardMessages(false);
+
 
                     p.sendMessage(ChatColor.RED + "Wyłączyłeś wiadomości o dropie ze zdrapki");
 
@@ -143,10 +163,10 @@ public class ChatCommands implements CommandExecutor {
                 });
 
 
-                if(ChatOpcjeConfigFile.getShowZdrapkaMessageStatus(p)) {
-                    gui.setItem(2, 4, zdrapkaButtonOn);
-                } else {
+                if(chatOptionsEntity.isShowScratchCardMessages()) {
                     gui.setItem(2, 4, zdrapkaButtonOff);
+                } else {
+                    gui.setItem(2, 4, zdrapkaButtonOn);
                 }
 
                 // chat
@@ -159,7 +179,9 @@ public class ChatCommands implements CommandExecutor {
 
                 chatButtonOn.setAction((action) -> {
 
-                    ChatOpcjeConfigFile.setShowChatMessage(p, false);
+//                    ChatOpcjeConfigFile.setShowChatMessage(p, false);
+                    finalChatOptionsEntity.setShowChatMessages(true);
+
 
                     p.sendMessage(ChatColor.RED + "Włączyłeś wiadomości z chatu");
 
@@ -168,7 +190,9 @@ public class ChatCommands implements CommandExecutor {
 
                 chatButtonOff.setAction((action) -> {
 
-                    ChatOpcjeConfigFile.setShowChatMessage(p, true);
+//                    ChatOpcjeConfigFile.setShowChatMessage(p, true);
+                    finalChatOptionsEntity.setShowChatMessages(false);
+
 
                     p.sendMessage(ChatColor.RED + "Wyłączyłeś wiadomości z chatu");
 
@@ -176,10 +200,11 @@ public class ChatCommands implements CommandExecutor {
                 });
 
 
-                if(ChatOpcjeConfigFile.getShowChatMessageStatus(p)) {
-                    gui.setItem(2, 6, chatButtonOn);
-                } else {
+//                if(ChatOpcjeConfigFile.getShowChatMessageStatus(p)) {
+                if(chatOptionsEntity.isShowChatMessages()) {
                     gui.setItem(2, 6, chatButtonOff);
+                } else {
+                    gui.setItem(2, 6, chatButtonOn);
                 }
 
                 // shop
@@ -191,9 +216,8 @@ public class ChatCommands implements CommandExecutor {
                 // TODO kolor itp wiadomosci
 
                 shopButtonOn.setAction((action) -> {
-
-                    ChatOpcjeConfigFile.setShowShopMessage(p, false);
-
+//                    ChatOpcjeConfigFile.setShowShopMessage(p, false);
+                    finalChatOptionsEntity.setShowShopMessages(true);
                     p.sendMessage(ChatColor.RED + "Funkcjonalność chwilowo niedostępna");
 
                     gui.updateItem(action.getSlot(), shopButtonOff);
@@ -201,7 +225,8 @@ public class ChatCommands implements CommandExecutor {
 
                 shopButtonOff.setAction((action) -> {
 
-                    ChatOpcjeConfigFile.setShowShopMessage(p, true);
+//                    ChatOpcjeConfigFile.setShowShopMessage(p, true);
+                    finalChatOptionsEntity.setShowShopMessages(false);
 
                     p.sendMessage(ChatColor.RED + "Funkcjonalność chwilowo niedostępna");
 
@@ -209,16 +234,22 @@ public class ChatCommands implements CommandExecutor {
                 });
 
 
-                if(ChatOpcjeConfigFile.getShowShopMessageStatus(p)) {
-                    gui.setItem(2, 8, shopButtonOn);
-                } else {
+//                if(ChatOpcjeConfigFile.getShowShopMessageStatus(p)) {
+                if(chatOptionsEntity.isShowShopMessages()) {
                     gui.setItem(2, 8, shopButtonOff);
+                } else {
+                    gui.setItem(2, 8, shopButtonOn);
                 }
 
 
                 gui.open(p);
 
-
+//                gui.setDefaultClickAction((action) -> {
+//                    Chatopcje.getChatOptionsEntityManager().createOrUpdateChatOptionsEntity(finalChatOptionsEntity);
+//                });
+                gui.setCloseGuiAction((action) -> {
+                    Chatopcje.getChatOptionsEntityManager().createOrUpdateChatOptionsEntity(finalChatOptionsEntity);
+                });
             } else {
                 sender.sendMessage(ChatColor.RED + "Ta komenda może być używana tylko przez graczy.");
             }

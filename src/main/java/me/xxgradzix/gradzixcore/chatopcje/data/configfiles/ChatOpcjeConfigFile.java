@@ -1,4 +1,4 @@
-package me.xxgradzix.gradzixcore.chatopcje.files;
+package me.xxgradzix.gradzixcore.chatopcje.data.configfiles;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;

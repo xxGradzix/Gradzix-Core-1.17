@@ -3,7 +3,7 @@ package me.xxgradzix.gradzixcore.panel.commands;
 import dev.triumphteam.gui.builder.item.ItemBuilder;
 import dev.triumphteam.gui.guis.Gui;
 import dev.triumphteam.gui.guis.GuiItem;
-import me.xxgradzix.gradzixcore.panel.files.PanelAdminConfigFile;
+import me.xxgradzix.gradzixcore.panel.data.DataManager;
 import me.xxgradzix.gradzixcore.panel.items.ItemManager;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
@@ -35,16 +35,23 @@ public class PanelCommand implements CommandExecutor {
                     .create();
 
 
+//            PanelOptionsEntity panelOptionsEntity = Panel.getPanelOptionsEntityManager().getPanelOptionsEntity();
+
+//            if(panelOptionsEntity == null) {
+//                Panel.getPanelOptionsEntityManager().createOrUpdatePanelOptionsEntity(new PanelOptionsEntity(true, true, true, true));
+//            }
+
+//            PanelOptionsEntity finalPanelOptionsEntity = panelOptionsEntity;
+
             // CHAT
 
             GuiItem chatOff = ItemBuilder.from(ItemManager.chatOff).asGuiItem();
             GuiItem chatOn = ItemBuilder.from(ItemManager.chatOn).asGuiItem();
 
-            // TODO kolor itp wiadomosci
-
             chatOn.setAction((action) -> {
 
-                PanelAdminConfigFile.setChatStatus(true);
+//                PanelAdminConfigFile.setChatStatus(true);
+                DataManager.setChatStatus(true);
 
                 p.sendMessage(ChatColor.RED + "Włączyłeś wiadomości na chat");
 
@@ -53,7 +60,8 @@ public class PanelCommand implements CommandExecutor {
 
             chatOff.setAction((action) -> {
 
-                PanelAdminConfigFile.setChatStatus(false);
+//                PanelAdminConfigFile.setChatStatus(false);
+                DataManager.setChatStatus(false);
 
                 p.sendMessage(ChatColor.RED + "Wyłączyłeś wiadomości na chat");
 
@@ -69,7 +77,7 @@ public class PanelCommand implements CommandExecutor {
                 gui.updateItem(action.getSlot(), chatOn);
             });
 
-            if(PanelAdminConfigFile.getChatStatus()) {
+            if(DataManager.getChatStatus()) {
                 gui.setItem(2, 2, chatOff);
             } else {
                 gui.setItem(2, 2, chatOn);
@@ -85,7 +93,8 @@ public class PanelCommand implements CommandExecutor {
 
             zdrapkaOn.setAction((action) -> {
 
-                PanelAdminConfigFile.setZdrapkaStatus(true);
+//                PanelAdminConfigFile.setZdrapkaStatus(true);
+                DataManager.setZdrapkaStatus(true);
 
                 p.sendMessage(ChatColor.RED + "Włączyłeś zdrapki");
 
@@ -94,7 +103,8 @@ public class PanelCommand implements CommandExecutor {
 
             zdrapkaOff.setAction((action) -> {
 
-                PanelAdminConfigFile.setZdrapkaStatus(false);
+//                PanelAdminConfigFile.setZdrapkaStatus(false);
+                DataManager.setZdrapkaStatus(false);
 
                 p.sendMessage(ChatColor.RED + "Wyłączyłeś zdrapki");
 
@@ -102,7 +112,7 @@ public class PanelCommand implements CommandExecutor {
                 gui.updateItem(action.getSlot(), zdrapkaOn);
             });
 
-            if(PanelAdminConfigFile.getZdrapkaStatus()) {
+            if(DataManager.getZdrapkaStatus()) {
                 gui.setItem(2, 4, zdrapkaOff);
             } else {
                 gui.setItem(2, 4, zdrapkaOn);
@@ -117,7 +127,8 @@ public class PanelCommand implements CommandExecutor {
 
             kityOn.setAction((action) -> {
 
-                PanelAdminConfigFile.setKityStatus(true);
+//                PanelAdminConfigFile.setKityStatus(true);
+                DataManager.setKitStatus(true);
 
                 p.sendMessage(ChatColor.RED + "Włączyłeś kity");
 
@@ -126,7 +137,8 @@ public class PanelCommand implements CommandExecutor {
 
             kityOff.setAction((action) -> {
 
-                PanelAdminConfigFile.setKityStatus(false);
+//                PanelAdminConfigFile.setKityStatus(false);
+                DataManager.setKitStatus(false);
 
                 p.sendMessage(ChatColor.RED + "Wyłączyłeś kity");
 
@@ -134,7 +146,7 @@ public class PanelCommand implements CommandExecutor {
                 gui.updateItem(action.getSlot(), kityOn);
             });
 
-            if(PanelAdminConfigFile.getKityStatus()) {
+            if(DataManager.getKitStatus()) {
                 gui.setItem(2, 6, kityOff);
             } else {
                 gui.setItem(2, 6, kityOn);
@@ -150,7 +162,8 @@ public class PanelCommand implements CommandExecutor {
 
             osiagnieciaOn.setAction((action) -> {
 
-                PanelAdminConfigFile.setOsiagnieciaStatus(true);
+//                PanelAdminConfigFile.setOsiagnieciaStatus(true);
+                DataManager.setOsiagnieciaStatus(true);
 
                 p.sendMessage(ChatColor.RED + "Włączyłeś osiagniecia");
 
@@ -159,7 +172,8 @@ public class PanelCommand implements CommandExecutor {
 
             osiagnieciaOff.setAction((action) -> {
 
-                PanelAdminConfigFile.setOsiagnieciaStatus(false);
+//                PanelAdminConfigFile.setOsiagnieciaStatus(false);
+                DataManager.setOsiagnieciaStatus(false);
 
                 p.sendMessage(ChatColor.RED + "Wyłączyłeś osiagniecia");
 
@@ -167,7 +181,7 @@ public class PanelCommand implements CommandExecutor {
                 gui.updateItem(action.getSlot(), osiagnieciaOn);
             });
 
-            if(PanelAdminConfigFile.getOsiagnieciaStatus()) {
+            if(DataManager.getOsiagnieciaStatus()) {
                 gui.setItem(2, 8, osiagnieciaOff);
             } else {
                 gui.setItem(2, 8, osiagnieciaOn);

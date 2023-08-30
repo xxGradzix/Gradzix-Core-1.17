@@ -3,7 +3,7 @@ package me.xxgradzix.gradzixcore.zdrapka.listeners;
 
 import dev.triumphteam.gui.guis.Gui;
 import dev.triumphteam.gui.guis.StorageGui;
-import me.xxgradzix.gradzixcore.zdrapka.files.ZdrapkaConfigFile;
+import me.xxgradzix.gradzixcore.zdrapka.data.DataManager;
 import me.xxgradzix.gradzixcore.zdrapka.items.ItemManager;
 import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
@@ -15,6 +15,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class OnLeftClick implements Listener {
@@ -44,23 +45,32 @@ public class OnLeftClick implements Listener {
                         .rows(6)
                         .create();
 
-                List<ItemStack> items = (List<ItemStack>) ZdrapkaConfigFile.getCustomFile().get("items");
+//                List<ItemStack> items = (List<ItemStack>) ZdrapkaConfigFile.getCustomFile().get("items");
+
+                ItemStack[] itemStacks = Arrays.asList(me.xxgradzix.gradzixcore.zdrapka.data.DataManager.getScratchCardItems()).toArray(new ItemStack[0]);
+                List<ItemStack> items = new ArrayList<>();
+                for (ItemStack item : itemStacks) {
+                    if(item == null) continue;
+                    items.add(item);
+                }
+
                 gui.addItem(items);
 
                 gui.open(p);
 
                 gui.setCloseGuiAction((player) -> {
-                    List<ItemStack> list = new ArrayList<ItemStack>();
+                    List<ItemStack> list = new ArrayList<>();
 
                     Inventory inv = gui.getInventory();
-                    for(ItemStack itemStack : inv.getContents()) {
-                        if(itemStack != null) {
-                            list.add(itemStack);
-
-                        }
-                    }
-                    ZdrapkaConfigFile.getCustomFile().set("items", list);
-                    ZdrapkaConfigFile.save();
+//                    for(ItemStack itemStack : inv.getContents()) {
+//                        if(itemStack != null) {
+//                            list.add(itemStack);
+//
+//                        }
+//                    }
+                    DataManager.setScratchCardItems(inv.getContents());
+//                    ZdrapkaConfigFile.getCustomFile().set("items", list);
+//                    ZdrapkaConfigFile.save();
                 });
             }
         }

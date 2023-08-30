@@ -1,6 +1,6 @@
 package me.xxgradzix.gradzixcore.panel.listeners;
 
-import me.xxgradzix.gradzixcore.panel.files.PanelAdminConfigFile;
+import me.xxgradzix.gradzixcore.panel.data.DataManager;
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -12,7 +12,7 @@ public class ChatEvent implements Listener {
 
     @EventHandler
     public void onPlayerChat(AsyncPlayerChatEvent event) {
-        if (!PanelAdminConfigFile.getChatStatus()) {
+        if (!DataManager.getChatStatus()) {
             event.setCancelled(true);
             event.getPlayer().sendMessage(ChatColor.RED + "Czat jest obecnie wyłączony.");
         }

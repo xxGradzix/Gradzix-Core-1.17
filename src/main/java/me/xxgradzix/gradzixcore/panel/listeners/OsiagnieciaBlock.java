@@ -1,6 +1,6 @@
 package me.xxgradzix.gradzixcore.panel.listeners;
 
-import me.xxgradzix.gradzixcore.panel.files.PanelAdminConfigFile;
+import me.xxgradzix.gradzixcore.panel.data.DataManager;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -15,9 +15,9 @@ public class OsiagnieciaBlock implements Listener {
 
         Player p = event.getPlayer();
 
-        if(PanelAdminConfigFile.getOsiagnieciaStatus()) return;
+        if(DataManager.getOsiagnieciaStatus()) return;
 
-        if(!PanelAdminConfigFile.getOsiagnieciaStatus()) {
+        if(!DataManager.getOsiagnieciaStatus()) {
 
             if (message.startsWith("/osiagniecia")) {
 

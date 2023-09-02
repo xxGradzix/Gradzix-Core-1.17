@@ -39,6 +39,22 @@ public class Panel {
 
     //////////////////
 
+    public void configureDB() throws SQLException {
+
+        TableUtils.createTableIfNotExists(connectionSource, PanelOptionsEntity.class);
+        panelOptionsEntityManager= new PanelOptionsEntityManager(connectionSource);
+    }
+
+    ////////////
+    public Panel(Gradzix_Core plugin, ConnectionSource connectionSource) {
+        this.plugin = plugin;
+        this.connectionSource = connectionSource;
+    }
+
+
+
+    //////////////////
+
     public void onEnable() {
 
         try {

@@ -1,12 +1,15 @@
 package me.xxgradzix.gradzixcore.ustawienia.commands.wymiana;
 
-import me.xxgradzix.gradzixcore.ustawienia.files.WymianaUstawieniaItemsConfigFile;
+import me.xxgradzix.gradzixcore.ustawienia.data.DataManager;
 import me.xxgradzix.gradzixcore.ustawienia.gui.wymiana.WymianaGui;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.HashMap;
 
 public class WymianaUstawieniaCommand implements CommandExecutor {
     @Override
@@ -28,7 +31,8 @@ public class WymianaUstawieniaCommand implements CommandExecutor {
 
 
 //            wymianaGui = new WymianaGui(WymianaUstawieniaItemsConfigFile.getAllItems());
-            wymianaGui = new WymianaGui(WymianaUstawieniaItemsConfigFile.getAllItemKeys(), WymianaUstawieniaItemsConfigFile.getAllItemValues());
+            HashMap<ItemStack, ItemStack> map = (HashMap<ItemStack, ItemStack>) DataManager.getAutoExchangeItems();
+            wymianaGui = new WymianaGui(map);
 
 
 

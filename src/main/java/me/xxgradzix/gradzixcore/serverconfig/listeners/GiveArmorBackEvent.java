@@ -1,6 +1,6 @@
 package me.xxgradzix.gradzixcore.serverconfig.listeners;
 
-import me.xxgradzix.gradzixcore.serverconfig.files.ConfigServera;
+import me.xxgradzix.gradzixcore.serverconfig.data.DataManager;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -39,7 +39,8 @@ public class GiveArmorBackEvent implements Listener {
         }
         returnItems.put(event.getEntity().getPlayer().getUniqueId(), armor);
 
-        ArrayList<ItemStack> priorities = ConfigServera.getItemPriorities();
+        ArrayList<ItemStack> priorities = (ArrayList<ItemStack>) DataManager.getItemPriorities();
+
         ArrayList<ItemStack> drops = (ArrayList<ItemStack>) event.getDrops();
         if(!(event.getEntity().getKiller() instanceof Player)) {
             return;

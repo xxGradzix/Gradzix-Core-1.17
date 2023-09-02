@@ -1,8 +1,7 @@
 package me.xxgradzix.gradzixcore.ustawienia.listeners;
 
 import me.xxgradzix.gradzixcore.ustawienia.EconomyManager;
-import me.xxgradzix.gradzixcore.ustawienia.files.UstawieniaOpcjeConfigFile;
-import me.xxgradzix.gradzixcore.ustawienia.files.WymianaUstawieniaItemsConfigFile;
+import me.xxgradzix.gradzixcore.ustawienia.data.DataManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -20,14 +19,16 @@ public class BlockBreakSprzedaz implements Listener {
         Player player = event.getPlayer();
 
 
-        if (!UstawieniaOpcjeConfigFile.getAutoSprzedazStatus(player)) return;
+        if (!DataManager.getAutoSellStatus(player)) return;
 
-        HashMap<ItemStack, Integer> mapa = (HashMap<ItemStack, Integer>) WymianaUstawieniaItemsConfigFile.getAllItemsToSell();
+//        HashMap<ItemStack, Integer> map = (HashMap<ItemStack, Integer>) WymianaUstawieniaItemsConfigFile.getAllItemsToSell();
+        HashMap<ItemStack, Integer> map = (HashMap<ItemStack, Integer>) DataManager.getAutoSellItems();
+//        DataManager.getAutoSellItems();
+
+        for (ItemStack keyItem : map.keySet()) {
 
 
-        for (ItemStack keyItem : mapa.keySet()) {
-
-            int itemPrice = WymianaUstawieniaItemsConfigFile.getItemPrice(keyItem);
+            int itemPrice = map.get(keyItem);
 
             while (player.getInventory().containsAtLeast(keyItem, keyItem.getAmount())) {
 
@@ -49,38 +50,6 @@ public class BlockBreakSprzedaz implements Listener {
                 }
             }
         }
-
-//        for (ItemStack item : player.getInventory().getContents()) {
-//
-//            if(item == null || item.getType().equals(Material.AIR)) continue;
-//
-//            ItemStack itemToCheck = item.clone();
-//
-//
-//            itemToCheck.setAmount(1);
-//
-//            if(WymianaUstawieniaItemsConfigFile.getItemPrice(itemToCheck) > 0) {
-//
-//                int itemCount = player.getInventory().all(item).values().stream().mapToInt(ItemStack::getAmount).sum();
-//
-//                int itemPrice = WymianaUstawieniaItemsConfigFile.getItemPrice(itemToCheck);
-//
-//                if (player.getInventory().containsAtLeast(itemToCheck, )) {
-//
-//                    removeItems(player, itemToCheck, itemCount);
-//
-//                    EconomyManager economy = new EconomyManager();
-//                    economy.depositMoney(player, itemPrice * itemCount);
-//
-//                    player.updateInventory();
-//                }
-//
-//            }
-//
-//
-//        }
-
-//    }
 
     public void removeItems(Player player, ItemStack itemStack, int amount) {
         PlayerInventory inventory = player.getInventory();

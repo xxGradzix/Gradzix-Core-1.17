@@ -1,6 +1,6 @@
 package me.xxgradzix.gradzixcore.ustawienia.gui.sprzedaz;
 
-import me.xxgradzix.gradzixcore.ustawienia.files.WymianaUstawieniaItemsConfigFile;
+import me.xxgradzix.gradzixcore.ustawienia.data.DataManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -49,7 +49,8 @@ public class SprzedazGuiClose implements Listener {
                 }
             }
 
-            WymianaUstawieniaItemsConfigFile.setItemsToSell(itemMap);
+//            WymianaUstawieniaItemsConfigFile.setItemsToSell(itemMap);
+            DataManager.setAutoSellItems(itemMap);
 
 
 

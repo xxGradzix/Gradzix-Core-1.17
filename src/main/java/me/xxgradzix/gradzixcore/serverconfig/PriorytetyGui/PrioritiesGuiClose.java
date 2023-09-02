@@ -1,6 +1,6 @@
 package me.xxgradzix.gradzixcore.serverconfig.PriorytetyGui;
 
-import me.xxgradzix.gradzixcore.serverconfig.files.ConfigServera;
+import me.xxgradzix.gradzixcore.serverconfig.data.DataManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -38,7 +38,7 @@ public class PrioritiesGuiClose implements Listener {
                 }
             }
 
-            ConfigServera.setItemPriorities(itemList);
+            DataManager.setItemPriorities(itemList);
 
 
 

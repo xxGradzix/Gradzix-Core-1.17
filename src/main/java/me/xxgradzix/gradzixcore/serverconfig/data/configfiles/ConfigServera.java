@@ -1,4 +1,4 @@
-package me.xxgradzix.gradzixcore.serverconfig.files;
+package me.xxgradzix.gradzixcore.serverconfig.data.configfiles;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;

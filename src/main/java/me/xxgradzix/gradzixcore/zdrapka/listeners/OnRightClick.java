@@ -140,16 +140,6 @@ public class OnRightClick implements Listener {
                     for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
                         if (!onlinePlayer.equals(p)) {
 
-                            // element powiązany z chatopcje
-
-//                            List<String> list = ChatOpcjeConfigFile.getShowZdrapkaMessageStatusUUIDsList(true);
-
-
-//                            for (ChatOptionsEntity chatOptionsEntity : chatOptionsEntityList) {
-//                                Bukkit.broadcastMessage(chatOptionsEntity.getPlayerName());
-//                            }
-
-
                             if (!list.contains(onlinePlayer.getUniqueId())) {
 
                                 onlinePlayer.sendMessage(ChatColor.GOLD + p.getDisplayName() + " wylosował " + losowyPrzedmiot.getItemMeta().getDisplayName() + ChatColor.GOLD + " ze " + ChatColor.YELLOW + "Z" +

@@ -1,6 +1,6 @@
 package me.xxgradzix.gradzixcore.serverconfig.listeners;
 
-import me.xxgradzix.gradzixcore.serverconfig.files.ConfigServera;
+import me.xxgradzix.gradzixcore.serverconfig.data.DataManager;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -40,7 +40,9 @@ public class DamageEvent implements Listener {
             if(newDamage < 1) newDamage = 1;
 
 
-            event.setDamage(newDamage * ConfigServera.getDamageMultiplier());
+            double serverDamageMultiplier = DataManager.getServerDamageMultiplier();
+
+            event.setDamage(newDamage * serverDamageMultiplier);
 
 
 

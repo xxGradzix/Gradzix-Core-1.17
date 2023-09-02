@@ -70,7 +70,7 @@ public class ScratchCardEntityManager {
 //            return null;
 //        }
 //    }
-//    public List<ChatOptionsEntity> getChatOptionsEntitiesWhereShowScratchCardMessageIs(boolean expectedValue) {
+
 //        try {
 //            return chatOptionsEntityDao.queryForEq("showScratchCardMessages", expectedValue);
 //        } catch (SQLException e) {
@@ -78,7 +78,7 @@ public class ScratchCardEntityManager {
 //            return null;
 //        }
 //    }
-//    public List<ChatOptionsEntity> getChatOptionsEntitiesWhereShowChatMessageIs(boolean expectedValue) {
+
 //        try {
 //            return chatOptionsEntityDao.queryForEq("showChatMessages", expectedValue);
 //        } catch (SQLException e) {

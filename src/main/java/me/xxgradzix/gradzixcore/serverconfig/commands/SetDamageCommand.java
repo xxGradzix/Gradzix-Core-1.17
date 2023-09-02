@@ -1,6 +1,6 @@
 package me.xxgradzix.gradzixcore.serverconfig.commands;
 
-import me.xxgradzix.gradzixcore.serverconfig.files.ConfigServera;
+import me.xxgradzix.gradzixcore.serverconfig.data.DataManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -24,7 +24,8 @@ public class SetDamageCommand implements CommandExecutor {
                 try {
                     double multiplier = Double.parseDouble(args[0]);
 
-                    ConfigServera.setDamageMultiplier(multiplier);
+
+                    DataManager.setServerDamageMultiplier(multiplier);
 
                     sender.sendMessage("Mnożnik obrażeń ustawiony na: " + multiplier);
                 } catch (NumberFormatException e) {

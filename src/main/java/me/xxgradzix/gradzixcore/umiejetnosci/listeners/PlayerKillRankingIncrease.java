@@ -2,8 +2,9 @@ package me.xxgradzix.gradzixcore.umiejetnosci.listeners;
 
 import me.xxgradzix.gradzixcore.chatopcje.Chatopcje;
 import me.xxgradzix.gradzixcore.chatopcje.data.database.entities.ChatOptionsEntity;
-import me.xxgradzix.gradzixcore.umiejetnosci.files.ModyfikatoryUmiejetnosciConfigFile;
-import me.xxgradzix.gradzixcore.umiejetnosci.files.UmiejetnosciConfigFile;
+import me.xxgradzix.gradzixcore.umiejetnosci.data.DataManager;
+import me.xxgradzix.gradzixcore.umiejetnosci.data.database.entities.enums.Ability;
+
 import net.dzikoysk.funnyguilds.event.rank.CombatPointsChangeEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -25,7 +26,10 @@ public class PlayerKillRankingIncrease implements Listener {
 
         Player p = Bukkit.getPlayer(event.getAttacker().getUUID());
 
-        double multiplier = ModyfikatoryUmiejetnosciConfigFile.getRankMultiplier(UmiejetnosciConfigFile.getRankLevel(p));
+        int playerRankLevel = DataManager.getPlayerAbilityLevel(Ability.RANK, p);
+
+
+        double multiplier = DataManager.getAbilityModifier(Ability.RANK, playerRankLevel);
 
         if(multiplier > 1) {
             killerPoints *= multiplier;

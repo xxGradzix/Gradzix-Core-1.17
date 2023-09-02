@@ -1,6 +1,7 @@
 package me.xxgradzix.gradzixcore.umiejetnosci.items;
 
-import me.xxgradzix.gradzixcore.umiejetnosci.files.ModyfikatoryUmiejetnosciConfigFile;
+import me.xxgradzix.gradzixcore.umiejetnosci.data.DataManager;
+import me.xxgradzix.gradzixcore.umiejetnosci.data.database.entities.enums.Ability;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -59,20 +60,27 @@ public class ItemManager {
 
         createOdlamek();
 
-        drop1Mod = ModyfikatoryUmiejetnosciConfigFile.getDropMultiplier(1);
-        drop2Mod = ModyfikatoryUmiejetnosciConfigFile.getDropMultiplier(2);
-        drop3Mod = ModyfikatoryUmiejetnosciConfigFile.getDropMultiplier(3);
-        drop4Mod = ModyfikatoryUmiejetnosciConfigFile.getDropMultiplier(4);
+//        drop1Mod = ModyfikatoryUmiejetnosciConfigFile.getDropMultiplier(1);
+//        drop2Mod = ModyfikatoryUmiejetnosciConfigFile.getDropMultiplier(2);
+//        drop3Mod = ModyfikatoryUmiejetnosciConfigFile.getDropMultiplier(3);
+//        drop4Mod = ModyfikatoryUmiejetnosciConfigFile.getDropMultiplier(4);
 
-        sila1Percent = (int) ((ModyfikatoryUmiejetnosciConfigFile.getSilaMultiplier(1) * 100) - 100);
-        sila2Percent = (int) ((ModyfikatoryUmiejetnosciConfigFile.getSilaMultiplier(2) * 100) - 100);
-        sila3Percent = (int) ((ModyfikatoryUmiejetnosciConfigFile.getSilaMultiplier(3) * 100) - 100);
-        sila4Percent = (int) ((ModyfikatoryUmiejetnosciConfigFile.getSilaMultiplier(4) * 100) - 100);
+        drop1Mod = DataManager.getAbilityModifier(Ability.DROP, 1);
+        drop2Mod = DataManager.getAbilityModifier(Ability.DROP, 2);
+        drop3Mod = DataManager.getAbilityModifier(Ability.DROP, 3);
+        drop4Mod = DataManager.getAbilityModifier(Ability.DROP, 4);
 
-        rank1Mod = (int) ((ModyfikatoryUmiejetnosciConfigFile.getRankMultiplier(1) * 100) - 100);
-        rank2Mod = (int) ((ModyfikatoryUmiejetnosciConfigFile.getRankMultiplier(2) * 100) - 100);
-        rank3Mod = (int) ((ModyfikatoryUmiejetnosciConfigFile.getRankMultiplier(3) * 100) - 100);
-        rank4Mod = (int) ((ModyfikatoryUmiejetnosciConfigFile.getRankMultiplier(4) * 100) - 100);
+
+
+        sila1Percent = (int) ((DataManager.getAbilityModifier(Ability.STRENGTH, 1) * 100) - 100);
+        sila2Percent = (int) ((DataManager.getAbilityModifier(Ability.STRENGTH, 2) * 100) - 100);
+        sila3Percent = (int) ((DataManager.getAbilityModifier(Ability.STRENGTH, 3) * 100) - 100);
+        sila4Percent = (int) ((DataManager.getAbilityModifier(Ability.STRENGTH, 4) * 100) - 100);
+
+        rank1Mod = (int) ((DataManager.getAbilityModifier(Ability.RANK, 1) * 100) - 100);
+        rank2Mod = (int) ((DataManager.getAbilityModifier(Ability.RANK, 2) * 100) - 100);
+        rank3Mod = (int) ((DataManager.getAbilityModifier(Ability.RANK, 3) * 100) - 100);
+        rank4Mod = (int) ((DataManager.getAbilityModifier(Ability.RANK, 4) * 100) - 100);
 
 
         // sila

@@ -1,6 +1,6 @@
 package me.xxgradzix.gradzixcore.ulepsz.commands;
 
-import me.xxgradzix.gradzixcore.ulepsz.files.UlepszConfigFile;
+import me.xxgradzix.gradzixcore.ulepsz.data.DataManager;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -20,10 +20,16 @@ public class UlepszCommand implements CommandExecutor {
 
             ItemStack currentItem = p.getInventory().getItemInMainHand();
 
+            if(currentItem == null) {
+                p.sendMessage("Musisz trzymać przedmiot w rece");
+                return false;
+            }
 
+            ItemStack nextItem = DataManager.getNextItem(currentItem);
+            ItemStack requiredItem = DataManager.getRequiredItem(currentItem);
 
-            ItemStack nextItem = UlepszConfigFile.findNextItem(currentItem);
-            ItemStack requiredItem = UlepszConfigFile.findRequiredItem(currentItem);
+//            ItemStack nextItem = UlepszConfigFile.findNextItem(currentItem);
+//            ItemStack requiredItem = UlepszConfigFile.findRequiredItem(currentItem);
 
             if(nextItem == null || requiredItem == null) {
                 p.sendMessage(ChatColor.RED + "Tego przedmiotu nie mozesz ulepszyc");
@@ -47,7 +53,15 @@ public class UlepszCommand implements CommandExecutor {
 
             } else {
 //                p.sendMessage(ChatColor.RED + "Nie masz wystarczającej ilości wymaganego przedmiotu aby to ulepszyć");
-                p.sendMessage(ChatColor.RED + "Aby to ulepszyć potrzebujesz " + requiredItem.getAmount() + " " + requiredItem.getItemMeta().getDisplayName());
+                if(requiredItem.hasItemMeta()) {
+                    if(requiredItem.getItemMeta().hasDisplayName()) {
+                        p.sendMessage(ChatColor.RED + "Aby to ulepszyć potrzebujesz " + requiredItem.getAmount() + " " + requiredItem.getItemMeta().getDisplayName());
+
+                    }
+                } else {
+                    p.sendMessage(ChatColor.RED + "Aby to ulepszyć potrzebujesz " + requiredItem.getAmount() + " " + requiredItem.getType());
+
+                }
             }
 
         }

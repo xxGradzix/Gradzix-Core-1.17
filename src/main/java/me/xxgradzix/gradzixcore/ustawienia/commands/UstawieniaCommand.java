@@ -3,7 +3,7 @@ package me.xxgradzix.gradzixcore.ustawienia.commands;
 import dev.triumphteam.gui.builder.item.ItemBuilder;
 import dev.triumphteam.gui.guis.Gui;
 import dev.triumphteam.gui.guis.GuiItem;
-import me.xxgradzix.gradzixcore.ustawienia.files.UstawieniaOpcjeConfigFile;
+import me.xxgradzix.gradzixcore.ustawienia.data.DataManager;
 import me.xxgradzix.gradzixcore.ustawienia.items.ItemManager;
 import net.kyori.adventure.text.Component;
 import org.bukkit.ChatColor;
@@ -84,20 +84,20 @@ public class UstawieniaCommand implements CommandExecutor {
 
             wymianaButtonOn.setAction((action) -> {
 
-                UstawieniaOpcjeConfigFile.setAutoWymianaStatus(p, true);
+                DataManager.setAutoExchangeStatus(p, true);
 
                 gui.updateItem(action.getSlot(), wymianaButtonOff);
             });
 
             wymianaButtonOff.setAction((action) -> {
 
-                UstawieniaOpcjeConfigFile.setAutoWymianaStatus(p, false);
+                DataManager.setAutoExchangeStatus(p, false);
 
                 gui.updateItem(action.getSlot(), wymianaButtonOn);
             });
 
 
-            if(UstawieniaOpcjeConfigFile.getAutoWymianaStatus(p)) {
+            if(DataManager.getAutoExchangeStatus(p)) {
                 gui.setItem(3, 4, wymianaButtonOff);
             } else {
                 gui.setItem(3, 4, wymianaButtonOn);
@@ -114,20 +114,21 @@ public class UstawieniaCommand implements CommandExecutor {
 
             sprzedazButtonOn.setAction((action) -> {
 
-                UstawieniaOpcjeConfigFile.setAutoSprzedazStatus(p, true);
+                DataManager.setAutoSellStatus(p, true);
 
                 gui.updateItem(action.getSlot(), sprzedazButtonOff);
             });
 
             sprzedazButtonOff.setAction((action) -> {
 
-                UstawieniaOpcjeConfigFile.setAutoSprzedazStatus(p, false);
+                DataManager.setAutoSellStatus(p, false);
 
                 gui.updateItem(action.getSlot(), sprzedazButtonOn);
             });
 
 
-            if(UstawieniaOpcjeConfigFile.getAutoSprzedazStatus(p)) {
+            
+            if(DataManager.getAutoSellStatus(p)) {
                 gui.setItem(3, 6, sprzedazButtonOff);
             } else {
                 gui.setItem(3, 6, sprzedazButtonOn);

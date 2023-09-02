@@ -1,7 +1,7 @@
 package me.xxgradzix.gradzixcore.umiejetnosci.listeners;
 
-import me.xxgradzix.gradzixcore.umiejetnosci.files.ModyfikatoryUmiejetnosciConfigFile;
-import me.xxgradzix.gradzixcore.umiejetnosci.files.UmiejetnosciConfigFile;
+import me.xxgradzix.gradzixcore.umiejetnosci.data.DataManager;
+import me.xxgradzix.gradzixcore.umiejetnosci.data.database.entities.enums.Ability;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -28,11 +28,11 @@ public class DamageListener implements Listener {
             Player player = (Player) event.getDamager();
             double damage = event.getDamage();
 
-            int damagerLevel = UmiejetnosciConfigFile.getSilaLevel(player);
+            int damagerLevel = DataManager.getPlayerAbilityLevel(Ability.STRENGTH, player);
 
             double multiplier = 1.0;
 
-            if (damagerLevel > 0 ) multiplier = ModyfikatoryUmiejetnosciConfigFile.getSilaMultiplier(damagerLevel);
+            if (damagerLevel > 0 ) multiplier = DataManager.getAbilityModifier(Ability.STRENGTH, damagerLevel);
 
             double increasedDamage = damage * multiplier;
 

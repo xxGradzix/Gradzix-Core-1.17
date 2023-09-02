@@ -1,8 +1,8 @@
 package me.xxgradzix.gradzixcore.umiejetnosci.listeners;
 
 
-import me.xxgradzix.gradzixcore.umiejetnosci.files.ModyfikatoryUmiejetnosciConfigFile;
-import me.xxgradzix.gradzixcore.umiejetnosci.files.UmiejetnosciConfigFile;
+import me.xxgradzix.gradzixcore.umiejetnosci.data.DataManager;
+import me.xxgradzix.gradzixcore.umiejetnosci.data.database.entities.enums.Ability;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -83,11 +83,13 @@ public class OnBlockBreak implements Listener {
 
         if(!p.getGameMode().equals(GameMode.SURVIVAL)) return;
 
-        int playerLevel = UmiejetnosciConfigFile.getDropLevel(p);
+//        int playerLevel = UmiejetnosciConfigFile.getDropLevel(p);
+        int playerLevel = DataManager.getPlayerAbilityLevel(Ability.DROP, p);
+
 
         if(playerLevel == 0) return;
 
-        double multiplier = ModyfikatoryUmiejetnosciConfigFile.getDropMultiplier(playerLevel);
+        double multiplier = DataManager.getAbilityModifier(Ability.DROP, playerLevel);
 
 //        Block block = event.getBlock();
         ItemStack itemInHand = event.getPlayer().getInventory().getItemInMainHand();

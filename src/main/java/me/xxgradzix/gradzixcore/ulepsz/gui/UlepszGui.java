@@ -26,12 +26,13 @@ package me.xxgradzix.gradzixcore.ulepsz.gui;
 //
 //}
 
+import me.xxgradzix.gradzixcore.ulepsz.data.DataManager;
+import me.xxgradzix.gradzixcore.ulepsz.data.database.entities.UpgradeEntity;
 import me.xxgradzix.gradzixcore.ustawienia.items.ItemManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,18 +42,22 @@ public class UlepszGui implements InventoryHolder {
     private Inventory[] inventory;
     private int currentPage;
     private int maxPage = 25;
-    private ArrayList<ItemStack[]> itemStacksList;
+//    private ArrayList<ItemStack[]> itemStacksList;
+    private List<UpgradeEntity> upgradeEntityList = DataManager.getAllUpgradeEntities();
 
-    public UlepszGui(ArrayList<ItemStack[]> itemStacksList) {
+    public UlepszGui() {
+        if(upgradeEntityList == null || upgradeEntityList.isEmpty()) {
+            upgradeEntityList = new ArrayList<>();
+        }
 
 //        ItemStack[] itemKeys;
-        if(itemStacksList.isEmpty() || itemStacksList == null) {
-            this.itemStacksList = new ArrayList<>();
-//            index = new ItemStack[9*maxPage];
-        } else {
-            this.itemStacksList = itemStacksList;
-//            index = itemMap.keySet().toArray(new ItemStack[9*maxPage]);
-        }
+//        if(itemStacksList.isEmpty() || itemStacksList == null) {
+//            this.itemStacksList = new ArrayList<>();
+////            index = new ItemStack[9*maxPage];
+//        } else {
+//            this.itemStacksList = itemStacksList;
+////            index = itemMap.keySet().toArray(new ItemStack[9*maxPage]);
+//        }
 
         this.currentPage = 0;
         this.inventory = new Inventory[maxPage];
@@ -90,20 +95,21 @@ public class UlepszGui implements InventoryHolder {
             inventory[i].setItem(43,ItemManager.greenGlass);
 
             for(int j = 0; j < 9; j++) {
-                if(index >= itemStacksList.size()) break;
-                if(itemStacksList.get(index) == null) {
+                if(index >= upgradeEntityList.size()) break;
+
+                if(upgradeEntityList.get(index) == null) {
                     index++;
                     continue;
                 }
-                if(itemStacksList.get(index)[0] == null ||
-                        itemStacksList.get(index)[1] == null ||
-                        itemStacksList.get(index)[2] == null)  {
+                if(upgradeEntityList.get(index).getCurrentItem() == null ||
+                        upgradeEntityList.get(index).getItemNeeded() == null ||
+                        upgradeEntityList.get(index).getNextItem()== null)  {
                     index++;
                     continue;
                 }
-                inventory[i].setItem(j, itemStacksList.get(index)[0]);
-                inventory[i].setItem((j+9), itemStacksList.get(index)[1]);
-                inventory[i].setItem((j+18), itemStacksList.get(index)[2]);
+                inventory[i].setItem(j, upgradeEntityList.get(index).getCurrentItem());
+                inventory[i].setItem((j+9), upgradeEntityList.get(index).getItemNeeded());
+                inventory[i].setItem((j+18), upgradeEntityList.get(index).getNextItem());
                 index++;
             }
 

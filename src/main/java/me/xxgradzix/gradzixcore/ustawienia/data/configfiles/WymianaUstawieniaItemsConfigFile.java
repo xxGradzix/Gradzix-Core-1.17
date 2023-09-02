@@ -1,4 +1,4 @@
-package me.xxgradzix.gradzixcore.ustawienia.files;
+package me.xxgradzix.gradzixcore.ustawienia.data.configfiles;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -44,65 +44,11 @@ public class WymianaUstawieniaItemsConfigFile {
         customFile = YamlConfiguration.loadConfiguration(file);
     }
 
-
-//    public static Map<ItemStack, ItemStack> getAllItems() {
-//    public static ArrayList<ItemStack> getAllItems() {
-//
-//
-////        List<Map<?, ?>> items = getCustomFile().getMapList("items");
-////
-////        if(items == null || items.isEmpty()) return new HashMap<>();
-////
-////        Map<ItemStack, ItemStack> map = (Map<ItemStack, ItemStack>) items.get(0);
-////
-////        if(map == null || map.isEmpty()) {
-////            return new HashMap<>();
-////        }
-////
-////        return map;
-//
-//        return (ArrayList<ItemStack>) getCustomFile().getList("items");
-//
-//    }
-
-public static ArrayList<ItemStack> getAllItemKeys() {
-//public static HashMap<ItemStack, Integer> getAllItemKeys() {
-
-
-//    List<Map<?, ?>> items = getCustomFile().getMapList("items");
-//
-//    if(items == null || items.isEmpty()) return new HashMap<>();
-//
-////        Map<ItemStack, ItemStack> map = (Map<ItemStack, ItemStack>) items.get(0);
-//    HashMap<ItemStack, Integer> map = (HashMap<ItemStack, Integer>) items.get(0);
-//
-//    if(map == null || map.isEmpty()) {
-//        return new HashMap<>();
-//    }
-//
-//    return map;
-/////////////////////////////////////////////////////
-    return (ArrayList<ItemStack>) getCustomFile().getList("items.keys");
-////////////////////////////////////////////////////////////
-
-}
+    public static ArrayList<ItemStack> getAllItemKeys() {
+        return (ArrayList<ItemStack>) getCustomFile().getList("items.keys");
+    }
     public static ArrayList<ItemStack> getAllItemValues() {
-//    public static HashMap<ItemStack, Integer> getAllItemValues() {
 
-
-//        List<Map<?, ?>> items = getCustomFile().getMapList("items");
-//
-//        if(items == null || items.isEmpty()) return new HashMap<>();
-//
-////        Map<ItemStack, ItemStack> map = (Map<ItemStack, ItemStack>) items.get(0);
-//        HashMap<ItemStack, Integer> map = (HashMap<ItemStack, Integer>) items.get(1);
-//
-//        if(map == null || map.isEmpty()) {
-//            return new HashMap<>();
-//        }
-//
-//        return map;
-////////////////////////////////////////
         ArrayList<ItemStack> items = (ArrayList<ItemStack>) getCustomFile().getList("items.values");
         ArrayList<Integer> amounts = (ArrayList<Integer>) getCustomFile().getIntegerList("items.valuesAmounts");
 
@@ -115,46 +61,16 @@ public static ArrayList<ItemStack> getAllItemKeys() {
         }
 
         return items;
-
-//        return (ArrayList<ItemStack>) getCustomFile().getList("items.values");
-////////////////////////////////////////////////////////////
-
-//        return (HashMap<ItemStack, Integer>) getCustomFile().getMapList("items").get(1);
     }
 
-
-
-
-//    public static void setItems(HashMap<ItemStack, ItemStack> items) {
     public static void setItems(ArrayList<ItemStack> itemKeys, ArrayList<ItemStack> itemValues, ArrayList<Integer> itemValuesAmounts) {
-//    public static void setItems(HashMap<ItemStack, Integer> itemKeys, HashMap<ItemStack, Integer> itemValues) {
-
-//        ArrayList<HashMap<ItemStack, ItemStack>> list = new ArrayList<>();
-//
-//        list.add(items);
-//
-//        getCustomFile().set("items", list);
-//        save();
-//
-//
-
 
         getCustomFile().set("items.keys", itemKeys);
         getCustomFile().set("items.values", itemValues);
         getCustomFile().set("items.valuesAmounts", itemValuesAmounts);
         save();
-//        ArrayList<HashMap<ItemStack, Integer>> list = new ArrayList<>();
-//
-//        list.add(itemKeys);
-//        list.add(itemValues);
-//
-//        getCustomFile().set("items", list);
-//        save();
 
     }
-
-    // sprzedaz
-
 
     public static Map<ItemStack, Integer> getAllItemsToSell() {
 
@@ -200,11 +116,4 @@ public static ArrayList<ItemStack> getAllItemKeys() {
         return price;
 
     }
-
-
-
-
-
-
-
 }

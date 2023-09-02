@@ -1,6 +1,6 @@
 package me.xxgradzix.gradzixcore.umiejetnosci.commands;
 
-import me.xxgradzix.gradzixcore.umiejetnosci.files.UmiejetnosciConfigFile;
+import me.xxgradzix.gradzixcore.umiejetnosci.data.DataManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -12,7 +12,8 @@ public class ResetUmiejetnosci implements CommandExecutor {
 
         if(!sender.hasPermission("umiejetnosci.resetumiejetnosci")) return false;
 
-        UmiejetnosciConfigFile.resetLevels();
+//        UmiejetnosciConfigFile.resetLevels();
+        DataManager.resetAllAbilities();
 
         return true;
     }

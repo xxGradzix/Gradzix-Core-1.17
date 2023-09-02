@@ -1,6 +1,7 @@
 package me.xxgradzix.gradzixcore.umiejetnosci.commands;
 
-import me.xxgradzix.gradzixcore.umiejetnosci.files.ModyfikatoryUmiejetnosciConfigFile;
+import me.xxgradzix.gradzixcore.umiejetnosci.data.DataManager;
+import me.xxgradzix.gradzixcore.umiejetnosci.data.database.entities.enums.Ability;
 import me.xxgradzix.gradzixcore.umiejetnosci.items.ItemManager;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -30,15 +31,17 @@ public class ModyfikatoryUmiejetnosciCommand implements CommandExecutor {
             switch (type) {
 
                 case "sila":
-                    ModyfikatoryUmiejetnosciConfigFile.setSilaLevel(level, multiplier);
+//                    ModyfikatoryUmiejetnosciConfigFile.setSilaLevel(level, multiplier);
+                    DataManager.setAbilityModifier(Ability.STRENGTH, level, multiplier);
                     break;
 
                 case "drop":
-                    ModyfikatoryUmiejetnosciConfigFile.setDropLevel(level, multiplier);
+//                    ModyfikatoryUmiejetnosciConfigFile.setDropLevel(level, multiplier);
+                    DataManager.setAbilityModifier(Ability.DROP, level, multiplier);
                     break;
                 case "rank":
-                    ModyfikatoryUmiejetnosciConfigFile.setRankLevel(level, multiplier);
-
+//                    ModyfikatoryUmiejetnosciConfigFile.setRankLevel(level, multiplier);
+                    DataManager.setAbilityModifier(Ability.RANK, level, multiplier);
                     break;
                 default:
                     sender.sendMessage(ChatColor.RED + "nieznany typ");

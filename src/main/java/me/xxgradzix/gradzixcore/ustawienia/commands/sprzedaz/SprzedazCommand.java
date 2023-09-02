@@ -1,11 +1,14 @@
 package me.xxgradzix.gradzixcore.ustawienia.commands.sprzedaz;
 
-import me.xxgradzix.gradzixcore.ustawienia.files.WymianaUstawieniaItemsConfigFile;
+import me.xxgradzix.gradzixcore.ustawienia.data.DataManager;
 import me.xxgradzix.gradzixcore.ustawienia.gui.sprzedaz.SprzedazGui;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+
+import java.util.HashMap;
 
 public class SprzedazCommand implements CommandExecutor {
 
@@ -21,7 +24,9 @@ public class SprzedazCommand implements CommandExecutor {
 
         SprzedazGui sprzedazGui;
 
-        sprzedazGui = new SprzedazGui(WymianaUstawieniaItemsConfigFile.getAllItemsToSell());
+        HashMap<ItemStack, Integer> map = (HashMap<ItemStack, Integer>) DataManager.getAutoSellItems();
+
+        sprzedazGui = new SprzedazGui(map);
 
 
         sprzedazGui.open(p);

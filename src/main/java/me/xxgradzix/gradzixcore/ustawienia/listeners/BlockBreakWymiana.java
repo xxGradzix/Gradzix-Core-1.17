@@ -1,15 +1,13 @@
 package me.xxgradzix.gradzixcore.ustawienia.listeners;
 
-import me.xxgradzix.gradzixcore.ustawienia.files.UstawieniaOpcjeConfigFile;
-import me.xxgradzix.gradzixcore.ustawienia.files.WymianaUstawieniaItemsConfigFile;
+import me.xxgradzix.gradzixcore.ustawienia.data.DataManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.PlayerInventory;
 
-import java.util.ArrayList;
+import java.util.Map;
 
 public class BlockBreakWymiana implements Listener {
 
@@ -47,79 +45,58 @@ public class BlockBreakWymiana implements Listener {
 //        }
 //
 //    }
-@EventHandler
-public void onBlockBreak(BlockBreakEvent event) {
-    Player player = event.getPlayer();
-
-    if (!UstawieniaOpcjeConfigFile.getAutoWymianaStatus(player)) return;
-
-//    p<ItemStack, ItemStack> mapa = (HashMap<ItemStack, ItemStack>) WymianaUstawieniaItemsConfigFile.getAllItems();
-
-    ArrayList<ItemStack> itemKeysMap = WymianaUstawieniaItemsConfigFile.getAllItemKeys();
-    ArrayList<ItemStack> itemValuesMap = WymianaUstawieniaItemsConfigFile.getAllItemValues();
+    @EventHandler
+    public void onBlockBreak(BlockBreakEvent event) {
+        Player player = event.getPlayer();
 
 
-    for(int i = 0; i < itemKeysMap.size(); i++) {
-        ItemStack itemKey = (ItemStack) itemKeysMap.toArray()[i];
-        ItemStack itemValue = (ItemStack) itemValuesMap.toArray()[i];
+        if (!DataManager.getAutoExchangeStatus(player)) return;
 
-//        itemKey.setAmount(itemKeysMap.get(itemKey));
-//        itemValue.setAmount(itemValuesMap.get(itemValue));
 
-        int keyAmount = 0;
-        for(ItemStack itemStack : player.getInventory().getContents()) {
-            if (itemStack != null && itemStack.isSimilar(itemKey)) {
-                keyAmount+=itemStack.getAmount();
+        Map<ItemStack, ItemStack> itemMap = DataManager.getAutoExchangeItems();
+
+
+        for(ItemStack item : itemMap.keySet()) {
+
+            ItemStack itemValue = itemMap.get(item);
+
+            int keyAmount = 0;
+
+            for(ItemStack itemStack : player.getInventory().getContents()) {
+                if (itemStack != null && itemStack.isSimilar(item)) {
+                    keyAmount += itemStack.getAmount();
+                }
             }
-        }
-        if (keyAmount >= itemKey.getAmount()) {
-            int itemsToGive = keyAmount / itemKey.getAmount();
-            for (int j = 0; j < itemsToGive; j++) {
-                removeItems(player, itemKey, itemKey.getAmount());
-                player.getInventory().addItem(itemValue);
-            }
-        }
+            final int rewardLoops = (keyAmount / item.getAmount());
 
+            final int priceToPay = (rewardLoops * item.getAmount());
+
+            final int valueAmount = (rewardLoops * itemValue.getAmount());
+
+
+            removeItems(player, item, priceToPay);
+            ItemStack reward = itemValue.clone();
+            reward.setAmount(valueAmount);
+            player.getInventory().addItem(reward);
+
+        }
     }
-
-//    HashMap<ItemStack, ItemStack> mapa = (HashMap<ItemStack, ItemStack>) WymianaUstawieniaItemsConfigFile.getAllItems();
-//
-////
-//    for (ItemStack key : mapa.keySet()) {
-//        ItemStack value = mapa.get(key);
-//        int keyAmount = 0;
-//        for(ItemStack itemStack : player.getInventory().getContents()) {
-//            if (itemStack != null && itemStack.isSimilar(key)) {
-//                keyAmount+=itemStack.getAmount();
-//            }
-//        }
-//
-//
-//        if (keyAmount >= key.getAmount()) {
-//            int diamondsToGive = keyAmount / key.getAmount();
-//            for (int i = 0; i < diamondsToGive; i++) {
-//                removeItems(player, key, key.getAmount());
-//                player.getInventory().addItem(value);
-//            }
-//        }
-//    }
-}
     public void removeItems(Player player, ItemStack itemStack, int amount) {
-        PlayerInventory inventory = player.getInventory();
+//        PlayerInventory inventory = player.getInventory();
+
         int remainingAmount = amount;
 
-        for (int i = 0; i < inventory.getSize(); i++) {
-            ItemStack item = inventory.getItem(i);
-
+        for (ItemStack item : player.getInventory().getContents()) {
             if (item != null && item.isSimilar(itemStack)) {
                 int itemAmount = item.getAmount();
 
                 if (itemAmount <= remainingAmount) {
                     remainingAmount -= itemAmount;
-                    inventory.setItem(i, null);
+                    item.setAmount(0);
+                    player.updateInventory();
                 } else {
                     item.setAmount(itemAmount - remainingAmount);
-                    break;
+                    remainingAmount -= itemAmount;
                 }
             }
         }

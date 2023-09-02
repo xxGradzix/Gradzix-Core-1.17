@@ -15,10 +15,10 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.logging.Logger;
 
 public final class Gradzix_Core extends JavaPlugin {
+
 
     public static final boolean USEDB = true;
     private static final Logger log = Logger.getLogger("Minecraft");
@@ -34,7 +34,6 @@ public final class Gradzix_Core extends JavaPlugin {
     private ServerConfig serverConfig;
     private Ulepsz ulepsz;
 
-
     // database variables
     private String databaseUrl = "jdbc:mysql://localhost:3306/gradzixcore";
     private ConnectionSource connectionSource;
@@ -46,20 +45,18 @@ public final class Gradzix_Core extends JavaPlugin {
     }
 
     //////////////////
+
+
     @Override public void onEnable()  {
-        if (!LocalDate.now().isBefore(LocalDate.of(2023, 9, 30))) {
-            System.out.println("jezeli wyswietliła sie ta wiadomosc to skontaktuj sie z xxGradzix");
+        if (!setupEconomy() ) {
+            log.severe(String.format("[%s] - Disabled due to no Vault dependency found!", getDescription().getName()));
+//          getServer().getPluginManager().disablePlugin(this);
             return;
         }
         try {
             configureDB();
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        }
-        if (!setupEconomy() ) {
-            log.severe(String.format("[%s] - Disabled due to no Vault dependency found!", getDescription().getName()));
-//          getServer().getPluginManager().disablePlugin(this);
-            return;
         }
         if (chatopcje == null) {
             chatopcje = new Chatopcje(this, connectionSource);
@@ -75,7 +72,7 @@ public final class Gradzix_Core extends JavaPlugin {
             magicznafajerwerka.onEnable();
         }
         if (ustawienia == null) {
-            ustawienia = new Ustawienia(this);
+            ustawienia = new Ustawienia(this, connectionSource);
             ustawienia.onEnable();
         }
         if (panel == null) {
@@ -83,15 +80,15 @@ public final class Gradzix_Core extends JavaPlugin {
             panel.onEnable();
         }
         if (umiejetnosci == null) {
-            umiejetnosci = new Umiejetnosci(this);
+            umiejetnosci = new Umiejetnosci(this, connectionSource);
             umiejetnosci.onEnable();
         }
         if (ulepsz == null) {
-            ulepsz = new Ulepsz(this);
+            ulepsz = new Ulepsz(this, connectionSource);
             ulepsz.onEnable();
         }
         if (serverConfig == null) {
-            serverConfig = new ServerConfig(this);
+            serverConfig = new ServerConfig(this, connectionSource);
             serverConfig.onEnable();
         }
     }

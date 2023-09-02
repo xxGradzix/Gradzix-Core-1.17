@@ -1,30 +1,65 @@
 package me.xxgradzix.gradzixcore.umiejetnosci;
 
+import com.j256.ormlite.support.ConnectionSource;
+import com.j256.ormlite.table.TableUtils;
 import me.xxgradzix.gradzixcore.Gradzix_Core;
 import me.xxgradzix.gradzixcore.umiejetnosci.commands.GiveOdlamekCommand;
 import me.xxgradzix.gradzixcore.umiejetnosci.commands.ModyfikatoryUmiejetnosciCommand;
 import me.xxgradzix.gradzixcore.umiejetnosci.commands.ResetUmiejetnosci;
 import me.xxgradzix.gradzixcore.umiejetnosci.commands.UmiejetnosciCommand;
-import me.xxgradzix.gradzixcore.umiejetnosci.files.ModyfikatoryUmiejetnosciConfigFile;
-import me.xxgradzix.gradzixcore.umiejetnosci.files.UmiejetnosciConfigFile;
+import me.xxgradzix.gradzixcore.umiejetnosci.data.configfiles.ModyfikatoryUmiejetnosciConfigFile;
+import me.xxgradzix.gradzixcore.umiejetnosci.data.configfiles.UmiejetnosciConfigFile;
+import me.xxgradzix.gradzixcore.umiejetnosci.data.database.entities.AbilityModifierEntity;
+import me.xxgradzix.gradzixcore.umiejetnosci.data.database.entities.PlayerAbilitiesEntity;
+import me.xxgradzix.gradzixcore.umiejetnosci.data.database.managers.AbilitiesModifiersEntityManager;
+import me.xxgradzix.gradzixcore.umiejetnosci.data.database.managers.PlayerAbilitiesEntityManager;
 import me.xxgradzix.gradzixcore.umiejetnosci.items.ItemManager;
 import me.xxgradzix.gradzixcore.umiejetnosci.listeners.DamageListener;
 import me.xxgradzix.gradzixcore.umiejetnosci.listeners.OnBlockBreak;
 import me.xxgradzix.gradzixcore.umiejetnosci.listeners.PlayerKillRankingIncrease;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class Umiejetnosci {
 
     private Gradzix_Core plugin;
 
-    public Umiejetnosci(Gradzix_Core plugin) {
+    // db change
+    private final ConnectionSource connectionSource;
+    private static PlayerAbilitiesEntityManager playerAbilitiesEntityManager;
+
+    private static AbilitiesModifiersEntityManager abilitiesModifiersEntityManager;
+
+    public static AbilitiesModifiersEntityManager getAbilitiesModifiersEntityManager() {
+        return abilitiesModifiersEntityManager;
+    }
+    public static PlayerAbilitiesEntityManager getPlayerAbilitiesEntityManager() {
+        return playerAbilitiesEntityManager;
+    }
+    public void configureDB() throws SQLException {
+
+        TableUtils.createTableIfNotExists(connectionSource, PlayerAbilitiesEntity.class);
+        playerAbilitiesEntityManager = new PlayerAbilitiesEntityManager(connectionSource);
+
+        TableUtils.createTableIfNotExists(connectionSource, AbilityModifierEntity.class);
+        abilitiesModifiersEntityManager = new AbilitiesModifiersEntityManager(connectionSource);
+
+    }
+    ////////////
+
+    public Umiejetnosci(Gradzix_Core plugin, ConnectionSource connectionSource) {
         this.plugin = plugin;
+        this.connectionSource = connectionSource;
     }
 
     public void onEnable() {
 
-
+        try {
+            configureDB();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
         plugin.getCommand("umiejetnosci").setExecutor(new UmiejetnosciCommand());
         plugin.getCommand("modyfikatoryumiejetnosci").setExecutor(new ModyfikatoryUmiejetnosciCommand());

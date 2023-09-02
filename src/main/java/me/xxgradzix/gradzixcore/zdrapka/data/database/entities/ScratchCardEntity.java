@@ -4,7 +4,7 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import lombok.Getter;
 import lombok.Setter;
-import me.xxgradzix.gradzixcore.zdrapka.persisters.ItemStackArrayPersister;
+import me.xxgradzix.gradzixcore.zdrapka.data.database.persisters.ItemStackArrayPersister;
 import org.bukkit.inventory.ItemStack;
 
 @DatabaseTable(tableName = "gradzixcore_scratch_card")

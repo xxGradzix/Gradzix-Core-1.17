@@ -3,7 +3,8 @@ package me.xxgradzix.gradzixcore.umiejetnosci.commands;
 import dev.triumphteam.gui.builder.item.ItemBuilder;
 import dev.triumphteam.gui.guis.Gui;
 import dev.triumphteam.gui.guis.GuiItem;
-import me.xxgradzix.gradzixcore.umiejetnosci.files.UmiejetnosciConfigFile;
+import me.xxgradzix.gradzixcore.umiejetnosci.data.DataManager;
+import me.xxgradzix.gradzixcore.umiejetnosci.data.database.entities.enums.Ability;
 import me.xxgradzix.gradzixcore.umiejetnosci.items.ItemManager;
 import net.kyori.adventure.text.Component;
 import org.bukkit.ChatColor;
@@ -111,7 +112,7 @@ public class UmiejetnosciCommand implements CommandExecutor {
 
                     gui.updateItem(action.getSlot(), sila1);
 
-                    UmiejetnosciConfigFile.incrementSilaLevel(p);
+                    DataManager.incrementAbilityLevel(Ability.STRENGTH, p);
 
                 } else {
                     p.sendMessage(ChatColor.RED + "Nie masz wystarczającej ilości odłamków");
@@ -125,7 +126,7 @@ public class UmiejetnosciCommand implements CommandExecutor {
 
                     gui.updateItem(action.getSlot(), sila2);
 
-                    UmiejetnosciConfigFile.incrementSilaLevel(p);
+                    DataManager.incrementAbilityLevel(Ability.STRENGTH, p);
                 } else {
                     p.sendMessage(ChatColor.RED + "Nie masz wystarczającej ilości odłamków");
                 }
@@ -137,7 +138,7 @@ public class UmiejetnosciCommand implements CommandExecutor {
                     removeItems(p, ItemManager.odlamek, requiredAmount);
 
                     gui.updateItem(action.getSlot(), sila3);
-                    UmiejetnosciConfigFile.incrementSilaLevel(p);
+                    DataManager.incrementAbilityLevel(Ability.STRENGTH, p);
 
                 } else {
                     p.sendMessage(ChatColor.RED + "Nie masz wystarczającej ilości odłamków");
@@ -150,7 +151,7 @@ public class UmiejetnosciCommand implements CommandExecutor {
                     removeItems(p, ItemManager.odlamek, requiredAmount);
 
                     gui.updateItem(action.getSlot(), sila4);
-                    UmiejetnosciConfigFile.incrementSilaLevel(p);
+                    DataManager.incrementAbilityLevel(Ability.STRENGTH, p);
 
                 } else {
                     p.sendMessage(ChatColor.RED + "Nie masz wystarczającej ilości odłamków");
@@ -160,7 +161,9 @@ public class UmiejetnosciCommand implements CommandExecutor {
                 p.sendMessage(ChatColor.RED + "Masz już najwyższy poziom tej umiejętności");
             });
 
-            switch (UmiejetnosciConfigFile.getSilaLevel(p)) {
+            int playerStrengthLevel = DataManager.getPlayerAbilityLevel(Ability.STRENGTH, p);;
+
+            switch (playerStrengthLevel) {
                 case 0:
                     gui.setItem(3, 5, sila0);
                     break;
@@ -197,7 +200,7 @@ public class UmiejetnosciCommand implements CommandExecutor {
 
                     gui.updateItem(action.getSlot(), drop1);
 
-                    UmiejetnosciConfigFile.incrementDropLevel(p);
+                    DataManager.incrementAbilityLevel(Ability.DROP, p);
 
                 } else {
                     p.sendMessage(ChatColor.RED + "Nie masz wystarczającej ilości odłamków");
@@ -211,7 +214,8 @@ public class UmiejetnosciCommand implements CommandExecutor {
 
                     gui.updateItem(action.getSlot(), drop2);
 
-                    UmiejetnosciConfigFile.incrementDropLevel(p);
+                    DataManager.incrementAbilityLevel(Ability.DROP, p);
+
                 } else {
                     p.sendMessage(ChatColor.RED + "Nie masz wystarczającej ilości odłamków");
                 }
@@ -223,7 +227,7 @@ public class UmiejetnosciCommand implements CommandExecutor {
                     removeItems(p, ItemManager.odlamek, requiredAmount);
 
                     gui.updateItem(action.getSlot(), drop3);
-                    UmiejetnosciConfigFile.incrementDropLevel(p);
+                    DataManager.incrementAbilityLevel(Ability.DROP, p);
 
                 } else {
                     p.sendMessage(ChatColor.RED + "Nie masz wystarczającej ilości odłamków");
@@ -236,7 +240,9 @@ public class UmiejetnosciCommand implements CommandExecutor {
                     removeItems(p, ItemManager.odlamek, requiredAmount);
 
                     gui.updateItem(action.getSlot(), drop4);
-                    UmiejetnosciConfigFile.incrementDropLevel(p);
+//                    UmiejetnosciConfigFile.incrementDropLevel(p);
+                    DataManager.incrementAbilityLevel(Ability.DROP, p);
+
 
                 } else {
                     p.sendMessage(ChatColor.RED + "Nie masz wystarczającej ilości odłamków");
@@ -246,7 +252,9 @@ public class UmiejetnosciCommand implements CommandExecutor {
                 p.sendMessage(ChatColor.RED + "Masz już najwyższy poziom tej umiejętności");
             });
 
-            switch (UmiejetnosciConfigFile.getDropLevel(p)) {
+            int playerDropLevel = DataManager.getPlayerAbilityLevel(Ability.DROP, p);
+
+            switch (playerDropLevel) {
                 case 0:
                     gui.setItem(3, 3, drop0);
                     break;
@@ -285,7 +293,9 @@ public class UmiejetnosciCommand implements CommandExecutor {
 
                     gui.updateItem(action.getSlot(), rank1);
 
-                    UmiejetnosciConfigFile.incrementRankLevel(p);
+
+                    DataManager.incrementAbilityLevel(Ability.RANK, p);
+
 
                 } else {
                     p.sendMessage(ChatColor.RED + "Nie masz wystarczającej ilości odłamków");
@@ -299,7 +309,7 @@ public class UmiejetnosciCommand implements CommandExecutor {
 
                     gui.updateItem(action.getSlot(), rank2);
 
-                    UmiejetnosciConfigFile.incrementRankLevel(p);
+                    DataManager.incrementAbilityLevel(Ability.RANK, p);
                 } else {
                     p.sendMessage(ChatColor.RED + "Nie masz wystarczającej ilości odłamków");
                 }
@@ -311,7 +321,7 @@ public class UmiejetnosciCommand implements CommandExecutor {
                     removeItems(p, ItemManager.odlamek, requiredAmount);
 
                     gui.updateItem(action.getSlot(), rank3);
-                    UmiejetnosciConfigFile.incrementRankLevel(p);
+                    DataManager.incrementAbilityLevel(Ability.RANK, p);
 
                 } else {
                     p.sendMessage(ChatColor.RED + "Nie masz wystarczającej ilości odłamków");
@@ -324,7 +334,7 @@ public class UmiejetnosciCommand implements CommandExecutor {
                     removeItems(p, ItemManager.odlamek, requiredAmount);
 
                     gui.updateItem(action.getSlot(), rank4);
-                    UmiejetnosciConfigFile.incrementRankLevel(p);
+                    DataManager.incrementAbilityLevel(Ability.RANK, p);
 
                 } else {
                     p.sendMessage(ChatColor.RED + "Nie masz wystarczającej ilości odłamków");
@@ -334,7 +344,10 @@ public class UmiejetnosciCommand implements CommandExecutor {
                 p.sendMessage(ChatColor.RED + "Masz już najwyższy poziom tej umiejętności");
             });
 
-            switch (UmiejetnosciConfigFile.getRankLevel(p)) {
+
+            int playerRankLevel = DataManager.getPlayerAbilityLevel(Ability.RANK, p);
+
+            switch (playerRankLevel) {
                 case 0:
                     gui.setItem(3, 7, rank0);
                     break;
@@ -354,10 +367,6 @@ public class UmiejetnosciCommand implements CommandExecutor {
                     gui.setItem(3, 7, new GuiItem(Material.BARRIER));
                     break;
             }
-            
-            
-
-
 
             gui.open(p);
 

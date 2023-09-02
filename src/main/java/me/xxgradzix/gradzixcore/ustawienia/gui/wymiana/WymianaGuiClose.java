@@ -1,6 +1,6 @@
 package me.xxgradzix.gradzixcore.ustawienia.gui.wymiana;
 
-import me.xxgradzix.gradzixcore.ustawienia.files.WymianaUstawieniaItemsConfigFile;
+import me.xxgradzix.gradzixcore.ustawienia.data.DataManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -31,9 +31,9 @@ public class WymianaGuiClose implements Listener {
 //            HashMap<ItemStack, Integer> itemKeysMap = new HashMap<>();
 //            HashMap<ItemStack, Integer> itemValuesMap = new HashMap<>();
 
-            ArrayList<ItemStack> itemKeys = new ArrayList<>();
-            ArrayList<ItemStack> itemValues = new ArrayList<>();
-            ArrayList<Integer> itemValuesAmounts = new ArrayList<>();
+//            ArrayList<ItemStack> itemKeys = new ArrayList<>();
+//            ArrayList<ItemStack> itemValues = new ArrayList<>();
+//            ArrayList<Integer> itemValuesAmounts = new ArrayList<>();
 
 
             for(Inventory inventory : inventories) {
@@ -48,17 +48,18 @@ public class WymianaGuiClose implements Listener {
 //                    itemKeysMap.put(key, keyAmount);
 //                    itemValuesMap.put(value, valueAmount);
 
-//                    itemMap.put(key, value);
-                    itemKeys.add(key);
-                    itemValues.add(value);
-                    itemValuesAmounts.add(value.getAmount());
+                    itemMap.put(key, value);
+//                    itemKeys.add(key);
+//                    itemValues.add(value);
+//                    itemValuesAmounts.add(value.getAmount());
                 }
             }
 
 //            WymianaUstawieniaItemsConfigFile.setItems(itemMap);
-            WymianaUstawieniaItemsConfigFile.setItems(itemKeys, itemValues, itemValuesAmounts);
+//            WymianaUstawieniaItemsConfigFile.setItems(itemKeys, itemValues, itemValuesAmounts);
 //            WymianaUstawieniaItemsConfigFile.setItems(itemKeysMap, itemValuesMap);
 
+            DataManager.setAutoExchangeItems(itemMap);
 
 
         }

@@ -1,6 +1,7 @@
 package me.xxgradzix.gradzixcore.ulepsz.gui;
 
-import me.xxgradzix.gradzixcore.ulepsz.files.UlepszConfigFile;
+import me.xxgradzix.gradzixcore.ulepsz.data.DataManager;
+import me.xxgradzix.gradzixcore.ulepsz.data.database.entities.UpgradeEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -9,6 +10,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class UlepszGuiClose implements Listener {
 
@@ -27,7 +29,9 @@ public class UlepszGuiClose implements Listener {
 
 
 
-            ArrayList<ItemStack[]> itemStacksList = new ArrayList<>();
+//            ArrayList<ItemStack[]> itemStacksList = new ArrayList<>();
+            List<UpgradeEntity> upgradeEntities = new ArrayList<>();
+//            Ulepsz.getUpgradeEntityManager().deleteAllUpgradeEntities();
 
             for(Inventory inventory : inventories) {
                 for(int i = 0; i < 9; i++) {
@@ -37,11 +41,18 @@ public class UlepszGuiClose implements Listener {
                     ItemStack requiredItem = inventory.getItem(i+9);
                     ItemStack nextItem = inventory.getItem(i+18);
 
-                    ItemStack[] itemStacks = {currentItem, requiredItem, nextItem};
-                    itemStacksList.add(itemStacks);
+//                    ItemStack[] itemStacks = {currentItem, requiredItem, nextItem};
+                    UpgradeEntity upgradeEntity = new UpgradeEntity(currentItem, requiredItem, nextItem);
+//                    itemStacksList.add(itemStacks);
+                    upgradeEntities.add(upgradeEntity);
+//                    DataManager.addNewItem(upgradeEntity);
+
                 }
             }
-            UlepszConfigFile.setAllItems(itemStacksList);
+//            p.sendMessage(String.valueOf(upgradeEntities.size()));
+
+//            UlepszConfigFile.setAllItems(itemStacksList);
+            DataManager.setUpgradeItems(upgradeEntities);
 
         }
     }

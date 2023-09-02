@@ -9,13 +9,6 @@ public class DataManager {
 
     private static boolean useDB = Gradzix_Core.USEDB;
 
-//    private static PanelOptionsEntity panelOptionsEntity = Panel.getPanelOptionsEntityManager().getPanelOptionsEntity();
-
-
-//    if(panelOptionsEntity == null) {
-//        Panel.getPanelOptionsEntityManager().createOrUpdatePanelOptionsEntity(new PanelOptionsEntity(true, true, true, true));
-//    }
-
     public static void setScratchCardItems(ItemStack[] items) {
 
         if(useDB) {

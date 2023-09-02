@@ -1,4 +1,4 @@
-package me.xxgradzix.gradzixcore.umiejetnosci.files;
+package me.xxgradzix.gradzixcore.umiejetnosci.data.configfiles;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;

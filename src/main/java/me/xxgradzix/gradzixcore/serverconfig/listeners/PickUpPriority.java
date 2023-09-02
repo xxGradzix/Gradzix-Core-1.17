@@ -1,6 +1,6 @@
 package me.xxgradzix.gradzixcore.serverconfig.listeners;
 
-import me.xxgradzix.gradzixcore.serverconfig.files.ConfigServera;
+import me.xxgradzix.gradzixcore.serverconfig.data.DataManager;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -16,7 +16,7 @@ public class PickUpPriority implements Listener {
     @EventHandler
     public void onPlayerPickup(PlayerDeathEvent event) {
 
-        ArrayList<ItemStack> priorities = ConfigServera.getItemPriorities();
+        ArrayList<ItemStack> priorities = (ArrayList<ItemStack>) DataManager.getItemPriorities();
 
         if(!(event.getEntity().getKiller() instanceof Player)) return;
         Player killer = event.getEntity().getKiller();

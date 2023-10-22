@@ -2,22 +2,26 @@ package me.xxgradzix.gradzixcore;
 
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.support.ConnectionSource;
+import me.xxgradzix.gradzixcore.adminPanel.Panel;
 import me.xxgradzix.gradzixcore.chatOptions.ChatOptions;
 import me.xxgradzix.gradzixcore.itemPickupPriorities.ItemPickupPriorities;
 import me.xxgradzix.gradzixcore.magicFirework.MagicFirework;
-import me.xxgradzix.gradzixcore.adminPanel.Panel;
+import me.xxgradzix.gradzixcore.playerAbilities.PlayerAbilities;
 import me.xxgradzix.gradzixcore.playerSettings.PlayerSettings;
 import me.xxgradzix.gradzixcore.rewardSystem.RewardSystem;
+import me.xxgradzix.gradzixcore.scratchCard.Zdrapka;
 import me.xxgradzix.gradzixcore.serverconfig.ServerConfig;
 import me.xxgradzix.gradzixcore.upgradeItem.Ulepsz;
-import me.xxgradzix.gradzixcore.playerAbilities.PlayerAbilities;
-import me.xxgradzix.gradzixcore.scratchCard.Zdrapka;
+
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.Properties;
 import java.util.logging.Logger;
 
 public final class Gradzix_Core extends JavaPlugin {
@@ -39,16 +43,25 @@ public final class Gradzix_Core extends JavaPlugin {
     private ItemPickupPriorities itemPickupPriorities;
     private RewardSystem rewardSystem;
 
-    // database variables
-    private final String databaseUrl = "jdbc:mysql://localhost:3306/gradzixcore";
     private ConnectionSource connectionSource;
-    public void configureDB() throws SQLException {
 
-        // DATABASE AGEPLAY
-//        this.connectionSource = new JdbcConnectionSource(databaseUrl, "u286_f8T7gXXzU1", "a65qmwbgH8Y@cg3dXm^qgSm6");
+    public static Properties loadConfig() throws IOException {
+        Properties prop = new Properties();
+        FileInputStream input = new FileInputStream("application.properties");
+        prop.load(input);
+        input.close();
+        return prop;
+    }
 
-        // DATABASE LOCAL
-        this.connectionSource = new JdbcConnectionSource(databaseUrl, "root", "");
+    public void configureDB() throws SQLException, IOException {
+
+        Properties config = loadConfig();
+
+        String databaseUrl = config.getProperty("db.url");
+        String user = config.getProperty("db.username");
+        String password = config.getProperty("db.password");
+
+        this.connectionSource = new JdbcConnectionSource(databaseUrl, user, password);
 
     }
 
@@ -65,7 +78,7 @@ public final class Gradzix_Core extends JavaPlugin {
         }
         try {
             configureDB();
-        } catch (SQLException e) {
+        } catch (SQLException | IOException e) {
             throw new RuntimeException(e);
         }
         if (chatOptions == null) {
@@ -131,6 +144,6 @@ public final class Gradzix_Core extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        
+
     }
 }

@@ -13,24 +13,23 @@ import me.xxgradzix.gradzixcore.playerSettings.data.database.managers.SettingIte
 import me.xxgradzix.gradzixcore.playerSettings.data.database.managers.SettingOptionsEntityManager;
 import me.xxgradzix.gradzixcore.playerSettings.data.configfiles.UstawieniaOpcjeConfigFile;
 import me.xxgradzix.gradzixcore.playerSettings.data.configfiles.WymianaUstawieniaItemsConfigFile;
-import me.xxgradzix.gradzixcore.playerSettings.gui.sprzedaz.SprzedazGuiClick;
+import me.xxgradzix.gradzixcore.playerSettings.gui.sprzedaz.SellGuiClick;
 import me.xxgradzix.gradzixcore.playerSettings.gui.sprzedaz.SprzedazGuiClose;
-import me.xxgradzix.gradzixcore.playerSettings.gui.wymiana.WymianaGuiClick;
-import me.xxgradzix.gradzixcore.playerSettings.gui.wymiana.WymianaGuiClose;
+import me.xxgradzix.gradzixcore.playerSettings.gui.wymiana.ExchangeGuiClick;
+import me.xxgradzix.gradzixcore.playerSettings.gui.wymiana.ExchangeGuiClose;
 import me.xxgradzix.gradzixcore.playerSettings.items.ItemManager;
-import me.xxgradzix.gradzixcore.playerSettings.listeners.BlockBreakSprzedaz;
-import me.xxgradzix.gradzixcore.playerSettings.listeners.BlockBreakWymiana;
+import me.xxgradzix.gradzixcore.playerSettings.listeners.BlockBreakSell;
+import me.xxgradzix.gradzixcore.playerSettings.listeners.BlockBreakExchange;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Ustawienia {
+public class PlayerSettings {
 
-    private Gradzix_Core plugin;
+    private final Gradzix_Core plugin;
 
-    // db change
-    private ConnectionSource connectionSource;
+    private final ConnectionSource connectionSource;
 
     private static SettingOptionsEntityManager settingOptionsEntityManager;
     private static SettingItemsEntityManager settingItemsEntityManager;
@@ -48,9 +47,8 @@ public class Ustawienia {
         settingOptionsEntityManager= new SettingOptionsEntityManager(connectionSource);
         settingItemsEntityManager = new SettingItemsEntityManager(connectionSource);
     }
-    ////////////
 
-    public Ustawienia(Gradzix_Core plugin, ConnectionSource connectionSource) {
+    public PlayerSettings(Gradzix_Core plugin, ConnectionSource connectionSource) {
         this.plugin = plugin;
         this.connectionSource = connectionSource;
     }
@@ -81,18 +79,16 @@ public class Ustawienia {
         plugin.getCommand("wymianaustawienia").setExecutor(new WymianaUstawieniaCommand());
         plugin.getCommand("sprzedazustawienia").setExecutor(new SprzedazCommand());
 
-        plugin.getServer().getPluginManager().registerEvents(new BlockBreakWymiana(), plugin);
-        plugin.getServer().getPluginManager().registerEvents(new BlockBreakSprzedaz(), plugin);
+        plugin.getServer().getPluginManager().registerEvents(new BlockBreakExchange(), plugin);
+        plugin.getServer().getPluginManager().registerEvents(new BlockBreakSell(), plugin);
 
-        plugin.getServer().getPluginManager().registerEvents(new WymianaGuiClose(), plugin);
-        plugin.getServer().getPluginManager().registerEvents(new WymianaGuiClick(), plugin);
+        plugin.getServer().getPluginManager().registerEvents(new ExchangeGuiClose(), plugin);
+        plugin.getServer().getPluginManager().registerEvents(new ExchangeGuiClick(), plugin);
 
         plugin.getServer().getPluginManager().registerEvents(new SprzedazGuiClose(), plugin);
-        plugin.getServer().getPluginManager().registerEvents(new SprzedazGuiClick(), plugin);
+        plugin.getServer().getPluginManager().registerEvents(new SellGuiClick(), plugin);
 
         plugin.getServer().getPluginManager().registerEvents(new OnJoin(), plugin);
-
-
 
     }
 

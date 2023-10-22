@@ -24,20 +24,7 @@ public class StrefaAFK implements Listener {
 
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent event) {
-//        if (getPlayerRegionName(event.getPlayer()) != null && getPlayerRegionName(event.getPlayer()).equals("strefaafk")) {
-//
-//            for (org.bukkit.entity.Player onlinePlayer : event.getPlayer().getWorld().getPlayers()) {
-//                if (onlinePlayer != event.getPlayer()) {
-//                    event.getPlayer().hidePlayer(plugin, onlinePlayer);
-//                }
-//            }
-//        } else {
-//            for (org.bukkit.entity.Player onlinePlayer : event.getPlayer().getWorld().getPlayers()) {
-//                if (onlinePlayer != event.getPlayer()) {
-//                    event.getPlayer().showPlayer(plugin, onlinePlayer);
-//                }
-//            }
-//        }
+
         if (getPlayerRegionName(event.getPlayer()) != null && getPlayerRegionName(event.getPlayer()).equals("strefaafk")) {
             for (org.bukkit.entity.Player onlinePlayer : event.getPlayer().getWorld().getPlayers()) {
                 if (onlinePlayer != event.getPlayer()) {

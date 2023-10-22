@@ -106,9 +106,9 @@ public class UmiejetnosciCommand implements CommandExecutor {
 
             sila0.setAction((action) -> {
                 int requiredAmount = 64;
-                if(p.getInventory().containsAtLeast(ItemManager.odlamek, requiredAmount)) {
+                if(p.getInventory().containsAtLeast(ItemManager.fragment, requiredAmount)) {
 
-                    removeItems(p, ItemManager.odlamek, requiredAmount);
+                    removeItems(p, ItemManager.fragment, requiredAmount);
 
                     gui.updateItem(action.getSlot(), sila1);
 
@@ -120,9 +120,9 @@ public class UmiejetnosciCommand implements CommandExecutor {
             });
             sila1.setAction((action) -> {
                 int requiredAmount = 128;
-                if(p.getInventory().containsAtLeast(ItemManager.odlamek, requiredAmount)) {
+                if(p.getInventory().containsAtLeast(ItemManager.fragment, requiredAmount)) {
 
-                    removeItems(p, ItemManager.odlamek, requiredAmount);
+                    removeItems(p, ItemManager.fragment, requiredAmount);
 
                     gui.updateItem(action.getSlot(), sila2);
 
@@ -133,9 +133,9 @@ public class UmiejetnosciCommand implements CommandExecutor {
             });
             sila2.setAction((action) -> {
                 int requiredAmount = 192;
-                if(p.getInventory().containsAtLeast(ItemManager.odlamek, requiredAmount)) {
+                if(p.getInventory().containsAtLeast(ItemManager.fragment, requiredAmount)) {
 
-                    removeItems(p, ItemManager.odlamek, requiredAmount);
+                    removeItems(p, ItemManager.fragment, requiredAmount);
 
                     gui.updateItem(action.getSlot(), sila3);
                     DataManager.incrementAbilityLevel(Ability.STRENGTH, p);
@@ -146,9 +146,9 @@ public class UmiejetnosciCommand implements CommandExecutor {
             });
             sila3.setAction((action) -> {
                 int requiredAmount = 256;
-                if(p.getInventory().containsAtLeast(ItemManager.odlamek, requiredAmount)) {
+                if(p.getInventory().containsAtLeast(ItemManager.fragment, requiredAmount)) {
 
-                    removeItems(p, ItemManager.odlamek, requiredAmount);
+                    removeItems(p, ItemManager.fragment, requiredAmount);
 
                     gui.updateItem(action.getSlot(), sila4);
                     DataManager.incrementAbilityLevel(Ability.STRENGTH, p);
@@ -194,9 +194,9 @@ public class UmiejetnosciCommand implements CommandExecutor {
 
             drop0.setAction((action) -> {
                 int requiredAmount = 64;
-                if(p.getInventory().containsAtLeast(ItemManager.odlamek, requiredAmount)) {
+                if(p.getInventory().containsAtLeast(ItemManager.fragment, requiredAmount)) {
 
-                    removeItems(p, ItemManager.odlamek, requiredAmount);
+                    removeItems(p, ItemManager.fragment, requiredAmount);
 
                     gui.updateItem(action.getSlot(), drop1);
 
@@ -208,9 +208,9 @@ public class UmiejetnosciCommand implements CommandExecutor {
             });
             drop1.setAction((action) -> {
                 int requiredAmount = 128;
-                if(p.getInventory().containsAtLeast(ItemManager.odlamek, requiredAmount)) {
+                if(p.getInventory().containsAtLeast(ItemManager.fragment, requiredAmount)) {
 
-                    removeItems(p, ItemManager.odlamek, requiredAmount);
+                    removeItems(p, ItemManager.fragment, requiredAmount);
 
                     gui.updateItem(action.getSlot(), drop2);
 
@@ -222,9 +222,9 @@ public class UmiejetnosciCommand implements CommandExecutor {
             });
             drop2.setAction((action) -> {
                 int requiredAmount = 192;
-                if(p.getInventory().containsAtLeast(ItemManager.odlamek, requiredAmount)) {
+                if(p.getInventory().containsAtLeast(ItemManager.fragment, requiredAmount)) {
 
-                    removeItems(p, ItemManager.odlamek, requiredAmount);
+                    removeItems(p, ItemManager.fragment, requiredAmount);
 
                     gui.updateItem(action.getSlot(), drop3);
                     DataManager.incrementAbilityLevel(Ability.DROP, p);
@@ -235,9 +235,9 @@ public class UmiejetnosciCommand implements CommandExecutor {
             });
             drop3.setAction((action) -> {
                 int requiredAmount = 256;
-                if(p.getInventory().containsAtLeast(ItemManager.odlamek, requiredAmount)) {
+                if(p.getInventory().containsAtLeast(ItemManager.fragment, requiredAmount)) {
 
-                    removeItems(p, ItemManager.odlamek, requiredAmount);
+                    removeItems(p, ItemManager.fragment, requiredAmount);
 
                     gui.updateItem(action.getSlot(), drop4);
 //                    UmiejetnosciConfigFile.incrementDropLevel(p);
@@ -287,9 +287,9 @@ public class UmiejetnosciCommand implements CommandExecutor {
 
             rank0.setAction((action) -> {
                 int requiredAmount = 64;
-                if(p.getInventory().containsAtLeast(ItemManager.odlamek, requiredAmount)) {
+                if(p.getInventory().containsAtLeast(ItemManager.fragment, requiredAmount)) {
 
-                    removeItems(p, ItemManager.odlamek, requiredAmount);
+                    removeItems(p, ItemManager.fragment, requiredAmount);
 
                     gui.updateItem(action.getSlot(), rank1);
 
@@ -303,9 +303,9 @@ public class UmiejetnosciCommand implements CommandExecutor {
             });
             rank1.setAction((action) -> {
                 int requiredAmount = 128;
-                if(p.getInventory().containsAtLeast(ItemManager.odlamek, requiredAmount)) {
+                if(p.getInventory().containsAtLeast(ItemManager.fragment, requiredAmount)) {
 
-                    removeItems(p, ItemManager.odlamek, requiredAmount);
+                    removeItems(p, ItemManager.fragment, requiredAmount);
 
                     gui.updateItem(action.getSlot(), rank2);
 
@@ -316,9 +316,9 @@ public class UmiejetnosciCommand implements CommandExecutor {
             });
             rank2.setAction((action) -> {
                 int requiredAmount = 192;
-                if(p.getInventory().containsAtLeast(ItemManager.odlamek, requiredAmount)) {
+                if(p.getInventory().containsAtLeast(ItemManager.fragment, requiredAmount)) {
 
-                    removeItems(p, ItemManager.odlamek, requiredAmount);
+                    removeItems(p, ItemManager.fragment, requiredAmount);
 
                     gui.updateItem(action.getSlot(), rank3);
                     DataManager.incrementAbilityLevel(Ability.RANK, p);
@@ -329,9 +329,9 @@ public class UmiejetnosciCommand implements CommandExecutor {
             });
             rank3.setAction((action) -> {
                 int requiredAmount = 256;
-                if(p.getInventory().containsAtLeast(ItemManager.odlamek, requiredAmount)) {
+                if(p.getInventory().containsAtLeast(ItemManager.fragment, requiredAmount)) {
 
-                    removeItems(p, ItemManager.odlamek, requiredAmount);
+                    removeItems(p, ItemManager.fragment, requiredAmount);
 
                     gui.updateItem(action.getSlot(), rank4);
                     DataManager.incrementAbilityLevel(Ability.RANK, p);

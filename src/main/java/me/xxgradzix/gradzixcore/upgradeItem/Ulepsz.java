@@ -3,13 +3,13 @@ package me.xxgradzix.gradzixcore.upgradeItem;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 import me.xxgradzix.gradzixcore.Gradzix_Core;
-import me.xxgradzix.gradzixcore.upgradeItem.commands.UlepszCommand;
-import me.xxgradzix.gradzixcore.upgradeItem.commands.UlepszConfigCommand;
+import me.xxgradzix.gradzixcore.upgradeItem.commands.UpgradeCommand;
+import me.xxgradzix.gradzixcore.upgradeItem.commands.UpgradeConfigCommand;
 import me.xxgradzix.gradzixcore.upgradeItem.data.database.entities.UpgradeEntity;
 import me.xxgradzix.gradzixcore.upgradeItem.data.database.managers.UpgradeEntityManager;
-import me.xxgradzix.gradzixcore.upgradeItem.files.UlepszConfigFile;
-import me.xxgradzix.gradzixcore.upgradeItem.gui.UlepszGuiClick;
-import me.xxgradzix.gradzixcore.upgradeItem.gui.UlepszGuiClose;
+import me.xxgradzix.gradzixcore.upgradeItem.files.UpgradeConfigFile;
+import me.xxgradzix.gradzixcore.upgradeItem.gui.UpgradeGuiClick;
+import me.xxgradzix.gradzixcore.upgradeItem.gui.UpgradeGuiClose;
 
 import java.sql.SQLException;
 
@@ -46,18 +46,18 @@ public class Ulepsz {
             throw new RuntimeException(e);
         }
 
-        plugin.getCommand("ulepsz").setExecutor(new UlepszCommand());
-        plugin.getCommand("ulepszconfig").setExecutor(new UlepszConfigCommand());
+        plugin.getCommand("ulepsz").setExecutor(new UpgradeCommand());
+        plugin.getCommand("ulepszconfig").setExecutor(new UpgradeConfigCommand());
 
 
-        plugin.getServer().getPluginManager().registerEvents(new UlepszGuiClick(), plugin);
-        plugin.getServer().getPluginManager().registerEvents(new UlepszGuiClose(), plugin);
+        plugin.getServer().getPluginManager().registerEvents(new UpgradeGuiClick(), plugin);
+        plugin.getServer().getPluginManager().registerEvents(new UpgradeGuiClose(), plugin);
 
-        UlepszConfigFile.setup();
+        UpgradeConfigFile.setup();
 
 
-        UlepszConfigFile.getCustomFile().options().copyDefaults(true);
-        UlepszConfigFile.save();
+        UpgradeConfigFile.getCustomFile().options().copyDefaults(true);
+        UpgradeConfigFile.save();
 
     }
 

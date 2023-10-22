@@ -15,11 +15,10 @@ public class OnJoin implements Listener {
 
         Player p = event.getPlayer();
 
-        String wymiana = DataManager.getAutoExchangeStatus(p) ? "ON" : "OFF";
-        String sprzedaz = DataManager.getAutoSellStatus(p) ? "ON" : "OFF";
+        String exchange = DataManager.getAutoExchangeStatus(p) ? "ON" : "OFF";
+        String sell = DataManager.getAutoSellStatus(p) ? "ON" : "OFF";
 
-
-        String message = "§7wymiana: §2" + wymiana + "§8« §7(§2/ustawienia§7) §8» §7sprzedaż: §2" + sprzedaz;
+        String message = "§7wymiana: §2" + exchange + "§8« §7(§2/ustawienia§7) §8» §7sprzedaż: §2" + sell;
         p.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(message));
 
     }

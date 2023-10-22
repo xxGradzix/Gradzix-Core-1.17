@@ -10,17 +10,14 @@ import lombok.Setter;
 @Setter
 public class PanelOptionsEntity {
 
-    public PanelOptionsEntity( boolean isChatEnabled, boolean isZdrapkaEnabled, boolean isKityEnabled, boolean isOsiagnieciaEnabled) {
+    public PanelOptionsEntity( boolean isChatEnabled, boolean isScratchCardEnabled, boolean isKitsEnabled, boolean isAchievementsEnabled) {
         this.id = 1;
         this.isChatEnabled = isChatEnabled;
-        this.isZdrapkaEnabled = isZdrapkaEnabled;
-        this.isKityEnabled = isKityEnabled;
-        this.isOsiagnieciaEnabled = isOsiagnieciaEnabled;
+        this.isScratchCardEnabled = isScratchCardEnabled;
+        this.isKitsEnabled = isKitsEnabled;
+        this.isAchievementsEnabled = isAchievementsEnabled;
     }
 
-    public int getId() {
-        return id;
-    }
 
     public void setId(int id) {
         this.id = id;
@@ -35,44 +32,42 @@ public class PanelOptionsEntity {
     private boolean isChatEnabled;
 
     @DatabaseField
-    private boolean isZdrapkaEnabled;
+    private boolean isScratchCardEnabled;
     @DatabaseField
-    private boolean isKityEnabled;
+    private boolean isKitsEnabled;
 
     @DatabaseField
-    private boolean isOsiagnieciaEnabled;
+    private boolean isAchievementsEnabled;
 
     public boolean isChatEnabled() {
         return isChatEnabled;
     }
-
-
-
+    
     public void setChatEnabled(boolean chatEnabled) {
         isChatEnabled = chatEnabled;
     }
 
-    public boolean isZdrapkaEnabled() {
-        return isZdrapkaEnabled;
+    public boolean isScratchCardEnabled() {
+        return isScratchCardEnabled;
     }
 
-    public void setZdrapkaEnabled(boolean zdrapkaEnabled) {
-        isZdrapkaEnabled = zdrapkaEnabled;
+    public void setScratchCardEnabled(boolean scratchCardEnabled) {
+        isScratchCardEnabled = scratchCardEnabled;
     }
 
-    public boolean isKityEnabled() {
-        return isKityEnabled;
+    public boolean isKitsEnabled() {
+        return isKitsEnabled;
     }
 
-    public void setKityEnabled(boolean kityEnabled) {
-        isKityEnabled = kityEnabled;
+    public void setKitsEnabled(boolean kitsEnabled) {
+        isKitsEnabled = kitsEnabled;
     }
 
-    public boolean isOsiagnieciaEnabled() {
-        return isOsiagnieciaEnabled;
+    public boolean isAchievementsEnabled() {
+        return isAchievementsEnabled;
     }
 
-    public void setOsiagnieciaEnabled(boolean osiagnieciaEnabled) {
-        isOsiagnieciaEnabled = osiagnieciaEnabled;
+    public void setAchievementsEnabled(boolean achievementsEnabled) {
+        isAchievementsEnabled = achievementsEnabled;
     }
 }

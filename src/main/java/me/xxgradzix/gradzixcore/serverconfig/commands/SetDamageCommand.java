@@ -18,12 +18,9 @@ public class SetDamageCommand implements CommandExecutor {
 
             Player p = (Player) sender;
 
-//            if(!p.hasPermission("serverConfig.damageConfig")) return false;
-
             if (args.length == 1) {
                 try {
                     double multiplier = Double.parseDouble(args[0]);
-
 
                     DataManager.setServerDamageMultiplier(multiplier);
 

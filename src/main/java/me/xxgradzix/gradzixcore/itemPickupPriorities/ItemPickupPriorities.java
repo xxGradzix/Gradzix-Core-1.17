@@ -14,10 +14,9 @@ import java.sql.SQLException;
 
 public final class ItemPickupPriorities {
 
-    private Gradzix_Core plugin;
+    private final Gradzix_Core plugin;
 
-    // db change
-    private ConnectionSource connectionSource;
+    private final ConnectionSource connectionSource;
 
     private static PickupPrioritiesEntityManager pickupPrioritiesEntityManager;
 
@@ -28,7 +27,6 @@ public final class ItemPickupPriorities {
         TableUtils.createTableIfNotExists(connectionSource, PickupPrioritiesEntity.class);
         pickupPrioritiesEntityManager = new PickupPrioritiesEntityManager(connectionSource);
     }
-    ////////////
 
     public ItemPickupPriorities(Gradzix_Core plugin, ConnectionSource connectionSource) {
         this.plugin = plugin;
@@ -44,8 +42,6 @@ public final class ItemPickupPriorities {
             throw new RuntimeException(e);
         }
 
-
-//        plugin.getServer().getPluginManager().registerEvents(new PickUpPriority(), plugin);
         plugin.getServer().getPluginManager().registerEvents(new PrioritiesGuiClick(), plugin);
         plugin.getServer().getPluginManager().registerEvents(new PrioritiesGuiClose(), plugin);
         plugin.getServer().getPluginManager().registerEvents(new GiveArmorBackEvent(), plugin);

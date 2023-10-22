@@ -7,7 +7,7 @@ import org.bukkit.inventory.ItemStack;
 
 public class DataManager {
 
-    private static boolean useDB = Gradzix_Core.USEDB;
+    private static final boolean useDB = Gradzix_Core.USEDB;
 
     public static void setScratchCardItems(ItemStack[] items) {
 
@@ -15,8 +15,6 @@ public class DataManager {
             ScratchCardEntity scratchCardEntity = Zdrapka.getScratchCardEntityManager().getScratchCardEntity();
             scratchCardEntity.setItems(items);
             Zdrapka.getScratchCardEntityManager().updateScratchCardEntity(scratchCardEntity);
-        } else {
-//            PanelAdminConfigFile.setChatStatus(value);
         }
     }
 
@@ -29,7 +27,7 @@ public class DataManager {
             ScratchCardEntity scratchCardEntity = Zdrapka.getScratchCardEntityManager().getScratchCardEntity();
             return scratchCardEntity.getItems();
         } else {
-            throw new RuntimeException("nie ma obslugi pliku konfiguracyjnego");
+            throw new RuntimeException("nie ma obsługi pliku konfiguracyjnego");
         }
     }
 

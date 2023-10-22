@@ -10,7 +10,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.jetbrains.annotations.NotNull;
 
-public class UlepszCommand implements CommandExecutor {
+public class UpgradeCommand implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
 
@@ -21,18 +21,15 @@ public class UlepszCommand implements CommandExecutor {
             ItemStack currentItem = p.getInventory().getItemInMainHand();
 
             if(currentItem == null) {
-                p.sendMessage("Musisz trzymać przedmiot w rece");
+                p.sendMessage("Musisz trzymać przedmiot w ręce");
                 return false;
             }
 
             ItemStack nextItem = DataManager.getNextItem(currentItem);
             ItemStack requiredItem = DataManager.getRequiredItem(currentItem);
 
-//            ItemStack nextItem = UlepszConfigFile.findNextItem(currentItem);
-//            ItemStack requiredItem = UlepszConfigFile.findRequiredItem(currentItem);
-
             if(nextItem == null || requiredItem == null) {
-                p.sendMessage(ChatColor.RED + "Tego przedmiotu nie mozesz ulepszyc");
+                p.sendMessage(ChatColor.RED + "Tego przedmiotu nie możesz ulepszyć");
                 return false;
             }
 
@@ -52,7 +49,6 @@ public class UlepszCommand implements CommandExecutor {
                 }
 
             } else {
-//                p.sendMessage(ChatColor.RED + "Nie masz wystarczającej ilości wymaganego przedmiotu aby to ulepszyć");
                 if(requiredItem.hasItemMeta()) {
                     if(requiredItem.getItemMeta().hasDisplayName()) {
                         p.sendMessage(ChatColor.RED + "Aby to ulepszyć potrzebujesz " + requiredItem.getAmount() + " " + requiredItem.getItemMeta().getDisplayName());
@@ -60,7 +56,6 @@ public class UlepszCommand implements CommandExecutor {
                     }
                 } else {
                     p.sendMessage(ChatColor.RED + "Aby to ulepszyć potrzebujesz " + requiredItem.getAmount() + " " + requiredItem.getType());
-
                 }
             }
 

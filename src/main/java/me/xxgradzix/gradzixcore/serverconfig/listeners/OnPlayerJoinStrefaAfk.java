@@ -34,14 +34,12 @@ public class OnPlayerJoinStrefaAfk implements Listener {
             }
         }
         if (getPlayerRegionName(event.getPlayer()) != null && getPlayerRegionName(event.getPlayer()).equals("strefaafk")) {
-            // Ukryj gracza poniżej określonej wysokości dla wszystkich innych graczy na serwerze
             for (org.bukkit.entity.Player onlinePlayer : event.getPlayer().getWorld().getPlayers()) {
                 if (onlinePlayer != event.getPlayer()) {
                     onlinePlayer.hidePlayer(plugin, event.getPlayer());
                 }
             }
         } else {
-            // Jeśli gracz jest powyżej określonej wysokości, pokaż go wszystkim innym graczom
             for (org.bukkit.entity.Player onlinePlayer : event.getPlayer().getWorld().getPlayers()) {
                 if (onlinePlayer != event.getPlayer()) {
                     onlinePlayer.showPlayer(plugin, event.getPlayer());

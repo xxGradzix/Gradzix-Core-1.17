@@ -13,31 +13,6 @@ public class DataManager {
 
     private static final boolean useDB = Gradzix_Core.USEDB;
 
-//    private static final PickupPrioritiesEntityManager manager = Ulepsz.getUpgradeEntityManager();
-
-//    public static void addNewItem(ItemStack currentItem, ItemStack requiredItem, ItemStack nextItem) {
-//
-//        if(useDB) {
-//            PickupPrioritiesEntityManager manager = Ulepsz.getUpgradeEntityManager();
-//
-//            UpgradeEntity entity = new UpgradeEntity(currentItem, requiredItem, nextItem);
-//
-//            manager.createOrUpdateUpgradeEntity(entity);
-//        } else {
-////            UstawieniaOpcjeConfigFile.setAutoWymianaStatus(player, true);
-//        }
-//    }
-//    public static void addNewItem(UpgradeEntity entity) {
-//
-//        if(useDB) {
-//            PickupPrioritiesEntityManager manager = Ulepsz.getUpgradeEntityManager();
-//            manager.createOrUpdateUpgradeEntity(entity);
-////            manager.createUpgradeEntity(entity);
-//        } else {
-//
-//        }
-//    }
-
     public static void setUpgradeItems(List<UpgradeEntity> upgradeEntities) {
 
         if(useDB) {
@@ -52,11 +27,7 @@ public class DataManager {
 
                 manager.createOrUpdateUpgradeEntity(upgradeEntity);
             }
-
-        } else {
-
         }
-
     }
 
     public static ItemStack getRequiredItem(ItemStack currentItem) {
@@ -70,7 +41,7 @@ public class DataManager {
             return entity.getItemNeeded();
 
         } else {
-            throw new RuntimeException("Nie ma obslugi pliku konfiguracyjnego");
+            throw new RuntimeException("Nie ma obsługi pliku konfiguracyjnego");
         }
     }
     public static ItemStack getNextItem(ItemStack currentItem) {
@@ -84,7 +55,7 @@ public class DataManager {
             return entity.getNextItem();
 
         } else {
-            throw new RuntimeException("Nie ma obslugi pliku konfiguracyjnego");
+            throw new RuntimeException("Nie ma obsługi pliku konfiguracyjnego");
         }
     }
     public static List<UpgradeEntity> getAllUpgradeEntities() {
@@ -94,7 +65,7 @@ public class DataManager {
             return manager.getUpgradeEntities();
 
         } else {
-            throw new RuntimeException("Nie ma obslugi pliku konfiguracyjnego");
+            throw new RuntimeException("Nie ma obsługi pliku konfiguracyjnego");
         }
     }
 

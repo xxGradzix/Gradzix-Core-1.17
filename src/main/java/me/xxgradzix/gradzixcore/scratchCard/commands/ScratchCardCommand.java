@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class ZdrapkaCommand implements CommandExecutor {
+public class ScratchCardCommand implements CommandExecutor {
 
 
     @Override
@@ -32,41 +32,38 @@ public class ZdrapkaCommand implements CommandExecutor {
                     .create();
 
 
-//            List<ItemStack> list = (List<ItemStack>) ZdrapkaConfigFile.getCustomFile().get("items");
-
             ItemStack[] itemStacks = Arrays.asList(me.xxgradzix.gradzixcore.scratchCard.data.DataManager.getScratchCardItems()).toArray(new ItemStack[0]);
 
             List<ItemStack> list = new ArrayList<>();
-            if(itemStacks.length > 0) {
-                for (ItemStack item : itemStacks) {
-                    if(item == null) continue;
-                    list.add(item);
-                }
+
+            for (ItemStack item : itemStacks) {
+                if (item == null) continue;
+                list.add(item);
             }
 
-            // szklo
+            // glass
 
-            ArrayList<Integer> czarne = new ArrayList<>();
+            ArrayList<Integer> black = new ArrayList<>();
 
 
-            czarne.add(2);
-            czarne.add(3);
-            czarne.add(4);
-            czarne.add(5);
-            czarne.add(6);
+            black.add(2);
+            black.add(3);
+            black.add(4);
+            black.add(5);
+            black.add(6);
 
-            czarne.add(18);
-            czarne.add(26);
+            black.add(18);
+            black.add(26);
 
-            czarne.add(38);
-            czarne.add(39);
-            czarne.add(40);
-            czarne.add(41);
-            czarne.add(42);
+            black.add(38);
+            black.add(39);
+            black.add(40);
+            black.add(41);
+            black.add(42);
 
             GuiItem blackGlass = new GuiItem(me.xxgradzix.gradzixcore.chatOptions.items.ItemManager.blackGlass);
 
-            gui.setItem(czarne, blackGlass);
+            gui.setItem(black, blackGlass);
 
 
             ArrayList<Integer> lime = new ArrayList<>();
@@ -89,8 +86,6 @@ public class ZdrapkaCommand implements CommandExecutor {
 
             gui.setItem(lime, limeGlass);
 
-
-
             int itemNum =0;
             for(int i = 10; i <= 35; i++) {
                 if(i % 9 == 0 || (i+1)%9 == 0) continue;
@@ -105,8 +100,6 @@ public class ZdrapkaCommand implements CommandExecutor {
             gui.open(p);
 
         }
-
-
 
         return true;
     }

@@ -40,9 +40,6 @@ public class PrioritiesGuiClose implements Listener {
             }
 
             DataManager.setItemPriorities(itemList);
-
-
-
         }
     }
 

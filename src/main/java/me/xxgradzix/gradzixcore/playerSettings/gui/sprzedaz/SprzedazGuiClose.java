@@ -21,9 +21,9 @@ public class SprzedazGuiClose implements Listener {
 
         Player p = (Player) event.getPlayer();
 
-        if (event.getInventory().getHolder() instanceof SprzedazGui) {
+        if (event.getInventory().getHolder() instanceof SellGui) {
 
-            ArrayList<Inventory> inventories = (ArrayList<Inventory>) ((SprzedazGui) event.getInventory().getHolder()).getInventories();
+            ArrayList<Inventory> inventories = (ArrayList<Inventory>) ((SellGui) event.getInventory().getHolder()).getInventories();
 
             HashMap<ItemStack, Integer> itemMap = new HashMap<>();
 

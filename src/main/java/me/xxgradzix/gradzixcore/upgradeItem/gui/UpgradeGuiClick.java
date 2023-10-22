@@ -6,28 +6,27 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
-public class UlepszGuiClick implements Listener {
+public class UpgradeGuiClick implements Listener {
 
 
 
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
-        if (!(event.getInventory().getHolder() instanceof UlepszGui)) {
+        if (!(event.getInventory().getHolder() instanceof UpgradeGui)) {
             return;
         }
 
         Player player = (Player) event.getWhoClicked();
-        int clickedSlot = event.getSlot();//.getRawSlot();
+        int clickedSlot = event.getSlot();
 
 
 
-        if (clickedSlot > 26 && clickedSlot < 45 && event.getClickedInventory().getHolder() instanceof UlepszGui) {
+        if (clickedSlot > 26 && clickedSlot < 45 && event.getClickedInventory().getHolder() instanceof UpgradeGui) {
 
-            event.setCancelled(true); // Zablokuj zabieranie przedmiotów z górnego rzędu
-            // Dodaj swoją logikę obsługi kliknięcia w górny rząd GUI
+            event.setCancelled(true);
         }
 
-        UlepszGui gui = (UlepszGui) event.getInventory().getHolder();
+        UpgradeGui gui = (UpgradeGui) event.getInventory().getHolder();
 
 
         if (event.getCurrentItem() != null && event.getCurrentItem().equals(ItemManager.previousPage)) {
@@ -35,9 +34,5 @@ public class UlepszGuiClick implements Listener {
         } else if (event.getCurrentItem() != null && event.getCurrentItem().equals(ItemManager.nextPage)) {
             gui.nextPage(player);
         }
-
-        // Obsługa kliknięcia innych przedmiotów w GUI, jeśli potrzebna
     }
-
-
 }

@@ -11,7 +11,7 @@ import org.bukkit.inventory.PlayerInventory;
 
 import java.util.HashMap;
 
-public class BlockBreakSprzedaz implements Listener {
+public class BlockBreakSell implements Listener {
 
 
     @EventHandler
@@ -20,37 +20,28 @@ public class BlockBreakSprzedaz implements Listener {
 
 
         if (!DataManager.getAutoSellStatus(player)) return;
-
-//        HashMap<ItemStack, Integer> map = (HashMap<ItemStack, Integer>) WymianaUstawieniaItemsConfigFile.getAllItemsToSell();
         HashMap<ItemStack, Integer> map = (HashMap<ItemStack, Integer>) DataManager.getAutoSellItems();
-//        DataManager.getAutoSellItems();
 
         for (ItemStack keyItem : map.keySet()) {
-
-
             int itemPrice = map.get(keyItem);
 
             while (player.getInventory().containsAtLeast(keyItem, keyItem.getAmount())) {
 
+                player.getInventory().removeItem(keyItem);
 
-                    // Usuń przedmiot klucza
-                    player.getInventory().removeItem(keyItem);
+                EconomyManager economy = new EconomyManager();
+                economy.depositMoney(player, itemPrice);
 
-
-
-                    EconomyManager economy = new EconomyManager();
-                    economy.depositMoney(player, itemPrice);
-                    if(keyItem.getItemMeta().hasDisplayName()) {
-                        player.sendMessage("§7Sprzedałeś przedmiot " + keyItem.getItemMeta().getDisplayName() + " za §2" + itemPrice + "$");
-                    } else {
-                        player.sendMessage("§7Sprzedałeś przedmiot " + keyItem.getType().toString() + " za §2" + itemPrice + "$");
-                    }
-
-                    player.updateInventory();
+                if(keyItem.getItemMeta().hasDisplayName()) {
+                    player.sendMessage("§7Sprzedałeś przedmiot " + keyItem.getItemMeta().getDisplayName() + " za §2" + itemPrice + "$");
+                } else {
+                    player.sendMessage("§7Sprzedałeś przedmiot " + keyItem.getType().toString() + " za §2" + itemPrice + "$");
                 }
+
+                player.updateInventory();
             }
         }
-
+    }
     public void removeItems(Player player, ItemStack itemStack, int amount) {
         PlayerInventory inventory = player.getInventory();
         int remainingAmount = amount;

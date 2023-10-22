@@ -18,18 +18,6 @@ public class PanelOptionsEntityManager {
         }
     }
 
-//    public void createPanelOptionsEntity(PanelOptionsEntity panelOptionsEntity) {
-//
-//        try {
-//            if (panelOptionsEntityDao.queryForAll().size() < 1) {
-//                panelOptionsEntityDao.create(panelOptionsEntity);
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//    }
-
-
     public void createOrUpdatePanelOptionsEntity(PanelOptionsEntity panelOptionsEntity) {
         try {
             panelOptionsEntity.setId(1);
@@ -54,30 +42,6 @@ public class PanelOptionsEntityManager {
             return panelOptionsEntity;
         }
     }
-//    public List<PanelOptionsEntity> getPanelOptionsEntityWhereShowDeathMessageIs(boolean expectedValue) {
-//        try {
-//            return chatOptionsEntityDao.queryForEq("showDeathMessages", expectedValue);
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//            return null;
-//        }
-//    }
-
-//        try {
-//            return chatOptionsEntityDao.queryForEq("showScratchCardMessages", expectedValue);
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//            return null;
-//        }
-//    }
-
-//        try {
-//            return chatOptionsEntityDao.queryForEq("showChatMessages", expectedValue);
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//            return null;
-//        }
-//    }
 
     public void updatePanelOptionsEntity(PanelOptionsEntity panelOptionsEntity) {
         try {

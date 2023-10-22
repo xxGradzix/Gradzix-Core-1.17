@@ -53,44 +53,43 @@ public class PanelAdminConfigFile {
         save();
     }
 
-    // zdrapka
+    // scratch card
 
-    public static boolean getZdrapkaStatus() {
+    public static boolean getScratchCardStatus() {
 
         return getCustomFile().getBoolean("isZdrapkaEnabled");
 
     }
 
 
-    public static void setZdrapkaStatus(boolean status) {
-        getCustomFile().set("isZdrapkaEnabled", status);
+    public static void setScratchCardStatus(boolean status) {
+        getCustomFile().set("isScratchCardEnabled", status);
         save();
     }
 
-    // kity
+    // kits
 
-    public static boolean getKityStatus() {
+    public static boolean getKitsStatus() {
 
-        return getCustomFile().getBoolean("isKityEnabled");
+        return getCustomFile().getBoolean("isKitsEnabled");
 
     }
 
 
-    public static void setKityStatus(boolean status) {
-        getCustomFile().set("isKityEnabled", status);
+    public static void setKitsStatus(boolean status) {
+        getCustomFile().set("isKitsEnabled", status);
         save();
     }
 
-    // osiagniecia
-    public static boolean getOsiagnieciaStatus() {
+    // achievements
+    public static boolean getAchievementsStatus() {
 
-        return getCustomFile().getBoolean("isOsiagnieciaEnabled");
+        return getCustomFile().getBoolean("isAchievementsEnabled");
 
     }
 
-
-    public static void setOsiagnieciaStatus(boolean status) {
-        getCustomFile().set("isOsiagnieciaEnabled", status);
+    public static void setAchievementsStatus(boolean status) {
+        getCustomFile().set("isAchievementsEnabled", status);
         save();
     }
 

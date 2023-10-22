@@ -22,23 +22,18 @@ public class ElytraBLock implements Listener {
         if (event.getPlayer() instanceof Player) {
             Player player = event.getPlayer();
 
-            if (getPlayerRegionName(event.getPlayer()) != null && getPlayerRegionName(player) == "strefabezelytry") {
+            if (getPlayerRegionName(event.getPlayer()) != null && getPlayerRegionName(player).equals("strefabezelytry")) {
 
                 if (player.getInventory().getChestplate().equals(Material.ELYTRA) ||
                         player.getInventory().getChestplate().getType() == Material.ELYTRA) {
 
 
-//                    player.sendMessage("Test");
                     player.setGliding(false);
                     event.setCancelled(true);
                 }
 
             }
-
-
         }
-
-
     }
 
     public String getPlayerRegionName(Player player) {

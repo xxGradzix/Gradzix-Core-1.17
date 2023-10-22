@@ -11,7 +11,7 @@ import org.bukkit.inventory.ItemStack;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class WymianaGuiClose implements Listener {
+public class ExchangeGuiClose implements Listener {
 
     @EventHandler
     public void onInventoryClose(InventoryCloseEvent event) {
@@ -21,20 +21,12 @@ public class WymianaGuiClose implements Listener {
         Player p = (Player) event.getPlayer();
 
 
-        if (event.getInventory().getHolder() instanceof WymianaGui) {
+        if (event.getInventory().getHolder() instanceof ExchangeGui) {
 
 
-            ArrayList<Inventory> inventories = (ArrayList<Inventory>) ((WymianaGui) event.getInventory().getHolder()).getInventories();
+            ArrayList<Inventory> inventories = (ArrayList<Inventory>) ((ExchangeGui) event.getInventory().getHolder()).getInventories();
 
             HashMap<ItemStack, ItemStack> itemMap = new HashMap<>();
-
-//            HashMap<ItemStack, Integer> itemKeysMap = new HashMap<>();
-//            HashMap<ItemStack, Integer> itemValuesMap = new HashMap<>();
-
-//            ArrayList<ItemStack> itemKeys = new ArrayList<>();
-//            ArrayList<ItemStack> itemValues = new ArrayList<>();
-//            ArrayList<Integer> itemValuesAmounts = new ArrayList<>();
-
 
             for(Inventory inventory : inventories) {
                 for(int i = 0; i < 9; i++) {
@@ -45,23 +37,11 @@ public class WymianaGuiClose implements Listener {
                     int keyAmount = key.getAmount();
                     int valueAmount = value.getAmount();
 
-//                    itemKeysMap.put(key, keyAmount);
-//                    itemValuesMap.put(value, valueAmount);
-
                     itemMap.put(key, value);
-//                    itemKeys.add(key);
-//                    itemValues.add(value);
-//                    itemValuesAmounts.add(value.getAmount());
                 }
             }
 
-//            WymianaUstawieniaItemsConfigFile.setItems(itemMap);
-//            WymianaUstawieniaItemsConfigFile.setItems(itemKeys, itemValues, itemValuesAmounts);
-//            WymianaUstawieniaItemsConfigFile.setItems(itemKeysMap, itemValuesMap);
-
             DataManager.setAutoExchangeItems(itemMap);
-
-
         }
     }
 

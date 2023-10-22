@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-public class UlepszConfigFile {
+public class UpgradeConfigFile {
 
     private static File file;
     private static FileConfiguration customFile;

@@ -13,51 +13,26 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class WymianaGui implements InventoryHolder {
+public class ExchangeGui implements InventoryHolder {
 
     private Inventory[] inventory;
     private int currentPage;
-    private int maxPage = 25;
+    private final int maxPage = 25;
     private Map<ItemStack, ItemStack> itemMap;
-    ArrayList<ItemStack> itemKeysList = null;
-//    private ArrayList<ItemStack> itemListKeys;
-//    private ArrayList<ItemStack> itemListValues;
+    private ArrayList<ItemStack> itemKeysList = null;
 
-    public WymianaGui(Map<ItemStack, ItemStack> items) {
-//    public WymianaGui(ArrayList<ItemStack> itemListKeys, ArrayList<ItemStack> itemListValues) {
-
-//        ItemStack[] itemKeys;
+    public ExchangeGui(Map<ItemStack, ItemStack> items) {
 
         if(items == null || items.isEmpty()) {
             this.itemMap = new HashMap<>();
-//            itemKeys = new ItemStack[9*maxPage];
         } else {
             this.itemMap = items;
-//            itemKeys = itemMap.keySet().toArray(new ItemStack[9*maxPage]);
         }
         this.itemKeysList = new ArrayList<>(itemMap.keySet());
-
-//        ItemStack[] itemKeys;
-//        ItemStack[] itemValues;
-//        if(itemListKeys == null || itemListValues.isEmpty() ||
-//        itemListValues == null || itemListValues.isEmpty()) {
-//            this.itemListKeys = new ArrayList<>();
-//            this.itemListValues = new ArrayList<>();
-////            itemKeys = new ItemStack[9*maxPage];
-////            itemValues = new ItemStack[9*maxPage];
-//        } else {
-//            this.itemListKeys = itemListKeys;
-//            this.itemListValues = itemListValues;
-////            itemKeys = itemListKeys.toArray(new ItemStack[9 * maxPage]);
-////            itemValues = itemListValues.keySet().toArray(new ItemStack[9 * maxPage]);
-//        }
 
 
         this.currentPage = 0;
         this.inventory = new Inventory[maxPage];
-
-        // Inicjalizacja inventories dla każdej strony
-
 
         int key = 0;
         for (int i = 0; i < maxPage; i++) {
@@ -70,11 +45,9 @@ public class WymianaGui implements InventoryHolder {
             if(i == maxPage-1) inventory[i].setItem(35, ItemManager.greenGlass);
 
             inventory[i].setItem(18, ItemManager.limeGlass);
-//            inventory[i].setItem(19, ItemManager.blackGlass);
             inventory[i].setItem(28, ItemManager.limeGlass);
 
             inventory[i].setItem(26, ItemManager.limeGlass);
-//            inventory[i].setItem(25, ItemManager.blackGlass);
             inventory[i].setItem(34, ItemManager.limeGlass);
 
             inventory[i].setItem(19,ItemManager.greenGlass);
@@ -98,27 +71,17 @@ public class WymianaGui implements InventoryHolder {
                 if(itemKeysList.size() <= key) break;
 
                 if(itemKeysList.get(key) == null) {
-//                || itemListValues.get(key)  == null) {
                     key++;
                     continue;
                 }
 
-//                ItemStack keyItem = itemListKeys.get(key);
-//                ItemStack valueItem = itemListValues.get(key);
-
                 ItemStack keyItem = itemKeysList.get(key);
                 ItemStack valueItem = itemMap.get(keyItem);
-
-//                keyItem.setAmount(itemListKeys.get(keyItem));
-//                valueItem.setAmount(itemListValues.get(valueItem));
-
 
                 inventory[i].setItem(j, keyItem);
                 inventory[i].setItem((j+9), valueItem);
                 key++;
             }
-
-
         }
     }
 

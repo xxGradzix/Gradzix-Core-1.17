@@ -53,8 +53,6 @@ public class DataManager {
             entity.setItemPriorities(itemPriorities);
             manager.createOrUpdatePickupPrioritiesEntity(entity);
 
-        } else {
-//            ConfigServera.setItemPriorities((ArrayList<ItemStack>) itemPriorities);
         }
 
     }
@@ -66,7 +64,7 @@ public class DataManager {
 
             return entity.getItemPriorities();
         } else {
-            throw new RuntimeException("nie ma obsulgi pliku konfiguracyjnego");
+            throw new RuntimeException("nie ma obsługi pliku konfiguracyjnego");
         }
 
     }

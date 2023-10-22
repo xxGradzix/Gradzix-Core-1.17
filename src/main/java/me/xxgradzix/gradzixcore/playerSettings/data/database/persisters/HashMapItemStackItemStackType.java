@@ -44,23 +44,6 @@ public class HashMapItemStackItemStackType extends StringType {
         return null;
     }
     private static String encodeItemStackMap(HashMap<ItemStack, ItemStack> itemStackMap) {
-//        HashMap<String, String> serializedMap = new HashMap<>();
-//
-//        for (Map.Entry<ItemStack, ItemStack> entry : itemStackMap.entrySet()) {
-//            ItemStack key = entry.getKey();
-//            ItemStack value = entry.getValue();
-//
-//            String serializedKey = encodeItem(key);
-//            String serializedValue = encodeItem(value);
-//
-//            serializedMap.put(serializedKey, serializedValue);
-//        }
-//
-//        Gson gson = new Gson();
-//        String json = gson.toJson(serializedMap);
-//
-//        return json;
-
 
         try {
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -77,20 +60,7 @@ public class HashMapItemStackItemStackType extends StringType {
 
     }
     private static HashMap<ItemStack, ItemStack> decodeItemStackMap(String data) {
-//        Gson gson = new Gson();
-//        HashMap<String, String> serializedMap = gson.fromJson(json, new TypeToken<HashMap<String, String>>() {}.getType());
-//
-//        HashMap<ItemStack, ItemStack> itemStackMap = new HashMap<>();
-//
-//        for (Map.Entry<String, String> entry : serializedMap.entrySet()) {
-//            String serializedKey = entry.getKey();
-//            String serializedValue = entry.getValue();
-//            ItemStack key = decodeItem(serializedKey);
-//            ItemStack value = decodeItem(serializedValue);
-//            itemStackMap.put(key, value);
-//        }
-//
-//        return itemStackMap;
+
         try {
             ByteArrayInputStream inputStream = new ByteArrayInputStream(Base64Coder.decodeLines(data));
             BukkitObjectInputStream dataInput = new BukkitObjectInputStream(inputStream);
@@ -106,24 +76,4 @@ public class HashMapItemStackItemStackType extends StringType {
 
     }
 
-
-//    private static String encodeItem(ItemStack itemStack) {
-//        YamlConfiguration config = new YamlConfiguration();
-//        config.set("i", itemStack);
-//        byte[] bytes = config.saveToString().getBytes(StandardCharsets.UTF_8);
-//        byte[] encodedBytes = Base64.encodeBase64(bytes);
-//        return new String(encodedBytes, StandardCharsets.UTF_8);
-//    }
-//
-//    private static ItemStack decodeItem(String string) {
-//        byte[] decodedBytes = Base64.decodeBase64(string.getBytes(StandardCharsets.UTF_8));
-//        YamlConfiguration config = new YamlConfiguration();
-//        try {
-//            config.loadFromString(new String(decodedBytes, StandardCharsets.UTF_8));
-//        } catch (IllegalArgumentException | InvalidConfigurationException e) {
-//            e.printStackTrace();
-//            return null;
-//        }
-//        return config.getItemStack("i", null);
-//    }
 }

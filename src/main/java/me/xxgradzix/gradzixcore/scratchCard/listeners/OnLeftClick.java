@@ -45,8 +45,6 @@ public class OnLeftClick implements Listener {
                         .rows(6)
                         .create();
 
-//                List<ItemStack> items = (List<ItemStack>) ZdrapkaConfigFile.getCustomFile().get("items");
-
                 ItemStack[] itemStacks = Arrays.asList(me.xxgradzix.gradzixcore.scratchCard.data.DataManager.getScratchCardItems()).toArray(new ItemStack[0]);
                 List<ItemStack> items = new ArrayList<>();
                 for (ItemStack item : itemStacks) {
@@ -62,15 +60,8 @@ public class OnLeftClick implements Listener {
                     List<ItemStack> list = new ArrayList<>();
 
                     Inventory inv = gui.getInventory();
-//                    for(ItemStack itemStack : inv.getContents()) {
-//                        if(itemStack != null) {
-//                            list.add(itemStack);
-//
-//                        }
-//                    }
+
                     DataManager.setScratchCardItems(inv.getContents());
-//                    ZdrapkaConfigFile.getCustomFile().set("items", list);
-//                    ZdrapkaConfigFile.save();
                 });
             }
         }

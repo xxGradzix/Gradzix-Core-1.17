@@ -9,42 +9,8 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.Map;
 
-public class BlockBreakWymiana implements Listener {
+public class BlockBreakExchange implements Listener {
 
-
-//    @EventHandler
-//    public void onItemHeldChange(BlockBreakEvent event) {
-//        Player player = event.getPlayer();
-//
-//        if (!UstawieniaOpcjeConfigFile.getAutoWymianaStatus(player)) return;
-//
-//        HashMap<ItemStack, ItemStack> mapa = (HashMap<ItemStack, ItemStack>) WymianaUstawieniaItemsConfigFile.getAllItems();
-//
-//
-//        // Sprawdź, czy nowy przedmiot jest kluczem do wymiany
-//
-//        for (ItemStack keyItem : mapa.keySet()) {
-//            while (player.getInventory().containsAtLeast(keyItem, keyItem.getAmount())) {
-//                int freeSlots = 0;
-//
-//                for (ItemStack item : player.getInventory().getContents()) {
-//                    if (item == null) {
-//                        freeSlots++;
-//                    }
-//                }
-//
-//                if (freeSlots >= 1) {
-//                    // Usuń przedmiot klucza
-//                    player.getInventory().removeItem(keyItem);
-//                    // Dodaj przedmiot wartości
-//                    player.getInventory().addItem(mapa.get(keyItem));
-//                    // Zaktualizuj ekwipunek gracza
-//                    player.updateInventory();
-//                }
-//            }
-//        }
-//
-//    }
     @EventHandler
     public void onBlockBreak(BlockBreakEvent event) {
         Player player = event.getPlayer();
@@ -82,7 +48,6 @@ public class BlockBreakWymiana implements Listener {
         }
     }
     public void removeItems(Player player, ItemStack itemStack, int amount) {
-//        PlayerInventory inventory = player.getInventory();
 
         int remainingAmount = amount;
 

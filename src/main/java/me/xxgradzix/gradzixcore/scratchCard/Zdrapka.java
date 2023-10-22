@@ -4,8 +4,8 @@ package me.xxgradzix.gradzixcore.scratchCard;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 import me.xxgradzix.gradzixcore.Gradzix_Core;
-import me.xxgradzix.gradzixcore.scratchCard.commands.GiveZdrapkaCommand;
-import me.xxgradzix.gradzixcore.scratchCard.commands.ZdrapkaCommand;
+import me.xxgradzix.gradzixcore.scratchCard.commands.GiveScratchCardCommand;
+import me.xxgradzix.gradzixcore.scratchCard.commands.ScratchCardCommand;
 import me.xxgradzix.gradzixcore.scratchCard.data.database.entities.ScratchCardEntity;
 import me.xxgradzix.gradzixcore.scratchCard.data.database.managers.ScratchCardEntityManager;
 import me.xxgradzix.gradzixcore.scratchCard.items.ItemManager;
@@ -48,18 +48,15 @@ public final class Zdrapka {
 
         ItemManager.init();
 
-        plugin.getCommand("givezdrapka").setExecutor(new GiveZdrapkaCommand());
-        plugin.getCommand("zdrapka").setExecutor(new ZdrapkaCommand());
+        plugin.getCommand("givezdrapka").setExecutor(new GiveScratchCardCommand());
+        plugin.getCommand("zdrapka").setExecutor(new ScratchCardCommand());
 
         plugin.getServer().getPluginManager().registerEvents(new OnLeftClick(), plugin);
         plugin.getServer().getPluginManager().registerEvents(new OnRightClick(), plugin);
 
-
     }
 
-
     public void onDisable() {
-        // Plugin shutdown logic
     }
 
 

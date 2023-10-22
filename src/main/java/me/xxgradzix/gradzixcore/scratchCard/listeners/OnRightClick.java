@@ -3,7 +3,7 @@ package me.xxgradzix.gradzixcore.scratchCard.listeners;
 import dev.triumphteam.gui.builder.item.ItemBuilder;
 import dev.triumphteam.gui.guis.Gui;
 import dev.triumphteam.gui.guis.GuiItem;
-import me.xxgradzix.gradzixcore.chatOptions.Chatopcje;
+import me.xxgradzix.gradzixcore.chatOptions.ChatOptions;
 import me.xxgradzix.gradzixcore.chatOptions.data.database.entities.ChatOptionsEntity;
 import me.xxgradzix.gradzixcore.adminPanel.data.DataManager;
 import me.xxgradzix.gradzixcore.scratchCard.items.ItemManager;
@@ -86,7 +86,7 @@ public class OnRightClick implements Listener {
 
 
                 Random random = new Random();
-                ItemStack losowyPrzedmiot = items.get(random.nextInt(items.size()));
+                ItemStack randomItem = items.get(random.nextInt(items.size()));
 
                 GuiItem yellowGlass = ItemBuilder.from(Material.YELLOW_STAINED_GLASS_PANE).setName(ChatColor.YELLOW+ "WYBIERZ").asGuiItem();
                 GuiItem redGlass = ItemBuilder.from(Material.RED_STAINED_GLASS_PANE).setName(ChatColor.RED+ "WYBIERZ").asGuiItem();
@@ -106,23 +106,21 @@ public class OnRightClick implements Listener {
 
                     int clickedSlot = defaultAction.getSlot();
 
-                    if(!gui.getInventory().contains(losowyPrzedmiot)) {
+                    if(!gui.getInventory().contains(randomItem)) {
                         gui.disableAllInteractions();
                     }
 
 
-                    if(gui.getInventory().getItem(clickedSlot) != null && gui.getInventory().getItem(clickedSlot).equals(losowyPrzedmiot)) {
+                    if(gui.getInventory().getItem(clickedSlot) != null && gui.getInventory().getItem(clickedSlot).equals(randomItem)) {
                         gui.enableItemTake();
                         gui.setDefaultClickAction((newDefaultAction) -> {
                             gui.disableAllInteractions();
                         });
                     }
 
-
-
                     if(!swapped.get() && defaultAction.getClickedInventory().equals(gui.getInventory())) {
 
-                        gui.getInventory().setItem(clickedSlot, losowyPrzedmiot);
+                        gui.getInventory().setItem(clickedSlot, randomItem);
                         swapped.set(true);
                     }
 
@@ -130,11 +128,11 @@ public class OnRightClick implements Listener {
                 });
 
                 gui.setCloseGuiAction(event -> {
-                    if(gui.getInventory().contains(losowyPrzedmiot) || (!containsEmptySlot(gui.getInventory()) && !gui.getInventory().contains(losowyPrzedmiot))) {
-                        p.getInventory().addItem(losowyPrzedmiot);
+                    if(gui.getInventory().contains(randomItem) || (!containsEmptySlot(gui.getInventory()) && !gui.getInventory().contains(randomItem))) {
+                        p.getInventory().addItem(randomItem);
 
                     }
-                    List<ChatOptionsEntity> chatOptionsEntityList = Chatopcje.getChatOptionsEntityManager().getChatOptionsEntitiesWhereShowScratchCardMessageIs(false);
+                    List<ChatOptionsEntity> chatOptionsEntityList = ChatOptions.getChatOptionsEntityManager().getChatOptionsEntitiesWhereShowScratchCardMessageIs(false);
                     List<UUID> list = chatOptionsEntityList.stream().map(ChatOptionsEntity::getUuid).collect(Collectors.toList());
 
                     for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
@@ -142,7 +140,7 @@ public class OnRightClick implements Listener {
 
                             if (!list.contains(onlinePlayer.getUniqueId())) {
 
-                                onlinePlayer.sendMessage(ChatColor.GOLD + p.getDisplayName() + " wylosował " + losowyPrzedmiot.getItemMeta().getDisplayName() + ChatColor.GOLD + " ze " + ChatColor.YELLOW + "Z" +
+                                onlinePlayer.sendMessage(ChatColor.GOLD + p.getDisplayName() + " wylosował " + randomItem.getItemMeta().getDisplayName() + ChatColor.GOLD + " ze " + ChatColor.YELLOW + "Z" +
                                         ChatColor.RED + "d" +
                                         ChatColor.AQUA + "r" +
                                         ChatColor.DARK_GREEN + "a" +
@@ -153,7 +151,7 @@ public class OnRightClick implements Listener {
 
 
                         } else {
-                            p.sendMessage(ChatColor.GOLD + "Wylosowales " + losowyPrzedmiot.getItemMeta().getDisplayName() + ChatColor.GOLD + "!");
+                            p.sendMessage(ChatColor.GOLD + "Wylosowałeś " + randomItem.getItemMeta().getDisplayName() + ChatColor.GOLD + "!");
                         }
                     }
                 });

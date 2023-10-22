@@ -7,9 +7,6 @@ import me.xxgradzix.gradzixcore.playerAbilities.data.database.entities.enums.Abi
 @DatabaseTable(tableName = "gradzixcore_ability_modifier")
 public class AbilityModifierEntity {
 
-//    @DatabaseField(unique = true, id = true)
-//    private Long id;
-
     @DatabaseField(unique = true, id = true, canBeNull = false)
     private Ability abilityName;
 
@@ -61,23 +58,6 @@ public class AbilityModifierEntity {
 
         return 1;
     }
-
-//    public Long getId() {
-//        return id;
-//    }
-//
-//    public void setId(Long id) {
-//        this.id = id;
-//    }
-//
-//    public String getAbilityName() {
-//        return abilityName;
-//    }
-//
-//    public void setAbilityName(String abilityName) {
-//        this.abilityName = abilityName;
-//    }
-
 
     public Ability getAbilityName() {
         return abilityName;

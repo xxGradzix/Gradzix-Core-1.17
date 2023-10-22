@@ -1,6 +1,6 @@
 package me.xxgradzix.gradzixcore.magicFirework.commands;
 
-import me.xxgradzix.gradzixcore.magicFirework.items.ItemMenager;
+import me.xxgradzix.gradzixcore.magicFirework.items.ItemManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -17,10 +17,9 @@ public class FireworkCommand implements CommandExecutor {
             return true;
         }
         Player player = (Player) sender;
-//        if(!player.hasPermission("magicznafajerwerka.givefajerwerka")) return false;
 
         if(cmd.getName().equalsIgnoreCase("givefirework")) {
-            player.getInventory().addItem(ItemMenager.firework);
+            player.getInventory().addItem(ItemManager.firework);
         }
 
         return true;

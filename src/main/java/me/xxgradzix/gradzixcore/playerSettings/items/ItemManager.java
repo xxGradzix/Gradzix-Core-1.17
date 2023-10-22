@@ -12,11 +12,11 @@ import java.util.List;
 
 public class ItemManager {
 
-    public static ItemStack autoWymianaOn;
-    public static ItemStack autoWymianaOff;
+    public static ItemStack autoExchangeOn;
+    public static ItemStack autoExchangeOff;
 
-    public static ItemStack autoSprzedazOn;
-    public static ItemStack autoSprzedazOff;
+    public static ItemStack autoSellOn;
+    public static ItemStack autoSellOff;
 
     public static ItemStack blackGlass;
     public static ItemStack limeGlass;
@@ -38,11 +38,11 @@ public class ItemManager {
 
     public static void init() {
 
-        createAutoWymianaOn();
-        createAutoWymianaOff();
+        crateAutoExchangeOn();
+        crateAutoExchangeOff();
 
-        createAutoSprzedazOn();
-        createAutoSprzedazOff();
+        createAutoSellOn();
+        createAutoSellOff();
 
         createLimeGlass();
         createGreenGlass();
@@ -59,21 +59,19 @@ public class ItemManager {
 
     }
 
-    private static void createAutoWymianaOn() {
+    private static void crateAutoExchangeOn() {
         ItemStack item = new ItemStack(Material.END_CRYSTAL, 1);
 
         ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(ChatColor.GRAY + "Automatyczną wymiana " + ChatColor.RED + "OFF");
+        meta.setDisplayName(ChatColor.GRAY + "Automatyczna wymiana " + ChatColor.RED + "OFF");
         List<String> lore = new ArrayList<>();
         lore.add(ChatColor.GRAY + "Kliknij aby włączyć");
         meta.setLore(lore);
-//        meta.addEnchant(Enchantment.LUCK, 1, false);
-//        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         item.setItemMeta(meta);
 
-        autoWymianaOn = item;
+        autoExchangeOn = item;
     }
-    private static void createAutoWymianaOff() {
+    private static void crateAutoExchangeOff() {
         ItemStack item = new ItemStack(Material.END_CRYSTAL, 1);
 
         ItemMeta meta = item.getItemMeta();
@@ -81,14 +79,12 @@ public class ItemManager {
         List<String> lore = new ArrayList<>();
         lore.add(ChatColor.GRAY + "Kliknij aby wyłączyć");
         meta.setLore(lore);
-//        meta.addEnchant(Enchantment.LUCK, 1, false);
-//        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         item.setItemMeta(meta);
 
-        autoWymianaOff = item;
+        autoExchangeOff = item;
     }
 
-    private static void createAutoSprzedazOn() {
+    private static void createAutoSellOn() {
         ItemStack item = new ItemStack(Material.SUNFLOWER, 1);
 
         ItemMeta meta = item.getItemMeta();
@@ -96,13 +92,11 @@ public class ItemManager {
         List<String> lore = new ArrayList<>();
         lore.add(ChatColor.GRAY + "Kliknij aby włączyć");
         meta.setLore(lore);
-//        meta.addEnchant(Enchantment.LUCK, 1, false);
-//        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         item.setItemMeta(meta);
 
-        autoSprzedazOn = item;
+        autoSellOn = item;
     }
-    private static void createAutoSprzedazOff() {
+    private static void createAutoSellOff() {
         ItemStack item = new ItemStack(Material.SUNFLOWER, 1);
 
         ItemMeta meta = item.getItemMeta();
@@ -110,19 +104,10 @@ public class ItemManager {
         List<String> lore = new ArrayList<>();
         lore.add(ChatColor.GRAY + "Kliknij aby wyłączyć");
         meta.setLore(lore);
-//        meta.addEnchant(Enchantment.LUCK, 1, false);
-//        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         item.setItemMeta(meta);
 
-        autoSprzedazOff = item;
+        autoSellOff = item;
     }
-
-
-
-
-
-
-
 
     private static void createBlackGlass() {
 
@@ -157,7 +142,7 @@ public class ItemManager {
 
         ItemStack item = new ItemStack(Material.ARROW, 1);
         ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(ChatColor.YELLOW + "Nastepna strona");
+        meta.setDisplayName(ChatColor.YELLOW + "Następna strona");
         item.setItemMeta(meta);
 
         nextPage = item;
@@ -178,7 +163,7 @@ public class ItemManager {
         ItemMeta meta = item.getItemMeta();
         meta.setDisplayName(ChatColor.GRAY + "Cena: " + ChatColor.GREEN + "0$");
         List<String> lore = new ArrayList<>();
-        lore.add(ChatColor.GRAY + "Kliknij aby zresetować cene");
+        lore.add(ChatColor.GRAY + "Kliknij aby zresetować cenę");
         meta.setLore(lore);
         meta.addEnchant(Enchantment.LUCK, 1, false);
         meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
@@ -196,10 +181,8 @@ public class ItemManager {
         ItemMeta meta = item.getItemMeta();
         meta.setDisplayName(ChatColor.GREEN + "1$");
         List<String> lore = new ArrayList<>();
-        lore.add(ChatColor.GRAY + "Kliknij aby dodac " + ChatColor.GREEN + "1$" + ChatColor.GRAY + " do ceny przedmiotu");
+        lore.add(ChatColor.GRAY + "Kliknij aby dodać " + ChatColor.GREEN + "1$" + ChatColor.GRAY + " do ceny przedmiotu");
         meta.setLore(lore);
-//        meta.addEnchant(Enchantment.LUCK, 1, false);
-//        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         item.setItemMeta(meta);
 
         addOne = item;
@@ -210,10 +193,8 @@ public class ItemManager {
         ItemMeta meta = item.getItemMeta();
         meta.setDisplayName(ChatColor.GREEN + "10$");
         List<String> lore = new ArrayList<>();
-        lore.add(ChatColor.GRAY + "Kliknij aby dodac " + ChatColor.GREEN + "10$" + ChatColor.GRAY + " do ceny przedmiotu");
+        lore.add(ChatColor.GRAY + "Kliknij aby dodać " + ChatColor.GREEN + "10$" + ChatColor.GRAY + " do ceny przedmiotu");
         meta.setLore(lore);
-//        meta.addEnchant(Enchantment.LUCK, 1, false);
-//        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         item.setItemMeta(meta);
 
         addTen = item;
@@ -224,10 +205,9 @@ public class ItemManager {
         ItemMeta meta = item.getItemMeta();
         meta.setDisplayName(ChatColor.GREEN + "100$");
         List<String> lore = new ArrayList<>();
-        lore.add(ChatColor.GRAY + "Kliknij aby dodac " + ChatColor.GREEN + "100$" + ChatColor.GRAY + " do ceny przedmiotu");
+        lore.add(ChatColor.GRAY + "Kliknij aby dodać " + ChatColor.GREEN + "100$" + ChatColor.GRAY + " do ceny przedmiotu");
         meta.setLore(lore);
-//        meta.addEnchant(Enchantment.LUCK, 1, false);
-//        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+
         item.setItemMeta(meta);
 
         addHundred = item;

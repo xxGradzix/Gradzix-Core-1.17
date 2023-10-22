@@ -1,7 +1,7 @@
 package me.xxgradzix.gradzixcore.playerAbilities.data;
 
 import me.xxgradzix.gradzixcore.Gradzix_Core;
-import me.xxgradzix.gradzixcore.playerAbilities.Umiejetnosci;
+import me.xxgradzix.gradzixcore.playerAbilities.PlayerAbilities;
 import me.xxgradzix.gradzixcore.playerAbilities.data.database.entities.AbilityModifierEntity;
 import me.xxgradzix.gradzixcore.playerAbilities.data.database.entities.PlayerAbilitiesEntity;
 import me.xxgradzix.gradzixcore.playerAbilities.data.database.entities.enums.Ability;
@@ -16,7 +16,7 @@ public class DataManager {
 
     public static void incrementAbilityLevel(Ability ability, Player player) {
         if(useDB) {
-            PlayerAbilitiesEntityManager manager = Umiejetnosci.getPlayerAbilitiesEntityManager();
+            PlayerAbilitiesEntityManager manager = PlayerAbilities.getPlayerAbilitiesEntityManager();
             PlayerAbilitiesEntity entity = manager.getPlayerAbilitiesEntityById(player.getUniqueId());
             if(entity == null) {
                 entity = new PlayerAbilitiesEntity(player.getUniqueId(), entity.getPlayerName(), 0, 0, 0);
@@ -24,13 +24,13 @@ public class DataManager {
             entity.incrementAbilityLevel(ability);
             manager.createOrUpdatePlayerAbilitiesEntity(entity);
         } else {
-//            UmiejetnosciConfigFile.incrementDropLevel(player);
+
         }
     }
 
     public static int getPlayerAbilityLevel(Ability ability, Player player) {
         if(useDB) {
-            PlayerAbilitiesEntityManager manager = Umiejetnosci.getPlayerAbilitiesEntityManager();
+            PlayerAbilitiesEntityManager manager = PlayerAbilities.getPlayerAbilitiesEntityManager();
             PlayerAbilitiesEntity entity = manager.getPlayerAbilitiesEntityById(player.getUniqueId());
 
             if(entity == null) {
@@ -46,7 +46,7 @@ public class DataManager {
 
     public static void resetAllAbilities() {
         if(useDB) {
-            PlayerAbilitiesEntityManager manager = Umiejetnosci.getPlayerAbilitiesEntityManager();
+            PlayerAbilitiesEntityManager manager = PlayerAbilities.getPlayerAbilitiesEntityManager();
             for(PlayerAbilitiesEntity playerAbilitiesEntity : manager.getPlayerAbilitiesEntities()) {
                 manager.deletePlayerAbilitiesEntity(playerAbilitiesEntity);
             }
@@ -56,31 +56,27 @@ public class DataManager {
         }
     }
 
-    //////////////////////////
-
 
     public static double getAbilityModifier(Ability ability, int level) {
 
         if(useDB) {
-            AbilitiesModifiersEntityManager manager = Umiejetnosci.getAbilitiesModifiersEntityManager();
+            AbilitiesModifiersEntityManager manager = PlayerAbilities.getAbilitiesModifiersEntityManager();
             AbilityModifierEntity entity = manager.getAbilityModifierEntityByAbilityType(ability);
             return entity.getAbilityModifier(level);
 
         } else {
-            throw new RuntimeException("Nie ma obsulgi pliku konfiguracyjnego");
-//            UmiejetnosciConfigFile.resetLevels();
+            throw new RuntimeException("Nie ma obsługi pliku konfiguracyjnego");
         }
     }
     public static void setAbilityModifier(Ability ability, int level, double modifier) {
 
         if(useDB) {
-            AbilitiesModifiersEntityManager manager = Umiejetnosci.getAbilitiesModifiersEntityManager();
+            AbilitiesModifiersEntityManager manager = PlayerAbilities.getAbilitiesModifiersEntityManager();
             AbilityModifierEntity entity = manager.getAbilityModifierEntityByAbilityType(ability);
             entity.setAbilityModifier(level, modifier);
 
         } else {
-            throw new RuntimeException("Nie ma obsulgi pliku konfiguracyjnego");
-//            UmiejetnosciConfigFile.resetLevels();
+            throw new RuntimeException("Nie ma obsługi pliku konfiguracyjnego");
         }
     }
 

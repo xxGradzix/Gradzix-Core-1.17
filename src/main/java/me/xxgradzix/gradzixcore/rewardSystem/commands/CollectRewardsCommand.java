@@ -28,14 +28,14 @@ public class CollectRewardsCommand implements CommandExecutor {
         PlayerRewardsEntity playerRewardsEntity = playerRewardsEntityManager.getPlayerRewardsEntityByMinecraftId(player.getUniqueId());
 
         if(playerRewardsEntity == null) {
-            player.sendMessage("Nie masz zadnych nagród do odebrania");
+            player.sendMessage("Nie masz żadnych nagród do odebrania");
             return false;
         }
 
         HashMap<String, Integer> rewards = playerRewardsEntity.getRewards();
 
         if(rewards == null || rewards.isEmpty()) {
-            player.sendMessage("Nie masz zadnych nagród do odebrania");
+            player.sendMessage("Nie masz żadnych nagród do odebrania");
             return false;
         }
 

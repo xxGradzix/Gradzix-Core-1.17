@@ -22,28 +22,28 @@ public class DataManager {
     public static void setScratchCardStatus(boolean value) {
         if(useDB) {
             PanelOptionsEntity panelOptionsEntity = Panel.getPanelOptionsEntityManager().getPanelOptionsEntity();
-            panelOptionsEntity.setZdrapkaEnabled(value);
+            panelOptionsEntity.setScratchCardEnabled(value);
             Panel.getPanelOptionsEntityManager().updatePanelOptionsEntity(panelOptionsEntity);
         } else {
-            PanelAdminConfigFile.setZdrapkaStatus(value);
+            PanelAdminConfigFile.setScratchCardStatus(value);
         }
     }
     public static void setKitStatus(boolean value) {
         if(useDB) {
             PanelOptionsEntity panelOptionsEntity = Panel.getPanelOptionsEntityManager().getPanelOptionsEntity();
-            panelOptionsEntity.setKityEnabled(value);
+            panelOptionsEntity.setKitsEnabled(value);
             Panel.getPanelOptionsEntityManager().updatePanelOptionsEntity(panelOptionsEntity);
         } else {
-            PanelAdminConfigFile.setKityStatus(value);
+            PanelAdminConfigFile.setKitsStatus(value);
         }
     }
     public static void setAchievementStatus(boolean value) {
         if(useDB) {
             PanelOptionsEntity panelOptionsEntity = Panel.getPanelOptionsEntityManager().getPanelOptionsEntity();
-            panelOptionsEntity.setOsiagnieciaEnabled(value);
+            panelOptionsEntity.setAchievementsEnabled(value);
             Panel.getPanelOptionsEntityManager().updatePanelOptionsEntity(panelOptionsEntity);
         } else {
-            PanelAdminConfigFile.setOsiagnieciaStatus(value);
+            PanelAdminConfigFile.setAchievementsStatus(value);
         }
     }
 
@@ -59,25 +59,25 @@ public class DataManager {
     public static boolean getScratchCardStatus() {
         if(useDB) {
             PanelOptionsEntity panelOptionsEntity = Panel.getPanelOptionsEntityManager().getPanelOptionsEntity();
-            return panelOptionsEntity.isZdrapkaEnabled();
+            return panelOptionsEntity.isScratchCardEnabled();
         } else {
-            return PanelAdminConfigFile.getZdrapkaStatus();
+            return PanelAdminConfigFile.getScratchCardStatus();
         }
     }
     public static boolean getKitStatus() {
         if(useDB) {
             PanelOptionsEntity panelOptionsEntity = Panel.getPanelOptionsEntityManager().getPanelOptionsEntity();
-            return panelOptionsEntity.isKityEnabled();
+            return panelOptionsEntity.isKitsEnabled();
         } else {
-            return PanelAdminConfigFile.getKityStatus();
+            return PanelAdminConfigFile.getKitsStatus();
         }
     }
     public static boolean getAchievementStatus() {
         if(useDB) {
             PanelOptionsEntity panelOptionsEntity = Panel.getPanelOptionsEntityManager().getPanelOptionsEntity();
-            return panelOptionsEntity.isOsiagnieciaEnabled();
+            return panelOptionsEntity.isAchievementsEnabled();
         } else {
-            return PanelAdminConfigFile.getOsiagnieciaStatus();
+            return PanelAdminConfigFile.getAchievementsStatus();
         }
     }
 

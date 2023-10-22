@@ -22,36 +22,34 @@ public class UstawieniaCommand implements CommandExecutor {
         if(sender instanceof Player) {
             Player p = (Player) sender;
 
-
             Gui gui = Gui.gui()
                     .title(Component.text(ChatColor.GREEN + ChatColor.BOLD.toString() + "USTAWIENIA " + ChatColor.GRAY + "(/ustawienia)"))
                     .rows(5)
                     .disableAllInteractions()
                     .create();
 
-            // szklo
+            // glass
 
-            ArrayList<Integer> czarne = new ArrayList<>();
+            ArrayList<Integer> black = new ArrayList<>();
 
+            black.add(2);
+            black.add(3);
+            black.add(4);
+            black.add(5);
+            black.add(6);
 
-            czarne.add(2);
-            czarne.add(3);
-            czarne.add(4);
-            czarne.add(5);
-            czarne.add(6);
+            black.add(18);
+            black.add(26);
 
-            czarne.add(18);
-            czarne.add(26);
-
-            czarne.add(38);
-            czarne.add(39);
-            czarne.add(40);
-            czarne.add(41);
-            czarne.add(42);
+            black.add(38);
+            black.add(39);
+            black.add(40);
+            black.add(41);
+            black.add(42);
 
             GuiItem blackGlass = new GuiItem(me.xxgradzix.gradzixcore.chatOptions.items.ItemManager.blackGlass);
 
-            gui.setItem(czarne, blackGlass);
+            gui.setItem(black, blackGlass);
 
             ArrayList<Integer> lime = new ArrayList<>();
 
@@ -74,71 +72,54 @@ public class UstawieniaCommand implements CommandExecutor {
             gui.setItem(lime, limeGlass);
 
 
-            // wymiana
+            // exchange
 
-            GuiItem wymianaButtonOff = ItemBuilder.from(ItemManager.autoWymianaOff).asGuiItem();
+            GuiItem exchangeButtonOff = ItemBuilder.from(ItemManager.autoExchangeOff).asGuiItem();
+            GuiItem exchangeButtonOn = ItemBuilder.from(ItemManager.autoExchangeOn).asGuiItem();
 
-            GuiItem wymianaButtonOn = ItemBuilder.from(ItemManager.autoWymianaOn).asGuiItem();
-
-
-
-            wymianaButtonOn.setAction((action) -> {
-
+            exchangeButtonOn.setAction((action) -> {
                 DataManager.setAutoExchangeStatus(p, true);
-
-                gui.updateItem(action.getSlot(), wymianaButtonOff);
+                gui.updateItem(action.getSlot(), exchangeButtonOff);
             });
 
-            wymianaButtonOff.setAction((action) -> {
-
+            exchangeButtonOff.setAction((action) -> {
                 DataManager.setAutoExchangeStatus(p, false);
-
-                gui.updateItem(action.getSlot(), wymianaButtonOn);
+                gui.updateItem(action.getSlot(), exchangeButtonOn);
             });
 
 
             if(DataManager.getAutoExchangeStatus(p)) {
-                gui.setItem(3, 4, wymianaButtonOff);
+                gui.setItem(3, 4, exchangeButtonOff);
             } else {
-                gui.setItem(3, 4, wymianaButtonOn);
+                gui.setItem(3, 4, exchangeButtonOn);
             }
 
 
-            // auto sprzedaz
+            // auto sell
 
-            GuiItem sprzedazButtonOff = ItemBuilder.from(ItemManager.autoSprzedazOff).asGuiItem();
+            GuiItem sellButtonOff = ItemBuilder.from(ItemManager.autoSellOff).asGuiItem();
 
-            GuiItem sprzedazButtonOn = ItemBuilder.from(ItemManager.autoSprzedazOn).asGuiItem();
+            GuiItem sellButtonOn = ItemBuilder.from(ItemManager.autoSellOn).asGuiItem();
 
 
 
-            sprzedazButtonOn.setAction((action) -> {
-
+            sellButtonOn.setAction((action) -> {
                 DataManager.setAutoSellStatus(p, true);
-
-                gui.updateItem(action.getSlot(), sprzedazButtonOff);
+                gui.updateItem(action.getSlot(), sellButtonOff);
             });
 
-            sprzedazButtonOff.setAction((action) -> {
-
+            sellButtonOff.setAction((action) -> {
                 DataManager.setAutoSellStatus(p, false);
-
-                gui.updateItem(action.getSlot(), sprzedazButtonOn);
+                gui.updateItem(action.getSlot(), sellButtonOn);
             });
 
-
-            
             if(DataManager.getAutoSellStatus(p)) {
-                gui.setItem(3, 6, sprzedazButtonOff);
+                gui.setItem(3, 6, sellButtonOff);
             } else {
-                gui.setItem(3, 6, sprzedazButtonOn);
+                gui.setItem(3, 6, sellButtonOn);
             }
-
-
             gui.open(p);
-
         }
-
         return true;
     }
 }

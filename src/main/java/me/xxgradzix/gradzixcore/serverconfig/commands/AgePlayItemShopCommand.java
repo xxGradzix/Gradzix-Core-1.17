@@ -15,34 +15,21 @@ public class AgePlayItemShopCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-//        if (sender instanceof Player) {
-//            Player player = (Player) sender;
+
         if(!sender.isOp()) {
-            System.out.println("Tylko uzytkowniz z opem moze uzyc");
+            System.out.println("Tylko OP może użyć tej komendy");
             return true;
         }
         sender.sendMessage(String.valueOf(args.length));
 
                 if(args.length < 2) {
-                    sender.sendMessage("Poprawne uzycie to");
+                    sender.sendMessage("Poprawne użycie to");
                     sender.sendMessage("/ais nadaj {NICK} klucz/ranga (opcjonalne){ILOSC}");
                     return true;
                 }
 
-//                if(args[0] != "nadaj") {
-//                    sender.sendMessage(args[1]);
-//
-//                    sender.sendMessage("BLAD NADAJ");
-//                    sender.sendMessage("Poprawne uzycie to");
-//                    sender.sendMessage("/ais nadaj {NICK} klucz/ranga (opcjonalne){ILOSC}");
-//
-//                    return true;
-//                }
-
                 String targetPlayerName = args[1];
                 Player targetPlayer = null;
-
-
 
                 if (targetPlayerName != null) {
 
@@ -53,27 +40,10 @@ public class AgePlayItemShopCommand implements CommandExecutor {
                     }
                 } else throw new RuntimeException("Nie podano nicku");
                 String ranga = args[2];
+
                 ranga.toLowerCase();
 
                 if(args.length == 3) {
-//                    if(args[2] == "bogacz") {
-//                        getServer().dispatchCommand(getConsoleSender(), "givezdrapka " +
-//                                targetPlayer.getName() +
-//                                " 3");
-//                        getServer().dispatchCommand(getConsoleSender(), "excellentcrates key give " +
-//                                targetPlayer.getName() +
-//                                " jaskiniowca 10");
-//                    }
-//                    if(args[2] == "jaskiniowca") {
-//                        getServer().dispatchCommand(getConsoleSender(), "givezdrapka " +
-//                                targetPlayer.getName());
-//                        getServer().dispatchCommand(getConsoleSender(), "excellentcrates key give " +
-//                                targetPlayer.getName() +
-//                                " magiczna 32");
-//                    }
-//                    getServer().dispatchCommand(getConsoleSender(), "lp user " +
-//                            targetPlayer.getName() +
-//                            " parent addtemp " + args[2] + " 30d" );
                     switch (args[2]) {
                         case "vip":
                             getServer().dispatchCommand(getConsoleSender(), "lp user " + targetPlayer.getName() + " parent addtemp vip 30d");
@@ -95,9 +65,6 @@ public class AgePlayItemShopCommand implements CommandExecutor {
                             getServer().dispatchCommand(getConsoleSender(), "lp user " + targetPlayer.getName() + " parent addtemp age 30d");
                             Bukkit.broadcastMessage("§7Gracz §2" + targetPlayer.getName() + " §7zakupił §4Zestaw Bogacz");
                             Bukkit.broadcastMessage("§aZakupy zrobisz na stronie §2www.ageplay.pl");
-//                            getServer().dispatchCommand(getConsoleSender(), "givezdrapka " +
-//                                    targetPlayer.getName() +
-//                                    " 3");
                             ItemStack itemToGive = new ItemStack(ItemManager.zdrapka);
                             itemToGive.setAmount(3);
                             targetPlayer.getInventory().addItem(itemToGive);
@@ -109,23 +76,19 @@ public class AgePlayItemShopCommand implements CommandExecutor {
                             getServer().dispatchCommand(getConsoleSender(), "lp user " + targetPlayer.getName() + " parent addtemp svip 30d");
                             Bukkit.broadcastMessage("§7Gracz §2" + targetPlayer.getName() + " §7zakupił §5Zestaw Jaskiniowca");
                             Bukkit.broadcastMessage("§aZakupy zrobisz na stronie §2www.ageplay.pl");
-
-//                            getServer().dispatchCommand(getConsoleSender(), "givezdrapka " +
-//                                    targetPlayer.getName());
                             targetPlayer.getInventory().addItem(ItemManager.zdrapka);
                             getServer().dispatchCommand(getConsoleSender(), "excellentcrates key give " +
                                     targetPlayer.getName() +
                                     " magiczna 32");
                             break;
                         default:
-                            sender.sendMessage("Mozliwe rangi to: ");
+                            sender.sendMessage("Możliwe rangi to: ");
                             sender.sendMessage("vip");
                             sender.sendMessage("svip");
                             sender.sendMessage("age");
                             sender.sendMessage("bogacz");
                             sender.sendMessage("jaskiniowca");
                             break;
-
                     }
 
                 }
@@ -134,7 +97,6 @@ public class AgePlayItemShopCommand implements CommandExecutor {
 
                     switch (args[2]) {
                         case "zdrapka":
-//                            getServer().dispatchCommand(getConsoleSender(), "givezdrapka " + targetPlayer.getName() + " " + amount);
                             ItemStack itemToGive = new ItemStack(ItemManager.zdrapka);
                             itemToGive.setAmount(amount);
                             targetPlayer.getInventory().addItem(itemToGive);
@@ -153,7 +115,7 @@ public class AgePlayItemShopCommand implements CommandExecutor {
                             Bukkit.broadcastMessage("§aZakupy zrobisz na stronie §2www.ageplay.pl");
                             break;
                         default:
-                            sender.sendMessage("Mozliwe klucze to: ");
+                            sender.sendMessage("Możliwe klucze to: ");
                             sender.sendMessage("zdrapka");
                             sender.sendMessage("jaskiniowca");
                             sender.sendMessage("kluczmagiczna");
@@ -162,16 +124,8 @@ public class AgePlayItemShopCommand implements CommandExecutor {
 
 
                     }
-
-
-
-
-
-
-
-                return true;
-            }
-//        }
+                    return true;
+                }
         return false;
     }
 

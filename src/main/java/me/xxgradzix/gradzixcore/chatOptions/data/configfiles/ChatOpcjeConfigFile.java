@@ -43,13 +43,12 @@ public class ChatOpcjeConfigFile {
         customFile = YamlConfiguration.loadConfiguration(file);
     }
 
+    // death messages
 
-    // wiadomosci smierci
     public static void setShowDeathMessage(Player player, boolean b) {
         getCustomFile().set("players." + player.getUniqueId().toString() + ".hideDeathMessage", b);
         save();
     }
-
 
     public static boolean getShowDeathMessageStatus(Player player) {
         return getCustomFile().getBoolean("players." + player.getUniqueId().toString() + ".hideDeathMessage");
@@ -70,14 +69,12 @@ public class ChatOpcjeConfigFile {
                     }
                 }
             }
-
             return uuidList;
-
     }
 
-    // wiadomosci zdrapki
+    // scratch card messages
 
-    public static List<String> getShowZdrapkaMessageStatusUUIDsList(boolean expectedValue) {
+    public static List<String> getShowScratchCardsMessageStatusList(boolean expectedValue) {
         List<String> uuidList = new ArrayList<>();
 
         ConfigurationSection playersSection = ChatOpcjeConfigFile.getCustomFile().getConfigurationSection("players");
@@ -92,20 +89,19 @@ public class ChatOpcjeConfigFile {
                 }
             }
         }
-
         return uuidList;
     }
 
-    public static void setShowZdrapkaMessage(Player player, boolean b) {
-        getCustomFile().set("players." + player.getUniqueId().toString() + ".hideZdrapkaMessage", b);
+    public static void setShowScratchCardMessages(Player player, boolean b) {
+        getCustomFile().set("players." + player.getUniqueId().toString() + ".hideScratchCardMessages", b);
         save();
     }
 
-    public static boolean getShowZdrapkaMessageStatus(Player player) {
-        return getCustomFile().getBoolean("players." + player.getUniqueId().toString() + ".hideZdrapkaMessage");
+    public static boolean getShowScratchCardMessages(Player player) {
+        return getCustomFile().getBoolean("players." + player.getUniqueId().toString() + ".hideScratchCardMessages");
     }
 
-    // wiadomosci chatu
+    // chat messages
 
     public static List<String> getShowChatMessageStatusUUIDsList(boolean expectedValue) {
         List<String> uuidList = new ArrayList<>();
@@ -135,8 +131,7 @@ public class ChatOpcjeConfigFile {
         return getCustomFile().getBoolean("players." + player.getUniqueId().toString() + ".hideChatMessage");
     }
 
-    // wiadomosci ze sklepu
-
+    // shop messages
 
     public static List<String> getShowShopMessageStatusUUIDsList(boolean expectedValue) {
         List<String> uuidList = new ArrayList<>();

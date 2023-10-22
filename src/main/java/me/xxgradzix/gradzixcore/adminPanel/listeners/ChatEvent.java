@@ -8,8 +8,6 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 public class ChatEvent implements Listener {
 
-
-
     @EventHandler
     public void onPlayerChat(AsyncPlayerChatEvent event) {
         if (!DataManager.getChatStatus()) {

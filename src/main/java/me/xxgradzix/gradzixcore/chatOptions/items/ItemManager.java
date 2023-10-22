@@ -13,8 +13,8 @@ public class ItemManager {
     public static ItemStack deathButtonOff;
     public static ItemStack deathButtonOn;
 
-    public static ItemStack zdrapkaButtonOff;
-    public static ItemStack zdrapkaButtonOn;
+    public static ItemStack scratchCardButtonOff;
+    public static ItemStack scratchCardButtonOn;
 
     public static ItemStack chatButtonOff;
     public static ItemStack chatButtonOn;
@@ -27,15 +27,13 @@ public class ItemManager {
     public static ItemStack greenGlass;
     public static ItemStack limeGlass;
 
-
-
     public static void init() {
 
         createDeathButtonOn();
         createDeathButtonOff();
 
-        createZdrapkaButtonOn();
-        createZdrapkaButtonOff();
+        createScratchCardButtonOn();
+        createScratchCardButtonOff();
 
         createChatButtonOn();
         createChatButtonOff();
@@ -58,8 +56,7 @@ public class ItemManager {
         List<String> lore = new ArrayList<>();
         lore.add(ChatColor.GRAY + "Kliknij aby wyłączyć");
         meta.setLore(lore);
-//        meta.addEnchant(Enchantment.LUCK, 1, false);
-//        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+
         item.setItemMeta(meta);
 
         deathButtonOff = item;
@@ -72,14 +69,13 @@ public class ItemManager {
         List<String> lore = new ArrayList<>();
         lore.add(ChatColor.GRAY + "Kliknij aby włączyć");
         meta.setLore(lore);
-//        meta.addEnchant(Enchantment.LUCK, 1, false);
-//        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+
         item.setItemMeta(meta);
 
         deathButtonOn = item;
     }
 
-    private static void createZdrapkaButtonOn() {
+    private static void createScratchCardButtonOn() {
         ItemStack item = new ItemStack(Material.PAPER, 1);
 
         ItemMeta meta = item.getItemMeta();
@@ -87,14 +83,13 @@ public class ItemManager {
         List<String> lore = new ArrayList<>();
         lore.add(ChatColor.GRAY + "Kliknij aby włączyć");
         meta.setLore(lore);
-//        meta.addEnchant(Enchantment.LUCK, 1, false);
-//        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+
         item.setItemMeta(meta);
 
-        zdrapkaButtonOn = item;
+        scratchCardButtonOn = item;
     }
 
-    private static void createZdrapkaButtonOff() {
+    private static void createScratchCardButtonOff() {
         ItemStack item = new ItemStack(Material.PAPER, 1);
 
         ItemMeta meta = item.getItemMeta();
@@ -102,11 +97,10 @@ public class ItemManager {
         List<String> lore = new ArrayList<>();
         lore.add(ChatColor.GRAY + "Kliknij aby wyłączyć");
         meta.setLore(lore);
-//        meta.addEnchant(Enchantment.LUCK, 1, false);
-//        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+
         item.setItemMeta(meta);
 
-        zdrapkaButtonOff = item;
+        scratchCardButtonOff = item;
     }
 
     private static void createChatButtonOn() {
@@ -117,8 +111,7 @@ public class ItemManager {
         List<String> lore = new ArrayList<>();
         lore.add(ChatColor.GRAY + "Kliknij aby włączyć");
         meta.setLore(lore);
-//        meta.addEnchant(Enchantment.LUCK, 1, false);
-//        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+
         item.setItemMeta(meta);
 
         chatButtonOn = item;
@@ -132,8 +125,7 @@ public class ItemManager {
         List<String> lore = new ArrayList<>();
         lore.add(ChatColor.GRAY + "Kliknij aby wyłączyć");
         meta.setLore(lore);
-//        meta.addEnchant(Enchantment.LUCK, 1, false);
-//        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+
         item.setItemMeta(meta);
 
         chatButtonOff = item;
@@ -147,8 +139,7 @@ public class ItemManager {
         List<String> lore = new ArrayList<>();
         lore.add(ChatColor.GRAY + "Kliknij aby włączyć");
         meta.setLore(lore);
-//        meta.addEnchant(Enchantment.LUCK, 1, false);
-//        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+
         item.setItemMeta(meta);
 
         shopButtonOn = item;
@@ -162,14 +153,13 @@ public class ItemManager {
         List<String> lore = new ArrayList<>();
         lore.add(ChatColor.GRAY + "Kliknij aby wyłączyć");
         meta.setLore(lore);
-//        meta.addEnchant(Enchantment.LUCK, 1, false);
-//        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+
         item.setItemMeta(meta);
 
         shopButtonOff = item;
     }
 
-    // szklo
+    // glass
 
     private static void createBlackGlass() {
 
@@ -199,7 +189,4 @@ public class ItemManager {
 
         limeGlass = item;
     }
-
-
-
 }

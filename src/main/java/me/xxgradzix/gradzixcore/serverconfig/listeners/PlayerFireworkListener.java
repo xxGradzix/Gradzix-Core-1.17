@@ -31,51 +31,11 @@ public class PlayerFireworkListener implements Listener {
 
 
             if(getPlayerRegionName(event.getPlayer()) == null) return;
-            if(getPlayerRegionName(event.getPlayer()) == "strefabezelytry" || getPlayerRegionName(event.getPlayer()).equals("strefabezelytry")) {
+            if(getPlayerRegionName(event.getPlayer()).equals("strefabezelytry")) {
                 event.setCancelled(true);
-//                event.setUseItemInHand(Event.Result.DENY);
-//                event.setUseInteractedBlock(Event.Result.DENY);
-//                player.setWalkSpeed(0);
-//                player.setFlySpeed(0);
                 event.setUseItemInHand(Event.Result.DENY);
-                // Dodatkowo możesz poinformować gracza, że używanie fajerwerków jest zabronione
-//                if (event.getClickedBlock() != null) {
-//                    // Anuluj event, aby zablokować zużycie fajerwerki
-//
-//                    event.setCancelled(true);
-//                    // Możesz również wysłać wiadomość do gracza informującą, że klikanie fajerwerką w blok jest zabronione
-//                    event.getPlayer().sendMessage("Klikanie fajerwerką w blok jest zabronione na tym serwerze.");
-//                }
-
             }
-            // Anuluj event
-
-
         }
-//        Player p = event.getPlayer();
-//        if(event.getAction().equals(Action.RIGHT_CLICK_AIR) || event.getAction().equals(Action.RIGHT_CLICK_BLOCK) ||
-//                event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
-//            p.sendMessage("test right/left click");
-//        if(p.getInventory().getItemInOffHand().getType().equals(Material.FIREWORK_ROCKET) || p.getInventory().getItemInMainHand().getType().equals(Material.FIREWORK_ROCKET) ||
-//                p.getInventory().getItemInOffHand().getType() == Material.FIREWORK_ROCKET || p.getInventory().getItemInMainHand().getType() == Material.FIREWORK_ROCKET) {
-//            p.sendMessage("test item in hand");
-//
-//            if(getPlayerRegionName(event.getPlayer()) == "strefabezelytry" || getPlayerRegionName(event.getPlayer()).equals("strefabezelytry")) {
-//                if(event.getItem().getType().equals(Material.FIREWORK_ROCKET) || event.getItem().getType() == Material.FIREWORK_ROCKET) {
-//
-//                    p.sendMessage("test strefa bez elytr");
-//                    event.setCancelled(true);
-//
-//                }
-//
-//                }
-//
-//            }
-//
-//
-//        }
-
-
     }
     public String getPlayerRegionName(Player player) {
         LocalPlayer localPlayer = WorldGuardPlugin.inst().wrapPlayer(player);

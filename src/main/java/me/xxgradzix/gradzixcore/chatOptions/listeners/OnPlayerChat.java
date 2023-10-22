@@ -1,6 +1,6 @@
 package me.xxgradzix.gradzixcore.chatOptions.listeners;
 
-import me.xxgradzix.gradzixcore.chatOptions.Chatopcje;
+import me.xxgradzix.gradzixcore.chatOptions.ChatOptions;
 import me.xxgradzix.gradzixcore.chatOptions.data.database.entities.ChatOptionsEntity;
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
@@ -19,8 +19,7 @@ public class OnPlayerChat implements Listener {
 
         UUID playerUUID = event.getPlayer().getUniqueId();
 
-//        List<String> blockedPlayersUUIDs = ChatOpcjeConfigFile.getShowChatMessageStatusUUIDsList(true);
-        List<ChatOptionsEntity> chatOptionsEntityList = Chatopcje.getChatOptionsEntityManager().getChatOptionsEntitiesWhereShowChatMessageIs(false);
+        List<ChatOptionsEntity> chatOptionsEntityList = ChatOptions.getChatOptionsEntityManager().getChatOptionsEntitiesWhereShowChatMessageIs(false);
 
         List<UUID> blockedPlayersUUIDs = chatOptionsEntityList.stream().map(ChatOptionsEntity::getUuid).collect(Collectors.toList());
 

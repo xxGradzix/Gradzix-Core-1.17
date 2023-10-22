@@ -19,17 +19,6 @@ public class ScratchCardEntityManager {
         }
     }
 
-//    public void createPanelOptionsEntity(PanelOptionsEntity panelOptionsEntity) {
-//
-//        try {
-//            if (panelOptionsEntityDao.queryForAll().size() < 1) {
-//                panelOptionsEntityDao.create(panelOptionsEntity);
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//    }
-
 
     public void createOrUpdateScratchCardEntity(ScratchCardEntity scratchCardEntity) {
         try {
@@ -98,7 +87,7 @@ public class ScratchCardEntityManager {
 
     public void deleteScratchCardEntity(ScratchCardEntity scratchCardEntity) {
         try {
-            scratchCardEntityDao.delete(new ScratchCardEntity());
+            scratchCardEntityDao.delete(scratchCardEntity);
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -24,7 +24,6 @@ import java.util.UUID;
 public class GiveArmorBackEvent implements Listener {
 
     public static HashMap<UUID, ArrayList<ItemStack>> returnItems = new HashMap<>();
-//    public static ArrayList<ItemStack> returnItems = new ArrayList<>();
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onDeathEvent(PlayerDeathEvent event){
@@ -36,8 +35,6 @@ public class GiveArmorBackEvent implements Listener {
 
             if(itemStack != null) {
                 if(shouldExecute()) armor.add(itemStack);
-
-//                if(shouldExecute()) returnItems.add(itemStack);
             }
         }
         returnItems.put(event.getEntity().getPlayer().getUniqueId(), armor);
@@ -51,9 +48,6 @@ public class GiveArmorBackEvent implements Listener {
 
         Player killer = event.getEntity().getKiller();
 
-
-//        Bukkit.broadcastMessage("Player UUID - " + String.valueOf(event.getEntity().getPlayer().getUniqueId()));
-//        Bukkit.broadcastMessage("ARMOR - Smierc");s
         drops.removeAll(armor);
 
         addItemsWithPriorities(killer, drops, priorities);
@@ -61,41 +55,19 @@ public class GiveArmorBackEvent implements Listener {
         event.getDrops().clear();
     }
 
-
-
-
-
     @EventHandler
     public void onPlayerRespawnEvent(PlayerRespawnEvent e){
 
-
         if(returnItems == null) {
-
             return;
         }
-//            UUID playerUUID = e.getPlayer().getUniqueId();
-            ArrayList<ItemStack> armorToGive = returnItems.getOrDefault(e.getPlayer().getUniqueId(), new ArrayList<>());
-
+        ArrayList<ItemStack> armorToGive = returnItems.getOrDefault(e.getPlayer().getUniqueId(), new ArrayList<>());
 
         Player player = e.getPlayer();
         if(shouldExecute()) {
             player.getInventory().setItemInOffHand(null);
 
         }
-
-//        for(ItemStack itemStack : armorToGive) {
-////        for(ItemStack itemStack : returnItems) {
-//            player.getInventory().addItem(itemStack);
-//        }
-//        Bukkit.broadcastMessage("Player UUID - " + String.valueOf(e.getPlayer().getUniqueId()));
-//        Bukkit.broadcastMessage("ARMOR - ODrodzenie");
-//        for(ItemStack item : armorToGive) {
-//            if(item != null) Bukkit.broadcastMessage("- " +  item.toString());
-//
-//        }
-
-
-
     }
     public static boolean shouldExecute() {
 
@@ -107,26 +79,10 @@ public class GiveArmorBackEvent implements Listener {
         return randomValue < 0.5;
     }
 
-//    @EventHandler
-//    public void onPlayerPickup(PlayerDeathEvent event) {
-//
-//        ArrayList<ItemStack> priorities = ConfigServera.getItemPriorities();
-//
-//        if(!(event.getEntity().getKiller() instanceof Player)) return;
-//        Player killer = event.getEntity().getKiller();
-//
-//        ArrayList<ItemStack> drops = (ArrayList<ItemStack>) event.getDrops();
-//
-//        addItemsWithPriorities(killer, drops, priorities);
-//
-//        event.getDrops().clear();
-//
-//
-//    }
     public void addItemsWithPriorities(Player player, ArrayList<ItemStack> itemsToGive, ArrayList<ItemStack> priorities) {
         PlayerInventory inventory = player.getInventory();
 
-        ArrayList<ItemStack> priorytetyKopia = new ArrayList<>(priorities);
+        ArrayList<ItemStack> prioritiesCopy = new ArrayList<>(priorities);
 
         ArrayList<ItemStack> itemsAfterPriorities = new ArrayList<>(itemsToGive);
 
@@ -134,12 +90,9 @@ public class GiveArmorBackEvent implements Listener {
 
         for (ItemStack itemStack : itemsToGive) {
             if(itemStack.containsEnchantment(Enchantment.VANISHING_CURSE)) continue;
-//
-//            if(returnItems.get(player.getUniqueId()).contains(itemStack)) continue;
 
-
-            if (priorytetyKopia.contains(itemStack)) {
-                priorytetyKopia.remove(itemStack);
+            if (prioritiesCopy.contains(itemStack)) {
+                prioritiesCopy.remove(itemStack);
                 itemsAfterPriorities.remove(itemStack);
                 if (inventory.firstEmpty() != -1) {
                     inventory.addItem(itemStack);
@@ -154,8 +107,6 @@ public class GiveArmorBackEvent implements Listener {
         for (ItemStack itemStack : itemsAfterPriorities) {
 
             if(itemStack.containsEnchantment(Enchantment.VANISHING_CURSE)) continue;
-//
-//            if(returnItems.get(player.getUniqueId()).contains(itemStack)) continue;
 
             if (inventory.firstEmpty() != -1) {
                 inventory.addItem(itemStack);

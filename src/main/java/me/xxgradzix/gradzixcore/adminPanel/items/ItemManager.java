@@ -13,14 +13,14 @@ public class ItemManager {
     public static ItemStack chatOn;
     public static ItemStack chatOff;
 
-    public static ItemStack zdrapkaOn;
-    public static ItemStack zdrapkaOff;
+    public static ItemStack scratchCardOn;
+    public static ItemStack scratchCardOff;
 
 
-    public static ItemStack kityOn;
-    public static ItemStack kityOff;
-    public static ItemStack osiagnieciaOn;
-    public static ItemStack osiagnieciaOff;
+    public static ItemStack kitsOn;
+    public static ItemStack kitsOff;
+    public static ItemStack achievementsOn;
+    public static ItemStack achievementsOff;
 
 
     public static void init() {
@@ -28,23 +28,25 @@ public class ItemManager {
         createChatOn();
         createChatOff();
 
-        createZdrapkaOn();
-        createZdrapkaOff();
+        createScratchCardOn();
+        createScratchCardOff();
 
-        createKityOn();
-        createKityOff();
+        createKitsOn();
+        createKitsOff();
 
-        createOsiagnieciaOn();
-        createOsiagnieciaOff();
+        createAchievementsOn();
+        createAchievementsOff();
 
     }
+
+    // chat
 
     private static void createChatOn() {
 
         ItemStack item = new ItemStack(Material.BOOK, 1);
 
         ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(ChatColor.GRAY + "Wiadomosci na chat " + ChatColor.RED + "OFF");
+        meta.setDisplayName(ChatColor.GRAY + "Wiadomości na chat " + ChatColor.RED + "OFF");
         List<String> lore = new ArrayList<>();
         lore.add(ChatColor.GRAY + "Kliknij aby włączyć");
         meta.setLore(lore);
@@ -59,7 +61,7 @@ public class ItemManager {
         ItemStack item = new ItemStack(Material.BOOK, 1);
 
         ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(ChatColor.GRAY + "Wiadomosci na chat " + ChatColor.GREEN + "ON");
+        meta.setDisplayName(ChatColor.GRAY + "Wiadomości na chat " + ChatColor.GREEN + "ON");
         List<String> lore = new ArrayList<>();
         lore.add(ChatColor.GRAY + "Kliknij aby wyłączyć");
         meta.setLore(lore);
@@ -69,10 +71,9 @@ public class ItemManager {
         chatOff = item;
     }
 
-    // zdrapka
+    // scratch card
 
-
-    private static void createZdrapkaOn() {
+    private static void createScratchCardOn() {
 
         ItemStack item = new ItemStack(Material.PAPER, 1);
 
@@ -84,10 +85,10 @@ public class ItemManager {
 
         item.setItemMeta(meta);
 
-        zdrapkaOn = item;
+        scratchCardOn = item;
     }
 
-    private static void createZdrapkaOff() {
+    private static void createScratchCardOff() {
 
         ItemStack item = new ItemStack(Material.PAPER, 1);
 
@@ -99,11 +100,11 @@ public class ItemManager {
 
         item.setItemMeta(meta);
 
-        zdrapkaOff = item;
+        scratchCardOff = item;
     }
 
 
-    private static void createKityOn() {
+    private static void createKitsOn() {
 
         ItemStack item = new ItemStack(Material.CHEST, 1);
 
@@ -115,10 +116,10 @@ public class ItemManager {
 
         item.setItemMeta(meta);
 
-        kityOn = item;
+        kitsOn = item;
     }
 
-    private static void createKityOff() {
+    private static void createKitsOff() {
 
         ItemStack item = new ItemStack(Material.CHEST, 1);
 
@@ -130,26 +131,26 @@ public class ItemManager {
 
         item.setItemMeta(meta);
 
-        kityOff = item;
+        kitsOff = item;
     }
 
 
-    private static void createOsiagnieciaOn() {
+    private static void createAchievementsOn() {
 
         ItemStack item = new ItemStack(Material.ENCHANTED_GOLDEN_APPLE, 1);
 
         ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(ChatColor.GRAY + "Osiagniecia " + ChatColor.RED + "OFF");
+        meta.setDisplayName(ChatColor.GRAY + "Osiągniecia " + ChatColor.RED + "OFF");
         List<String> lore = new ArrayList<>();
         lore.add(ChatColor.GRAY + "Kliknij aby włączyć");
         meta.setLore(lore);
 
         item.setItemMeta(meta);
 
-        osiagnieciaOn = item;
+        achievementsOn = item;
     }
 
-    private static void createOsiagnieciaOff() {
+    private static void createAchievementsOff() {
 
         ItemStack item = new ItemStack(Material.ENCHANTED_GOLDEN_APPLE, 1);
 
@@ -161,7 +162,7 @@ public class ItemManager {
 
         item.setItemMeta(meta);
 
-        osiagnieciaOff = item;
+        achievementsOff = item;
     }
 
 

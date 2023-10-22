@@ -1,31 +1,5 @@
 package me.xxgradzix.gradzixcore.upgradeItem.gui;
 
-//public class UlepszGui implements InventoryHolder, Listener {
-//
-//    private Inventory inventory;
-//    private int currentPage;
-//    private int maxPage;
-//
-//    public UlepszGui() {
-//        inventory = Bukkit.createInventory(this, 36, "Itemy do wymiany");
-//
-//    }
-//
-//    public void open(Player player) {
-//
-//        player.openInventory(inventory);
-//
-//    }
-//
-//    @Override
-//    public Inventory getInventory() {
-//        return inventory;
-//    }
-//
-//
-//
-//}
-
 import me.xxgradzix.gradzixcore.upgradeItem.data.DataManager;
 import me.xxgradzix.gradzixcore.upgradeItem.data.database.entities.UpgradeEntity;
 import me.xxgradzix.gradzixcore.playerSettings.items.ItemManager;
@@ -35,29 +9,20 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-public class UlepszGui implements InventoryHolder {
+public class UpgradeGui implements InventoryHolder {
 
     private Inventory[] inventory;
     private int currentPage;
     private int maxPage = 25;
-//    private ArrayList<ItemStack[]> itemStacksList;
     private List<UpgradeEntity> upgradeEntityList = DataManager.getAllUpgradeEntities();
 
-    public UlepszGui() {
+    public UpgradeGui() {
         if(upgradeEntityList == null || upgradeEntityList.isEmpty()) {
             upgradeEntityList = new ArrayList<>();
         }
-
-//        ItemStack[] itemKeys;
-//        if(itemStacksList.isEmpty() || itemStacksList == null) {
-//            this.itemStacksList = new ArrayList<>();
-////            index = new ItemStack[9*maxPage];
-//        } else {
-//            this.itemStacksList = itemStacksList;
-////            index = itemMap.keySet().toArray(new ItemStack[9*maxPage]);
-//        }
 
         this.currentPage = 0;
         this.inventory = new Inventory[maxPage];
@@ -142,9 +107,7 @@ public class UlepszGui implements InventoryHolder {
     public List<Inventory> getInventories() {
         List<Inventory> itemList = new ArrayList<>();
 
-        for (Inventory inventory : inventory) {
-            itemList.add(inventory);
-        }
+        Collections.addAll(itemList, inventory);
         return itemList;
     }
 }

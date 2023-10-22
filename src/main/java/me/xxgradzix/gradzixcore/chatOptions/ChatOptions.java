@@ -14,12 +14,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class Chatopcje {
+public final class ChatOptions {
 
-    private Gradzix_Core plugin;
+    private final Gradzix_Core plugin;
 
-    // db change
-    private ConnectionSource connectionSource;
+    private final ConnectionSource connectionSource;
 
     private static ChatOptionsEntityManager chatOptionsEntityManager;
 
@@ -33,7 +32,7 @@ public final class Chatopcje {
     }
     ////////////
 
-    public Chatopcje(Gradzix_Core plugin, ConnectionSource connectionSource) {
+    public ChatOptions(Gradzix_Core plugin, ConnectionSource connectionSource) {
         this.plugin = plugin;
         this.connectionSource = connectionSource;
     }
@@ -57,14 +56,10 @@ public final class Chatopcje {
 
         List<String> list = new ArrayList<>();
 
-//        ChatOpcjeConfigFile.setup();
-//        ChatOpcjeConfigFile.getCustomFile().addDefault("players", list);
-//        ChatOpcjeConfigFile.getCustomFile().options().copyDefaults(true);
-//        ChatOpcjeConfigFile.save();
 
     }
 
     public void onDisable() {
-        // Plugin shutdown logic
+
     }
 }

@@ -23,16 +23,8 @@ public class UpgradeEntity {
     @DatabaseField(persisterClass = ItemStackClassPersister.class, columnDefinition = "TEXT")
     private ItemStack nextItem;
 
-//    public UpgradeEntity(ItemStack currentItem, ItemStack itemNeeded, ItemStack nextItem) {
-//
-//        this.currentItem = currentItem;
-//        this.itemNeeded = itemNeeded;
-//        this.nextItem = nextItem;
-//    }
-
 
     public UpgradeEntity(ItemStack currentItem, ItemStack itemNeeded, ItemStack nextItem) {
-//        this.id = 1L;
         this.currentItem = currentItem;
         this.itemNeeded = itemNeeded;
         this.nextItem = nextItem;

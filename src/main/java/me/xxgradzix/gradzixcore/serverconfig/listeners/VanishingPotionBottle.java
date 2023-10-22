@@ -24,7 +24,6 @@ public class VanishingPotionBottle implements Listener {
         if (e.getItem().getType() == Material.POTION) {
             Bukkit.getServer().getScheduler().runTaskLaterAsynchronously(plugin, new Runnable() {
                 public void run() {
-//                    player.setItemInHand(new ItemStack(Material.AIR));
                     removeItems(player, new ItemStack(Material.GLASS_BOTTLE), 1);
                 }
             }, 1L);
@@ -40,13 +39,8 @@ public class VanishingPotionBottle implements Listener {
             if (item != null && item.isSimilar(itemStack)) {
                 int itemAmount = item.getAmount();
 
-//                if (itemAmount <= remainingAmount) {
                     remainingAmount -= itemAmount;
                     inventory.setItem(i, null);
-//                } else {
-//                    item.setAmount(itemAmount - remainingAmount);
-//                    break;
-//                }
             }
         }
     }

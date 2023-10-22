@@ -20,18 +20,6 @@ public class SettingItemsEntityManager {
         }
     }
 
-//    public void createSettingsItemsEntity(UpgradeEntity entity) {
-//
-//        try {
-//            if (entityDao.queryForAll().size() < 1) {
-//                entityDao.create(entity);
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//    }
-
-
     public void createOrUpdateSettingsItemsEntity(SettingsItemsEntity entity) {
         try {
             entity.setId();
@@ -54,30 +42,6 @@ public class SettingItemsEntityManager {
             return null;
         }
     }
-//    public List<PanelOptionsEntity> getPanelOptionsEntityWhereShowDeathMessageIs(boolean expectedValue) {
-//        try {
-//            return chatOptionsEntityDao.queryForEq("showDeathMessages", expectedValue);
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//            return null;
-//        }
-//    }
-//    public List<PlayerAbilitiesEntity> getChatOptionsEntitiesWhereShowScratchCardMessageIs(boolean expectedValue) {
-//        try {
-//            return chatOptionsEntityDao.queryForEq("showScratchCardMessages", expectedValue);
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//            return null;
-//        }
-//    }
-//    public List<PlayerAbilitiesEntity> getChatOptionsEntitiesWhereShowChatMessageIs(boolean expectedValue) {
-//        try {
-//            return chatOptionsEntityDao.queryForEq("showChatMessages", expectedValue);
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//            return null;
-//        }
-//    }
 
     public void updateSettingsItemsEntity(SettingsItemsEntity entity) {
         try {

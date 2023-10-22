@@ -2,20 +2,20 @@ package me.xxgradzix.gradzixcore.magicFirework;
 
 import me.xxgradzix.gradzixcore.Gradzix_Core;
 import me.xxgradzix.gradzixcore.magicFirework.commands.FireworkCommand;
-import me.xxgradzix.gradzixcore.magicFirework.items.ItemMenager;
+import me.xxgradzix.gradzixcore.magicFirework.items.ItemManager;
 import me.xxgradzix.gradzixcore.magicFirework.listeners.OnPlayerDamage;
 import me.xxgradzix.gradzixcore.magicFirework.listeners.PlayerFireworkListener;
 
-public final class Magicznafajerwerka {
+public final class MagicFirework {
 
-    private Gradzix_Core plugin;
+    private final Gradzix_Core plugin;
 
-    public Magicznafajerwerka(Gradzix_Core plugin) {
+    public MagicFirework(Gradzix_Core plugin) {
         this.plugin = plugin;
     }
 
     public void onEnable() {
-        ItemMenager.init();
+        ItemManager.init();
         plugin.getCommand("givefirework").setExecutor(new FireworkCommand());
 
         plugin.getServer().getPluginManager().registerEvents(new PlayerFireworkListener(), plugin);
@@ -24,6 +24,6 @@ public final class Magicznafajerwerka {
     }
 
     public void onDisable() {
-        // Plugin shutdown logic
+
     }
 }

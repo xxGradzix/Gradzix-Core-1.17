@@ -1,7 +1,7 @@
 package me.xxgradzix.gradzixcore.playerSettings.data;
 
 import me.xxgradzix.gradzixcore.Gradzix_Core;
-import me.xxgradzix.gradzixcore.playerSettings.Ustawienia;
+import me.xxgradzix.gradzixcore.playerSettings.PlayerSettings;
 import me.xxgradzix.gradzixcore.playerSettings.data.database.entities.SettingsEntity;
 import me.xxgradzix.gradzixcore.playerSettings.data.database.entities.SettingsItemsEntity;
 import me.xxgradzix.gradzixcore.playerSettings.data.database.managers.SettingItemsEntityManager;
@@ -15,19 +15,12 @@ import java.util.Map;
 
 public class DataManager {
 
-    private static boolean useDB = Gradzix_Core.USEDB;
-
-//    private static PanelOptionsEntity panelOptionsEntity = Panel.getPanelOptionsEntityManager().getPanelOptionsEntity();
-
-
-//    if(panelOptionsEntity == null) {
-//        Panel.getPanelOptionsEntityManager().createOrUpdatePanelOptionsEntity(new PanelOptionsEntity(true, true, true, true));
-//    }
+    private static final boolean useDB = Gradzix_Core.USEDB;
 
     public static void setAutoExchangeStatus(Player player, boolean value) {
 
         if(useDB) {
-            SettingOptionsEntityManager manager = Ustawienia.getSettingOptionsEntityManager();
+            SettingOptionsEntityManager manager = PlayerSettings.getSettingOptionsEntityManager();
             SettingsEntity entity = manager.getSettingsEntityByUUID(player.getUniqueId());
             entity.setAutoExchange(value);
             manager.createOrUpdateSettingsEntity(entity);
@@ -38,7 +31,7 @@ public class DataManager {
     public static void setAutoSellStatus(Player player, boolean value) {
 
         if(useDB) {
-            SettingOptionsEntityManager manager = Ustawienia.getSettingOptionsEntityManager();
+            SettingOptionsEntityManager manager = PlayerSettings.getSettingOptionsEntityManager();
             SettingsEntity entity = manager.getSettingsEntityByUUID(player.getUniqueId());
             entity.setAutoSell(value);
             manager.createOrUpdateSettingsEntity(entity);
@@ -49,29 +42,25 @@ public class DataManager {
     public static void setAutoExchangeItems(HashMap<ItemStack, ItemStack> itemMap) {
 
         if(useDB) {
-            SettingItemsEntityManager manager = Ustawienia.getSettingItemsEntityManager();
+            SettingItemsEntityManager manager = PlayerSettings.getSettingItemsEntityManager();
             SettingsItemsEntity entity = manager.getSettingsItemsEntity();
             entity.setItemsToExchange(itemMap);
             manager.createOrUpdateSettingsItemsEntity(entity);
-        } else {
-//            UstawieniaOpcjeConfigFile.setAutoSprzedazStatus(player, true);
         }
     }
     public static void setAutoSellItems(HashMap<ItemStack, Integer> itemMap) {
 
         if(useDB) {
-            SettingItemsEntityManager manager = Ustawienia.getSettingItemsEntityManager();
+            SettingItemsEntityManager manager = PlayerSettings.getSettingItemsEntityManager();
             SettingsItemsEntity entity = manager.getSettingsItemsEntity();
             entity.setItemsToSell(itemMap);
             manager.createOrUpdateSettingsItemsEntity(entity);
-        } else {
-//            UstawieniaOpcjeConfigFile.setAutoSprzedazStatus(player, true);
         }
     }
     public static Map<ItemStack, ItemStack> getAutoExchangeItems() {
 
         if(useDB) {
-            SettingItemsEntityManager manager = Ustawienia.getSettingItemsEntityManager();
+            SettingItemsEntityManager manager = PlayerSettings.getSettingItemsEntityManager();
             SettingsItemsEntity entity = manager.getSettingsItemsEntity();
             return entity.getItemsToExchange();
         } else {
@@ -81,7 +70,7 @@ public class DataManager {
     public static Map<ItemStack, Integer> getAutoSellItems() {
 
         if(useDB) {
-            SettingItemsEntityManager manager = Ustawienia.getSettingItemsEntityManager();
+            SettingItemsEntityManager manager = PlayerSettings.getSettingItemsEntityManager();
             SettingsItemsEntity entity = manager.getSettingsItemsEntity();
             return entity.getItemsToSell();
         } else {
@@ -93,7 +82,7 @@ public class DataManager {
     public static boolean getAutoExchangeStatus(Player player) {
 
         if(useDB) {
-            SettingOptionsEntityManager manager = Ustawienia.getSettingOptionsEntityManager();
+            SettingOptionsEntityManager manager = PlayerSettings.getSettingOptionsEntityManager();
             SettingsEntity entity = manager.getSettingsEntityByUUID(player.getUniqueId());
             return entity.isAutoExchange();
         } else {
@@ -103,7 +92,7 @@ public class DataManager {
     public static boolean getAutoSellStatus(Player player) {
 
         if(useDB) {
-            SettingOptionsEntityManager manager = Ustawienia.getSettingOptionsEntityManager();
+            SettingOptionsEntityManager manager = PlayerSettings.getSettingOptionsEntityManager();
             SettingsEntity entity = manager.getSettingsEntityByUUID(player.getUniqueId());
             return entity.isAutoSell();
         } else {

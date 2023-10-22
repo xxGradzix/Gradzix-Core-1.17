@@ -15,30 +15,23 @@ public class PrioritiesGui implements InventoryHolder {
 
     private Inventory[] inventory;
     private int currentPage;
-    private int maxPage = 6;
+    private final int maxPage = 6;
     private ArrayList<ItemStack> itemList;
 
     public PrioritiesGui(ArrayList<ItemStack> itemList) {
 
-//        ItemStack[] itemKeys;
         if(itemList.isEmpty() || itemList == null) {
             this.itemList = new ArrayList<>();
-//            itemKeys = new ItemStack[9*maxPage];
         } else {
             this.itemList = itemList;
-//            itemKeys = itemMap.keySet().toArray(new ItemStack[9*maxPage]);
         }
-
 
         this.currentPage = 0;
         this.inventory = new Inventory[maxPage];
 
-        // Inicjalizacja inventories dla każdej strony
-
-
         int itemNum = 0;
         for (int i = 0; i < maxPage; i++) {
-            inventory[i] = Bukkit.createInventory(this, 54, "Ustawienia sprzedazy - Strona " + (i + 1));
+            inventory[i] = Bukkit.createInventory(this, 54, "PlayerSettings sprzedazy - Strona " + (i + 1));
 
             if(i > 0) inventory[i].setItem(45, ItemManager.previousPage);
             if(i<maxPage-1) inventory[i].setItem(53, ItemManager.nextPage);
@@ -63,8 +56,6 @@ public class PrioritiesGui implements InventoryHolder {
 
                 itemNum++;
             }
-
-
         }
     }
 

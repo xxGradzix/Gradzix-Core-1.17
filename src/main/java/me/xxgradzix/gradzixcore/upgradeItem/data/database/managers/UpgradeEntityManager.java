@@ -12,8 +12,6 @@ import java.util.List;
 
 public class UpgradeEntityManager {
     private Dao<UpgradeEntity, Long> entityDao;
-//    private Dao<UpgradeEntity, ItemStack> entityDao;
-
     public UpgradeEntityManager(ConnectionSource connectionSource) {
         try {
             entityDao = DaoManager.createDao(connectionSource, UpgradeEntity.class);

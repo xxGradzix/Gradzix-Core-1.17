@@ -3,11 +3,11 @@ package me.xxgradzix.gradzixcore.playerAbilities;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 import me.xxgradzix.gradzixcore.Gradzix_Core;
-import me.xxgradzix.gradzixcore.playerAbilities.commands.GiveOdlamekCommand;
-import me.xxgradzix.gradzixcore.playerAbilities.commands.ModyfikatoryUmiejetnosciCommand;
+import me.xxgradzix.gradzixcore.playerAbilities.commands.GiveFragmentCommand;
+import me.xxgradzix.gradzixcore.playerAbilities.commands.AbilitiesModifierCommand;
 import me.xxgradzix.gradzixcore.playerAbilities.commands.ResetUmiejetnosci;
 import me.xxgradzix.gradzixcore.playerAbilities.commands.UmiejetnosciCommand;
-import me.xxgradzix.gradzixcore.playerAbilities.data.configfiles.ModyfikatoryUmiejetnosciConfigFile;
+import me.xxgradzix.gradzixcore.playerAbilities.data.configfiles.AbilitiesModifiersConfigFile;
 import me.xxgradzix.gradzixcore.playerAbilities.data.configfiles.UmiejetnosciConfigFile;
 import me.xxgradzix.gradzixcore.playerAbilities.data.database.entities.AbilityModifierEntity;
 import me.xxgradzix.gradzixcore.playerAbilities.data.database.entities.PlayerAbilitiesEntity;
@@ -21,9 +21,9 @@ import me.xxgradzix.gradzixcore.playerAbilities.listeners.PlayerKillRankingIncre
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class Umiejetnosci {
+public class PlayerAbilities {
 
-    private Gradzix_Core plugin;
+    private final Gradzix_Core plugin;
 
     // db change
     private final ConnectionSource connectionSource;
@@ -48,7 +48,7 @@ public class Umiejetnosci {
     }
     ////////////
 
-    public Umiejetnosci(Gradzix_Core plugin, ConnectionSource connectionSource) {
+    public PlayerAbilities(Gradzix_Core plugin, ConnectionSource connectionSource) {
         this.plugin = plugin;
         this.connectionSource = connectionSource;
     }
@@ -62,8 +62,8 @@ public class Umiejetnosci {
         }
 
         plugin.getCommand("umiejetnosci").setExecutor(new UmiejetnosciCommand());
-        plugin.getCommand("modyfikatoryumiejetnosci").setExecutor(new ModyfikatoryUmiejetnosciCommand());
-        plugin.getCommand("giveodlamek").setExecutor(new GiveOdlamekCommand());
+        plugin.getCommand("modyfikatoryumiejetnosci").setExecutor(new AbilitiesModifierCommand());
+        plugin.getCommand("giveodlamek").setExecutor(new GiveFragmentCommand());
 
         plugin.getCommand("resetumiejetnosci").setExecutor(new ResetUmiejetnosci());
 
@@ -77,26 +77,26 @@ public class Umiejetnosci {
         UmiejetnosciConfigFile.save();
 
 
-        ModyfikatoryUmiejetnosciConfigFile.setup();
+        AbilitiesModifiersConfigFile.setup();
 
-        ModyfikatoryUmiejetnosciConfigFile.getCustomFile().addDefault("umiejetnosci.sila.1", 1.1);
-        ModyfikatoryUmiejetnosciConfigFile.getCustomFile().addDefault("umiejetnosci.sila.2", 1.2);
-        ModyfikatoryUmiejetnosciConfigFile.getCustomFile().addDefault("umiejetnosci.sila.3", 1.3);
-        ModyfikatoryUmiejetnosciConfigFile.getCustomFile().addDefault("umiejetnosci.sila.4", 1.4);
+        AbilitiesModifiersConfigFile.getCustomFile().addDefault("umiejetnosci.sila.1", 1.1);
+        AbilitiesModifiersConfigFile.getCustomFile().addDefault("umiejetnosci.sila.2", 1.2);
+        AbilitiesModifiersConfigFile.getCustomFile().addDefault("umiejetnosci.sila.3", 1.3);
+        AbilitiesModifiersConfigFile.getCustomFile().addDefault("umiejetnosci.sila.4", 1.4);
 
 
-        ModyfikatoryUmiejetnosciConfigFile.getCustomFile().addDefault("umiejetnosci.drop.1", 1.5);
-        ModyfikatoryUmiejetnosciConfigFile.getCustomFile().addDefault("umiejetnosci.drop.2", 2.0);
-        ModyfikatoryUmiejetnosciConfigFile.getCustomFile().addDefault("umiejetnosci.drop.3", 2.5);
-        ModyfikatoryUmiejetnosciConfigFile.getCustomFile().addDefault("umiejetnosci.drop.4", 3.0);
+        AbilitiesModifiersConfigFile.getCustomFile().addDefault("umiejetnosci.drop.1", 1.5);
+        AbilitiesModifiersConfigFile.getCustomFile().addDefault("umiejetnosci.drop.2", 2.0);
+        AbilitiesModifiersConfigFile.getCustomFile().addDefault("umiejetnosci.drop.3", 2.5);
+        AbilitiesModifiersConfigFile.getCustomFile().addDefault("umiejetnosci.drop.4", 3.0);
 
-        ModyfikatoryUmiejetnosciConfigFile.getCustomFile().addDefault("umiejetnosci.rank.1", 1.2);
-        ModyfikatoryUmiejetnosciConfigFile.getCustomFile().addDefault("umiejetnosci.rank.2", 1.4);
-        ModyfikatoryUmiejetnosciConfigFile.getCustomFile().addDefault("umiejetnosci.rank.3", 1.6);
-        ModyfikatoryUmiejetnosciConfigFile.getCustomFile().addDefault("umiejetnosci.rank.4", 1.8);
+        AbilitiesModifiersConfigFile.getCustomFile().addDefault("umiejetnosci.rank.1", 1.2);
+        AbilitiesModifiersConfigFile.getCustomFile().addDefault("umiejetnosci.rank.2", 1.4);
+        AbilitiesModifiersConfigFile.getCustomFile().addDefault("umiejetnosci.rank.3", 1.6);
+        AbilitiesModifiersConfigFile.getCustomFile().addDefault("umiejetnosci.rank.4", 1.8);
 
-        ModyfikatoryUmiejetnosciConfigFile.getCustomFile().options().copyDefaults(true);
-        ModyfikatoryUmiejetnosciConfigFile.save();
+        AbilitiesModifiersConfigFile.getCustomFile().options().copyDefaults(true);
+        AbilitiesModifiersConfigFile.save();
 
         ItemManager.init();
     }

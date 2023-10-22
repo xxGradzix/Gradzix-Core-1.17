@@ -1,12 +1,12 @@
 package me.xxgradzix.gradzixcore.playerSettings.gui.sprzedaz;
 
-//public class UlepszGui implements InventoryHolder, Listener {
+//public class UpgradeGui implements InventoryHolder, Listener {
 //
 //    private Inventory inventory;
 //    private int currentPage;
 //    private int maxPage;
 //
-//    public UlepszGui() {
+//    public UpgradeGui() {
 //        inventory = Bukkit.createInventory(this, 36, "Itemy do wymiany");
 //
 //    }
@@ -40,17 +40,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class SprzedazGui implements InventoryHolder {
+public class SellGui implements InventoryHolder {
 
     private Inventory[] inventory;
     private int currentPage;
-    private int maxPage = 25;
+    private final int maxPage = 25;
     private Map<ItemStack, Integer> itemMap;
 
-    public SprzedazGui(Map<ItemStack, Integer> itemMap) {
+    public SellGui(Map<ItemStack, Integer> itemMap) {
 
         ItemStack[] itemKeys;
-        if(itemMap.isEmpty() || itemMap == null) {
+        if(itemMap == null || itemMap.isEmpty()) {
             this.itemMap = new HashMap<>();
             itemKeys = new ItemStack[9*maxPage];
         } else {
@@ -62,12 +62,9 @@ public class SprzedazGui implements InventoryHolder {
         this.currentPage = 0;
         this.inventory = new Inventory[maxPage];
 
-        // Inicjalizacja inventories dla każdej strony
-
-
         int key = 0;
         for (int i = 0; i < maxPage; i++) {
-            inventory[i] = Bukkit.createInventory(this, 54, "Ustawienia sprzedazy - Strona " + (i + 1));
+            inventory[i] = Bukkit.createInventory(this, 54, "PlayerSettings sprzedaży - Strona " + (i + 1));
 
             if(i > 0) inventory[i].setItem(45, ItemManager.previousPage);
             if(i<maxPage-1) inventory[i].setItem(53, ItemManager.nextPage);
@@ -78,7 +75,6 @@ public class SprzedazGui implements InventoryHolder {
             for(int slot = 9; slot < 18;  slot++) {
                 inventory[i].setItem(slot, ItemManager.price);
             }
-
             for(int slot = 18; slot < 27;  slot++) {
                 inventory[i].setItem(slot, ItemManager.addOne);
             }
@@ -116,8 +112,6 @@ public class SprzedazGui implements InventoryHolder {
 
                 key++;
             }
-
-
         }
     }
 

@@ -7,7 +7,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import java.io.File;
 import java.io.IOException;
 
-public class ModyfikatoryUmiejetnosciConfigFile {
+public class AbilitiesModifiersConfigFile {
 
     private static File file;
     private static FileConfiguration customFile;
@@ -17,8 +17,8 @@ public class ModyfikatoryUmiejetnosciConfigFile {
         if(!file.exists()) {
             try{
                 file.createNewFile();
-            } catch (IOException e) {
-                //
+            } catch (IOException ignored) {
+
             }
         }
         customFile = YamlConfiguration.loadConfiguration(file);
@@ -39,11 +39,9 @@ public class ModyfikatoryUmiejetnosciConfigFile {
         customFile = YamlConfiguration.loadConfiguration(file);
     }
 
-    // sila
+    // strength
 
     public static double getSilaMultiplier(int level) {
-
-
         return (double) getCustomFile().get("umiejetnosci.sila." + level);
     }
 
@@ -53,7 +51,6 @@ public class ModyfikatoryUmiejetnosciConfigFile {
         save();
 
     }
-
 
     // drop
 

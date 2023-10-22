@@ -70,8 +70,8 @@ public class PanelCommand implements CommandExecutor {
 
             // SCRATCH CARD
 
-            GuiItem scratchCardOff = ItemBuilder.from(ItemManager.zdrapkaOff).asGuiItem();
-            GuiItem scratchCardOn = ItemBuilder.from(ItemManager.zdrapkaOn).asGuiItem();
+            GuiItem scratchCardOff = ItemBuilder.from(ItemManager.scratchCardOff).asGuiItem();
+            GuiItem scratchCardOn = ItemBuilder.from(ItemManager.scratchCardOn).asGuiItem();
 
             scratchCardOn.setAction((action) -> {
 
@@ -84,7 +84,6 @@ public class PanelCommand implements CommandExecutor {
 
             scratchCardOff.setAction((action) -> {
 
-//                PanelAdminConfigFile.setZdrapkaStatus(false);
                 DataManager.setScratchCardStatus(false);
 
                 p.sendMessage(ChatColor.RED + "Wyłączyłeś zdrapki");
@@ -99,79 +98,69 @@ public class PanelCommand implements CommandExecutor {
                 gui.setItem(2, 4, scratchCardOn);
             }
 
-            // Kity
+            // KITS
 
-            GuiItem kityOff = ItemBuilder.from(ItemManager.kityOff).asGuiItem();
-            GuiItem kityOn = ItemBuilder.from(ItemManager.kityOn).asGuiItem();
+            GuiItem kitsOff = ItemBuilder.from(ItemManager.kitsOff).asGuiItem();
+            GuiItem kitsOn = ItemBuilder.from(ItemManager.kitsOn).asGuiItem();
 
-            // TODO kolor itp wiadomosci
 
-            kityOn.setAction((action) -> {
+            kitsOn.setAction((action) -> {
 
-//                PanelAdminConfigFile.setKityStatus(true);
                 DataManager.setKitStatus(true);
 
                 p.sendMessage(ChatColor.RED + "Włączyłeś kity");
 
-                gui.updateItem(action.getSlot(), kityOff);
+                gui.updateItem(action.getSlot(), kitsOff);
             });
 
-            kityOff.setAction((action) -> {
+            kitsOff.setAction((action) -> {
 
-//                PanelAdminConfigFile.setKityStatus(false);
                 DataManager.setKitStatus(false);
 
                 p.sendMessage(ChatColor.RED + "Wyłączyłeś kity");
 
 
-                gui.updateItem(action.getSlot(), kityOn);
+                gui.updateItem(action.getSlot(), kitsOn);
             });
 
             if(DataManager.getKitStatus()) {
-                gui.setItem(2, 6, kityOff);
+                gui.setItem(2, 6, kitsOff);
             } else {
-                gui.setItem(2, 6, kityOn);
+                gui.setItem(2, 6, kitsOn);
             }
 
 
-            // Osiagniecia
+            // ACHIEVEMENTS
 
-            GuiItem osiagnieciaOff = ItemBuilder.from(ItemManager.osiagnieciaOff).asGuiItem();
-            GuiItem osiagnieciaOn = ItemBuilder.from(ItemManager.osiagnieciaOn).asGuiItem();
+            GuiItem achievementsOff = ItemBuilder.from(ItemManager.achievementsOff).asGuiItem();
+            GuiItem achievementsOn = ItemBuilder.from(ItemManager.achievementsOn).asGuiItem();
 
-            // TODO kolor itp wiadomosci
+            achievementsOn.setAction((action) -> {
 
-            osiagnieciaOn.setAction((action) -> {
-
-//                PanelAdminConfigFile.setOsiagnieciaStatus(true);
                 DataManager.setAchievementStatus(true);
 
                 p.sendMessage(ChatColor.RED + "Włączyłeś osiagniecia");
 
-                gui.updateItem(action.getSlot(), osiagnieciaOff);
+                gui.updateItem(action.getSlot(), achievementsOff);
             });
 
-            osiagnieciaOff.setAction((action) -> {
+            achievementsOff.setAction((action) -> {
 
-//                PanelAdminConfigFile.setOsiagnieciaStatus(false);
                 DataManager.setAchievementStatus(false);
 
                 p.sendMessage(ChatColor.RED + "Wyłączyłeś osiagniecia");
 
 
-                gui.updateItem(action.getSlot(), osiagnieciaOn);
+                gui.updateItem(action.getSlot(), achievementsOn);
             });
 
             if(DataManager.getAchievementStatus()) {
-                gui.setItem(2, 8, osiagnieciaOff);
+                gui.setItem(2, 8, achievementsOff);
             } else {
-                gui.setItem(2, 8, osiagnieciaOn);
+                gui.setItem(2, 8, achievementsOn);
             }
 
-
             gui.open(p);
-
-
         }
 
         return true;

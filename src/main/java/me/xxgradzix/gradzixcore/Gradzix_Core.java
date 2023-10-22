@@ -2,14 +2,15 @@ package me.xxgradzix.gradzixcore;
 
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.support.ConnectionSource;
-import me.xxgradzix.gradzixcore.chatOptions.Chatopcje;
+import me.xxgradzix.gradzixcore.chatOptions.ChatOptions;
 import me.xxgradzix.gradzixcore.itemPickupPriorities.ItemPickupPriorities;
-import me.xxgradzix.gradzixcore.magicFirework.Magicznafajerwerka;
+import me.xxgradzix.gradzixcore.magicFirework.MagicFirework;
 import me.xxgradzix.gradzixcore.adminPanel.Panel;
+import me.xxgradzix.gradzixcore.playerSettings.PlayerSettings;
+import me.xxgradzix.gradzixcore.rewardSystem.RewardSystem;
 import me.xxgradzix.gradzixcore.serverconfig.ServerConfig;
 import me.xxgradzix.gradzixcore.upgradeItem.Ulepsz;
-import me.xxgradzix.gradzixcore.playerAbilities.Umiejetnosci;
-import me.xxgradzix.gradzixcore.playerSettings.Ustawienia;
+import me.xxgradzix.gradzixcore.playerAbilities.PlayerAbilities;
 import me.xxgradzix.gradzixcore.scratchCard.Zdrapka;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.plugin.RegisteredServiceProvider;
@@ -27,18 +28,19 @@ public final class Gradzix_Core extends JavaPlugin {
     private static Economy econ = null;
 
     private Zdrapka zdrapkaPlugin;
-    private Chatopcje chatopcje;
-    private Magicznafajerwerka magicznafajerwerka;
+    private ChatOptions chatOptions;
+    private MagicFirework magicFirework;
 
-    private Ustawienia ustawienia;
+    private PlayerSettings playerSettings;
     private Panel panel;
-    private Umiejetnosci umiejetnosci;
+    private PlayerAbilities playerAbilities;
     private ServerConfig serverConfig;
     private Ulepsz ulepsz;
     private ItemPickupPriorities itemPickupPriorities;
+    private RewardSystem rewardSystem;
 
     // database variables
-    private String databaseUrl = "jdbc:mysql://localhost:3306/gradzixcore";
+    private final String databaseUrl = "jdbc:mysql://localhost:3306/gradzixcore";
     private ConnectionSource connectionSource;
     public void configureDB() throws SQLException {
 
@@ -50,17 +52,15 @@ public final class Gradzix_Core extends JavaPlugin {
 
     }
 
-    //////////////////
 
     @Override
     public void onEnable()  {
         if (!LocalDate.now().isBefore(LocalDate.of(2023, 12, 30))) {
-            System.out.println("jezeli wyswietliła sie ta wiadomosc to skontaktuj sie z xxGradzix");
+            System.out.println("jeżeli wyświetliła się ta wiadomosc to skontaktuj sie z xxGradzix");
             return;
         }
         if (!setupEconomy() ) {
             log.severe(String.format("[%s] - Disabled due to no Vault dependency found!", getDescription().getName()));
-//          getServer().getPluginManager().disablePlugin(this);
             return;
         }
         try {
@@ -68,30 +68,30 @@ public final class Gradzix_Core extends JavaPlugin {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        if (chatopcje == null) {
-            chatopcje = new Chatopcje(this, connectionSource);
-            chatopcje.onEnable();
+        if (chatOptions == null) {
+            chatOptions = new ChatOptions(this, connectionSource);
+            chatOptions.onEnable();
         }
         if (zdrapkaPlugin == null) {
             zdrapkaPlugin = new Zdrapka(this, connectionSource);
             zdrapkaPlugin.onEnable();
         }
 
-        if (magicznafajerwerka == null) {
-            magicznafajerwerka = new Magicznafajerwerka(this);
-            magicznafajerwerka.onEnable();
+        if (magicFirework == null) {
+            magicFirework = new MagicFirework(this);
+            magicFirework.onEnable();
         }
-        if (ustawienia == null) {
-            ustawienia = new Ustawienia(this, connectionSource);
-            ustawienia.onEnable();
+        if (playerSettings == null) {
+            playerSettings = new PlayerSettings(this, connectionSource);
+            playerSettings.onEnable();
         }
         if (panel == null) {
             panel = new Panel(this, connectionSource);
             panel.onEnable();
         }
-        if (umiejetnosci == null) {
-            umiejetnosci = new Umiejetnosci(this, connectionSource);
-            umiejetnosci.onEnable();
+        if (playerAbilities == null) {
+            playerAbilities = new PlayerAbilities(this, connectionSource);
+            playerAbilities.onEnable();
         }
         if (ulepsz == null) {
             ulepsz = new Ulepsz(this, connectionSource);
@@ -108,6 +108,10 @@ public final class Gradzix_Core extends JavaPlugin {
         if (itemPickupPriorities == null) {
             itemPickupPriorities = new ItemPickupPriorities(this, connectionSource);
             itemPickupPriorities.onEnable();
+        }
+        if (rewardSystem == null) {
+            rewardSystem = new RewardSystem(this, connectionSource);
+            rewardSystem.onEnable();
         }
     }
     private boolean setupEconomy() {
@@ -127,6 +131,6 @@ public final class Gradzix_Core extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        // Plugin shutdown logic
+        
     }
 }

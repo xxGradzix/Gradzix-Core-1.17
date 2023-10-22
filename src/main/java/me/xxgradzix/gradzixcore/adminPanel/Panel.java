@@ -16,9 +16,9 @@ import java.sql.SQLException;
 
 public class Panel {
 
-    private Gradzix_Core plugin;
+    private final Gradzix_Core plugin;
     // db change
-    private ConnectionSource connectionSource;
+    private final ConnectionSource connectionSource;
 
     private static PanelOptionsEntityManager panelOptionsEntityManager;
 
@@ -41,8 +41,6 @@ public class Panel {
 
         try {
             configureDB();
-
-//            getPanelOptionsEntityManager().createOrUpdatePanelOptionsEntity(new PanelOptionsEntity(true, true, true, true));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

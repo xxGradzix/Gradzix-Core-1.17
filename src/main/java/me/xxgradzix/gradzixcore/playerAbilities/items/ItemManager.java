@@ -13,9 +13,9 @@ import java.util.ArrayList;
 
 public class ItemManager {
 
-    public static ItemStack odlamek;
+    public static ItemStack fragment;
 
-    // sila
+    // strength
     public static ItemStack sila0;
     public static ItemStack sila1;
     public static ItemStack sila2;
@@ -58,12 +58,7 @@ public class ItemManager {
 
     public static void init() {
 
-        createOdlamek();
-
-//        drop1Mod = ModyfikatoryUmiejetnosciConfigFile.getDropMultiplier(1);
-//        drop2Mod = ModyfikatoryUmiejetnosciConfigFile.getDropMultiplier(2);
-//        drop3Mod = ModyfikatoryUmiejetnosciConfigFile.getDropMultiplier(3);
-//        drop4Mod = ModyfikatoryUmiejetnosciConfigFile.getDropMultiplier(4);
+        createFragment();
 
         drop1Mod = DataManager.getAbilityModifier(Ability.DROP, 1);
         drop2Mod = DataManager.getAbilityModifier(Ability.DROP, 2);
@@ -83,7 +78,7 @@ public class ItemManager {
         rank4Mod = (int) ((DataManager.getAbilityModifier(Ability.RANK, 4) * 100) - 100);
 
 
-        // sila
+        // strength
         createSila0();
         createSila1();
         createSila2();
@@ -110,9 +105,9 @@ public class ItemManager {
 
     }
 
-    // sila
+    // strength
 
-    private static void createOdlamek() {
+    private static void createFragment() {
 
         ItemStack item = new ItemStack(Material.PRISMARINE_SHARD, 1);
 
@@ -125,24 +120,15 @@ public class ItemManager {
         meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         item.setItemMeta(meta);
 
-
-        odlamek = item;
+        fragment = item;
     }
 
-    // sila
-    private static final Material silamat = Material.REDSTONE;
-
-//    private static int sila1Percent = (int) ((ModyfikatoryUmiejetnosciConfigFile.getSilaMultiplier(1) * 100) - 100);
-//    private static int sila2Percent = (int) ((ModyfikatoryUmiejetnosciConfigFile.getSilaMultiplier(2) * 100) - 100);
-//    private static int sila3Percent = (int) ((ModyfikatoryUmiejetnosciConfigFile.getSilaMultiplier(3) * 100) - 100);
-//    private static int sila4Percent = (int) ((ModyfikatoryUmiejetnosciConfigFile.getSilaMultiplier(4) * 100) - 100);
-
+    // strength
+    private static final Material STRENGTH_MATERIAL = Material.REDSTONE;
 
     private static void createSila0() {
 
-
-
-        ItemStack item = new ItemStack(silamat, 1);
+        ItemStack item = new ItemStack(STRENGTH_MATERIAL, 1);
 
         ItemMeta meta = item.getItemMeta();
         meta.setDisplayName(ChatColor.RED + "Poziom Siły");
@@ -164,7 +150,7 @@ public class ItemManager {
 
     private static void createSila1() {
 
-        ItemStack item = new ItemStack(silamat, 1);
+        ItemStack item = new ItemStack(STRENGTH_MATERIAL, 1);
 
         ItemMeta meta = item.getItemMeta();
         meta.setDisplayName(ChatColor.RED + "Poziom Siły");
@@ -185,7 +171,7 @@ public class ItemManager {
     }
     private static void createSila2() {
 
-        ItemStack item = new ItemStack(silamat, 1);
+        ItemStack item = new ItemStack(STRENGTH_MATERIAL, 1);
 
         ItemMeta meta = item.getItemMeta();
         meta.setDisplayName(ChatColor.RED + "Poziom Siły");
@@ -206,7 +192,7 @@ public class ItemManager {
     }
     private static void createSila3() {
 
-        ItemStack item = new ItemStack(silamat, 1);
+        ItemStack item = new ItemStack(STRENGTH_MATERIAL, 1);
 
         ItemMeta meta = item.getItemMeta();
         meta.setDisplayName(ChatColor.RED + "Poziom Siły");
@@ -227,7 +213,7 @@ public class ItemManager {
     }
     private static void createSila4() {
 
-        ItemStack item = new ItemStack(silamat, 1);
+        ItemStack item = new ItemStack(STRENGTH_MATERIAL, 1);
 
         ItemMeta meta = item.getItemMeta();
         meta.setDisplayName(ChatColor.RED + "Poziom Siły");
@@ -249,13 +235,13 @@ public class ItemManager {
 
 
     // drop
-    private static final Material dropmat = Material.NETHERITE_PICKAXE;
+    private static final Material DROP_MATERIAL = Material.NETHERITE_PICKAXE;
 
     private static void createDrop0() {
 
 
 
-        ItemStack item = new ItemStack(dropmat, 1);
+        ItemStack item = new ItemStack(DROP_MATERIAL, 1);
 
         ItemMeta meta = item.getItemMeta();
         meta.setDisplayName(ChatColor.DARK_GRAY + "Dodatkowy drop");
@@ -277,7 +263,7 @@ public class ItemManager {
 
     private static void createDrop1() {
 
-        ItemStack item = new ItemStack(dropmat, 1);
+        ItemStack item = new ItemStack(DROP_MATERIAL, 1);
 
         ItemMeta meta = item.getItemMeta();
         meta.setDisplayName(ChatColor.DARK_GRAY + "Dodatkowy drop");
@@ -298,7 +284,7 @@ public class ItemManager {
     }
     private static void createDrop2() {
 
-        ItemStack item = new ItemStack(dropmat, 1);
+        ItemStack item = new ItemStack(DROP_MATERIAL, 1);
 
         ItemMeta meta = item.getItemMeta();
         meta.setDisplayName(ChatColor.DARK_GRAY + "Dodatkowy drop");
@@ -319,7 +305,7 @@ public class ItemManager {
     }
     private static void createDrop3() {
 
-        ItemStack item = new ItemStack(dropmat, 1);
+        ItemStack item = new ItemStack(DROP_MATERIAL, 1);
 
         ItemMeta meta = item.getItemMeta();
         meta.setDisplayName(ChatColor.DARK_GRAY + "Dodatkowy drop");
@@ -340,7 +326,7 @@ public class ItemManager {
     }
     private static void createDrop4() {
 
-        ItemStack item = new ItemStack(dropmat, 1);
+        ItemStack item = new ItemStack(DROP_MATERIAL, 1);
 
         ItemMeta meta = item.getItemMeta();
         meta.setDisplayName(ChatColor.DARK_GRAY + "Dodatkowy drop");

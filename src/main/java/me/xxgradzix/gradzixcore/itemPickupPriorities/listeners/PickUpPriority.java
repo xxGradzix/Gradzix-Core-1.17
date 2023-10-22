@@ -33,7 +33,7 @@ public class PickUpPriority implements Listener {
     public void addItemsWithPriorities(Player player, ArrayList<ItemStack> itemsToGive, ArrayList<ItemStack> priorities) {
         PlayerInventory inventory = player.getInventory();
 
-        ArrayList<ItemStack> priorytetyKopia = new ArrayList<>(priorities);
+        ArrayList<ItemStack> prioritiesCopy = new ArrayList<>(priorities);
 
         ArrayList<ItemStack> itemsAfterPriorities = new ArrayList<>(itemsToGive);
 
@@ -42,8 +42,8 @@ public class PickUpPriority implements Listener {
         for (ItemStack itemStack : itemsToGive) {
             if(itemStack.containsEnchantment(Enchantment.VANISHING_CURSE)) continue;
 
-            if (priorytetyKopia.contains(itemStack)) {
-                priorytetyKopia.remove(itemStack);
+            if (prioritiesCopy.contains(itemStack)) {
+                prioritiesCopy.remove(itemStack);
                 itemsAfterPriorities.remove(itemStack);
                 if (inventory.firstEmpty() != -1) {
                     inventory.addItem(itemStack);

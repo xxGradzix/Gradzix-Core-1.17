@@ -6,28 +6,24 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
-public class WymianaGuiClick implements Listener {
+public class ExchangeGuiClick implements Listener {
 
 
 
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
-        if (!(event.getInventory().getHolder() instanceof WymianaGui)) {
+        if (!(event.getInventory().getHolder() instanceof ExchangeGui)) {
             return;
         }
 
         Player player = (Player) event.getWhoClicked();
-        int clickedSlot = event.getSlot();//.getRawSlot();
+        int clickedSlot = event.getSlot();
 
-
-
-        if (clickedSlot > 17 && clickedSlot < 36 && event.getClickedInventory().getHolder() instanceof WymianaGui) {
-
-            event.setCancelled(true); // Zablokuj zabieranie przedmiotów z górnego rzędu
-            // Dodaj swoją logikę obsługi kliknięcia w górny rząd GUI
+        if (clickedSlot > 17 && clickedSlot < 36 && event.getClickedInventory().getHolder() instanceof ExchangeGui) {
+            event.setCancelled(true);
         }
 
-        WymianaGui gui = (WymianaGui) event.getInventory().getHolder();
+        ExchangeGui gui = (ExchangeGui) event.getInventory().getHolder();
 
 
         if (event.getCurrentItem() != null && event.getCurrentItem().equals(ItemManager.previousPage)) {
@@ -35,9 +31,5 @@ public class WymianaGuiClick implements Listener {
         } else if (event.getCurrentItem() != null && event.getCurrentItem().equals(ItemManager.nextPage)) {
             gui.nextPage(player);
         }
-
-        // Obsługa kliknięcia innych przedmiotów w GUI, jeśli potrzebna
     }
-
-
 }

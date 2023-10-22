@@ -30,8 +30,6 @@ public class DamageEvent implements Listener {
 
             double oldDamage = event.getDamage();
 
-
-//            player.sendMessage("Old " + oldDamage);
             double damageReduction = protLevel * 0.17;
 
 
@@ -43,11 +41,6 @@ public class DamageEvent implements Listener {
             double serverDamageMultiplier = DataManager.getServerDamageMultiplier();
 
             event.setDamage(newDamage * serverDamageMultiplier);
-
-
-
-//            player.sendMessage("Current " + event.getDamage());
-
         }
     }
 

@@ -57,25 +57,11 @@ public class OnBlockBreak implements Listener {
         blockTypes.add(Material.COBWEB);
         blockTypes.add(Material.COBWEB);
 
-
-//        com.sk89q.worldedit.util.Location location = BukkitAdapter.adapt(block.getLocation());
-//        ApplicableRegionSet regions = WorldGuard.getInstance().getPlatform().getRegionContainer().createQuery().getApplicableRegions(location);
-//        LocalPlayer localPlayer = WorldGuardPlugin.inst().wrapPlayer(p);
-//
-//
-//
-//
-//        StateFlag.State flagState = regions.queryValue(localPlayer, Flags.BLOCK_BREAK);
-//
-//        if (flagState != null && (flagState == StateFlag.State.DENY || flagState.equals(StateFlag.State.DENY))) {
-            if(!blockTypes.contains(block.getType())) {
-
-                event.setCancelled(true);
-                p.sendMessage("Nie możesz niszczyć tego bloku w tym regionie.");
-                return;
-            }
-
-//        }
+        if(!blockTypes.contains(block.getType())) {
+            event.setCancelled(true);
+            p.sendMessage("Nie możesz niszczyć tego bloku w tym regionie.");
+            return;
+        }
 
 
         if(event.isCancelled()) return;
@@ -83,15 +69,12 @@ public class OnBlockBreak implements Listener {
 
         if(!p.getGameMode().equals(GameMode.SURVIVAL)) return;
 
-//        int playerLevel = UmiejetnosciConfigFile.getDropLevel(p);
         int playerLevel = DataManager.getPlayerAbilityLevel(Ability.DROP, p);
-
 
         if(playerLevel == 0) return;
 
         double multiplier = DataManager.getAbilityModifier(Ability.DROP, playerLevel);
 
-//        Block block = event.getBlock();
         ItemStack itemInHand = event.getPlayer().getInventory().getItemInMainHand();
         int fortuneLevel = itemInHand.getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS);
 
@@ -113,11 +96,6 @@ public class OnBlockBreak implements Listener {
             } else {
                 event.getBlock().getWorld().dropItemNaturally(event.getBlock().getLocation(), drop);
             }
-
         }
-
     }
-
-
-
 }

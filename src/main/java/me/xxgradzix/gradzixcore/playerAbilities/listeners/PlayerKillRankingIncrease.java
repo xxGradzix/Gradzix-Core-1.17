@@ -1,6 +1,6 @@
 package me.xxgradzix.gradzixcore.playerAbilities.listeners;
 
-import me.xxgradzix.gradzixcore.chatOptions.Chatopcje;
+import me.xxgradzix.gradzixcore.chatOptions.ChatOptions;
 import me.xxgradzix.gradzixcore.chatOptions.data.database.entities.ChatOptionsEntity;
 import me.xxgradzix.gradzixcore.playerAbilities.data.DataManager;
 import me.xxgradzix.gradzixcore.playerAbilities.data.database.entities.enums.Ability;
@@ -37,9 +37,7 @@ public class PlayerKillRankingIncrease implements Listener {
 
         event.setAttackerPointsChange(killerPoints);
 
-
-//        List<String> blockedMessagePlayerUUIDs = ChatOpcjeConfigFile.getShowDeathMessageStatusUUIDsList(true);
-        List<ChatOptionsEntity> chatOptionsEntityList = Chatopcje.getChatOptionsEntityManager().getChatOptionsEntitiesWhereShowDeathMessageIs(false);
+        List<ChatOptionsEntity> chatOptionsEntityList = ChatOptions.getChatOptionsEntityManager().getChatOptionsEntitiesWhereShowDeathMessageIs(false);
 
         List<UUID> blockedMessagePlayerUUIDs = chatOptionsEntityList.stream().map((ChatOptionsEntity::getUuid)).collect(Collectors.toList());
 

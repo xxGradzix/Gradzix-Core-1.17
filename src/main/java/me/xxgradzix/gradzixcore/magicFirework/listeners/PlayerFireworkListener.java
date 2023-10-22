@@ -6,7 +6,7 @@ import com.sk89q.worldguard.WorldGuard;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.protection.ApplicableRegionSet;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
-import me.xxgradzix.gradzixcore.magicFirework.items.ItemMenager;
+import me.xxgradzix.gradzixcore.magicFirework.items.ItemManager;
 import org.bukkit.Location;
 import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
@@ -26,12 +26,12 @@ public class PlayerFireworkListener implements Listener {
     public void onPlayerInteract(PlayerInteractEvent event) {
 
         if(event.getAction().equals(Action.RIGHT_CLICK_AIR) || event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
-            if (event.getItem() != null && event.getItem().isSimilar(ItemMenager.firework)) {
+            if (event.getItem() != null && event.getItem().isSimilar(ItemManager.firework)) {
                 event.setCancelled(true);
 
 
                 if(getPlayerRegionName(event.getPlayer()) != null &&
-                        (getPlayerRegionName(event.getPlayer()) == "strefabezelytry" || getPlayerRegionName(event.getPlayer()).equals("strefabezelytry"))) {
+                        (getPlayerRegionName(event.getPlayer()).equals("strefabezelytry") || getPlayerRegionName(event.getPlayer()).equals("strefabezelytry"))) {
                     event.setCancelled(true);
 //
                     event.setUseItemInHand(Event.Result.DENY);
@@ -39,20 +39,17 @@ public class PlayerFireworkListener implements Listener {
                 }
 
 
-                    if (getPlayerRegionName(event.getPlayer()) != "strefabezelytry") {
+                    if (!getPlayerRegionName(event.getPlayer()).equals("strefabezelytry")) {
 
                     ItemStack fireworkItem = event.getItem();
 
                     FireworkMeta fireworkMeta = (FireworkMeta) fireworkItem.getItemMeta();
 
-
                     Firework firework = event.getPlayer().launchProjectile(Firework.class);
                     firework.setFireworkMeta(fireworkMeta);
 
-
                     Vector direction = event.getPlayer().getLocation().getDirection();
                     firework.setVelocity(direction);
-
                 }
                 event.setCancelled(true);
             }

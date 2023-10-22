@@ -20,15 +20,6 @@ public class AbilitiesModifiersEntityManager {
         }
     }
 
-//    public void createAbilityModifierEntity(AbilityModifierEntity entity) {
-//        try {
-//            entityDao.create(entity);
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//    }
-
-
     public void createOrUpdateAbilityModifierEntity(AbilityModifierEntity entity) {
         try {
             entityDao.createOrUpdate(entity);
@@ -54,66 +45,6 @@ public class AbilitiesModifiersEntityManager {
             return null;
         }
     }
-//    public AbilityModifierEntity getStrengthAbilityModifierEntity() {
-//        try {
-//
-//            AbilityModifierEntity entity = entityDao.queryForId(1L);
-//
-//            if(entity == null) {
-//                entity = new AbilityModifierEntity(1L, "strength",
-//                        1.1, 1.2, 1.3, 1.4,
-//                        64, 128, 192, 256);
-//                createOrUpdateAbilityModifierEntity(entity);
-//            }
-//
-//            return entity;
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//            return null;
-//        }
-//    }
-//    public AbilityModifierEntity getDropAbilityModifierEntity() {
-//        try {
-//            AbilityModifierEntity entity = entityDao.queryForId(2L);
-//
-//            if(entity == null) {
-//                entity = new AbilityModifierEntity(2L, "drop",
-//                        1.5, 2, 2.5, 3,
-//                        64, 128, 192, 256);
-//                createOrUpdateAbilityModifierEntity(entity);
-//            }
-//
-//            return entity;
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//            return null;
-//        }
-//    }
-//    public AbilityModifierEntity getRankAbilityModifierEntity() {
-//        try {
-//            AbilityModifierEntity entity = entityDao.queryForId(3L);
-//
-//            if(entity == null) {
-//                entity = new AbilityModifierEntity(3L, "drop",
-//                        1.1, 1.2, 1.3, 1.4,
-//                        64, 128, 192, 256);
-//                createOrUpdateAbilityModifierEntity(entity);
-//            }
-//
-//            return entity;
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//            return null;
-//        }
-//    }
-//    public List<AbilityModifierEntity> getAbilityModifierEntities() {
-//        try {
-//            return entityDao.queryForAll();
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//            return null;
-//        }
-//    }
 
     public void updateAbilityModifierEntity(AbilityModifierEntity entity) {
         try {

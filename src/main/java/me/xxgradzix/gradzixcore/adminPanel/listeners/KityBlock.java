@@ -19,59 +19,32 @@ public class KityBlock implements Listener {
 
         if(!DataManager.getKitStatus()) {
 
-
             if (message.startsWith("/kit")) {
-
                     event.setCancelled(true);
-
                     p.sendMessage(ChatColor.RED + "Kity są aktualnie wyłączone");
-
-
             }
             if (message.startsWith("/essentials:kits")) {
-
                 event.setCancelled(true);
-
                 p.sendMessage(ChatColor.RED + "Kity są aktualnie wyłączone");
-
-
             }
             if (message.startsWith("/essentials:ekits")) {
-
                 event.setCancelled(true);
-
                 p.sendMessage(ChatColor.RED + "Kity są aktualnie wyłączone");
-
-
             }
             if (message.startsWith("/essentials:kit")) {
-
                 event.setCancelled(true);
-
                 p.sendMessage(ChatColor.RED + "Kity są aktualnie wyłączone");
-
-
             }
             if (message.startsWith("/essentials:ekit")) {
-
                 event.setCancelled(true);
-
                 p.sendMessage(ChatColor.RED + "Kity są aktualnie wyłączone");
-
-
             }
-
             if (message.startsWith("/ekit")) {
-
                 if(!message.equals("/ekit gracz")) {
                     event.setCancelled(true);
-
                     p.sendMessage(ChatColor.RED + "Kity są aktualnie wyłączone");
                 }
-
             }
         }
-
     }
-
 }

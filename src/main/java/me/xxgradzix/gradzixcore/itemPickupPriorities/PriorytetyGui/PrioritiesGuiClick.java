@@ -16,13 +16,11 @@ public class PrioritiesGuiClick implements Listener {
         }
 
         Player player = (Player) event.getWhoClicked();
-        int clickedSlot = event.getSlot();//.getRawSlot();
-
-
+        int clickedSlot = event.getSlot();
 
         if (clickedSlot > 44 && event.getClickedInventory().getHolder() instanceof PrioritiesGui) {
 
-            event.setCancelled(true); // Zablokuj zabieranie przedmiotów z górnego rzędu
+            event.setCancelled(true);
 
         }
 

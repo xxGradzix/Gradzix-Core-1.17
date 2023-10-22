@@ -10,9 +10,6 @@ import java.util.List;
 
 public class ItemManager {
 
-//    public static ItemStack vipCollectButton;
-
-
     public static void init() {
 
     }
@@ -23,11 +20,9 @@ public class ItemManager {
         ItemMeta meta = item.getItemMeta();
         meta.setDisplayName(ChatColor.YELLOW + "VIP");
         List<String> lore = new ArrayList<>();
-        lore.add(ChatColor.GRAY + "Kliknij aby odebrać nagrode");
+        lore.add(ChatColor.GRAY + "Kliknij aby odebrać nagrodę");
         lore.add(ChatColor.GRAY + "Ilość nagród do odebrania: " + ChatColor.DARK_GRAY + rewardAmount);
         meta.setLore(lore);
-//        meta.addEnchant(Enchantment.LUCK, 1, false);
-//        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         item.setItemMeta(meta);
 
         return item;
@@ -38,11 +33,9 @@ public class ItemManager {
         ItemMeta meta = item.getItemMeta();
         meta.setDisplayName(ChatColor.GOLD + "SVIP");
         List<String> lore = new ArrayList<>();
-        lore.add(ChatColor.GRAY + "Kliknij aby odebrać nagrode");
+        lore.add(ChatColor.GRAY + "Kliknij aby odebrać nagrodę");
         lore.add(ChatColor.GRAY + "Ilość nagród do odebrania: " + ChatColor.DARK_GRAY + rewardAmount);
         meta.setLore(lore);
-//        meta.addEnchant(Enchantment.LUCK, 1, false);
-//        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         item.setItemMeta(meta);
 
         return item;
@@ -53,11 +46,9 @@ public class ItemManager {
         ItemMeta meta = item.getItemMeta();
         meta.setDisplayName(ChatColor.GREEN + "AGE");
         List<String> lore = new ArrayList<>();
-        lore.add(ChatColor.GRAY + "Kliknij aby odebrać nagrode");
+        lore.add(ChatColor.GRAY + "Kliknij aby odebrać nagrodę");
         lore.add(ChatColor.GRAY + "Ilość nagród do odebrania: " + ChatColor.DARK_GRAY + rewardAmount);
         meta.setLore(lore);
-//        meta.addEnchant(Enchantment.LUCK, 1, false);
-//        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         item.setItemMeta(meta);
 
         return item;

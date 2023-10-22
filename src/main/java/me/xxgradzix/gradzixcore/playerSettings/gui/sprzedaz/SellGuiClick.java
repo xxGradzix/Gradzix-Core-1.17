@@ -10,28 +10,23 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-public class SprzedazGuiClick implements Listener {
+public class SellGuiClick implements Listener {
 
 
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
-        if (!(event.getInventory().getHolder() instanceof SprzedazGui)) {
+        if (!(event.getInventory().getHolder() instanceof SellGui)) {
             return;
         }
 
         Player player = (Player) event.getWhoClicked();
-        int clickedSlot = event.getSlot();//.getRawSlot();
+        int clickedSlot = event.getSlot();
 
-
-
-        if (clickedSlot > 8 && clickedSlot < 54 && event.getClickedInventory().getHolder() instanceof SprzedazGui) {
-
-            event.setCancelled(true); // Zablokuj zabieranie przedmiotów z górnego rzędu
-
+        if (clickedSlot > 8 && clickedSlot < 54 && event.getClickedInventory().getHolder() instanceof SellGui) {
+            event.setCancelled(true);
         }
 
-        SprzedazGui gui = (SprzedazGui) event.getInventory().getHolder();
-
+        SellGui gui = (SellGui) event.getInventory().getHolder();
 
         if (event.getCurrentItem() != null && event.getCurrentItem().equals(ItemManager.previousPage)) {
             gui.previousPage(player);
@@ -100,9 +95,5 @@ public class SprzedazGuiClick implements Listener {
             gui.getInventory().setItem(event.getSlot() - 27, item);
 
         }
-
-
     }
-
-
 }

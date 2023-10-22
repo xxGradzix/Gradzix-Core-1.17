@@ -30,7 +30,6 @@ public class BazarWystawCommand implements CommandExecutor {
                     sender.sendMessage("/bazarwwystaw [CENA] [ILOSC]");
                     return true;
                 }
-
             }
         }
         return false;

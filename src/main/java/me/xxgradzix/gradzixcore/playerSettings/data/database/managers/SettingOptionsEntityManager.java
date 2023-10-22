@@ -52,30 +52,6 @@ public class SettingOptionsEntityManager {
             return null;
         }
     }
-//    public List<PanelOptionsEntity> getPanelOptionsEntityWhereShowDeathMessageIs(boolean expectedValue) {
-//        try {
-//            return chatOptionsEntityDao.queryForEq("showDeathMessages", expectedValue);
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//            return null;
-//        }
-//    }
-//    public List<PlayerAbilitiesEntity> getChatOptionsEntitiesWhereShowScratchCardMessageIs(boolean expectedValue) {
-//        try {
-//            return chatOptionsEntityDao.queryForEq("showScratchCardMessages", expectedValue);
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//            return null;
-//        }
-//    }
-//    public List<PlayerAbilitiesEntity> getChatOptionsEntitiesWhereShowChatMessageIs(boolean expectedValue) {
-//        try {
-//            return chatOptionsEntityDao.queryForEq("showChatMessages", expectedValue);
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//            return null;
-//        }
-//    }
 
     public void updateSettingsEntity(SettingsEntity entity) {
         try {

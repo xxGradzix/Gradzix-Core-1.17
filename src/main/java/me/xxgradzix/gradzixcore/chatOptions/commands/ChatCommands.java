@@ -3,7 +3,7 @@ package me.xxgradzix.gradzixcore.chatOptions.commands;
 import dev.triumphteam.gui.builder.item.ItemBuilder;
 import dev.triumphteam.gui.guis.Gui;
 import dev.triumphteam.gui.guis.GuiItem;
-import me.xxgradzix.gradzixcore.chatOptions.Chatopcje;
+import me.xxgradzix.gradzixcore.chatOptions.ChatOptions;
 import me.xxgradzix.gradzixcore.chatOptions.data.database.entities.ChatOptionsEntity;
 import me.xxgradzix.gradzixcore.chatOptions.items.ItemManager;
 import net.kyori.adventure.text.Component;
@@ -31,41 +31,39 @@ public class ChatCommands implements CommandExecutor {
                         .disableAllInteractions()
                         .create();
 
+                // glass
 
-                // szklo
+                ArrayList<Integer> black = new ArrayList<>();
 
-                ArrayList<Integer> czarne = new ArrayList<>();
-
-                czarne.add(0);
-                czarne.add(2);
-                czarne.add(4);
-                czarne.add(6);
-                czarne.add(8);
-                czarne.add(18);
-                czarne.add(20);
-                czarne.add(22);
-                czarne.add(24);
-                czarne.add(26);
+                black.add(0);
+                black.add(2);
+                black.add(4);
+                black.add(6);
+                black.add(8);
+                black.add(18);
+                black.add(20);
+                black.add(22);
+                black.add(24);
+                black.add(26);
 
                 GuiItem blackGlass = new GuiItem(ItemManager.blackGlass);
 
-                gui.setItem(czarne, blackGlass);
+                gui.setItem(black, blackGlass);
 
+                ArrayList<Integer> green = new ArrayList<>();
 
-                ArrayList<Integer> zielone = new ArrayList<>();
-
-                zielone.add(1);
-                zielone.add(3);
-                zielone.add(5);
-                zielone.add(7);
-                zielone.add(19);
-                zielone.add(21);
-                zielone.add(23);
-                zielone.add(25);
+                green.add(1);
+                green.add(3);
+                green.add(5);
+                green.add(7);
+                green.add(19);
+                green.add(21);
+                green.add(23);
+                green.add(25);
 
                 GuiItem greenGlass = new GuiItem(ItemManager.greenGlass);
 
-                gui.setItem(zielone, greenGlass);
+                gui.setItem(green, greenGlass);
 
                 ArrayList<Integer> lime = new ArrayList<>();
 
@@ -79,8 +77,7 @@ public class ChatCommands implements CommandExecutor {
 
                 gui.setItem(lime, limeGlass);
 
-
-                ChatOptionsEntity chatOptionsEntity = Chatopcje.getChatOptionsEntityManager().getChatOptionsEntityById(p.getUniqueId());
+                ChatOptionsEntity chatOptionsEntity = ChatOptions.getChatOptionsEntityManager().getChatOptionsEntityById(p.getUniqueId());
 
                 if(chatOptionsEntity == null) {
                     chatOptionsEntity = new ChatOptionsEntity(p.getUniqueId(),
@@ -89,84 +86,57 @@ public class ChatCommands implements CommandExecutor {
                             true,
                             true,
                             true);
-                    Chatopcje.getChatOptionsEntityManager().createChatOptionsEntity(chatOptionsEntity);
+                    ChatOptions.getChatOptionsEntityManager().createChatOptionsEntity(chatOptionsEntity);
                 }
 
                 ChatOptionsEntity finalChatOptionsEntity = chatOptionsEntity;
-                // smierc
+
+                // death
 
                 GuiItem deathButtonOff = ItemBuilder.from(ItemManager.deathButtonOff).asGuiItem();
 
                 GuiItem deathButtonOn = ItemBuilder.from(ItemManager.deathButtonOn).asGuiItem();
 
-                // TODO kolor itp wiadomosci
-
-
-
                 deathButtonOn.setAction((action) -> {
-
-//                    ChatOpcjeConfigFile.setShowDeathMessage(p, false);
                     finalChatOptionsEntity.setShowDeathMessages(true);
-
                     p.sendMessage(ChatColor.RED + "Włączyłeś wiadomości o śmierci");
-
                     gui.updateItem(action.getSlot(), deathButtonOff);
                 });
 
                 deathButtonOff.setAction((action) -> {
-
-//                    ChatOpcjeConfigFile.setShowDeathMessage(p, true);
                     finalChatOptionsEntity.setShowDeathMessages(false);
-
-
                     p.sendMessage(ChatColor.RED + "Wyłączyłeś wiadomości o śmierci");
-
                     gui.updateItem(action.getSlot(), deathButtonOn);
                 });
 
-//                if(ChatOpcjeConfigFile.getShowDeathMessageStatus(p)) {
                 if(chatOptionsEntity.isShowDeathMessages()) {
                     gui.setItem(2, 2, deathButtonOff);
                 } else {
                     gui.setItem(2, 2, deathButtonOn);
                 }
 
+                // scratch card
 
-                // zdrapka
+                GuiItem scratchCardOff = ItemBuilder.from(ItemManager.scratchCardButtonOff).asGuiItem();
 
-                GuiItem zdrapkaButtonOff = ItemBuilder.from(ItemManager.zdrapkaButtonOff).asGuiItem();
+                GuiItem scratchCardOn = ItemBuilder.from(ItemManager.scratchCardButtonOn).asGuiItem();
 
-                GuiItem zdrapkaButtonOn = ItemBuilder.from(ItemManager.zdrapkaButtonOn).asGuiItem();
-
-
-                // TODO kolor itp wiadomosci
-
-                zdrapkaButtonOn.setAction((action) -> {
-
-//                    ChatOpcjeConfigFile.setShowZdrapkaMessage(p, false);
+                scratchCardOn.setAction((action) -> {
                     finalChatOptionsEntity.setShowScratchCardMessages(true);
-
                     p.sendMessage(ChatColor.RED + "Włączyłeś wiadomości o dropie ze zdrapki");
-
-                    gui.updateItem(action.getSlot(), zdrapkaButtonOff);
+                    gui.updateItem(action.getSlot(), scratchCardOff);
                 });
 
-                zdrapkaButtonOff.setAction((action) -> {
-
-//                    ChatOpcjeConfigFile.setShowZdrapkaMessage(p, true);
+                scratchCardOff.setAction((action) -> {
                     finalChatOptionsEntity.setShowScratchCardMessages(false);
-
-
                     p.sendMessage(ChatColor.RED + "Wyłączyłeś wiadomości o dropie ze zdrapki");
-
-                    gui.updateItem(action.getSlot(), zdrapkaButtonOn);
+                    gui.updateItem(action.getSlot(), scratchCardOn);
                 });
-
 
                 if(chatOptionsEntity.isShowScratchCardMessages()) {
-                    gui.setItem(2, 4, zdrapkaButtonOff);
+                    gui.setItem(2, 4, scratchCardOff);
                 } else {
-                    gui.setItem(2, 4, zdrapkaButtonOn);
+                    gui.setItem(2, 4, scratchCardOn);
                 }
 
                 // chat
@@ -175,32 +145,18 @@ public class ChatCommands implements CommandExecutor {
 
                 GuiItem chatButtonOn = ItemBuilder.from(ItemManager.chatButtonOn).asGuiItem();
 
-                // TODO kolor itp wiadomosci
-
                 chatButtonOn.setAction((action) -> {
-
-//                    ChatOpcjeConfigFile.setShowChatMessage(p, false);
                     finalChatOptionsEntity.setShowChatMessages(true);
-
-
                     p.sendMessage(ChatColor.RED + "Włączyłeś wiadomości z chatu");
-
                     gui.updateItem(action.getSlot(), chatButtonOff);
                 });
 
                 chatButtonOff.setAction((action) -> {
-
-//                    ChatOpcjeConfigFile.setShowChatMessage(p, true);
                     finalChatOptionsEntity.setShowChatMessages(false);
-
-
                     p.sendMessage(ChatColor.RED + "Wyłączyłeś wiadomości z chatu");
-
                     gui.updateItem(action.getSlot(), chatButtonOn);
                 });
 
-
-//                if(ChatOpcjeConfigFile.getShowChatMessageStatus(p)) {
                 if(chatOptionsEntity.isShowChatMessages()) {
                     gui.setItem(2, 6, chatButtonOff);
                 } else {
@@ -213,48 +169,33 @@ public class ChatCommands implements CommandExecutor {
 
                 GuiItem shopButtonOn = ItemBuilder.from(ItemManager.shopButtonOn).asGuiItem();
 
-                // TODO kolor itp wiadomosci
-
                 shopButtonOn.setAction((action) -> {
-//                    ChatOpcjeConfigFile.setShowShopMessage(p, false);
                     finalChatOptionsEntity.setShowShopMessages(true);
                     p.sendMessage(ChatColor.RED + "Funkcjonalność chwilowo niedostępna");
-
                     gui.updateItem(action.getSlot(), shopButtonOff);
                 });
 
                 shopButtonOff.setAction((action) -> {
-
-//                    ChatOpcjeConfigFile.setShowShopMessage(p, true);
                     finalChatOptionsEntity.setShowShopMessages(false);
-
                     p.sendMessage(ChatColor.RED + "Funkcjonalność chwilowo niedostępna");
-
                     gui.updateItem(action.getSlot(), shopButtonOn);
                 });
 
-
-//                if(ChatOpcjeConfigFile.getShowShopMessageStatus(p)) {
                 if(chatOptionsEntity.isShowShopMessages()) {
                     gui.setItem(2, 8, shopButtonOff);
                 } else {
                     gui.setItem(2, 8, shopButtonOn);
                 }
 
-
                 gui.open(p);
 
-//                gui.setDefaultClickAction((action) -> {
-//                    Chatopcje.getChatOptionsEntityManager().createOrUpdateChatOptionsEntity(finalChatOptionsEntity);
-//                });
                 gui.setCloseGuiAction((action) -> {
-                    Chatopcje.getChatOptionsEntityManager().createOrUpdateChatOptionsEntity(finalChatOptionsEntity);
+                    ChatOptions.getChatOptionsEntityManager().createOrUpdateChatOptionsEntity(finalChatOptionsEntity);
                 });
             } else {
                 sender.sendMessage(ChatColor.RED + "Ta komenda może być używana tylko przez graczy.");
             }
         }
-
         return true;
     }
 }

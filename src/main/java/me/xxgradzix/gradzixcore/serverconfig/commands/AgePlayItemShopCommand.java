@@ -1,6 +1,6 @@
 package me.xxgradzix.gradzixcore.serverconfig.commands;
 
-import me.xxgradzix.gradzixcore.zdrapka.items.ItemManager;
+import me.xxgradzix.gradzixcore.scratchCard.items.ItemManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

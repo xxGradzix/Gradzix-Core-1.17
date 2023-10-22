@@ -7,7 +7,6 @@ import com.j256.ormlite.support.ConnectionSource;
 import me.xxgradzix.gradzixcore.serverconfig.data.database.entities.ServerConfigEntity;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 public class ServerConfigEntityManager {
     private Dao<ServerConfigEntity, Long> entityDao;
@@ -32,7 +31,7 @@ public class ServerConfigEntityManager {
         try {
             ServerConfigEntity entity = entityDao.queryForFirst();
             if(entity == null) {
-                entity = new ServerConfigEntity(1, new ArrayList<>());
+                entity = new ServerConfigEntity(1);
                 createOrUpdateServerConfigEntity(entity);
             }
 

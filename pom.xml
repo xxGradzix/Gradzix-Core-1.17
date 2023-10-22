@@ -39,7 +39,7 @@
                         </goals>
                         <configuration>
                             <createDependencyReducedPom>false</createDependencyReducedPom>
-                            <outputFile>C:\Users\kuba\Desktop\spigot1_17_1\plugins\Gradzix-Core.jar</outputFile>
+                            <outputFile>C:\Users\kuba\Desktop\serwery\BoxPvp_1\plugins\Gradzix-Core.jar</outputFile>
                         </configuration>
                     </execution>
                 </executions>

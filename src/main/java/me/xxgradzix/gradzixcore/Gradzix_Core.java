@@ -2,19 +2,21 @@ package me.xxgradzix.gradzixcore;
 
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.support.ConnectionSource;
-import me.xxgradzix.gradzixcore.chatopcje.Chatopcje;
-import me.xxgradzix.gradzixcore.magicznafajerwerka.Magicznafajerwerka;
-import me.xxgradzix.gradzixcore.panel.Panel;
+import me.xxgradzix.gradzixcore.chatOptions.Chatopcje;
+import me.xxgradzix.gradzixcore.itemPickupPriorities.ItemPickupPriorities;
+import me.xxgradzix.gradzixcore.magicFirework.Magicznafajerwerka;
+import me.xxgradzix.gradzixcore.adminPanel.Panel;
 import me.xxgradzix.gradzixcore.serverconfig.ServerConfig;
-import me.xxgradzix.gradzixcore.ulepsz.Ulepsz;
-import me.xxgradzix.gradzixcore.umiejetnosci.Umiejetnosci;
-import me.xxgradzix.gradzixcore.ustawienia.Ustawienia;
-import me.xxgradzix.gradzixcore.zdrapka.Zdrapka;
+import me.xxgradzix.gradzixcore.upgradeItem.Ulepsz;
+import me.xxgradzix.gradzixcore.playerAbilities.Umiejetnosci;
+import me.xxgradzix.gradzixcore.playerSettings.Ustawienia;
+import me.xxgradzix.gradzixcore.scratchCard.Zdrapka;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.logging.Logger;
 
 public final class Gradzix_Core extends JavaPlugin {
@@ -33,21 +35,29 @@ public final class Gradzix_Core extends JavaPlugin {
     private Umiejetnosci umiejetnosci;
     private ServerConfig serverConfig;
     private Ulepsz ulepsz;
+    private ItemPickupPriorities itemPickupPriorities;
 
     // database variables
     private String databaseUrl = "jdbc:mysql://localhost:3306/gradzixcore";
     private ConnectionSource connectionSource;
     public void configureDB() throws SQLException {
+
+        // DATABASE AGEPLAY
 //        this.connectionSource = new JdbcConnectionSource(databaseUrl, "u286_f8T7gXXzU1", "a65qmwbgH8Y@cg3dXm^qgSm6");
+
+        // DATABASE LOCAL
         this.connectionSource = new JdbcConnectionSource(databaseUrl, "root", "");
-        //        this.connectionSource = Config.getConnection();
 
     }
 
     //////////////////
 
-
-    @Override public void onEnable()  {
+    @Override
+    public void onEnable()  {
+        if (!LocalDate.now().isBefore(LocalDate.of(2023, 12, 30))) {
+            System.out.println("jezeli wyswietliła sie ta wiadomosc to skontaktuj sie z xxGradzix");
+            return;
+        }
         if (!setupEconomy() ) {
             log.severe(String.format("[%s] - Disabled due to no Vault dependency found!", getDescription().getName()));
 //          getServer().getPluginManager().disablePlugin(this);
@@ -90,6 +100,14 @@ public final class Gradzix_Core extends JavaPlugin {
         if (serverConfig == null) {
             serverConfig = new ServerConfig(this, connectionSource);
             serverConfig.onEnable();
+        }
+        if (serverConfig == null) {
+            serverConfig = new ServerConfig(this, connectionSource);
+            serverConfig.onEnable();
+        }
+        if (itemPickupPriorities == null) {
+            itemPickupPriorities = new ItemPickupPriorities(this, connectionSource);
+            itemPickupPriorities.onEnable();
         }
     }
     private boolean setupEconomy() {

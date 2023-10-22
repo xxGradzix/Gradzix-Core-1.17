@@ -5,10 +5,6 @@ import me.xxgradzix.gradzixcore.serverconfig.ServerConfig;
 import me.xxgradzix.gradzixcore.serverconfig.data.configfiles.ConfigServera;
 import me.xxgradzix.gradzixcore.serverconfig.data.database.entities.ServerConfigEntity;
 import me.xxgradzix.gradzixcore.serverconfig.data.database.managers.ServerConfigEntityManager;
-import org.bukkit.inventory.ItemStack;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class DataManager {
 
@@ -40,35 +36,4 @@ public class DataManager {
         }
 
     }
-
-    public static void setItemPriorities(List<ItemStack> itemPriorities) {
-
-        if(useDB) {
-
-            ServerConfigEntityManager manager = ServerConfig.getServerConfigEntityManager();
-            ServerConfigEntity entity = manager.getServerConfigEntity();
-
-            entity.setItemPriorities(itemPriorities);
-            manager.createOrUpdateServerConfigEntity(entity);
-
-        } else {
-            ConfigServera.setItemPriorities((ArrayList<ItemStack>) itemPriorities);
-        }
-
-    }
-    public static List<ItemStack> getItemPriorities() {
-
-        if(useDB) {
-            ServerConfigEntityManager manager = ServerConfig.getServerConfigEntityManager();
-            ServerConfigEntity entity = manager.getServerConfigEntity();
-
-            return entity.getItemPriorities();
-        } else {
-            throw new RuntimeException("nie ma obsulgi pliku konfiguracyjnego");
-        }
-
-    }
-
-
-
 }

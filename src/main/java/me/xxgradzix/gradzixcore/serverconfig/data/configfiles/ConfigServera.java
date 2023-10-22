@@ -3,11 +3,9 @@ package me.xxgradzix.gradzixcore.serverconfig.data.configfiles;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.inventory.ItemStack;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class ConfigServera {
 
@@ -55,17 +53,17 @@ public class ConfigServera {
         save();
     }
 
-    public static ArrayList<ItemStack> getItemPriorities() {
-
-        return (ArrayList<ItemStack>) getCustomFile().getList("itemPriorities");
-
-    }
-
-
-    public static void setItemPriorities(ArrayList<ItemStack> itemPriorities) {
-        getCustomFile().set("itemPriorities", itemPriorities);
-        save();
-    }
+//    public static ArrayList<ItemStack> getItemPriorities() {
+//
+//        return (ArrayList<ItemStack>) getCustomFile().getList("itemPriorities");
+//
+//    }
+//
+//
+//    public static void setItemPriorities(ArrayList<ItemStack> itemPriorities) {
+//        getCustomFile().set("itemPriorities", itemPriorities);
+//        save();
+//    }
 
 
 }

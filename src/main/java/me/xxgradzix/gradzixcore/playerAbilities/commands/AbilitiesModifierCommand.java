@@ -7,16 +7,33 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-public class AbilitiesModifierCommand implements CommandExecutor {
+import java.util.ArrayList;
+import java.util.List;
+
+public class AbilitiesModifierCommand implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
         if (args.length == 3) {
-            String type = args[0];
-            int level = Integer.parseInt(args[1]);
-            double multiplier = Double.parseDouble(args[2]);
-
+            String type = args[0].toLowerCase();
+            int level;
+            try {
+                level = Integer.parseInt(args[1]);
+            } catch (Exception e) {
+                // Todo must be number MEssage
+                return false;
+            }
+            double multiplier;
+            try {
+                multiplier = Double.parseDouble(args[2]);
+            } catch (Exception e) {
+                // Todo must be number MEssage
+                return false;
+            }
             if(level < 1 || level > 4) {
                 sender.sendMessage(ChatColor.RED + "nie możesz ustawić takiego poziomu");
                 return false;
@@ -52,6 +69,21 @@ public class AbilitiesModifierCommand implements CommandExecutor {
             sender.sendMessage(ChatColor.RED + "Nieprawidłowe użycie komendy. Użyj /modyfikatoryumiejetnosci [typ] [level] [multiplier]");
             return false;
         }
+    }
+
+    @Nullable
+    @Override
+    public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, @NotNull String[] args) {
+        if(command.getName().equalsIgnoreCase("modyfikatoryumiejetnosci")) {
+            if (args.length == 1) {
+                List<String> completions = new ArrayList<>();
+                completions.add("DROP");
+                completions.add("RANK");
+                completions.add("SILA");
+                return completions;
+            }
+        }
+        return null;
     }
 }
 

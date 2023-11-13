@@ -6,6 +6,7 @@ import me.xxgradzix.gradzixcore.Gradzix_Core;
 import me.xxgradzix.gradzixcore.rewardSystem.commands.CollectRewardsCommand;
 import me.xxgradzix.gradzixcore.rewardSystem.database.entities.PlayerRewardsEntity;
 import me.xxgradzix.gradzixcore.rewardSystem.database.managers.PlayerRewardsEntityManager;
+import me.xxgradzix.gradzixcore.rewardSystem.managers.RewardManager;
 
 import java.sql.SQLException;
 
@@ -20,8 +21,13 @@ public class RewardSystem {
 
 
     private PlayerRewardsEntityManager playerRewardsEntityManager;
+
+    public static RewardManager rewardManager;
     public PlayerRewardsEntityManager playerRewardsEntityManager() {
         return playerRewardsEntityManager;
+    }
+    public RewardManager getRewardManager() {
+        return rewardManager;
     }
     public RewardSystem(Gradzix_Core plugin, ConnectionSource connectionSource) {
         this.plugin = plugin;
@@ -33,8 +39,13 @@ public class RewardSystem {
     }
 
     public void onEnable() {
-
-        plugin.getCommand("odbierz").setExecutor(new CollectRewardsCommand(playerRewardsEntityManager));
+        try {
+            configureDB();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        rewardManager = new RewardManager(playerRewardsEntityManager);
+        plugin.getCommand("odbierz").setExecutor(new CollectRewardsCommand(playerRewardsEntityManager, rewardManager));
 
     }
 

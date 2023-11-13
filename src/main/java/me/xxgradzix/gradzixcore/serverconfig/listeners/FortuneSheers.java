@@ -29,7 +29,7 @@ public class FortuneSheers implements Listener {
 
                 if(event.getBlock() != null && blockTypes.contains(event.getBlock().getType())) {
                     ArrayList<ItemStack> drops = (ArrayList<ItemStack>) event.getBlock().getDrops();
-                    event.setDropItems(false);
+//                    event.setDropItems(false);
                     for(ItemStack drop : drops) {
                         event.getBlock().getWorld().dropItemNaturally(event.getBlock().getLocation(), drop);
                         event.getBlock().getWorld().dropItemNaturally(event.getBlock().getLocation(), drop);

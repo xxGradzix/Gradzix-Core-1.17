@@ -74,6 +74,7 @@ public class DataManager {
             AbilitiesModifiersEntityManager manager = PlayerAbilities.getAbilitiesModifiersEntityManager();
             AbilityModifierEntity entity = manager.getAbilityModifierEntityByAbilityType(ability);
             entity.setAbilityModifier(level, modifier);
+            manager.updateAbilityModifierEntity(entity);
 
         } else {
             throw new RuntimeException("Nie ma obsługi pliku konfiguracyjnego");

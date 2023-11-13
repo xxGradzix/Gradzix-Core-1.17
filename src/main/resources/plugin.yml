@@ -4,7 +4,8 @@ main: me.xxgradzix.gradzixcore.Gradzix_Core
 api-version: 1.17
 authors: [xxGradzix]
 
-depend: [WorldGuard]
+depend: [WorldGuard, WorldEdit]
+
 
 commands:
   givezdrapka:
@@ -76,3 +77,24 @@ commands:
   ais:
     description: Komenda dla itemshopu
     permission: serverConfig.ais
+
+  odbierz:
+    description: odbiera nagrode
+    permission: rewardsystem.odbierz
+
+  createGenerator:
+    description: tworzy generator
+    permission: generators.createGenerator
+  setGenerator:
+    description: umiejscawia generator
+    permission: generators.setGenerator
+  refreshGenerators:
+    description: odswieza generator
+    permission: generators.refreshGenerators
+
+  showGenerators:
+    description: otwiera gui generatorow generator
+    permission: generators.showGenerators
+  events:
+    description: startuje event
+    permission: events.startevent

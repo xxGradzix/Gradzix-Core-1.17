@@ -2,8 +2,11 @@ package me.xxgradzix.gradzixcore;
 
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.support.ConnectionSource;
+import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import me.xxgradzix.gradzixcore.adminPanel.Panel;
 import me.xxgradzix.gradzixcore.chatOptions.ChatOptions;
+import me.xxgradzix.gradzixcore.events.Events;
+import me.xxgradzix.gradzixcore.generators.Generators;
 import me.xxgradzix.gradzixcore.itemPickupPriorities.ItemPickupPriorities;
 import me.xxgradzix.gradzixcore.magicFirework.MagicFirework;
 import me.xxgradzix.gradzixcore.playerAbilities.PlayerAbilities;
@@ -12,13 +15,14 @@ import me.xxgradzix.gradzixcore.rewardSystem.RewardSystem;
 import me.xxgradzix.gradzixcore.scratchCard.Zdrapka;
 import me.xxgradzix.gradzixcore.serverconfig.ServerConfig;
 import me.xxgradzix.gradzixcore.upgradeItem.Ulepsz;
-
 import net.milkbowl.vault.economy.Economy;
+import org.bukkit.Bukkit;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.Properties;
@@ -42,14 +46,36 @@ public final class Gradzix_Core extends JavaPlugin {
     private Ulepsz ulepsz;
     private ItemPickupPriorities itemPickupPriorities;
     private RewardSystem rewardSystem;
+    private Generators generators;
+    private Events events;
 
     private ConnectionSource connectionSource;
 
-    public static Properties loadConfig() throws IOException {
+//    public static Properties loadConfig() throws IOException {
+//        Properties prop = new Properties();
+//        FileInputStream input = new FileInputStream("src/main/resources/application.properties");
+//        prop.load(input);
+//        input.close();
+//        return prop;
+//    }
+    Properties loadConfig() throws IOException {
         Properties prop = new Properties();
-        FileInputStream input = new FileInputStream("application.properties");
-        prop.load(input);
-        input.close();
+        InputStream input = getClass().getClassLoader().getResourceAsStream("application.properties");
+
+        try {
+            prop.load(input);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (input != null) {
+                    input.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
         return prop;
     }
 
@@ -75,6 +101,11 @@ public final class Gradzix_Core extends JavaPlugin {
         if (!setupEconomy() ) {
             log.severe(String.format("[%s] - Disabled due to no Vault dependency found!", getDescription().getName()));
             return;
+        }
+//        WorldEditPlugin worldEdit = Bukkit.getPluginManager().getPlugin("WorldEdit");
+        if (Bukkit.getPluginManager().getPlugin("WorldEdit") != null) {
+        } else {
+            getLogger().severe("WorldEdit is not available.");
         }
         try {
             configureDB();
@@ -126,6 +157,14 @@ public final class Gradzix_Core extends JavaPlugin {
             rewardSystem = new RewardSystem(this, connectionSource);
             rewardSystem.onEnable();
         }
+        if (generators == null) {
+            generators = new Generators(this, getWorldEdit(), connectionSource);
+            generators.onEnable();
+        }
+        if (events == null) {
+            events = new Events(this, connectionSource);
+            events.onEnable();
+        }
     }
     private boolean setupEconomy() {
         if (getServer().getPluginManager().getPlugin("Vault") == null) {
@@ -140,6 +179,11 @@ public final class Gradzix_Core extends JavaPlugin {
     }
     public static Economy getEconomy() {
         return econ;
+    }
+    private WorldEditPlugin getWorldEdit() {
+        Plugin p = Bukkit.getServer().getPluginManager().getPlugin("WorldEdit");
+        if (p instanceof WorldEditPlugin) return (WorldEditPlugin) p;
+        else return null;
     }
 
     @Override

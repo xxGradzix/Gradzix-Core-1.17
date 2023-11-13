@@ -11,6 +11,9 @@ import java.util.UUID;
 @DatabaseTable(tableName = "players_rewards")
 public class PlayerRewardsEntity {
 
+    public enum Reward {
+        vip, svip, age, bogacz, jaskiniowca
+    }
     @DatabaseField(unique = true, id = true)
     private UUID id;
 

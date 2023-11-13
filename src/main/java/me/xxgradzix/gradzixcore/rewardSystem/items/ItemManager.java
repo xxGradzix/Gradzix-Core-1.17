@@ -53,6 +53,19 @@ public class ItemManager {
 
         return item;
     }
+    public static ItemStack createRewardCollectButton(Material rewardMaterial, String rewardName, int rewardAmount) {
+        ItemStack item = new ItemStack(rewardMaterial, 1);
+
+        ItemMeta meta = item.getItemMeta();
+        meta.setDisplayName(rewardName);
+        List<String> lore = new ArrayList<>();
+        lore.add(ChatColor.GRAY + "Kliknij aby odebrać nagrodę");
+        lore.add(ChatColor.GRAY + "Ilość nagród do odebrania: " + ChatColor.DARK_GRAY + rewardAmount);
+        meta.setLore(lore);
+        item.setItemMeta(meta);
+
+        return item;
+    }
 
 
 

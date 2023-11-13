@@ -12,7 +12,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 public class InventoryUtils {
-	
+
 	public static String toBase64(Inventory inventory) {
         try {
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -28,9 +28,9 @@ public class InventoryUtils {
             return Base64Coder.encodeLines(outputStream.toByteArray());
         } catch (Exception e) {
             throw new IllegalStateException("Unable to save item stacks.", e);
-        }    
+        }
     }
-	
+
 	public static Inventory fromBase64(String data) throws IOException {
         try {
             ByteArrayInputStream inputStream = new ByteArrayInputStream(Base64Coder.decodeLines(data));
@@ -40,14 +40,14 @@ public class InventoryUtils {
             for (int i = 0; i < inventory.getSize(); i++) {
                 inventory.setItem(i, (ItemStack) dataInput.readObject());
             }
-            
+
             dataInput.close();
             return inventory;
         } catch (ClassNotFoundException e) {
             throw new IOException("Unable to decode class type.", e);
         }
     }
-	
+
 	 public static String itemStackArrayToBase64(ItemStack[] items) throws IllegalStateException {
 	    	try {
 	            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -65,7 +65,7 @@ public class InventoryUtils {
 	            throw new IllegalStateException("Unable to save item stacks.", e);
 	        }
 	    }
-	
+
 	public static ItemStack[] itemStackArrayFromBase64(String data) throws IOException {
     	try {
             ByteArrayInputStream inputStream = new ByteArrayInputStream(Base64Coder.decodeLines(data));
@@ -75,7 +75,7 @@ public class InventoryUtils {
             for (int i = 0; i < items.length; i++) {
             	items[i] = (ItemStack) dataInput.readObject();
             }
-            
+
             dataInput.close();
             return items;
         } catch (ClassNotFoundException e) {

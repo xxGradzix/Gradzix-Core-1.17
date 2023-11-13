@@ -10,7 +10,10 @@ import me.xxgradzix.gradzixcore.serverconfig.commands.SetDamageCommand;
 import me.xxgradzix.gradzixcore.serverconfig.data.configfiles.ConfigServera;
 import me.xxgradzix.gradzixcore.serverconfig.data.database.entities.ServerConfigEntity;
 import me.xxgradzix.gradzixcore.serverconfig.data.database.managers.ServerConfigEntityManager;
-import me.xxgradzix.gradzixcore.serverconfig.listeners.*;
+import me.xxgradzix.gradzixcore.serverconfig.listeners.BlockPlacingBlocks;
+import me.xxgradzix.gradzixcore.serverconfig.listeners.DamageEvent;
+import me.xxgradzix.gradzixcore.serverconfig.listeners.FortuneSheers;
+import me.xxgradzix.gradzixcore.serverconfig.listeners.VanishingPotionBottle;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -42,14 +45,16 @@ public class ServerConfig {
         }
 
         plugin.getServer().getPluginManager().registerEvents(new DamageEvent(), plugin);
-        plugin.getServer().getPluginManager().registerEvents(new ElytraBLock(), plugin);
-        plugin.getServer().getPluginManager().registerEvents(new PlayerFireworkListener(), plugin);
+//        plugin.getServer().getPluginManager().registerEvents(new ElytraBLock(), plugin);
+//        plugin.getServer().getPluginManager().registerEvents(new PlayerFireworkListener(), plugin);
         plugin.getServer().getPluginManager().registerEvents(new VanishingPotionBottle(plugin), plugin);
 
-        plugin.getServer().getPluginManager().registerEvents(new StrefaAFK(plugin), plugin);
+//        plugin.getServer().getPluginManager().registerEvents(new StrefaAFK(plugin), plugin);
         plugin.getServer().getPluginManager().registerEvents(new FortuneSheers(), plugin);
-        plugin.getServer().getPluginManager().registerEvents(new OnPlayerJoinStrefaAfk(plugin), plugin);
-        plugin.getServer().getPluginManager().registerEvents(new BlockPlacingBlocks(), plugin);
+//        plugin.getServer().getPluginManager().registerEvents(new OnPlayerJoinStrefaAfk(plugin), plugin);
+        BlockPlacingBlocks blockPlacingBlocks = new BlockPlacingBlocks(plugin);
+        blockPlacingBlocks.runTaskTimer(plugin, 0L, 20L * 5);
+        plugin.getServer().getPluginManager().registerEvents(blockPlacingBlocks, plugin);
 
         plugin.getCommand("setserverdamagemultiplier").setExecutor(new SetDamageCommand());
         plugin.getCommand("bazarwystaw").setExecutor(new BazarWystawCommand());

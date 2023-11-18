@@ -3,6 +3,7 @@ package me.xxgradzix.gradzixcore.generators.commands;
 import com.sk89q.worldedit.IncompleteRegionException;
 import com.sk89q.worldedit.bukkit.BukkitAdapter;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
+import com.sk89q.worldedit.internal.annotation.Selection;
 import com.sk89q.worldedit.regions.Region;
 import me.xxgradzix.gradzixcore.generators.data.database.entities.Generator;
 import me.xxgradzix.gradzixcore.generators.data.database.entities.GeneratorLocation;
@@ -27,6 +28,7 @@ import java.util.stream.Collectors;
 public class SetGeneratorCommand implements CommandExecutor, TabCompleter {
 
     private final WorldEditPlugin worldEdit;
+
     private final GeneratorManager generatorManager;
     private final GeneratorLocationManager generatorLocationManager;
 
@@ -98,7 +100,22 @@ public class SetGeneratorCommand implements CommandExecutor, TabCompleter {
                 minLocation,
                 maxLocation
         );
-        generatorLocationManager.createOrUpdateGeneratorLocation(generatorLocation);
+        generatorLocationManager.createOrUpdateGeneratorLocation(selection, generatorLocation);
+//        RegionManager regionManager = WorldGuard.getInstance().getPlatform().getRegionContainer().get(selection.getWorld());
+//        ProtectedCuboidRegion newRegion = new ProtectedCuboidRegion("generator",
+//                selection.getMinimumPoint(),
+//                selection.getMaximumPoint());
+//
+//        try {
+//
+//            regionManager.addRegion(newRegion);
+//            regionManager.save();
+//
+//            player.sendMessage("Region został utworzony na podstawie zaznaczenia!");
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+
         return true;
     }
 

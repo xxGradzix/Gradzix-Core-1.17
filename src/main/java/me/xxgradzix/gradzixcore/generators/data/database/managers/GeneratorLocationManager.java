@@ -4,6 +4,12 @@ package me.xxgradzix.gradzixcore.generators.data.database.managers;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.support.ConnectionSource;
+import com.sk89q.worldedit.bukkit.BukkitAdapter;
+import com.sk89q.worldedit.regions.Region;
+import com.sk89q.worldguard.WorldGuard;
+import com.sk89q.worldguard.protection.managers.RegionManager;
+import com.sk89q.worldguard.protection.managers.storage.StorageException;
+import com.sk89q.worldguard.protection.regions.ProtectedCuboidRegion;
 import me.xxgradzix.gradzixcore.generators.data.database.entities.Generator;
 import me.xxgradzix.gradzixcore.generators.data.database.entities.GeneratorLocation;
 
@@ -24,10 +30,22 @@ public class GeneratorLocationManager {
         }
     }
 
-    public void createOrUpdateGeneratorLocation(GeneratorLocation entity) {
+    public void createOrUpdateGeneratorLocation(Region selection, GeneratorLocation entity) {
         try {
             entityDao.createOrUpdate(entity);
-        } catch (SQLException e) {
+
+            ProtectedCuboidRegion newRegion = new ProtectedCuboidRegion("generator",
+                    selection.getMinimumPoint(),
+                    selection.getMaximumPoint());
+
+            RegionManager regionManager = WorldGuard.getInstance().getPlatform().getRegionContainer().get(BukkitAdapter.adapt(entity.getMinLocation().getWorld()));
+
+
+            System.out.println(newRegion.toString());
+            regionManager.addRegion(newRegion);
+
+            regionManager.save();
+        } catch (SQLException | StorageException e) {
             e.printStackTrace();
         }
     }
@@ -59,16 +77,32 @@ public class GeneratorLocationManager {
     }
     public void deleteAllGeneratorLocationsByGenerator(Generator generator) {
         try {
-            entityDao.delete(getAllGeneratorLocationsByGenerator(generator));
-        } catch (SQLException e) {
-            e.printStackTrace();
+//            entityDao.delete(getAllGeneratorLocationsByGenerator(generator));
+            for (GeneratorLocation generatorLocation : getAllGeneratorLocationsByGenerator(generator)) {
+                RegionManager regionManager = WorldGuard.getInstance().getPlatform().getRegionContainer().get(BukkitAdapter.adapt(generatorLocation.getMinLocation().getWorld()));
+                regionManager.removeRegion("generator");
+                regionManager.save();
+                entityDao.delete(generatorLocation);
+            }
+
+        } catch (StorageException | SQLException e) {
+            throw new RuntimeException(e);
         }
     }
     public void deleteGeneratorLocationById(Long id) {
+
         try {
+            Optional<GeneratorLocation> generatorLocation = getGeneratorLocationByID(id);
+            if(generatorLocation.isPresent()) {
+                RegionManager regionManager = WorldGuard.getInstance().getPlatform().getRegionContainer().get(BukkitAdapter.adapt(generatorLocation.get().getMinLocation().getWorld()));
+
+                regionManager.removeRegion("generator");
+                regionManager.save();
+            }
             entityDao.deleteById(id);
-        } catch (SQLException e) {
-            e.printStackTrace();
+
+        } catch (StorageException | SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 }

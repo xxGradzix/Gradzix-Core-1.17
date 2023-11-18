@@ -32,6 +32,7 @@ public class CreateGeneratorCommand implements CommandExecutor {
             player.sendMessage("Musisz podać nazwe generatora, cooldown oraz materialy z jakiego ma sie skladac");
             return false;
         }
+
         String name = args[0];
         int coolDownSeconds = 0;
         try {

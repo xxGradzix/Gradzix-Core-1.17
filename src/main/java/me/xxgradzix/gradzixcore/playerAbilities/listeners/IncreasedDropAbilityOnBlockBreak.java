@@ -1,10 +1,16 @@
 package me.xxgradzix.gradzixcore.playerAbilities.listeners;
 
 
+import com.sk89q.worldedit.bukkit.BukkitAdapter;
+import com.sk89q.worldguard.WorldGuard;
+import com.sk89q.worldguard.protection.ApplicableRegionSet;
+import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import me.xxgradzix.gradzixcore.events.Events;
 import me.xxgradzix.gradzixcore.playerAbilities.data.DataManager;
 import me.xxgradzix.gradzixcore.playerAbilities.data.database.entities.enums.Ability;
 import org.bukkit.GameMode;
+import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -27,40 +33,8 @@ public class IncreasedDropAbilityOnBlockBreak implements Listener {
 
         Block block = event.getBlock();
 
-//        event.setDropItems(false);
-//        ArrayList<Material> blockTypes = new ArrayList<>();
-//        blockTypes.add(Material.DIAMOND_BLOCK);
-//        blockTypes.add(Material.DIAMOND_ORE);
-//        blockTypes.add(Material.EMERALD_BLOCK);
-//        blockTypes.add(Material.EMERALD_ORE);
-//        blockTypes.add(Material.GOLD_ORE);
-//        blockTypes.add(Material.GOLD_BLOCK);
-//        blockTypes.add(Material.REDSTONE_BLOCK);
-//        blockTypes.add(Material.REDSTONE_ORE);
-//        blockTypes.add(Material.IRON_BLOCK);
-//        blockTypes.add(Material.IRON_ORE);
-//        blockTypes.add(Material.NETHERITE_BLOCK);
-//        blockTypes.add(Material.ANCIENT_DEBRIS);
-//        blockTypes.add(Material.COAL_BLOCK);
-//        blockTypes.add(Material.COAL_ORE);
-//        blockTypes.add(Material.LAPIS_BLOCK);
-//        blockTypes.add(Material.LAPIS_ORE);
-//        blockTypes.add(Material.ACACIA_LOG);
-//        blockTypes.add(Material.ACACIA_PLANKS);
-//
-//        blockTypes.add(Material.LIME_WOOL);
-//        blockTypes.add(Material.PINK_WOOL);
-//        blockTypes.add(Material.COBWEB);
-//        blockTypes.add(Material.COBWEB);
-//
-//        if(!blockTypes.contains(block.getType())) {
-//            event.setCancelled(true);
-//            p.sendMessage("Nie możesz niszczyć tego bloku w tym regionie.");
-//            return;
-//        }
+        if(!isLocationInGeneratorRegion(block.getLocation())) return;
 
-
-//        if(!p.getGameMode().equals(GameMode.SURVIVAL)) return;
         ItemStack itemInHand = event.getPlayer().getInventory().getItemInMainHand();
 
         int fortuneLevel = itemInHand.getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS);
@@ -76,9 +50,6 @@ public class IncreasedDropAbilityOnBlockBreak implements Listener {
         if(Events.isGeneratorEventEnabled()) eventMultiplier = Events.getGeneratorEventMultiplier();
 
 
-
-
-
         for(ItemStack drop : block.getDrops()) {
 
             int finalDropAmount = (int) (afterFortuneAmount * playerAbilityLevelModifier * eventMultiplier);
@@ -91,5 +62,21 @@ public class IncreasedDropAbilityOnBlockBreak implements Listener {
                 event.getBlock().getWorld().dropItemNaturally(event.getBlock().getLocation(), drop);
             }
         }
+    }
+    public boolean isLocationInGeneratorRegion(Location location) {
+        World world = location.getWorld();
+        if (world == null) {
+            return false;
+        }
+
+        ApplicableRegionSet regionSet = WorldGuard.getInstance().getPlatform().getRegionContainer().createQuery().getApplicableRegions(BukkitAdapter.adapt(location));
+
+        for (ProtectedRegion region : regionSet) {
+            if (region.getId().equalsIgnoreCase("generator")) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

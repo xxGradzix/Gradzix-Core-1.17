@@ -85,9 +85,11 @@ public class ShowGeneratorsCommand implements CommandExecutor {
 
             for(GeneratorLocation generator : generatorsList) {
                 GuiItem generatorButton = ItemBuilder.from(ItemManager.createGeneratorLocationButton(generator)).asGuiItem();
+
                 generatorButton.setAction(buttonEvent -> {
                     if(buttonEvent.isRightClick()) {
                         generatorLocationManager.deleteGeneratorLocationById(generator.getId());
+
                         generatorLocationsGui.removeItem(generatorButton);
                     }
                     generatorLocationsGui.update();

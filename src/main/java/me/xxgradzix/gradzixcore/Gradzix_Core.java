@@ -3,6 +3,7 @@ package me.xxgradzix.gradzixcore;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.support.ConnectionSource;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
+import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import me.xxgradzix.gradzixcore.adminPanel.Panel;
 import me.xxgradzix.gradzixcore.chatOptions.ChatOptions;
 import me.xxgradzix.gradzixcore.events.Events;
@@ -158,7 +159,7 @@ public final class Gradzix_Core extends JavaPlugin {
             rewardSystem.onEnable();
         }
         if (generators == null) {
-            generators = new Generators(this, getWorldEdit(), connectionSource);
+            generators = new Generators(this, getWorldEdit(), getWorldGuard(), connectionSource);
             generators.onEnable();
         }
         if (events == null) {
@@ -183,6 +184,11 @@ public final class Gradzix_Core extends JavaPlugin {
     private WorldEditPlugin getWorldEdit() {
         Plugin p = Bukkit.getServer().getPluginManager().getPlugin("WorldEdit");
         if (p instanceof WorldEditPlugin) return (WorldEditPlugin) p;
+        else return null;
+    }
+    private WorldGuardPlugin getWorldGuard() {
+        Plugin p = Bukkit.getServer().getPluginManager().getPlugin("WorldGuard");
+        if (p instanceof WorldGuardPlugin) return (WorldGuardPlugin) p;
         else return null;
     }
 

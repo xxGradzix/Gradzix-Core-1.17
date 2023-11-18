@@ -3,6 +3,7 @@ package me.xxgradzix.gradzixcore.generators;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
+import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import me.xxgradzix.gradzixcore.Gradzix_Core;
 import me.xxgradzix.gradzixcore.generators.commands.CreateGeneratorCommand;
 import me.xxgradzix.gradzixcore.generators.commands.RefillGenerators;
@@ -21,6 +22,7 @@ public final class Generators {
     private final Gradzix_Core plugin;
     private final ConnectionSource connectionSource;
     private final WorldEditPlugin worldEditPlugin;
+    private final WorldGuardPlugin worldGuardPlugin;
 
     private GeneratorManager generatorManager;
     private GeneratorLocationManager generatorLocationManager;
@@ -32,10 +34,11 @@ public final class Generators {
         generatorLocationManager = new GeneratorLocationManager(connectionSource);
     }
 
-    public Generators(Gradzix_Core plugin, WorldEditPlugin worldEditPlugin, ConnectionSource connectionSource) {
+    public Generators(Gradzix_Core plugin, WorldEditPlugin worldEditPlugin, WorldGuardPlugin worldGuardPlugin, ConnectionSource connectionSource) {
         this.plugin = plugin;
         this.worldEditPlugin = worldEditPlugin;
         this.connectionSource = connectionSource;
+        this.worldGuardPlugin = worldGuardPlugin;
     }
 
     public void onEnable() {

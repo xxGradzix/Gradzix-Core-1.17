@@ -98,3 +98,7 @@ commands:
   events:
     description: startuje event
     permission: events.startevent
+
+  binds:
+    description: plays binds
+    permission: binds.binds

@@ -5,6 +5,7 @@ import com.j256.ormlite.support.ConnectionSource;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import me.xxgradzix.gradzixcore.adminPanel.Panel;
+import me.xxgradzix.gradzixcore.binds.Binds;
 import me.xxgradzix.gradzixcore.chatOptions.ChatOptions;
 import me.xxgradzix.gradzixcore.events.Events;
 import me.xxgradzix.gradzixcore.generators.Generators;
@@ -49,6 +50,7 @@ public final class Gradzix_Core extends JavaPlugin {
     private RewardSystem rewardSystem;
     private Generators generators;
     private Events events;
+    private Binds binds;
 
     private ConnectionSource connectionSource;
 
@@ -165,6 +167,10 @@ public final class Gradzix_Core extends JavaPlugin {
         if (events == null) {
             events = new Events(this, connectionSource);
             events.onEnable();
+        }
+        if (binds == null) {
+            binds = new Binds(this);
+            binds.onEnable();
         }
     }
     private boolean setupEconomy() {

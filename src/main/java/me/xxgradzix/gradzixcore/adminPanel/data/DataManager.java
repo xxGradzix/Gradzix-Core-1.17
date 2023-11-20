@@ -2,7 +2,6 @@ package me.xxgradzix.gradzixcore.adminPanel.data;
 
 import me.xxgradzix.gradzixcore.Gradzix_Core;
 import me.xxgradzix.gradzixcore.adminPanel.Panel;
-import me.xxgradzix.gradzixcore.adminPanel.data.configfiles.PanelAdminConfigFile;
 import me.xxgradzix.gradzixcore.adminPanel.data.database.entities.PanelOptionsEntity;
 
 public class DataManager {
@@ -15,8 +14,6 @@ public class DataManager {
             PanelOptionsEntity panelOptionsEntity = Panel.getPanelOptionsEntityManager().getPanelOptionsEntity();
             panelOptionsEntity.setChatEnabled(value);
             Panel.getPanelOptionsEntityManager().updatePanelOptionsEntity(panelOptionsEntity);
-        } else {
-            PanelAdminConfigFile.setChatStatus(value);
         }
     }
     public static void setScratchCardStatus(boolean value) {
@@ -24,8 +21,6 @@ public class DataManager {
             PanelOptionsEntity panelOptionsEntity = Panel.getPanelOptionsEntityManager().getPanelOptionsEntity();
             panelOptionsEntity.setScratchCardEnabled(value);
             Panel.getPanelOptionsEntityManager().updatePanelOptionsEntity(panelOptionsEntity);
-        } else {
-            PanelAdminConfigFile.setScratchCardStatus(value);
         }
     }
     public static void setKitStatus(boolean value) {
@@ -33,8 +28,6 @@ public class DataManager {
             PanelOptionsEntity panelOptionsEntity = Panel.getPanelOptionsEntityManager().getPanelOptionsEntity();
             panelOptionsEntity.setKitsEnabled(value);
             Panel.getPanelOptionsEntityManager().updatePanelOptionsEntity(panelOptionsEntity);
-        } else {
-            PanelAdminConfigFile.setKitsStatus(value);
         }
     }
     public static void setAchievementStatus(boolean value) {
@@ -42,8 +35,6 @@ public class DataManager {
             PanelOptionsEntity panelOptionsEntity = Panel.getPanelOptionsEntityManager().getPanelOptionsEntity();
             panelOptionsEntity.setAchievementsEnabled(value);
             Panel.getPanelOptionsEntityManager().updatePanelOptionsEntity(panelOptionsEntity);
-        } else {
-            PanelAdminConfigFile.setAchievementsStatus(value);
         }
     }
 
@@ -53,7 +44,7 @@ public class DataManager {
             PanelOptionsEntity panelOptionsEntity = Panel.getPanelOptionsEntityManager().getPanelOptionsEntity();
             return panelOptionsEntity.isChatEnabled();
         } else {
-            return PanelAdminConfigFile.getChatStatus();
+            return false;
         }
     }
     public static boolean getScratchCardStatus() {
@@ -61,7 +52,7 @@ public class DataManager {
             PanelOptionsEntity panelOptionsEntity = Panel.getPanelOptionsEntityManager().getPanelOptionsEntity();
             return panelOptionsEntity.isScratchCardEnabled();
         } else {
-            return PanelAdminConfigFile.getScratchCardStatus();
+            return false;
         }
     }
     public static boolean getKitStatus() {
@@ -69,7 +60,7 @@ public class DataManager {
             PanelOptionsEntity panelOptionsEntity = Panel.getPanelOptionsEntityManager().getPanelOptionsEntity();
             return panelOptionsEntity.isKitsEnabled();
         } else {
-            return PanelAdminConfigFile.getKitsStatus();
+            return false;
         }
     }
     public static boolean getAchievementStatus() {
@@ -77,7 +68,7 @@ public class DataManager {
             PanelOptionsEntity panelOptionsEntity = Panel.getPanelOptionsEntityManager().getPanelOptionsEntity();
             return panelOptionsEntity.isAchievementsEnabled();
         } else {
-            return PanelAdminConfigFile.getAchievementsStatus();
+            return false;
         }
     }
 

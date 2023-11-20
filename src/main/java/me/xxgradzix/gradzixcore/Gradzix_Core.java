@@ -17,6 +17,7 @@ import me.xxgradzix.gradzixcore.playerSettings.PlayerSettings;
 import me.xxgradzix.gradzixcore.rewardSystem.RewardSystem;
 import me.xxgradzix.gradzixcore.scratchCard.Zdrapka;
 import me.xxgradzix.gradzixcore.serverconfig.ServerConfig;
+import me.xxgradzix.gradzixcore.socialMediaRewards.SocialMediaRewards;
 import me.xxgradzix.gradzixcore.upgradeItem.Ulepsz;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
@@ -53,16 +54,10 @@ public final class Gradzix_Core extends JavaPlugin {
     private Events events;
     private Binds binds;
     private MagicPond magicPond;
+    private SocialMediaRewards socialMediaRewards;
 
     private ConnectionSource connectionSource;
 
-//    public static Properties loadConfig() throws IOException {
-//        Properties prop = new Properties();
-//        FileInputStream input = new FileInputStream("src/main/resources/application.properties");
-//        prop.load(input);
-//        input.close();
-//        return prop;
-//    }
     Properties loadConfig() throws IOException {
         Properties prop = new Properties();
         InputStream input = getClass().getClassLoader().getResourceAsStream("application.properties");
@@ -174,9 +169,15 @@ public final class Gradzix_Core extends JavaPlugin {
             binds = new Binds(this);
             binds.onEnable();
         }
+
         if (magicPond == null) {
             magicPond = new MagicPond(this, connectionSource);
             magicPond.onEnable();
+        }
+
+        if (socialMediaRewards == null) {
+            socialMediaRewards = new SocialMediaRewards(this, connectionSource);
+            socialMediaRewards.onEnable();
         }
     }
     private boolean setupEconomy() {

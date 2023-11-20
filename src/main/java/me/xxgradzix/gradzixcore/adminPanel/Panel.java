@@ -4,7 +4,6 @@ import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 import me.xxgradzix.gradzixcore.Gradzix_Core;
 import me.xxgradzix.gradzixcore.adminPanel.commands.PanelCommand;
-import me.xxgradzix.gradzixcore.adminPanel.data.configfiles.PanelAdminConfigFile;
 import me.xxgradzix.gradzixcore.adminPanel.data.database.entities.PanelOptionsEntity;
 import me.xxgradzix.gradzixcore.adminPanel.data.database.managers.PanelOptionsEntityManager;
 import me.xxgradzix.gradzixcore.adminPanel.items.ItemManager;
@@ -52,13 +51,6 @@ public class Panel {
         plugin.getServer().getPluginManager().registerEvents(new OsiagnieciaBlock(), plugin);
         plugin.getCommand("panel").setExecutor(new PanelCommand());
 
-        PanelAdminConfigFile.setup();
-        PanelAdminConfigFile.getCustomFile().addDefault("isChatEnabled", true);
-        PanelAdminConfigFile.getCustomFile().addDefault("isZdrapkaEnabled", true);
-        PanelAdminConfigFile.getCustomFile().addDefault("isKityEnabled", true);
-        PanelAdminConfigFile.getCustomFile().addDefault("isOsiagnieciaEnabled", true);
-        PanelAdminConfigFile.getCustomFile().options().copyDefaults(true);
-        PanelAdminConfigFile.save();
 
     }
 

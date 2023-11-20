@@ -51,7 +51,7 @@ public class ScratchCardEntityManager {
             return scratchCardEntity;
         }
     }
-//    public List<PanelOptionsEntity> getPanelOptionsEntityWhereShowDeathMessageIs(boolean expectedValue) {
+//    public List<SocialMediaRewardsEntity> getPanelOptionsEntityWhereShowDeathMessageIs(boolean expectedValue) {
 //        try {
 //            return chatOptionsEntityDao.queryForEq("showDeathMessages", expectedValue);
 //        } catch (SQLException e) {

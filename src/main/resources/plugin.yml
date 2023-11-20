@@ -103,6 +103,7 @@ commands:
     description: plays binds
     permission: binds.binds
 
+
   jeziorkoconfig:
     description: nagrody z jeziorka
     permission: jeziorko.jeziorko
@@ -110,3 +111,7 @@ commands:
   jeziorko:
     description: pokazuje nagrody z jeziorka
     permission: jeziorko.nagrodyzjeziorka
+
+  nagroda:
+    description: otwiera gui nagrod
+    permission: rewards.nagroda

@@ -11,6 +11,7 @@ import me.xxgradzix.gradzixcore.events.Events;
 import me.xxgradzix.gradzixcore.generators.Generators;
 import me.xxgradzix.gradzixcore.itemPickupPriorities.ItemPickupPriorities;
 import me.xxgradzix.gradzixcore.magicFirework.MagicFirework;
+import me.xxgradzix.gradzixcore.magicPond.MagicPond;
 import me.xxgradzix.gradzixcore.playerAbilities.PlayerAbilities;
 import me.xxgradzix.gradzixcore.playerSettings.PlayerSettings;
 import me.xxgradzix.gradzixcore.rewardSystem.RewardSystem;
@@ -51,6 +52,7 @@ public final class Gradzix_Core extends JavaPlugin {
     private Generators generators;
     private Events events;
     private Binds binds;
+    private MagicPond magicPond;
 
     private ConnectionSource connectionSource;
 
@@ -171,6 +173,10 @@ public final class Gradzix_Core extends JavaPlugin {
         if (binds == null) {
             binds = new Binds(this);
             binds.onEnable();
+        }
+        if (magicPond == null) {
+            magicPond = new MagicPond(this, connectionSource);
+            magicPond.onEnable();
         }
     }
     private boolean setupEconomy() {

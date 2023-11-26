@@ -10,6 +10,7 @@ import me.xxgradzix.gradzixcore.chatOptions.ChatOptions;
 import me.xxgradzix.gradzixcore.events.Events;
 import me.xxgradzix.gradzixcore.generators.Generators;
 import me.xxgradzix.gradzixcore.itemPickupPriorities.ItemPickupPriorities;
+import me.xxgradzix.gradzixcore.itemShop.ItemShop;
 import me.xxgradzix.gradzixcore.magicFirework.MagicFirework;
 import me.xxgradzix.gradzixcore.magicPond.MagicPond;
 import me.xxgradzix.gradzixcore.playerAbilities.PlayerAbilities;
@@ -54,7 +55,10 @@ public final class Gradzix_Core extends JavaPlugin {
     private Events events;
     private Binds binds;
     private MagicPond magicPond;
+
     private SocialMediaRewards socialMediaRewards;
+
+    private ItemShop itemShop;
 
     private ConnectionSource connectionSource;
 
@@ -175,9 +179,15 @@ public final class Gradzix_Core extends JavaPlugin {
             magicPond.onEnable();
         }
 
+
         if (socialMediaRewards == null) {
             socialMediaRewards = new SocialMediaRewards(this, connectionSource);
             socialMediaRewards.onEnable();
+        }
+
+        if (itemShop == null) {
+            itemShop = new ItemShop(this, connectionSource);
+            itemShop.onEnable();
         }
     }
     private boolean setupEconomy() {

@@ -115,3 +115,18 @@ commands:
   nagroda:
     description: otwiera gui nagrod
     permission: rewards.nagroda
+
+  itemshop:
+    description: otwiera item shop
+    permission: itemshop.itemshop
+
+  itemshopconfig:
+    description: item shop config
+    aliases:
+      - isc
+    permission: itemshop.itemshopconfig
+
+  stankonta:
+    description: item shop balance
+    permission: itemshop.stankonta
+

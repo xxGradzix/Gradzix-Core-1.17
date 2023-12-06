@@ -137,6 +137,13 @@ public class DataManager {
         }
         return entity;
     }
+    public void createPlayerBalanceEntityIfNotExists(Player player) {
+        Optional<ItemShopPlayerBalanceEntity> optional = playerBalanceEntityManager.getItemShopCategoryEntityById(player.getUniqueId());
+        if(!optional.isPresent()) {
+            ItemShopPlayerBalanceEntity entity = new ItemShopPlayerBalanceEntity(player.getUniqueId(), 0, 0);
+            playerBalanceEntityManager.createOrUpdateAItemShopPlayerBalanceEntity(entity);
+        }
+    }
     public boolean addMoneyToPlayer(Player player, ShopType shopType, int price) {
         ItemShopPlayerBalanceEntity entity = getPlayerBalanceEntity(player);
 

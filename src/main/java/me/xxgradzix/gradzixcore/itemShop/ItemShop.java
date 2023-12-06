@@ -14,6 +14,8 @@ import me.xxgradzix.gradzixcore.itemShop.data.database.managers.ItemShopCategory
 import me.xxgradzix.gradzixcore.itemShop.data.database.managers.ItemShopPlayerBalanceEntityManager;
 import me.xxgradzix.gradzixcore.itemShop.data.database.managers.ItemShopProductEntityManager;
 import me.xxgradzix.gradzixcore.itemShop.items.ItemManager;
+import me.xxgradzix.gradzixcore.itemShop.listeners.OnPlayerJoinCreateBalanceEntity;
+import me.xxgradzix.gradzixcore.itemShop.listeners.OnPlayerKillAddPoint;
 import me.xxgradzix.gradzixcore.itemShop.managers.EconomyManager;
 
 import java.sql.SQLException;
@@ -59,6 +61,9 @@ public class ItemShop {
         plugin.getCommand("itemShop").setExecutor(new ItemShopCommand(dataManager));
         plugin.getCommand("itemShopConfig").setExecutor(new ItemShopConfigCommand(dataManager));
         plugin.getCommand("stankonta").setExecutor(new ItemShopBalanceCommand(dataManager));
+
+        plugin.getServer().getPluginManager().registerEvents(new OnPlayerKillAddPoint(dataManager), plugin);
+        plugin.getServer().getPluginManager().registerEvents(new OnPlayerJoinCreateBalanceEntity(dataManager, plugin), plugin);
 
     }
 

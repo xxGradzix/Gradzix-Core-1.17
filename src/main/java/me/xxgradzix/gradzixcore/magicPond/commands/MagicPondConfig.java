@@ -120,6 +120,12 @@ public class MagicPondConfig implements CommandExecutor, TabCompleter {
                 completions.add("dodaj");
                 completions.add("usun");
                 return completions;
+            } else if(args.length == 2) {
+                ArrayList<String> nums = new ArrayList<>();
+                for (int i = 1; i <=100; i++) {
+                    nums.add(String.valueOf(i));
+                }
+                return nums;
             }
         }
         return null;

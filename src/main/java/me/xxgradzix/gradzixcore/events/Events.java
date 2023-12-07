@@ -36,6 +36,9 @@ public class Events {
         Events.keyRewardItemAmount = keyRewardItemAmount;
     }
 
+    public static void setIsMagicPondEventEnabled(boolean isMagicPondEventEnabled) {
+        Events.isMagicPondEventEnabled = isMagicPondEventEnabled;
+    }
 
     @Getter
     private static boolean isGeneratorEventEnabled;
@@ -52,6 +55,8 @@ public class Events {
     @Getter
     private static int keyRewardItemAmount;
 
+    @Getter
+    private static boolean isMagicPondEventEnabled;
 
 
     public Events(Gradzix_Core plugin, ConnectionSource connectionSource) {

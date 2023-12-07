@@ -2,6 +2,7 @@ package me.xxgradzix.gradzixcore.events.commands;
 
 import me.xxgradzix.gradzixcore.Gradzix_Core;
 import me.xxgradzix.gradzixcore.events.Events;
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -12,20 +13,23 @@ import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitScheduler;
+import org.bukkit.util.StringUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.rmi.NoSuchObjectException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.NoSuchElementException;
 
-public class StartEvent implements CommandExecutor , TabCompleter {
+public class StartEvent implements CommandExecutor, TabCompleter {
     public StartEvent(Gradzix_Core plugin) {
         this.plugin = plugin;
     }
 
     private enum EVENT_NAME {
-        GENERATOR, KLUCZ
+        GENERATOR, KLUCZ, JEZIORKO
     }
 
     private static final HashMap<EVENT_NAME, Integer> eventsIds = new HashMap<>();
@@ -47,6 +51,7 @@ public class StartEvent implements CommandExecutor , TabCompleter {
 
 
         EVENT_NAME eventChoice;
+
         try {
             eventChoice = EVENT_NAME.valueOf(chosenEventName);
         } catch (Exception e) {
@@ -65,7 +70,7 @@ public class StartEvent implements CommandExecutor , TabCompleter {
 
         switch (eventChoice) {
             case KLUCZ:
-
+            {
                 if(!(sender instanceof Player)) {
                     sender.sendMessage("tylko gracz moze rozpoczac ten event");
                     return false;
@@ -81,6 +86,7 @@ public class StartEvent implements CommandExecutor , TabCompleter {
                 double chance = 0.01;
 
                 if(args.length > 2) {
+
                     try {
                         chance = Double.parseDouble(args[2]);
                         if(chance < 1) {
@@ -93,92 +99,143 @@ public class StartEvent implements CommandExecutor , TabCompleter {
                     sender.sendMessage("Poprawne uzycie to /events START KLUCZ [szansa] [czas]");
                 }
 
-                // TODO rozpoczales event z przedmiotem
-
                 if(args.length > 3) {
                     try {
                         timeMinutes = Integer.parseInt(args[3]);
                     } catch (Exception ignored) {};
                 }
 
-                Bukkit.broadcastMessage(ChatColor.GRAY + "Rozpoczął się event " + ChatColor.GREEN +" key drop");
-                Bukkit.broadcastMessage(ChatColor.GRAY + "Event zakończy sie za " + ChatColor.DARK_GRAY + timeMinutes + ChatColor.GRAY+ " minut");
-
-                Events.setIsKeyEventEnabled(true);
-                Events.setKeyRewardItem(reward);
-                Events.setKeyRewardItemAmount(reward.getAmount());
-
-                scheduler.runTaskLaterAsynchronously(plugin, (bukkitTask) -> {
-
-                    Events.setIsKeyEventEnabled(false);
-                    Bukkit.broadcastMessage(ChatColor.GRAY + "Event " + ChatColor.GREEN +" key drop " + ChatColor.GRAY + "zakończył się");
-
-                }, 20L * timeMinutes * 60);
-
-                break;
-            case GENERATOR:
-                Bukkit.broadcastMessage(ChatColor.GRAY + "Rozpoczął się event " + ChatColor.GREEN +" generator boost");
-                Bukkit.broadcastMessage(ChatColor.GRAY + "Event zakończy sie za " + ChatColor.DARK_GRAY + timeMinutes + ChatColor.GRAY+ " minut");
-
+                startKeyEventTask(timeMinutes, reward, chance);
+            }
+            break;
+            case GENERATOR: {
                 if(args.length > 2) {
                     try {
                         timeMinutes = Integer.parseInt(args[2]);
                     } catch (Exception ignored) {};
                 }
-
-                Events.setIsGeneratorEventEnabled(true);
-
+                startGeneratorEventTask(timeMinutes);
+            }
+            break;
+            case JEZIORKO: {
                 if(args.length > 2) {
                     try {
                         timeMinutes = Integer.parseInt(args[2]);
                     } catch (Exception ignored) {};
                 }
-
-                scheduler.runTaskLaterAsynchronously(plugin, (bukkitTask) -> {
-                    Events.setIsGeneratorEventEnabled(false);
-                    Bukkit.broadcastMessage(ChatColor.GRAY + "Event " + ChatColor.GREEN +" generator boost " + ChatColor.GRAY + "zakończył się");
-
-                }, 20L * timeMinutes * 60);
-                break;
+                startMagicPondEventTask(timeMinutes);
+            }
+            break;
             default:
                 sender.sendMessage(ChatColor.RED + "nie ma takiego eventu");
         }
 
         return true;
     }
-    private void cancelTask(EVENT_NAME eventName) {
+    private void startGeneratorEventTask(int timeMinutes){
+        Bukkit.broadcastMessage(ChatColor.GRAY + "Rozpoczął się event " + ChatColor.GREEN +" generator boost");
+        Bukkit.broadcastMessage(ChatColor.GRAY + "Event zakończy sie za " + ChatColor.DARK_GRAY + timeMinutes + ChatColor.GRAY+ " minut");
 
-        switch (eventName) {
-            case GENERATOR:
-                if(Events.isGeneratorEventEnabled()) {
-                    Bukkit.broadcastMessage(ChatColor.GRAY + "Event " + ChatColor.GREEN +" generator boost " + ChatColor.GRAY + "zakończył się");
-                }
-                Events.setIsGeneratorEventEnabled(false);
-                break;
-            case KLUCZ:
-                if(Events.isKeyEventEnabled()) {
-                    Bukkit.broadcastMessage(ChatColor.GRAY + "Event " + ChatColor.GREEN +" key drop " + ChatColor.GRAY + "zakończył się");
-                }
-                Events.setIsKeyEventEnabled(false);
-                break;
+        Events.setIsGeneratorEventEnabled(true);
+
+        startTask(EVENT_NAME.GENERATOR, timeMinutes);
+    }
+    private void startKeyEventTask(int timeMinutes, ItemStack reward, double chance){
+
+        if(reward == null || reward.getType().equals(Material.AIR)) {
+            throw new NullPointerException("Reward cannot be null");
         }
+        // TODO rozpoczales event z przedmiotem
+
+        Bukkit.broadcastMessage(ChatColor.GRAY + "Rozpoczął się event " + ChatColor.GREEN +" key drop");
+        Bukkit.broadcastMessage(ChatColor.GRAY + "Event zakończy sie za " + ChatColor.DARK_GRAY + timeMinutes + ChatColor.GRAY+ " minut");
+
+        Events.setIsKeyEventEnabled(true);
+        Events.setKeyRewardItem(reward);
+        Events.setKeyRewardItemAmount(reward.getAmount());
+
+        startTask(EVENT_NAME.KLUCZ, timeMinutes);
+    }
+    private void startMagicPondEventTask(int timeMinutes){
+
+        Bukkit.broadcastMessage(ChatColor.GRAY + "Rozpoczął się event " + ChatColor.AQUA +" magiczne jeziorko");
+        Bukkit.broadcastMessage(ChatColor.GRAY + "Event zakończy sie za " + ChatColor.DARK_GRAY + timeMinutes + ChatColor.GRAY+ " minut");
+
+        Events.setIsMagicPondEventEnabled(true);
+
+        startTask(EVENT_NAME.JEZIORKO, timeMinutes);
+    }
+    private void startTask(EVENT_NAME eventName, int timeMinutes) throws NoSuchElementException { // todo save id to map
+        int id;
+        cancelTask(eventName);
+        switch (eventName){
+            case KLUCZ:{
+
+                id = scheduler.runTaskLaterAsynchronously(plugin, () -> {
+
+                    Events.setIsKeyEventEnabled(false);
+                    Bukkit.broadcastMessage(ChatColor.GRAY + "Event " + ChatColor.GREEN +" key drop " + ChatColor.GRAY + "zakończył się");
+
+                }, 20L * timeMinutes * 60).getTaskId();
+
+            }
+            break;
+            case GENERATOR: {
+                id = scheduler.runTaskLaterAsynchronously(plugin, () -> {
+                    Events.setIsGeneratorEventEnabled(false);
+                    Bukkit.broadcastMessage(ChatColor.GRAY + "Event " + ChatColor.GREEN +" generator boost " + ChatColor.GRAY + "zakończył się");
+
+                }, 20L * timeMinutes * 60).getTaskId();
+            }
+            break;
+            case JEZIORKO: {
+                id = scheduler.runTaskLater(plugin, () -> {
+                    Events.setIsMagicPondEventEnabled(false);
+                    Bukkit.broadcastMessage(ChatColor.GRAY + "Event " + ChatColor.AQUA +" magiczne jeziorko " + ChatColor.GRAY + "zakończył się");
+
+                }, 20L * timeMinutes * 60).getTaskId();
+            }
+            break;
+            default: {
+                throw new NoSuchElementException();
+            }
+        }
+        eventsIds.put(eventName, id);
+
+    }
+    private void cancelTask(EVENT_NAME eventName) {
+        if(!eventsIds.containsKey(eventName)) {
+            return;
+        }
+        scheduler.cancelTask(eventsIds.get(eventName));
+        eventsIds.remove(eventName);
+        startTask(eventName, 0);
     }
     @Nullable
     @Override
     public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, @NotNull String[] args) {
+        if(!command.getName().equalsIgnoreCase("events")) return new ArrayList<>();
 
-        if(command.getName().equalsIgnoreCase("events") && args.length == 1){
+        if(args.length == 1){
             ArrayList<String> names = new ArrayList<>();
             names.add("START");
             names.add("STOP");
             return names;
-        } else if(command.getName().equalsIgnoreCase("events") && args.length == 2) {
+        } else if(args.length == 2) {
             ArrayList<String> names = new ArrayList<>();
             for (EVENT_NAME eventName : EVENT_NAME.values()) {
                 names.add(eventName.name());
             }
             return names;
+        } else if(args.length == 3) {
+            ArrayList<String> nums = new ArrayList<>();
+            for (int i = 1; i <=60; i++) {
+                nums.add(String.valueOf(i));
+            }
+            return nums;
         }
-        return null;
+
+        return new ArrayList<>();
     }
+
 }

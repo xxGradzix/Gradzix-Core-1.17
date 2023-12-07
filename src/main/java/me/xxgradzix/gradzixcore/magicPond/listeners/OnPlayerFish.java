@@ -1,6 +1,7 @@
 package me.xxgradzix.gradzixcore.magicPond.listeners;
 
 
+import me.xxgradzix.gradzixcore.events.Events;
 import me.xxgradzix.gradzixcore.magicPond.data.DataManager;
 import org.bukkit.Material;
 import org.bukkit.entity.Item;
@@ -24,11 +25,16 @@ public class OnPlayerFish implements Listener {
 
     @EventHandler
     public void onPlayerFish(PlayerFishEvent event) {
+        Player p = event.getPlayer();
+        if(!Events.isMagicPondEventEnabled()) {
+            event.setCancelled(true);
+            p.sendMessage("Event magiczne jeziorko jest w tym momencie wyłączony");
+        }
 
         if (event.getState() != PlayerFishEvent.State.CAUGHT_FISH) return;
 
 
-        Player p = event.getPlayer();
+
 
         Item item = (Item) event.getCaught();
 

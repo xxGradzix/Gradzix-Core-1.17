@@ -17,6 +17,8 @@ import me.xxgradzix.gradzixcore.playerAbilities.items.ItemManager;
 import me.xxgradzix.gradzixcore.playerAbilities.listeners.DamageListener;
 import me.xxgradzix.gradzixcore.playerAbilities.listeners.IncreasedDropAbilityOnBlockBreak;
 import me.xxgradzix.gradzixcore.playerAbilities.listeners.PlayerKillRankingIncrease;
+import me.xxgradzix.gradzixcore.playerAbilities.listeners.RefreshOnJoin;
+//import me.xxgradzix.gradzixcore.playerAbilities.listeners.PlayerKillRankingIncrease;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -61,7 +63,6 @@ public class PlayerAbilities {
             throw new RuntimeException(e);
         }
 
-//        plugin.getCommand("umiejetnosci").setExecutor(new UmiejetnosciCommand());
         plugin.getCommand("modyfikatoryumiejetnosci").setExecutor(new AbilitiesModifierCommand());
         plugin.getCommand("giveodlamek").setExecutor(new GiveFragmentCommand());
 
@@ -70,6 +71,7 @@ public class PlayerAbilities {
         plugin.getServer().getPluginManager().registerEvents(new DamageListener(), plugin);
         plugin.getServer().getPluginManager().registerEvents(new IncreasedDropAbilityOnBlockBreak(), plugin);
         plugin.getServer().getPluginManager().registerEvents(new PlayerKillRankingIncrease(), plugin);
+        plugin.getServer().getPluginManager().registerEvents(new RefreshOnJoin(), plugin);
 
         UmiejetnosciConfigFile.setup();
         UmiejetnosciConfigFile.getCustomFile().addDefault("umiejetnosci", new ArrayList<String>());

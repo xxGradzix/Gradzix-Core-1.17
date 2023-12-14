@@ -5,9 +5,13 @@ import com.j256.ormlite.table.TableUtils;
 import lombok.Getter;
 import me.xxgradzix.gradzixcore.Gradzix_Core;
 import me.xxgradzix.gradzixcore.serverconfig.commands.*;
+import me.xxgradzix.gradzixcore.serverconfig.commands.ranksCommands.AgeCommand;
+import me.xxgradzix.gradzixcore.serverconfig.commands.ranksCommands.SVipCommand;
+import me.xxgradzix.gradzixcore.serverconfig.commands.ranksCommands.VipCommand;
 import me.xxgradzix.gradzixcore.serverconfig.data.configfiles.ConfigServera;
 import me.xxgradzix.gradzixcore.serverconfig.data.database.entities.ServerConfigEntity;
 import me.xxgradzix.gradzixcore.serverconfig.data.database.managers.ServerConfigEntityManager;
+import me.xxgradzix.gradzixcore.serverconfig.listeners.BlockGrief;
 import me.xxgradzix.gradzixcore.serverconfig.listeners.BlockPlacingBlocks;
 import me.xxgradzix.gradzixcore.serverconfig.listeners.elytraAndFireworkBlock.ElytraAndFallDamageDecrease;
 import me.xxgradzix.gradzixcore.serverconfig.listeners.elytraAndFireworkBlock.OnTotemBreakBlockFirework;
@@ -45,23 +49,30 @@ public class ServerConfig {
         }
 
         plugin.getServer().getPluginManager().registerEvents(new DamageEvent(), plugin);
-
         plugin.getServer().getPluginManager().registerEvents(new VanishingPotionBottle(plugin), plugin);
         plugin.getServer().getPluginManager().registerEvents(new OnTotemBreakBlockFirework(), plugin);
 
         plugin.getServer().getPluginManager().registerEvents(new ElytraAndFallDamageDecrease(), plugin);
         plugin.getServer().getPluginManager().registerEvents(new FortuneSheers(), plugin);
-
+        plugin.getServer().getPluginManager().registerEvents(new BlockGrief(), plugin);
         BlockPlacingBlocks blockPlacingBlocks = new BlockPlacingBlocks(plugin);
         blockPlacingBlocks.runTaskTimer(plugin, 0L, 20L * Gradzix_Core.REMOVE_BLOCKS_INTERVAL_SECONDS);
 
         plugin.getServer().getPluginManager().registerEvents(blockPlacingBlocks, plugin);
+
 
         plugin.getCommand("setserverdamagemultiplier").setExecutor(new SetDamageCommand());
         plugin.getCommand("bazar").setExecutor(new ActionHouseRenameCommand());
         plugin.getCommand("ais").setExecutor(new AgePlayItemShopCommand());
         plugin.getCommand("setarmorattribute").setExecutor(new SetArmorAttributeOnItem());
         plugin.getCommand("gamma").setExecutor(new GammaCommand());
+
+        plugin.getCommand("kosz").setExecutor(new BinCommand());
+
+
+        plugin.getCommand("vip").setExecutor(new VipCommand());
+        plugin.getCommand("svip").setExecutor(new SVipCommand());
+        plugin.getCommand("age").setExecutor(new AgeCommand());
 
         ConfigServera.setup();
         ConfigServera.getCustomFile().set("damageMultiplier", 1);

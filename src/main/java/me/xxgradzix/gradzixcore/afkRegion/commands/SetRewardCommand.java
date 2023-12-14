@@ -1,5 +1,7 @@
 package me.xxgradzix.gradzixcore.afkRegion.commands;
 
+import me.xxgradzix.gradzixcore.afkRegion.AfkRegion;
+import me.xxgradzix.gradzixcore.afkRegion.GetRewardInAfkRegion;
 import me.xxgradzix.gradzixcore.afkRegion.data.database.entities.RewardsEntity;
 import me.xxgradzix.gradzixcore.afkRegion.data.database.managers.RewardsEntityManager;
 import org.bukkit.Material;
@@ -49,12 +51,14 @@ public class SetRewardCommand implements CommandExecutor, TabCompleter {
             rewardsEntity.setBigReward(reward);
             rewardsEntityManager.updateRewardsEntity(rewardsEntity);
             player.sendMessage("Ustawiono duza nagrode za bycie afk na: " + reward.getType());
+            AfkRegion.updateRewards();
             return true;
         }
         if(args[0].equalsIgnoreCase("small")) {
             rewardsEntity.setSmallReward(reward);
             rewardsEntityManager.updateRewardsEntity(rewardsEntity);
             player.sendMessage("Ustawiono podstawowa nagrode za bycie afk na: " + reward.getType());
+            AfkRegion.updateRewards();
             return true;
         }
 

@@ -8,6 +8,7 @@ import me.xxgradzix.gradzixcore.socialMediaRewards.commands.NagrodaCommand;
 import me.xxgradzix.gradzixcore.socialMediaRewards.data.database.DataManager;
 import me.xxgradzix.gradzixcore.socialMediaRewards.data.database.entities.SocialMediaRewardsEntity;
 import me.xxgradzix.gradzixcore.socialMediaRewards.data.database.managers.SocialMediaRewardsEntityManager;
+import me.xxgradzix.gradzixcore.serverconfig.listeners.BlockGrief;
 import me.xxgradzix.gradzixcore.socialMediaRewards.listeners.LinkClickEvent;
 
 import java.sql.SQLException;

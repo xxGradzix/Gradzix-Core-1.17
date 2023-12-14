@@ -6,6 +6,7 @@ import me.xxgradzix.gradzixcore.itemPickupPriorities.data.database.entities.Pick
 import me.xxgradzix.gradzixcore.itemPickupPriorities.data.database.managers.PickupPrioritiesEntityManager;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DataManager {
@@ -21,10 +22,10 @@ public class DataManager {
 
             entity.setItemPriorities(itemPriorities);
             manager.createOrUpdatePickupPrioritiesEntity(entity);
-
+            ItemPickupPriorities.updateItemPriorities();
         }
-
     }
+
     public static List<ItemStack> getItemPriorities() {
 
         if(useDB) {

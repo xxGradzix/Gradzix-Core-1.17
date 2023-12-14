@@ -21,12 +21,6 @@ public class AbilitiesGuiManager {
     public static void openAbilitiesGui(Player p) {
 
 
-
-//        Gui gui = Gui.gui()
-//                .title(Component.text(ChatColor.GREEN + ChatColor.BOLD.toString() + "UMIEJĘTNOŚCI " + ChatColor.GRAY + "(/umiejetnosci)"))
-//                .disableAllInteractions()
-//                .rows(5)
-//                .create();
         Gui gui = Gui.gui()
                 .title(Component.text(ChatColor.GREEN + ChatColor.BOLD.toString() + "UMIEJĘTNOŚCI " + ChatColor.GRAY + "(/umiejetnosci)"))
                 .disableAllInteractions()

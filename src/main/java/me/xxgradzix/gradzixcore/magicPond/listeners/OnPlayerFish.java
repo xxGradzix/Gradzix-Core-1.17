@@ -2,6 +2,7 @@ package me.xxgradzix.gradzixcore.magicPond.listeners;
 
 
 import me.xxgradzix.gradzixcore.events.Events;
+import me.xxgradzix.gradzixcore.magicPond.MagicPond;
 import me.xxgradzix.gradzixcore.magicPond.data.DataManager;
 import org.bukkit.Material;
 import org.bukkit.entity.Item;
@@ -39,7 +40,8 @@ public class OnPlayerFish implements Listener {
         Item item = (Item) event.getCaught();
 
 
-        HashMap<ItemStack, Integer> rewards = dataManager.getMagicPondEntityRewards();
+//        HashMap<ItemStack, Integer> rewards = dataManager.getMagicPondEntityRewards();
+        HashMap<ItemStack, Integer> rewards = MagicPond.getMagicPondRewards();
 
         ItemStack reward = chooseRandomReward(rewards);
 

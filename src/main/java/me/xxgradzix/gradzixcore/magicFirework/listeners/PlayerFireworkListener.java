@@ -45,31 +45,6 @@ public class PlayerFireworkListener implements Listener {
         Vector direction = event.getPlayer().getLocation().getDirection();
         firework.setVelocity(direction);
 
-//            if (event.getItem() == null || !event.getItem().isSimilar(ItemManager.firework)) {
-//                event.setCancelled(true);
-
-
-//                if(getPlayerRegionName(event.getPlayer()) != null &&
-//                        (getPlayerRegionName(event.getPlayer()).equals("strefabezelytry") || getPlayerRegionName(event.getPlayer()).equals("strefabezelytry"))) {
-//                    event.setCancelled(true);
-////
-//                    event.setUseItemInHand(Event.Result.DENY);
-//                    return;
-//                }
-//                    if (!getPlayerRegionName(event.getPlayer()).equals("strefabezelytry")) {
     }
-//    public String getPlayerRegionName(Player player) {
-//        LocalPlayer localPlayer = WorldGuardPlugin.inst().wrapPlayer(player);
-//        Location location = player.getLocation();
-//
-//        ApplicableRegionSet regionSet = WorldGuard.getInstance().getPlatform().getRegionContainer().createQuery().getApplicableRegions(BukkitAdapter.adapt(location));
-//
-//        for (ProtectedRegion region : regionSet) {
-//            if (region.contains(location.getBlockX(), location.getBlockY(), location.getBlockZ())) {
-//                return region.getId();
-//            }
-//        }
-//
-//        return null;
-//    }
+
 }

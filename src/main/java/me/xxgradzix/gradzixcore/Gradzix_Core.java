@@ -9,11 +9,11 @@ import me.xxgradzix.gradzixcore.adminPanel.Panel;
 import me.xxgradzix.gradzixcore.afkRegion.AfkRegion;
 import me.xxgradzix.gradzixcore.binds.Binds;
 import me.xxgradzix.gradzixcore.chatOptions.ChatOptions;
+import me.xxgradzix.gradzixcore.clansExtension.ClansExtension;
 import me.xxgradzix.gradzixcore.events.Events;
 import me.xxgradzix.gradzixcore.generators.Generators;
 import me.xxgradzix.gradzixcore.incognito.Incognito;
 import me.xxgradzix.gradzixcore.itemPickupPriorities.ItemPickupPriorities;
-import me.xxgradzix.gradzixcore.itemShop.ItemShop;
 import me.xxgradzix.gradzixcore.magicFirework.MagicFirework;
 import me.xxgradzix.gradzixcore.magicPond.MagicPond;
 import me.xxgradzix.gradzixcore.playerAbilities.PlayerAbilities;
@@ -27,6 +27,7 @@ import me.xxgradzix.gradzixcore.socialMediaRewards.SocialMediaRewards;
 import me.xxgradzix.gradzixcore.upgradeItem.Ulepsz;
 import me.xxgradzix.gradzixcore.warps.Warps;
 import me.xxgradzix.gradzixcore.webRemover.WebRemover;
+import net.dzikoysk.funnyguilds.FunnyGuilds;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
@@ -41,20 +42,21 @@ import java.util.Properties;
 import java.util.logging.Logger;
 
 public final class Gradzix_Core extends JavaPlugin {
-    
+
     public static final boolean USEDB = true;
-    
+
     public static final long WEAKNESS_EFFECT_DURATION_TIME_SECONDS = 3;
     public static final long AFK_REWARD_DELAY_SECONDS = 15L * 60;
     public static final long BOSS_SPAWN_DELAY_SECONDS = 60;
     public static final long REMOVE_BLOCKS_INTERVAL_SECONDS = 300;
     public static final long FAST_GENERATOR_REGENERATION_TIME_SECONDS = 180;
     public static final long SLOW_GENERATOR_REGENERATION_TIME_SECONDS = 300;
+    public static final int MESSAGE_BUTTON_COOLDOWN_SECONDS = 3;
 
     private static final Logger log = Logger.getLogger("Minecraft");
-    
+
     private static Economy econ = null;
-    
+
     @Getter
     private static Gradzix_Core instance;
 
@@ -74,14 +76,16 @@ public final class Gradzix_Core extends JavaPlugin {
     private MagicPond magicPond;
     private ShulkerRework shulkerRework;
     private SocialMediaRewards socialMediaRewards;
-    private ItemShop itemShop;
+//    private ItemShop itemShop;
     private Incognito incognito;
     private PlayerPerks playerPerks;
     private WebRemover webRemover;
     private AfkRegion afkRegion;
     private Warps warps;
+    private ClansExtension clansExtension;
 
     private ConnectionSource connectionSource;
+    private FunnyGuilds funnyGuilds;
 
     Properties loadConfig() {
         Properties prop = new Properties();
@@ -203,10 +207,10 @@ public final class Gradzix_Core extends JavaPlugin {
             socialMediaRewards.onEnable();
         }
 
-        if (itemShop == null) {
-            itemShop = new ItemShop(this, connectionSource);
-            itemShop.onEnable();
-        }
+//        if (itemShop == null) {
+//            itemShop = new ItemShop(this, connectionSource);
+//            itemShop.onEnable();
+//        }
         if (shulkerRework == null) {
             shulkerRework = new ShulkerRework(this);
             shulkerRework.onEnable();
@@ -232,6 +236,10 @@ public final class Gradzix_Core extends JavaPlugin {
             warps.onEnable();
         }
 
+        if (clansExtension == null) {
+            clansExtension = new ClansExtension(this, connectionSource, funnyGuilds);
+            clansExtension.onEnable();
+        }
     }
     private boolean setupEconomy() {
         if (getServer().getPluginManager().getPlugin("Vault") == null) {

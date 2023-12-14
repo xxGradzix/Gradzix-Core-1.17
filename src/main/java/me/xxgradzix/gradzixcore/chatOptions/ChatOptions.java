@@ -30,7 +30,6 @@ public final class ChatOptions {
         TableUtils.createTableIfNotExists(connectionSource, ChatOptionsEntity.class);
         chatOptionsEntityManager = new ChatOptionsEntityManager(connectionSource);
     }
-    ////////////
 
     public ChatOptions(Gradzix_Core plugin, ConnectionSource connectionSource) {
         this.plugin = plugin;

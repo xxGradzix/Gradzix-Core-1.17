@@ -1,13 +1,10 @@
 package me.xxgradzix.gradzixcore.itemPickupPriorities.listeners;
 
-import me.xxgradzix.gradzixcore.itemPickupPriorities.data.DataManager;
+import me.xxgradzix.gradzixcore.itemPickupPriorities.ItemPickupPriorities;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
-import net.luckperms.api.model.group.GroupManager;
 import net.luckperms.api.model.user.User;
 import net.luckperms.api.model.user.UserManager;
-import net.luckperms.api.query.QueryOptions;
-import org.bukkit.Bukkit;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -45,7 +42,6 @@ public class GiveItemsBackWithPriorities implements Listener {
         double returnPercent = getPlayerReturnPercent(user);
 
         List<ItemStack> inventoryItems = Arrays.asList(victim.getInventory().getContents());
-//        List<ItemStack> armorItems = Arrays.asList(victim.getInventory().getArmorContents());
 
         ArrayList<ItemStack> itemsToReturn = new ArrayList<>();
         itemsToReturn.addAll(inventoryItems);
@@ -116,7 +112,7 @@ public class GiveItemsBackWithPriorities implements Listener {
     private void addItemsWithPriorities(Player player, ArrayList<ItemStack> items) {
         PlayerInventory inventory = player.getInventory();
 
-        ArrayList<ItemStack> priorities = (ArrayList<ItemStack>) DataManager.getItemPriorities();
+        List<ItemStack> priorities = ItemPickupPriorities.getItemPriorities();
 
         ArrayList<ItemStack> itemsAfterPriorities = new ArrayList<>();
 

@@ -20,7 +20,7 @@ out/
 
 # Package Files #
 *.jar
-*.war
+*.warEntity
 *.nar
 *.ear
 *.zip

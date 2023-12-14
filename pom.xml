@@ -60,6 +60,7 @@
         </resources>
     </build>
 
+
     <repositories>
         <repository>
             <id>spigotmc-repo</id>
@@ -194,7 +195,7 @@
         <dependency>
             <groupId>dev.triumphteam</groupId>
             <artifactId>triumph-gui</artifactId>
-            <version>3.1.5</version>
+            <version>3.1.7</version>
         </dependency>
         <dependency>
             <groupId>com.github.decentsoftware-eu</groupId>

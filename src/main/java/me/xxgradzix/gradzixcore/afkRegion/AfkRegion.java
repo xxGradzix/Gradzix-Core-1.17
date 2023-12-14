@@ -12,6 +12,7 @@ import me.xxgradzix.gradzixcore.afkRegion.data.database.entities.RewardsEntity;
 import me.xxgradzix.gradzixcore.afkRegion.data.database.managers.RewardsEntityManager;
 import me.xxgradzix.gradzixcore.afkRegion.listeners.EnterRegionListener;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -36,11 +37,18 @@ public class AfkRegion {
         this.connectionSource = connectionSource;
     }
 
+    private static ItemStack smallReward = new ItemStack(Material.DIAMOND);
+    private static ItemStack bigReward = new ItemStack(Material.DIAMOND);
+
     public static ItemStack getSmallReward() {
-        return rewardsEntityManager.getRewardsEntity().getSmallReward();
+        return smallReward;
     }
     public static ItemStack getBigReward() {
-        return rewardsEntityManager.getRewardsEntity().getBigReward();
+        return bigReward;
+    }
+    public static void updateRewards() {
+        smallReward = rewardsEntityManager.getRewardsEntity().getSmallReward();
+        bigReward = rewardsEntityManager.getRewardsEntity().getBigReward();
     }
 
     public void onEnable() {
@@ -51,8 +59,9 @@ public class AfkRegion {
             throw new RuntimeException(e);
         }
 
-        plugin.getServer().getPluginManager().registerEvents(new EnterRegionListener(), plugin);
+        updateRewards();
 
+        plugin.getServer().getPluginManager().registerEvents(new EnterRegionListener(), plugin);
         plugin.getCommand("setAfkReward").setExecutor(new SetRewardCommand(rewardsEntityManager));
 
     }

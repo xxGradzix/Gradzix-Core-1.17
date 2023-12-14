@@ -11,8 +11,10 @@ import me.xxgradzix.gradzixcore.magicPond.data.database.entities.MagicPondEntity
 import me.xxgradzix.gradzixcore.magicPond.data.database.managers.MagicPondEntityManager;
 import me.xxgradzix.gradzixcore.magicPond.items.ItemManager;
 import me.xxgradzix.gradzixcore.magicPond.listeners.OnPlayerFish;
+import org.bukkit.inventory.ItemStack;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 
 public final class MagicPond {
 
@@ -21,16 +23,24 @@ public final class MagicPond {
     private ConnectionSource connectionSource;
 
     private MagicPondEntityManager magicPondEntityManager;
-    private DataManager dataManager;
+    private static DataManager dataManager;
+
+    private static HashMap<ItemStack, Integer> magicPondRewards = new HashMap<>();
+
+    public static void updateMagicPondRewards() {
+        magicPondRewards = dataManager.getMagicPondEntityRewards();
+    }
+
+    public static HashMap<ItemStack, Integer> getMagicPondRewards() {
+        return magicPondRewards;
+    }
 
     public MagicPondEntityManager getScratchCardEntityManager() {
         return magicPondEntityManager;
     }
     public void configureDB() throws SQLException {
-
         TableUtils.createTableIfNotExists(connectionSource, MagicPondEntity.class);
         magicPondEntityManager = new MagicPondEntityManager(connectionSource);
-        dataManager = new DataManager(magicPondEntityManager);
     }
 
 
@@ -47,8 +57,10 @@ public final class MagicPond {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
+        dataManager = new DataManager(magicPondEntityManager);
         ItemManager.init();
+
+        updateMagicPondRewards();
 
         plugin.getCommand("jeziorkoconfig").setExecutor(new MagicPondConfig(dataManager));
         plugin.getCommand("jeziorko").setExecutor(new MagicPondRewards(dataManager));

@@ -26,10 +26,7 @@ public class PlayerKillRankingIncrease implements Listener {
 
         Player p = Bukkit.getPlayer(event.getAttacker().getUUID());
 
-        int playerRankLevel = DataManager.getPlayerAbilityLevel(Ability.RANK, p);
-
-
-        double multiplier = DataManager.getAbilityModifier(Ability.RANK, playerRankLevel);
+        double multiplier = DataManager.getRankAbilityModifier(p);
 
         if(multiplier > 1) {
             killerPoints *= multiplier;

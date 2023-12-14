@@ -31,19 +31,17 @@ public class DropFragmentOnKill implements Listener {
         Player killer = dead.getKiller();
 
         if(killer == null) return;
+
         PlayerPerksEntity playerPerksEntityById = playerPerksEntityManager.getPlayerPerksEntityById(killer.getUniqueId());
         double chance = 0.1;
+
         if(LuckPermsProvider.get().getUserManager().getUser(killer.getUniqueId()) != null) {
             User user = LuckPermsProvider.get().getUserManager().getUser(killer.getUniqueId());
             chance = getPlayerRewardChance(user);
         }
         chance += (playerPerksEntityById.getPerkTypeLevel(PerkType.PERK_FRAGMENT_DROP) / 100);
 
-//        Bukkit.broadcastMessage("Chance: " + chance);
-
         if(!(shouldDrop(chance))) return;
-
-//        Bukkit.broadcastMessage("Dropped");
 
         if (killer.getInventory().firstEmpty() != -1) {
             killer.getInventory().addItem(ItemManager.perkFragment);
@@ -67,11 +65,6 @@ public class DropFragmentOnKill implements Listener {
 
         Random random = new Random();
         double result = random.nextDouble();
-
-//        Bukkit.broadcastMessage("____________");
-//        Bukkit.broadcastMessage("Result: " + result);
-//        Bukkit.broadcastMessage("Chance: " + chance);
-//        Bukkit.broadcastMessage("____________");
 
         return result <= chance;
     }

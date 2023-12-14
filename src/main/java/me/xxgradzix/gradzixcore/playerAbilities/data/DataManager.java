@@ -10,6 +10,10 @@ import me.xxgradzix.gradzixcore.playerAbilities.data.database.managers.PlayerAbi
 import me.xxgradzix.gradzixcore.playerAbilities.data.configfiles.UmiejetnosciConfigFile;
 import org.bukkit.entity.Player;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
 public class DataManager {
 
     private static boolean useDB = Gradzix_Core.USEDB;
@@ -26,6 +30,35 @@ public class DataManager {
         } else {
 
         }
+        refreshAbilities(player);
+    }
+
+    private static final Map<UUID, Double> dropAbilityModifierCache = new HashMap<>();
+    public static double getDropAbilityModifier(Player player) {
+        if (!dropAbilityModifierCache.containsKey(player.getUniqueId())) {
+            refreshDropAbilityModifier(player);
+        }
+        return dropAbilityModifierCache.get(player.getUniqueId());
+    }
+    private static void refreshDropAbilityModifier(Player player) {
+        dropAbilityModifierCache.put(player.getUniqueId(), getAbilityModifier(Ability.DROP, getPlayerAbilityLevel(Ability.DROP, player)));
+    }
+
+    private static final Map<UUID, Double> rankAbilityModifierCache = new HashMap<>();
+    public static double getRankAbilityModifier(Player player) {
+        if (!rankAbilityModifierCache.containsKey(player.getUniqueId())) {
+            refreshRankAbilityModifier(player);
+        }
+        return rankAbilityModifierCache.get(player.getUniqueId());
+    }
+
+    private static void refreshRankAbilityModifier(Player player) {
+        rankAbilityModifierCache.put(player.getUniqueId(), getAbilityModifier(Ability.RANK, getPlayerAbilityLevel(Ability.RANK, player)));
+    }
+
+    public static void refreshAbilities(Player player) {
+        refreshDropAbilityModifier(player);
+        refreshRankAbilityModifier(player);
     }
 
     public static int getPlayerAbilityLevel(Ability ability, Player player) {

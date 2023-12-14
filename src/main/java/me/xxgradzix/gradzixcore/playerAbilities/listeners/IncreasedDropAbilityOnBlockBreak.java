@@ -8,7 +8,6 @@ import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import me.xxgradzix.gradzixcore.events.Events;
 import me.xxgradzix.gradzixcore.generators.Generators;
 import me.xxgradzix.gradzixcore.playerAbilities.data.DataManager;
-import me.xxgradzix.gradzixcore.playerAbilities.data.database.entities.enums.Ability;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -22,7 +21,6 @@ import org.bukkit.inventory.ItemStack;
 
 public class IncreasedDropAbilityOnBlockBreak implements Listener {
 
-
     @EventHandler
     public void onBlockBreak(BlockBreakEvent event) {
 
@@ -30,7 +28,6 @@ public class IncreasedDropAbilityOnBlockBreak implements Listener {
         Player p  = event.getPlayer();
 
         if(p.getGameMode().equals(GameMode.CREATIVE)) return;
-
 
 
         Block block = event.getBlock();
@@ -43,7 +40,7 @@ public class IncreasedDropAbilityOnBlockBreak implements Listener {
 
         int afterFortuneAmount = fortuneLevel > 0 ? 1 + (int) (Math.random() * (fortuneLevel + 2)) : 1;
 
-        double playerAbilityLevelModifier = DataManager.getAbilityModifier(Ability.DROP, DataManager.getPlayerAbilityLevel(Ability.DROP, p));
+        double playerAbilityLevelModifier = DataManager.getDropAbilityModifier(p);
 
         double eventMultiplier = 1;
 

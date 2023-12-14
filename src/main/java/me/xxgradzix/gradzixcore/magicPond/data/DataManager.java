@@ -1,6 +1,7 @@
 package me.xxgradzix.gradzixcore.magicPond.data;
 
 import me.xxgradzix.gradzixcore.Gradzix_Core;
+import me.xxgradzix.gradzixcore.magicPond.MagicPond;
 import me.xxgradzix.gradzixcore.magicPond.data.database.entities.MagicPondEntity;
 import me.xxgradzix.gradzixcore.magicPond.data.database.managers.MagicPondEntityManager;
 import org.bukkit.inventory.ItemStack;
@@ -24,7 +25,9 @@ public class DataManager {
             if(magicPondEntity == null) throw new RuntimeException("Nie ma obiektu magic pond");
             magicPondEntity.setRewards(rewards);
             magicPondEntityManager.createOrUpdateMagicPondEntity(magicPondEntity);
+
         }
+        MagicPond.updateMagicPondRewards();
     }
 
     public HashMap<ItemStack, Integer> getMagicPondEntityRewards() {

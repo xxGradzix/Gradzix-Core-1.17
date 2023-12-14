@@ -65,8 +65,6 @@ commands:
     permission: umiejetnosci.resetumiejetnosci
     usage: /resetumiejetnosci
 
-#  bazarwystaw:
-#    description: ma zastapic /bazar sell
 
   setpriorities:
     description: otwiera gui priorytetow
@@ -129,6 +127,15 @@ commands:
     description: item shop balance
     permission: itemshop.stankonta
 
+  configWojny:
+    description: configWojny
+    permission: clansextension.configwojny
+
+  wypowiedzwojne:
+    description: wypowiada wojne
+
+  wojny:
+    description: menu wojen
   incognito:
     description: incognito
 
@@ -147,6 +154,10 @@ commands:
     description: shows player perks levels
     aliases:
       - perks
+
+  ulepszeniaklanu:
+    description: menu ulepszen klanu
+
   setarmorattribute:
     description: sets armor atribute
     permission: armor.setarmoratribute
@@ -168,3 +179,15 @@ commands:
   warp:
     description: otwiera gui warpow
     aliases: [warpy, warps]
+
+  vip:
+    description: otwiera vip menu
+
+  svip:
+    description: otwiera svip menu
+
+  age:
+    description: otwiera age menu
+
+  kosz:
+    description: otwiera kosz

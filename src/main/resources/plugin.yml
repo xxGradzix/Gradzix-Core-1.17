@@ -130,3 +130,11 @@ commands:
     description: item shop balance
     permission: itemshop.stankonta
 
+  test:
+    description: test
+
+  wojna:
+    description: wypowiada wojne
+
+  wojny:
+    description: menu wojen

@@ -14,7 +14,6 @@ import me.xxgradzix.gradzixcore.itemShop.managers.EconomyManager;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import sun.font.CStrike;
 
 import javax.management.InstanceAlreadyExistsException;
 import java.rmi.NoSuchObjectException;

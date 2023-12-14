@@ -7,6 +7,7 @@ import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import me.xxgradzix.gradzixcore.adminPanel.Panel;
 import me.xxgradzix.gradzixcore.binds.Binds;
 import me.xxgradzix.gradzixcore.chatOptions.ChatOptions;
+import me.xxgradzix.gradzixcore.clansExtension.ClansExtension;
 import me.xxgradzix.gradzixcore.events.Events;
 import me.xxgradzix.gradzixcore.generators.Generators;
 import me.xxgradzix.gradzixcore.itemPickupPriorities.ItemPickupPriorities;
@@ -20,6 +21,7 @@ import me.xxgradzix.gradzixcore.scratchCard.Zdrapka;
 import me.xxgradzix.gradzixcore.serverconfig.ServerConfig;
 import me.xxgradzix.gradzixcore.socialMediaRewards.SocialMediaRewards;
 import me.xxgradzix.gradzixcore.upgradeItem.Ulepsz;
+import net.dzikoysk.funnyguilds.FunnyGuilds;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
@@ -59,8 +61,10 @@ public final class Gradzix_Core extends JavaPlugin {
     private SocialMediaRewards socialMediaRewards;
 
     private ItemShop itemShop;
+    private ClansExtension clansExtension;
 
     private ConnectionSource connectionSource;
+    private FunnyGuilds funnyGuilds;
 
     Properties loadConfig() throws IOException {
         Properties prop = new Properties();
@@ -98,6 +102,7 @@ public final class Gradzix_Core extends JavaPlugin {
 
     @Override
     public void onEnable()  {
+        funnyGuilds = FunnyGuilds.getInstance();
         if (!LocalDate.now().isBefore(LocalDate.of(2023, 12, 30))) {
             System.out.println("jeżeli wyświetliła się ta wiadomosc to skontaktuj sie z xxGradzix");
             return;
@@ -188,6 +193,10 @@ public final class Gradzix_Core extends JavaPlugin {
         if (itemShop == null) {
             itemShop = new ItemShop(this, connectionSource);
             itemShop.onEnable();
+        }
+        if (clansExtension == null) {
+            clansExtension = new ClansExtension(this, connectionSource, funnyGuilds);
+            clansExtension.onEnable();
         }
     }
     private boolean setupEconomy() {

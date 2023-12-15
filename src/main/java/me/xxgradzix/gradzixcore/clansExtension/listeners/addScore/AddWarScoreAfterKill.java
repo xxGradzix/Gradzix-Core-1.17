@@ -1,5 +1,6 @@
 package me.xxgradzix.gradzixcore.clansExtension.listeners.addScore;
 
+import me.xxgradzix.gradzixcore.clansExtension.ClansExtension;
 import me.xxgradzix.gradzixcore.clansExtension.data.database.entities.War;
 import me.xxgradzix.gradzixcore.clansExtension.managers.WarManager;
 import net.dzikoysk.funnyguilds.FunnyGuilds;
@@ -28,8 +29,9 @@ public class AddWarScoreAfterKill implements Listener {
     @EventHandler
     public void onPlayerKill(EntityDeathEvent event) {
 
+        if(!ClansExtension.ARE_WARS_ACTIVE) return;
+
         if(!(event.getEntity() instanceof Player)) return;
-        Bukkit.broadcastMessage("Test 1");
 
         Player killer = event.getEntity().getKiller();
 
@@ -41,8 +43,6 @@ public class AddWarScoreAfterKill implements Listener {
         Option<User> optionalVictim = userManager.findByPlayer(victim);
 
         if(!optionalKiller.isPresent() || !optionalVictim.isPresent()) return;
-        Bukkit.broadcastMessage("Test 2");
-
 
         User killerUser = optionalKiller.get();
         User victimUser = optionalVictim.get();
@@ -51,8 +51,6 @@ public class AddWarScoreAfterKill implements Listener {
         Option<Guild> victimGuildOption = victimUser.getGuild();
 
         if(!killerGuildOption.isPresent() || !victimGuildOption.isPresent()) return;
-        Bukkit.broadcastMessage("Test 3");
-
 
         Guild killerGuild = killerGuildOption.get();
         Guild victinGuild = killerGuildOption.get();
@@ -60,7 +58,6 @@ public class AddWarScoreAfterKill implements Listener {
         Optional<War> optionalWar = warManager.getActiveWarOfGuilds(killerGuild.getUUID(), victinGuild.getUUID());
 
         if(!optionalWar.isPresent()) return;
-        Bukkit.broadcastMessage("Test 4");
 
         War war = optionalWar.get();
 

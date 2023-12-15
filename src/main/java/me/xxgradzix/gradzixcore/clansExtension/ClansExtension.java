@@ -24,6 +24,7 @@ public class ClansExtension {
     private final WarManager warManager;
 
     private final ConnectionSource connectionSource;
+    public static boolean ARE_WARS_ACTIVE = false;
 
     public void configureDB() throws SQLException {
         TableUtils.createTableIfNotExists(connectionSource, War.class);
@@ -48,7 +49,7 @@ public class ClansExtension {
     public void onEnable() {
 
         plugin.getCommand("test").setExecutor(new TestCommand(funnyGuilds, warManager, plugin));
-        plugin.getCommand("wojna").setExecutor(new WarCommand(funnyGuilds, warManager));
+        plugin.getCommand("wypowiedzwojne").setExecutor(new WarCommand(funnyGuilds, warManager));
         plugin.getCommand("wojny").setExecutor(new WojnyCommand(funnyGuilds, warManager));
 
         plugin.getServer().getPluginManager().registerEvents(new GuildLoseLivesEvent(funnyGuilds), plugin);

@@ -133,7 +133,7 @@ commands:
   test:
     description: test
 
-  wojna:
+  wypowiedzwojne:
     description: wypowiada wojne
 
   wojny:

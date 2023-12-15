@@ -50,70 +50,68 @@ public class WarEntityManager {
         }
     }
 
-    public List<War> getWarsByGuildId(UUID id, @Nullable WAR_STATE warState) {
+//    public List<War> getWarsByGuildId(UUID id, @Nullable WAR_STATE warState) {
+//        try {
+//            List<War> wars;
+//
+//            if(warState != null) {
+//                Where where = entityDao.queryBuilder().where();
+//                wars = where
+//                        .or(
+//                                where.eq("invader_id", id),
+//                                where.eq("invaded_id", id)
+//                        )
+//                        .and()
+//                        .eq("warState", warState)
+//                        .query();
+//            } else {
+//                Where where = entityDao.queryBuilder().where();
+//                wars = where
+//                        .or(
+//                                where.eq("invader_id", id),
+//                                where.eq("invaded_id", id)
+//                        )
+//                        .query();
+//            }
+//
+//            return wars;
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//            return new ArrayList<>();
+//        }
+//    }
+    public List<War> getWarsByGuildId(UUID guildId, WAR_STATE warState) { // TODO warstate
         try {
-            List<War> wars;
-
-            if(warState != null) {
-                Where where = entityDao.queryBuilder().where();
-                wars = where
-                        .or(
-                                where.eq("invader_id", id),
-                                where.eq("invaded_id", id)
-                        )
-                        .and()
-                        .eq("warState", warState)
-                        .query();
-            } else {
-                Where where = entityDao.queryBuilder().where();
-                wars = where
-                        .or(
-                                where.eq("invader_id", id),
-                                where.eq("invaded_id", id)
-                        )
-                        .query();
-            }
-
-            return wars;
+            QueryBuilder<War, Long> queryBuilder = entityDao.queryBuilder();
+            Where<War, Long> where = queryBuilder.where();
+            where.or(
+                    where.eq("invader_guild_id", guildId),
+                    where.eq("invaded_guild_id", guildId)
+            );
+            return queryBuilder.query();
         } catch (SQLException e) {
+            // Handle SQLException
             e.printStackTrace();
-            return new ArrayList<>();
+            return Collections.emptyList();
         }
     }
 
 
     public List<War> getWarByGuildIds(UUID id1, UUID id2, WAR_STATE warState) {
         try {
-            Where where = entityDao.queryBuilder().where();
-            List<War> wars1 = entityDao.queryBuilder()
-                    .where()
-                    .eq("invader_id", id1)
-                    .and()
-                    .eq("invaded_id", id2)
-//                    .and()
-//                    .eq("warState", warState)
-                    .query();
-            List<War> wars2 = entityDao.queryBuilder()
-                    .where()
-                    .eq("invader_id", id2)
-                    
-                    .and()
-                    .eq("invaded_id", id1)
-//                    .and()
-//                    .eq("warState", warState)
-                    .query();
-//            List<War> wars =
-//                    where
-//                    .or(
-//                            where.eq("invader_id", id1).and().eq("invaded_id", id2),
-//                            where.eq("invader_id", id2).and().eq("invaded_id", id1)
-//                    )
-//                    .and()
-//                    .eq("warState", warState)
-//                    .query();
-
-            wars1.addAll(wars2);
-            return wars1;
+            QueryBuilder<War, Long> queryBuilder = entityDao.queryBuilder();
+            Where<War, Long> where = queryBuilder.where();
+            where.and(
+                    where.or(
+                            where.eq("invader_id", id1),
+                            where.eq("invaded_id", id1)
+                    ),
+                    where.or(
+                            where.eq("invader_id", id2),
+                            where.eq("invaded_id", id2)
+                    )
+            );
+            return queryBuilder.query();
         } catch (SQLException e) {
             e.printStackTrace();
             return new ArrayList<>();

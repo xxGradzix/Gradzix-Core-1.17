@@ -1,6 +1,7 @@
 package me.xxgradzix.gradzixcore.clansExtension.commands;
 
 import me.xxgradzix.gradzixcore.Gradzix_Core;
+import me.xxgradzix.gradzixcore.clansExtension.ClansExtension;
 import me.xxgradzix.gradzixcore.clansExtension.managers.WarManager;
 import net.dzikoysk.funnyguilds.FunnyGuilds;
 import org.bukkit.Bukkit;
@@ -25,9 +26,12 @@ public class TestCommand implements CommandExecutor {
         warManager.startWars();
 
         Bukkit.broadcastMessage("zaczely sie wojny");
+        ClansExtension.ARE_WARS_ACTIVE = true;
         Bukkit.getScheduler().runTaskLater(plugin, () -> {
+            ClansExtension.ARE_WARS_ACTIVE = false;
             warManager.endWars();
             Bukkit.broadcastMessage("skonczyly sie wojny");
+
         }, 20 * 30);
 
 

@@ -17,8 +17,9 @@ public class GuildLoseLivesEvent implements Listener {
 
     @EventHandler
     public void onLoseLives(GuildLivesChangeEvent event) {
-        Bukkit.broadcastMessage("Wololo");
+
         if(event.getNewLives() == 0) {
+
             Bukkit.broadcastMessage("Koniec gildi " + event.getGuild().getName());
             GuildManager guildManager = funnyGuilds.getGuildManager();
 

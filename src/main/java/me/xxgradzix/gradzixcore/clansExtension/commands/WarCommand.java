@@ -17,7 +17,7 @@ import panda.std.Option;
 
 import java.util.List;
 
-public class WarCommand implements CommandExecutor {
+public class WarCommand implements CommandExecutor { // TODO change to DeclareWarCommand
 
     private final FunnyGuilds funnyGuilds;
 

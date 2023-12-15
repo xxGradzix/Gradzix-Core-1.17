@@ -78,7 +78,6 @@ public class WarManager {
             warEntityManager.createOrUpdateWar(war);
             // TODO notify war participants
         });
-
     }
     public void endWars() {
         List<War> wars = warEntityManager.getAllWars().stream()

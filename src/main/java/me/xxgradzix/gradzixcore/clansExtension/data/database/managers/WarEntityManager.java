@@ -86,7 +86,7 @@ public class WarEntityManager {
 //            return new ArrayList<>();
 //        }
 //    }
-    public List<War> getWarsByGuildId(@NotNull UUID guildId, @Nullable WAR_STATE warState) { // TODO warstate
+    public List<War> getWarsByGuildId(@NotNull UUID guildId, @Nullable WAR_STATE warState) {
         try {
             QueryBuilder<War, Long> queryBuilder = entityDao.queryBuilder();
             Where<War, Long> where = queryBuilder.where();

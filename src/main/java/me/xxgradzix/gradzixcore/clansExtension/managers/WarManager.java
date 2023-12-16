@@ -165,9 +165,7 @@ public class WarManager {
         return Optional.empty();
     }
 
-    public void endWar(War war) { // DODAC SYSTEM REKORDU WOJNY
-        // TODO do this method
-
+    public void endWar(War war) { // TODO DODAC SYSTEM REKORDU WOJNY
         UUID winnerGuildUUID = getLooserGuildUUID(war);
 
         if(winnerGuildUUID != null) {

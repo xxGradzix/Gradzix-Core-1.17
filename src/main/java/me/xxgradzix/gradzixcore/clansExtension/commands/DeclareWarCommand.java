@@ -15,7 +15,7 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import panda.std.Option;
 
-public class DeclareWarCommand implements CommandExecutor { // TODO change to DeclareWarCommand
+public class DeclareWarCommand implements CommandExecutor {
 
     private final FunnyGuilds funnyGuilds;
 

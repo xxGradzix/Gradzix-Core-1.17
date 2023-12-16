@@ -3,9 +3,9 @@ package me.xxgradzix.gradzixcore.clansExtension;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 import me.xxgradzix.gradzixcore.Gradzix_Core;
-import me.xxgradzix.gradzixcore.clansExtension.commands.TestCommand;
-import me.xxgradzix.gradzixcore.clansExtension.commands.WarCommand;
-import me.xxgradzix.gradzixcore.clansExtension.commands.WojnyCommand;
+import me.xxgradzix.gradzixcore.clansExtension.commands.WarConfigCommand;
+import me.xxgradzix.gradzixcore.clansExtension.commands.DeclareWarCommand;
+import me.xxgradzix.gradzixcore.clansExtension.commands.WarsCommand;
 import me.xxgradzix.gradzixcore.clansExtension.data.database.entities.War;
 import me.xxgradzix.gradzixcore.clansExtension.data.database.managers.WarEntityManager;
 import me.xxgradzix.gradzixcore.clansExtension.listeners.GuildLoseLivesEvent;
@@ -41,16 +41,16 @@ public class ClansExtension {
             throw new RuntimeException(e);
         }
 
-        warManager = new WarManager(warEntityManager);
+        warManager = new WarManager(warEntityManager, funnyGuilds);
 
     }
 
 
     public void onEnable() {
 
-        plugin.getCommand("test").setExecutor(new TestCommand(funnyGuilds, warManager, plugin));
-        plugin.getCommand("wypowiedzwojne").setExecutor(new WarCommand(funnyGuilds, warManager));
-        plugin.getCommand("wojny").setExecutor(new WojnyCommand(funnyGuilds, warManager));
+        plugin.getCommand("configWojny").setExecutor(new WarConfigCommand(funnyGuilds, warManager, plugin));
+        plugin.getCommand("wypowiedzwojne").setExecutor(new DeclareWarCommand(funnyGuilds, warManager));
+        plugin.getCommand("wojny").setExecutor(new WarsCommand(funnyGuilds, warManager));
 
         plugin.getServer().getPluginManager().registerEvents(new GuildLoseLivesEvent(funnyGuilds), plugin);
         plugin.getServer().getPluginManager().registerEvents(new AddWarScoreAfterKill(funnyGuilds, warManager), plugin);

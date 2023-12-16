@@ -7,6 +7,7 @@ import dev.triumphteam.gui.guis.PaginatedGui;
 import me.xxgradzix.gradzixcore.clansExtension.data.database.entities.War;
 import me.xxgradzix.gradzixcore.clansExtension.items.ItemManager;
 import me.xxgradzix.gradzixcore.clansExtension.managers.WarManager;
+import me.xxgradzix.gradzixcore.clansExtension.messages.Messages;
 import net.dzikoysk.funnyguilds.FunnyGuilds;
 import net.dzikoysk.funnyguilds.guild.Guild;
 import net.dzikoysk.funnyguilds.guild.GuildManager;
@@ -24,11 +25,11 @@ import panda.std.Option;
 import java.util.List;
 import java.util.UUID;
 
-public class WojnyCommand implements CommandExecutor {
+public class WarsCommand implements CommandExecutor {
     private final FunnyGuilds funnyGuilds;
     private final WarManager warManager;
 
-    public WojnyCommand(FunnyGuilds funnyGuilds, WarManager warManager) {
+    public WarsCommand(FunnyGuilds funnyGuilds, WarManager warManager) {
         this.funnyGuilds = funnyGuilds;
         this.warManager = warManager;
     }
@@ -52,8 +53,7 @@ public class WojnyCommand implements CommandExecutor {
         Option<Guild> guildOption = user.getGuild();
 
         if(guildOption.isEmpty()) {
-            // TODO wiadomsoc
-            player.sendMessage("Nie masz zadnej gildi");
+            player.sendMessage(Messages.YOU_DONT_HAVE_CLAN);
             return true;
         }
 
@@ -78,15 +78,25 @@ public class WojnyCommand implements CommandExecutor {
 
         allGuildWars.forEach(war -> {
             UUID enemyGuildID;
+            int userGuildsPoints = 0;
+            int enemyGuildsPoints = 0;
+
             if(userGuildId.equals(war.getInvadedGuildId())) {
                 enemyGuildID = war.getInvaderGuildId();
-            } else enemyGuildID = war.getInvadedGuildId();
+                userGuildsPoints = war.getInvadedScore();
+                enemyGuildsPoints = war.getInvaderScore();
+            } else {
+                enemyGuildID = war.getInvadedGuildId();
+
+                userGuildsPoints = war.getInvaderScore();
+                enemyGuildsPoints = war.getInvadedScore();
+            }
 
             Option<Guild> enemyGuildOpt = guildManager.findByUuid(enemyGuildID);
 
             if(enemyGuildOpt.isEmpty()) return;
 
-            gui.addItem(new GuiItem(ItemManager.warResult(guild, enemyGuildOpt.get(), war.getWarState(), 1, 1)));
+            gui.addItem(new GuiItem(ItemManager.warResult(war.getId(), guild, enemyGuildOpt.get(), war.getWarState(), userGuildsPoints, enemyGuildsPoints)));
 
 
         });

@@ -63,6 +63,8 @@ public class AddWarScoreAfterKill implements Listener {
 
         warManager.addPointForGuild(war, killerGuild.getUUID());
 
+        Bukkit.broadcastMessage("Id to : " + war.getId());
+
         killer.sendMessage("Zdobyłeś punkt dla swojej gildi w wojnie");
 
         victim.sendMessage("Zabil Cie czlonek gildi z ktora masz wojne");

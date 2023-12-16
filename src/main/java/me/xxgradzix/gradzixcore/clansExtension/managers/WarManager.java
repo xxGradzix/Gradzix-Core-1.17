@@ -5,10 +5,15 @@ import me.xxgradzix.gradzixcore.clansExtension.data.database.entities.War;
 import me.xxgradzix.gradzixcore.clansExtension.data.database.managers.WarEntityManager;
 import me.xxgradzix.gradzixcore.clansExtension.exceptions.TheyAlreadyHaveWarException;
 import me.xxgradzix.gradzixcore.clansExtension.exceptions.YouAlreadyHaveWarException;
+import me.xxgradzix.gradzixcore.clansExtension.listeners.GuildLoseLivesEvent;
+import net.dzikoysk.funnyguilds.FunnyGuilds;
+import net.dzikoysk.funnyguilds.event.FunnyEvent;
+import net.dzikoysk.funnyguilds.event.guild.GuildLivesChangeEvent;
 import net.dzikoysk.funnyguilds.guild.Guild;
+import net.dzikoysk.funnyguilds.guild.GuildManager;
 import org.bukkit.Bukkit;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import panda.std.Option;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -23,8 +28,10 @@ public class WarManager {
 
     private final WarEntityManager warEntityManager;
 
-    public WarManager(WarEntityManager warEntityManager) {
+    private final FunnyGuilds funnyGuilds;
+    public WarManager(WarEntityManager warEntityManager, FunnyGuilds funnyGuilds) {
         this.warEntityManager = warEntityManager;
+        this.funnyGuilds = funnyGuilds;
     }
 
     public void declareWar(Guild invaderGuild, Guild invadedGuild) throws YouAlreadyHaveWarException, TheyAlreadyHaveWarException {
@@ -85,8 +92,9 @@ public class WarManager {
                 .collect(Collectors.toList());
 
         wars.forEach(war -> {
-            war.setWarState(WAR_STATE.FINISHED);
-            warEntityManager.createOrUpdateWar(war);
+
+            endWar(war);
+
             // notify
         });
     }
@@ -99,12 +107,24 @@ public class WarManager {
 
     public void addPointForGuild(War war, UUID guildId) {
 
-        if(guildId.equals(war.getInvadedGuildId())) war.setInvadedScore(war.getInvadedScore() + 1);
 
-        if(guildId.equals(war.getInvaderGuildId())) war.setInvaderScore(war.getInvaderScore() + 1);
+        if(guildId.equals(war.getInvadedGuildId())) {
+            Bukkit.broadcastMessage("Invaded dostaje punkt");
+            int previousPoints = war.getInvadedScore();
+            previousPoints++;
+            war.setInvadedScore(previousPoints);
+
+        }
+
+        if(guildId.equals(war.getInvaderGuildId())) {
+            Bukkit.broadcastMessage("Invader dostaje punkt");
+
+            int previousPoints = war.getInvaderScore();
+            previousPoints++;
+            war.setInvaderScore(previousPoints);
+        }
 
         warEntityManager.createOrUpdateWar(war);
-
     }
 
     @Nullable
@@ -121,16 +141,50 @@ public class WarManager {
 
         return null;
     }
+    @Nullable
+    public UUID getLooserGuildUUID(War war) {
+
+        int invaderKills = war.getInvaderScore();
+        int invadedKills = war.getInvadedScore();
+
+        if(invaderKills == invadedKills) return null; // draw
+
+        if(invaderKills < invadedKills) return war.getInvaderGuildId();
+
+        if(invaderKills > invadedKills) return war.getInvadedGuildId();
+
+        return null;
+    }
 
     public Optional<War> getActiveWarOfGuilds(UUID guild1Id, UUID guild2Id) {
 
         List<War> warByGuildIds = warEntityManager.getWarByGuildIds(guild1Id, guild2Id, WAR_STATE.CURRENT);
 
-        Bukkit.broadcastMessage(warByGuildIds.toString());
-
         if(!warByGuildIds.isEmpty()) return warByGuildIds.stream().findFirst();
 
         return Optional.empty();
+    }
+
+    public void endWar(War war) { // DODAC SYSTEM REKORDU WOJNY
+        // TODO do this method
+
+        UUID winnerGuildUUID = getLooserGuildUUID(war);
+
+        if(winnerGuildUUID != null) {
+            GuildManager guildManager = funnyGuilds.getGuildManager();
+            Option<Guild> byUuid = guildManager.findByUuid(winnerGuildUUID);
+
+            if(byUuid.isPresent()){
+                Guild guild = byUuid.get();
+                int oldLives = guild.getLives();
+                oldLives--;
+                guild.setLives(oldLives);
+                Bukkit.getServer().getPluginManager().callEvent(new GuildLivesChangeEvent(FunnyEvent.EventCause.COMBAT, null, guild, oldLives));
+            }
+        }
+        war.setWarState(WAR_STATE.FINISHED);
+        warEntityManager.createOrUpdateWar(war);
+
     }
 
 

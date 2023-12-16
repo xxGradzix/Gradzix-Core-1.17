@@ -8,6 +8,8 @@ import com.j256.ormlite.stmt.Where;
 import com.j256.ormlite.support.ConnectionSource;
 import me.xxgradzix.gradzixcore.clansExtension.data.database.entities.WAR_STATE;
 import me.xxgradzix.gradzixcore.clansExtension.data.database.entities.War;
+import org.bukkit.Bukkit;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.sql.SQLException;
@@ -34,6 +36,10 @@ public class WarEntityManager {
     }
     public void createOrUpdateWar(War entity) {
         try {
+//                    Bukkit.broadcastMessage("Invader " + entity.getInvaderScore());
+//                    Bukkit.broadcastMessage("Invaded " + entity.getInvadedScore());
+
+
             entityDao.createOrUpdate(entity);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -80,14 +86,16 @@ public class WarEntityManager {
 //            return new ArrayList<>();
 //        }
 //    }
-    public List<War> getWarsByGuildId(UUID guildId, WAR_STATE warState) { // TODO warstate
+    public List<War> getWarsByGuildId(@NotNull UUID guildId, @Nullable WAR_STATE warState) { // TODO warstate
         try {
             QueryBuilder<War, Long> queryBuilder = entityDao.queryBuilder();
             Where<War, Long> where = queryBuilder.where();
             where.or(
-                    where.eq("invader_guild_id", guildId),
-                    where.eq("invaded_guild_id", guildId)
+                    where.eq("invader_id", guildId),
+                    where.eq("invaded_id", guildId)
             );
+            if(warState != null) where.and().eq("warState", warState);
+
             return queryBuilder.query();
         } catch (SQLException e) {
             // Handle SQLException
@@ -97,7 +105,7 @@ public class WarEntityManager {
     }
 
 
-    public List<War> getWarByGuildIds(UUID id1, UUID id2, WAR_STATE warState) {
+    public List<War> getWarByGuildIds(@NotNull UUID id1, @NotNull UUID id2, @Nullable WAR_STATE warState) {
         try {
             QueryBuilder<War, Long> queryBuilder = entityDao.queryBuilder();
             Where<War, Long> where = queryBuilder.where();
@@ -111,6 +119,8 @@ public class WarEntityManager {
                             where.eq("invaded_id", id2)
                     )
             );
+            if(warState != null) where.and().eq("warState", warState);
+
             return queryBuilder.query();
         } catch (SQLException e) {
             e.printStackTrace();

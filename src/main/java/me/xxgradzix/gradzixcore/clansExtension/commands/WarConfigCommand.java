@@ -10,11 +10,11 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
-public class TestCommand implements CommandExecutor {
+public class WarConfigCommand implements CommandExecutor {
     private final FunnyGuilds funnyGuilds;
     private final WarManager warManager;
     private final Gradzix_Core plugin;
-    public TestCommand(FunnyGuilds funnyGuilds, WarManager warManager, Gradzix_Core plugin) {
+    public WarConfigCommand(FunnyGuilds funnyGuilds, WarManager warManager, Gradzix_Core plugin) {
         this.funnyGuilds = funnyGuilds;
         this.warManager = warManager;
         this.plugin = plugin;
@@ -27,6 +27,7 @@ public class TestCommand implements CommandExecutor {
 
         Bukkit.broadcastMessage("zaczely sie wojny");
         ClansExtension.ARE_WARS_ACTIVE = true;
+
         Bukkit.getScheduler().runTaskLater(plugin, () -> {
             ClansExtension.ARE_WARS_ACTIVE = false;
             warManager.endWars();

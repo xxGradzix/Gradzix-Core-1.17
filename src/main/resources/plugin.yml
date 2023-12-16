@@ -130,8 +130,9 @@ commands:
     description: item shop balance
     permission: itemshop.stankonta
 
-  test:
-    description: test
+  configWojny:
+    description: configWojny
+    permission: clansextension.configwojny
 
   wypowiedzwojne:
     description: wypowiada wojne

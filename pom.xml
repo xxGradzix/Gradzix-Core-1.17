@@ -27,6 +27,7 @@
                     <target>${java.version}</target>
                 </configuration>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
@@ -42,8 +43,10 @@
                             <outputFile>C:\Users\kuba\Desktop\spigot1_17_1\plugins\Gradzix-Core.jar</outputFile>
 <!--                            <outputFile>C:\Users\kuba\Desktop\serwery\BoxPvp_1\plugins\Gradzix-Core.jar</outputFile>-->
                         </configuration>
+
                     </execution>
                 </executions>
+
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

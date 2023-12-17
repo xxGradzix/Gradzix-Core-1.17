@@ -62,6 +62,10 @@ public class DeclareWarCommand implements CommandExecutor {
             player.sendMessage(Messages.CLAN_DOES_NOT_EXISTS);
             return false;
         }
+        if (guild.equals(invadedGuildOption.get())) {
+            player.sendMessage(Messages.YOU_CANT_DECLARE_WAR_TO_YOUR_OWN_GUILD);
+            return false;
+        }
         Guild invadedGuild = invadedGuildOption.get();
 
         try {
@@ -74,9 +78,9 @@ public class DeclareWarCommand implements CommandExecutor {
             return false;
         }
 
-        player.sendMessage(Messages.DECLARED_WAR_TO_CLAN_XXXX + invadedGuild.getUUID());
-        // TODO notify enemy
+        player.sendMessage(Messages.YOU_DECLARED_WAR_TO_CLAN_XXXX + invadedGuild.getUUID());
 
+        invadedGuild.getOnlineMembers().forEach(onlinePlayer -> onlinePlayer.sendMessage(Messages.CLAN_XXXX_DECLARED_WAR_TO_YOU(guild.getTag())));
 
         return false;
     }

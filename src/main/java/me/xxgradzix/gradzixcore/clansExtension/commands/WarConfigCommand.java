@@ -34,7 +34,7 @@ public class WarConfigCommand implements CommandExecutor {
             warManager.endWars();
             Bukkit.broadcastMessage(Messages.WARS_ENDED);
 
-        }, 20 * 30);
+        }, 20 * 60 * 2);
 
         return true;
 

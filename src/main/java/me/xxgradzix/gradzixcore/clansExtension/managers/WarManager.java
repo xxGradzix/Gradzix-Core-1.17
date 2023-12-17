@@ -7,6 +7,7 @@ import me.xxgradzix.gradzixcore.clansExtension.data.database.managers.WarEntityM
 import me.xxgradzix.gradzixcore.clansExtension.data.database.managers.WarRecordEntityManager;
 import me.xxgradzix.gradzixcore.clansExtension.exceptions.TheyAlreadyHaveWarException;
 import me.xxgradzix.gradzixcore.clansExtension.exceptions.YouAlreadyHaveWarException;
+import me.xxgradzix.gradzixcore.clansExtension.messages.Messages;
 import net.dzikoysk.funnyguilds.FunnyGuilds;
 import net.dzikoysk.funnyguilds.event.FunnyEvent;
 import net.dzikoysk.funnyguilds.event.guild.GuildLivesChangeEvent;
@@ -80,10 +81,25 @@ public class WarManager {
                 )
                 .collect(Collectors.toList());
 
+
         warEntities.forEach((war) -> {
+
             war.setWarState(WAR_STATE.CURRENT);
+            UUID invaderGuildId = war.getInvaderGuildId();
+            UUID invadedGuildId = war.getInvadedGuildId();
+
+            Option<Guild> invaderGuildOption = funnyGuilds.getGuildManager().findByUuid(invaderGuildId);
+            Option<Guild> invadedGuildOption = funnyGuilds.getGuildManager().findByUuid(invadedGuildId);
+
+            if(invaderGuildOption.isPresent() && invadedGuildOption.isPresent()) {
+                Guild invaderGuild = invaderGuildOption.get();
+                Guild invadedGuild = invadedGuildOption.get();
+
+                invaderGuild.getOnlineMembers().forEach(onlinePlayer -> onlinePlayer.sendMessage(Messages.YOUR_WAR_WITH_CLAN_XXXX_HAS_STARTED(invadedGuild.getTag())));
+                invadedGuild.getOnlineMembers().forEach(onlinePlayer -> onlinePlayer.sendMessage(Messages.YOUR_WAR_WITH_CLAN_XXXX_HAS_STARTED(invaderGuild.getTag())));
+            }
+
             warEntityManager.createOrUpdateWar(war);
-            // TODO notify war participants
         });
     }
     public void endWars() {
@@ -93,7 +109,6 @@ public class WarManager {
 
         warEntities.forEach(war -> {
             endWar(war);
-            // TODO notify war participants
         });
     }
 
@@ -173,6 +188,13 @@ public class WarManager {
         Option<Guild> invadedOptionalGuild = guildManager.findByUuid(warEntity.getInvadedGuildId());
         if(invadedOptionalGuild.isPresent()) invadedTag = invadedOptionalGuild.get().getTag();
 
+        if(invaderOptionalGuild.isPresent() && invadedOptionalGuild.isPresent()) {
+            Guild invaderGuild = invaderOptionalGuild.get();
+            Guild invadedGuild = invadedOptionalGuild.get();
+
+            invaderGuild.getOnlineMembers().forEach(onlinePlayer -> onlinePlayer.sendMessage(Messages.YOUR_WAR_WITH_CLAN_XXXX_HAS_STARTED(invadedGuild.getTag())));
+            invadedGuild.getOnlineMembers().forEach(onlinePlayer -> onlinePlayer.sendMessage(Messages.YOUR_WAR_WITH_CLAN_XXXX_HAS_STARTED(invaderGuild.getTag())));
+        }
 
         WarRecordEntity invaderRecord = new WarRecordEntity(warEntity.getInvaderGuildId(),
                 invaderTag,

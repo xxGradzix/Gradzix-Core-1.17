@@ -192,8 +192,8 @@ public class WarManager {
             Guild invaderGuild = invaderOptionalGuild.get();
             Guild invadedGuild = invadedOptionalGuild.get();
 
-            invaderGuild.getOnlineMembers().forEach(onlinePlayer -> onlinePlayer.sendMessage(Messages.YOUR_WAR_WITH_CLAN_XXXX_HAS_STARTED(invadedGuild.getTag())));
-            invadedGuild.getOnlineMembers().forEach(onlinePlayer -> onlinePlayer.sendMessage(Messages.YOUR_WAR_WITH_CLAN_XXXX_HAS_STARTED(invaderGuild.getTag())));
+            invaderGuild.getOnlineMembers().forEach(onlinePlayer -> onlinePlayer.sendMessage(Messages.YOUR_WAR_WITH_CLAN_XXXX_HAS_ENDED(invadedGuild.getTag())));
+            invadedGuild.getOnlineMembers().forEach(onlinePlayer -> onlinePlayer.sendMessage(Messages.YOUR_WAR_WITH_CLAN_XXXX_HAS_ENDED(invaderGuild.getTag())));
         }
 
         WarRecordEntity invaderRecord = new WarRecordEntity(warEntity.getInvaderGuildId(),

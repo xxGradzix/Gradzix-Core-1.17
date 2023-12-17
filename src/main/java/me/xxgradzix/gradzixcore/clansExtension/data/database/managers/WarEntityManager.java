@@ -7,47 +7,41 @@ import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.stmt.Where;
 import com.j256.ormlite.support.ConnectionSource;
 import me.xxgradzix.gradzixcore.clansExtension.data.database.entities.WAR_STATE;
-import me.xxgradzix.gradzixcore.clansExtension.data.database.entities.War;
-import org.bukkit.Bukkit;
+import me.xxgradzix.gradzixcore.clansExtension.data.database.entities.WarEntity;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.sql.SQLException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class WarEntityManager {
-    private Dao<War, Long> entityDao;
+    private Dao<WarEntity, Long> entityDao;
 
     public WarEntityManager(ConnectionSource connectionSource) {
         try {
-            entityDao = DaoManager.createDao(connectionSource, War.class);
+            entityDao = DaoManager.createDao(connectionSource, WarEntity.class);
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public void createWar(War entity) {
+    public void createWar(WarEntity entity) {
         try {
             entityDao.create(entity);
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-    public void createOrUpdateWar(War entity) {
+    public void createOrUpdateWar(WarEntity entity) {
         try {
-//                    Bukkit.broadcastMessage("Invader " + entity.getInvaderScore());
-//                    Bukkit.broadcastMessage("Invaded " + entity.getInvadedScore());
-
-
             entityDao.createOrUpdate(entity);
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-    public Optional<War> getWarByID(Long id) {
+    public Optional<WarEntity> getWarByID(Long id) {
         try {
-            War entity = entityDao.queryForId(id);
+            WarEntity entity = entityDao.queryForId(id);
             if(entity == null) return Optional.empty();
             return Optional.of(entity);
         } catch (SQLException e) {
@@ -86,10 +80,10 @@ public class WarEntityManager {
 //            return new ArrayList<>();
 //        }
 //    }
-    public List<War> getWarsByGuildId(@NotNull UUID guildId, @Nullable WAR_STATE warState) {
+    public List<WarEntity> getWarsByGuildId(@NotNull UUID guildId, @Nullable WAR_STATE warState) {
         try {
-            QueryBuilder<War, Long> queryBuilder = entityDao.queryBuilder();
-            Where<War, Long> where = queryBuilder.where();
+            QueryBuilder<WarEntity, Long> queryBuilder = entityDao.queryBuilder();
+            Where<WarEntity, Long> where = queryBuilder.where();
             where.or(
                     where.eq("invader_id", guildId),
                     where.eq("invaded_id", guildId)
@@ -103,12 +97,32 @@ public class WarEntityManager {
             return Collections.emptyList();
         }
     }
-
-
-    public List<War> getWarByGuildIds(@NotNull UUID id1, @NotNull UUID id2, @Nullable WAR_STATE warState) {
+    public List<WarEntity> getActiveWarsByGuildId(@NotNull UUID guildId) {
         try {
-            QueryBuilder<War, Long> queryBuilder = entityDao.queryBuilder();
-            Where<War, Long> where = queryBuilder.where();
+            QueryBuilder<WarEntity, Long> queryBuilder = entityDao.queryBuilder();
+            Where<WarEntity, Long> where = queryBuilder.where();
+            where.or(
+                    where.eq("invader_id", guildId),
+                    where.eq("invaded_id", guildId)
+            );
+            where.and().or(
+                    where.eq("warState", WAR_STATE.CURRENT),
+                    where.eq("warState", WAR_STATE.FUTURE)
+            );
+
+            return queryBuilder.query();
+        } catch (SQLException e) {
+            // Handle SQLException
+            e.printStackTrace();
+            return Collections.emptyList();
+        }
+    }
+
+
+    public List<WarEntity> getWarByGuildIds(@NotNull UUID id1, @NotNull UUID id2, @Nullable WAR_STATE warState) {
+        try {
+            QueryBuilder<WarEntity, Long> queryBuilder = entityDao.queryBuilder();
+            Where<WarEntity, Long> where = queryBuilder.where();
             where.and(
                     where.or(
                             where.eq("invader_id", id1),
@@ -127,7 +141,7 @@ public class WarEntityManager {
             return new ArrayList<>();
         }
     }
-    public List<War> getAllWars() {
+    public List<WarEntity> getAllWars() {
         try {
             return entityDao.queryForAll();
         } catch (SQLException e) {

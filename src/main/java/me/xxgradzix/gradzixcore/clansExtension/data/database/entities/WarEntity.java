@@ -12,7 +12,7 @@ import java.util.UUID;
 @DatabaseTable(tableName = "gradzixcore_war")
 @Data
 @NoArgsConstructor
-public class War {
+public class WarEntity {
 
     @DatabaseField(generatedId = true)
     private Long id;
@@ -38,7 +38,7 @@ public class War {
     @DatabaseField(columnName = "warState")
     private WAR_STATE warState;
 
-    public War(UUID invaderGuildId, UUID invadedGuildId, int invaderScore, int invadedScore, LocalDateTime warStart, LocalDateTime warEnd, WAR_STATE warState) {
+    public WarEntity(UUID invaderGuildId, UUID invadedGuildId, int invaderScore, int invadedScore, LocalDateTime warStart, LocalDateTime warEnd, WAR_STATE warState) {
         this.invaderGuildId = invaderGuildId;
         this.invadedGuildId = invadedGuildId;
         this.invaderScore = invaderScore;

@@ -1,8 +1,9 @@
 package me.xxgradzix.gradzixcore.clansExtension.listeners.addScore;
 
 import me.xxgradzix.gradzixcore.clansExtension.ClansExtension;
-import me.xxgradzix.gradzixcore.clansExtension.data.database.entities.War;
+import me.xxgradzix.gradzixcore.clansExtension.data.database.entities.WarEntity;
 import me.xxgradzix.gradzixcore.clansExtension.managers.WarManager;
+import me.xxgradzix.gradzixcore.clansExtension.messages.Messages;
 import net.dzikoysk.funnyguilds.FunnyGuilds;
 import net.dzikoysk.funnyguilds.guild.Guild;
 import net.dzikoysk.funnyguilds.user.User;
@@ -55,19 +56,17 @@ public class AddWarScoreAfterKill implements Listener {
         Guild killerGuild = killerGuildOption.get();
         Guild victinGuild = killerGuildOption.get();
 
-        Optional<War> optionalWar = warManager.getActiveWarOfGuilds(killerGuild.getUUID(), victinGuild.getUUID());
+        Optional<WarEntity> optionalWar = warManager.getActiveWarOfGuilds(killerGuild.getUUID(), victinGuild.getUUID());
 
         if(!optionalWar.isPresent()) return;
 
-        War war = optionalWar.get();
+        WarEntity warEntity = optionalWar.get();
 
-        warManager.addPointForGuild(war, killerGuild.getUUID());
+        warManager.addPointForGuild(warEntity, killerGuild.getUUID());
 
-        Bukkit.broadcastMessage("Id to : " + war.getId());
+        killer.sendMessage(Messages.YOU_KILLED_MEMBER_OF_ENEMY_GUILD);
 
-        killer.sendMessage("Zdobyłeś punkt dla swojej gildi w wojnie");
-
-        victim.sendMessage("Zabil Cie czlonek gildi z ktora masz wojne");
+        victim.sendMessage(Messages.YOU_WERE_KILLED_BY_MEMBER_OF_ENEMY_GUILD);
 
     }
 

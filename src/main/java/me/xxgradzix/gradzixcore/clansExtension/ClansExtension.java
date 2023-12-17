@@ -6,9 +6,12 @@ import me.xxgradzix.gradzixcore.Gradzix_Core;
 import me.xxgradzix.gradzixcore.clansExtension.commands.WarConfigCommand;
 import me.xxgradzix.gradzixcore.clansExtension.commands.DeclareWarCommand;
 import me.xxgradzix.gradzixcore.clansExtension.commands.WarsCommand;
-import me.xxgradzix.gradzixcore.clansExtension.data.database.entities.War;
+import me.xxgradzix.gradzixcore.clansExtension.data.database.entities.WarEntity;
+import me.xxgradzix.gradzixcore.clansExtension.data.database.entities.WarRecordEntity;
 import me.xxgradzix.gradzixcore.clansExtension.data.database.managers.WarEntityManager;
+import me.xxgradzix.gradzixcore.clansExtension.data.database.managers.WarRecordEntityManager;
 import me.xxgradzix.gradzixcore.clansExtension.listeners.GuildLoseLivesEvent;
+import me.xxgradzix.gradzixcore.clansExtension.listeners.GuildRemoveEvent;
 import me.xxgradzix.gradzixcore.clansExtension.listeners.addScore.AddWarScoreAfterKill;
 import me.xxgradzix.gradzixcore.clansExtension.managers.WarManager;
 import net.dzikoysk.funnyguilds.FunnyGuilds;
@@ -21,14 +24,17 @@ public class ClansExtension {
     private final FunnyGuilds funnyGuilds;
 
     private WarEntityManager warEntityManager;
+    private WarRecordEntityManager warRecordEntityManager;
     private final WarManager warManager;
 
     private final ConnectionSource connectionSource;
     public static boolean ARE_WARS_ACTIVE = false;
 
     public void configureDB() throws SQLException {
-        TableUtils.createTableIfNotExists(connectionSource, War.class);
+        TableUtils.createTableIfNotExists(connectionSource, WarEntity.class);
+        TableUtils.createTableIfNotExists(connectionSource, WarRecordEntity.class);
         warEntityManager = new WarEntityManager(connectionSource);
+        warRecordEntityManager = new WarRecordEntityManager(connectionSource);
     }
     public ClansExtension(Gradzix_Core plugin, ConnectionSource connectionSource, FunnyGuilds funnyGuilds) {
         this.funnyGuilds = funnyGuilds;
@@ -41,7 +47,7 @@ public class ClansExtension {
             throw new RuntimeException(e);
         }
 
-        warManager = new WarManager(warEntityManager, funnyGuilds);
+        warManager = new WarManager(warEntityManager, warRecordEntityManager, funnyGuilds);
 
     }
 
@@ -54,6 +60,7 @@ public class ClansExtension {
 
         plugin.getServer().getPluginManager().registerEvents(new GuildLoseLivesEvent(funnyGuilds), plugin);
         plugin.getServer().getPluginManager().registerEvents(new AddWarScoreAfterKill(funnyGuilds, warManager), plugin);
+        plugin.getServer().getPluginManager().registerEvents(new GuildRemoveEvent(warManager, funnyGuilds), plugin);
 
     }
 

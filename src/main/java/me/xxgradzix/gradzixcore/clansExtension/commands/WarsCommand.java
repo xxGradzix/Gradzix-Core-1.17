@@ -4,7 +4,8 @@ import dev.triumphteam.gui.builder.item.ItemBuilder;
 import dev.triumphteam.gui.guis.Gui;
 import dev.triumphteam.gui.guis.GuiItem;
 import dev.triumphteam.gui.guis.PaginatedGui;
-import me.xxgradzix.gradzixcore.clansExtension.data.database.entities.War;
+import me.xxgradzix.gradzixcore.clansExtension.data.database.entities.WarEntity;
+import me.xxgradzix.gradzixcore.clansExtension.data.database.entities.WarRecordEntity;
 import me.xxgradzix.gradzixcore.clansExtension.items.ItemManager;
 import me.xxgradzix.gradzixcore.clansExtension.managers.WarManager;
 import me.xxgradzix.gradzixcore.clansExtension.messages.Messages;
@@ -19,6 +20,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import panda.std.Option;
 
@@ -45,63 +47,87 @@ public class WarsCommand implements CommandExecutor {
         UserManager userManager = funnyGuilds.getUserManager();
 
         Option<User> userOption = userManager.findByPlayer(player);
-
         if(userOption.isEmpty()) return false;
-
         User user = userOption.get();
 
         Option<Guild> guildOption = user.getGuild();
-
         if(guildOption.isEmpty()) {
             player.sendMessage(Messages.YOU_DONT_HAVE_CLAN);
             return true;
         }
+        Guild playerGuild = guildOption.get();
 
-        Guild guild = guildOption.get();
-
-        PaginatedGui gui = Gui.paginated()
-                .title(Component.text("Wojny gildi "))
-                .rows(2)
+        Gui chooseWarsStatus = Gui.gui()
+                .title(Component.text("Wybierz status wojny"))
+                .rows(1)
                 .disableAllInteractions()
-//                .pageSize(45) // Set the size you want, or leave it to be automatic.
                 .create();
 
-        gui.setItem(2, 1, ItemBuilder.from(Material.PAPER).setName("Previous").asGuiItem(event -> gui.previous()));
-        gui.getFiller().fillBetweenPoints(2, 2, 2, 8, new GuiItem(Material.GREEN_STAINED_GLASS_PANE));
-        gui.setItem(2, 9, ItemBuilder.from(Material.PAPER).setName("Next").asGuiItem(event -> gui.next()));
+        GuiItem endedWarsButton = new GuiItem(Material.END_CRYSTAL);
+        GuiItem activeWarsButton = new GuiItem(Material.END_PORTAL_FRAME);
 
-        UUID userGuildId = guild.getUUID();
+        endedWarsButton.setAction(event -> {
+            openEndedWarsGui(player, playerGuild);
+        });
 
-        List<War> allGuildWars = warManager.getAllGuildWars(userGuildId);
+        activeWarsButton.setAction(event -> {
+            openActiveWarsGui(player, playerGuild);
+        });
+        chooseWarsStatus.setItem(2, activeWarsButton);
+        chooseWarsStatus.setItem(6, endedWarsButton);
+
+        chooseWarsStatus.open(player);
+
+        return false;
+    }
+
+    private void openActiveWarsGui(Player player, Guild userGuild) {
+        Gui activeWars = Gui.gui()
+                .title(Component.text("Aktywne wojny gildi"))
+                .rows(3)
+                .disableAllInteractions()
+                .create();
 
         GuildManager guildManager = funnyGuilds.getGuildManager();
 
-        allGuildWars.forEach(war -> {
-            UUID enemyGuildID;
-            int userGuildsPoints = 0;
-            int enemyGuildsPoints = 0;
+        List<WarEntity> allActiveWarsByGuildId = warManager.getNonEndedGuildWars(userGuild.getUUID());
 
-            if(userGuildId.equals(war.getInvadedGuildId())) {
-                enemyGuildID = war.getInvaderGuildId();
-                userGuildsPoints = war.getInvadedScore();
-                enemyGuildsPoints = war.getInvaderScore();
-            } else {
-                enemyGuildID = war.getInvadedGuildId();
+        allActiveWarsByGuildId.forEach(warEntity -> {
+            UUID userGuildId = userGuild.getUUID();
+            UUID enemyGuildId = warEntity.getInvaderGuildId().equals(userGuildId) ? warEntity.getInvadedGuildId() : warEntity.getInvaderGuildId();
 
-                userGuildsPoints = war.getInvaderScore();
-                enemyGuildsPoints = war.getInvadedScore();
-            }
+            int userGuildPoints = warEntity.getInvaderGuildId().equals(userGuildId) ? warEntity.getInvaderScore() : warEntity.getInvadedScore();
+            int enemyGuildPoints = warEntity.getInvaderGuildId().equals(enemyGuildId) ? warEntity.getInvaderScore() : warEntity.getInvadedScore();
 
-            Option<Guild> enemyGuildOpt = guildManager.findByUuid(enemyGuildID);
+            Option<Guild> enemyGuildOption = guildManager.findByUuid(enemyGuildId);
+            if(enemyGuildOption.isEmpty()) return;
+            Guild enemyGuild = enemyGuildOption.get();
 
-            if(enemyGuildOpt.isEmpty()) return;
-
-            gui.addItem(new GuiItem(ItemManager.warResult(war.getId(), guild, enemyGuildOpt.get(), war.getWarState(), userGuildsPoints, enemyGuildsPoints)));
-
-
+            ItemStack warItem = ItemManager.endedWarResult(warEntity.getId(), userGuild.getTag(), enemyGuild.getTag(), userGuildPoints, enemyGuildPoints);
+            activeWars.addItem(new GuiItem(warItem));
         });
-        gui.open(player);
 
-        return false;
+        activeWars.open(player);
+    }
+
+    private void openEndedWarsGui(Player player, Guild guild) {
+        PaginatedGui endedWars = Gui.paginated()
+                .title(Component.text("Zakończone wojny gildi"))
+                .rows(2)
+                .disableAllInteractions()
+                .create();
+
+        endedWars.setItem(2, 1, ItemBuilder.from(Material.ARROW).setName("Poprzednia strona").asGuiItem(event -> endedWars.previous()));
+        endedWars.getFiller().fillBetweenPoints(2, 2, 2, 8, new GuiItem(Material.GREEN_STAINED_GLASS_PANE));
+        endedWars.setItem(2, 9, ItemBuilder.from(Material.ARROW).setName("Nastepna strona").asGuiItem(event -> endedWars.next()));
+
+        List<WarRecordEntity> allEndedWarsByGuildId = warManager.getAllEndedWarsByGuildId(guild.getUUID());
+
+        allEndedWarsByGuildId.forEach(warRecord -> {
+            ItemStack warResultItem = ItemManager.endedWarResult(warRecord.getId(), warRecord.getOwnerTag(), warRecord.getEnemyTag(), warRecord.getOwnerScore(), warRecord.getEnemyScore());
+            endedWars.addItem(new GuiItem(warResultItem));
+        });
+
+        endedWars.open(player);
     }
 }

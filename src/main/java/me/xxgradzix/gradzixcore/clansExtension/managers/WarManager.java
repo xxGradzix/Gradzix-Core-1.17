@@ -1,11 +1,12 @@
 package me.xxgradzix.gradzixcore.clansExtension.managers;
 
 import me.xxgradzix.gradzixcore.clansExtension.data.database.entities.WAR_STATE;
-import me.xxgradzix.gradzixcore.clansExtension.data.database.entities.War;
+import me.xxgradzix.gradzixcore.clansExtension.data.database.entities.WarEntity;
+import me.xxgradzix.gradzixcore.clansExtension.data.database.entities.WarRecordEntity;
 import me.xxgradzix.gradzixcore.clansExtension.data.database.managers.WarEntityManager;
+import me.xxgradzix.gradzixcore.clansExtension.data.database.managers.WarRecordEntityManager;
 import me.xxgradzix.gradzixcore.clansExtension.exceptions.TheyAlreadyHaveWarException;
 import me.xxgradzix.gradzixcore.clansExtension.exceptions.YouAlreadyHaveWarException;
-import me.xxgradzix.gradzixcore.clansExtension.listeners.GuildLoseLivesEvent;
 import net.dzikoysk.funnyguilds.FunnyGuilds;
 import net.dzikoysk.funnyguilds.event.FunnyEvent;
 import net.dzikoysk.funnyguilds.event.guild.GuildLivesChangeEvent;
@@ -27,10 +28,12 @@ import java.util.stream.Collectors;
 public class WarManager {
 
     private final WarEntityManager warEntityManager;
+    private final WarRecordEntityManager warRecordEntityManager;
 
     private final FunnyGuilds funnyGuilds;
-    public WarManager(WarEntityManager warEntityManager, FunnyGuilds funnyGuilds) {
+    public WarManager(WarEntityManager warEntityManager, WarRecordEntityManager warRecordEntityManager, FunnyGuilds funnyGuilds) {
         this.warEntityManager = warEntityManager;
+        this.warRecordEntityManager = warRecordEntityManager;
         this.funnyGuilds = funnyGuilds;
     }
 
@@ -39,17 +42,17 @@ public class WarManager {
         UUID invaderGuildId = invaderGuild.getUUID();
         UUID invadedGuildId = invadedGuild.getUUID();
 
-        List<War> nonEndedInvaderGuildWars = warEntityManager.getWarsByGuildId(invaderGuildId, WAR_STATE.FUTURE);
-        nonEndedInvaderGuildWars.addAll(warEntityManager.getWarsByGuildId(invaderGuildId, WAR_STATE.CURRENT));
+        List<WarEntity> nonEndedInvaderGuildWarEntities = warEntityManager.getWarsByGuildId(invaderGuildId, WAR_STATE.FUTURE);
+        nonEndedInvaderGuildWarEntities.addAll(warEntityManager.getWarsByGuildId(invaderGuildId, WAR_STATE.CURRENT));
 
-        if(!nonEndedInvaderGuildWars.isEmpty()) {
+        if(!nonEndedInvaderGuildWarEntities.isEmpty()) {
             throw new YouAlreadyHaveWarException("You already have war");
         }
 
-        List<War> nonEndedInvadedGuildWars = warEntityManager.getWarsByGuildId(invadedGuildId, WAR_STATE.FUTURE);
-        nonEndedInvadedGuildWars.addAll(warEntityManager.getWarsByGuildId(invadedGuildId, WAR_STATE.CURRENT));
+        List<WarEntity> nonEndedInvadedGuildWarEntities = warEntityManager.getWarsByGuildId(invadedGuildId, WAR_STATE.FUTURE);
+        nonEndedInvadedGuildWarEntities.addAll(warEntityManager.getWarsByGuildId(invadedGuildId, WAR_STATE.CURRENT));
 
-        if(!nonEndedInvadedGuildWars.isEmpty()) {
+        if(!nonEndedInvadedGuildWarEntities.isEmpty()) {
             throw new TheyAlreadyHaveWarException("This guild already is in war");
         }
 
@@ -58,7 +61,7 @@ public class WarManager {
         LocalDateTime warStart = now.with(TemporalAdjusters.next(DayOfWeek.FRIDAY)).atTime(12, 00);
         LocalDateTime warEnd = now.with(TemporalAdjusters.next(DayOfWeek.SUNDAY)).atTime(18, 00);
 
-        War war = new War(
+        WarEntity warEntity = new WarEntity(
                 invaderGuild.getUUID(),
                 invadedGuild.getUUID(),
                 0,
@@ -67,110 +70,132 @@ public class WarManager {
                 warEnd,
                 WAR_STATE.FUTURE
         );
-
-        warEntityManager.createWar(war);
-
+        warEntityManager.createWar(warEntity);
     }
 
     public void startWars() {
-
-        List<War> wars = warEntityManager.getAllWars().stream()
+        List<WarEntity> warEntities = warEntityManager.getAllWars().stream()
                 .filter(war -> war.getWarState().equals(WAR_STATE.FUTURE)
 //                        && LocalDateTime.now().isAfter(war.getWarStart()) && LocalDateTime.now().isAfter(war.getWarEnd())
                 )
                 .collect(Collectors.toList());
 
-        wars.forEach((war) -> {
+        warEntities.forEach((war) -> {
             war.setWarState(WAR_STATE.CURRENT);
             warEntityManager.createOrUpdateWar(war);
             // TODO notify war participants
         });
     }
     public void endWars() {
-        List<War> wars = warEntityManager.getAllWars().stream()
+        List<WarEntity> warEntities = warEntityManager.getAllWars().stream()
                 .filter(war -> war.getWarState().equals(WAR_STATE.CURRENT))
                 .collect(Collectors.toList());
 
-        wars.forEach(war -> {
-
+        warEntities.forEach(war -> {
             endWar(war);
-
-            // notify
+            // TODO notify war participants
         });
     }
 
-    public List<War> getAllGuildWars(UUID id) {
+    public List<WarEntity> getNonEndedGuildWars(UUID id) {
 
-        return warEntityManager.getWarsByGuildId(id, null);
-
+        return warEntityManager.getActiveWarsByGuildId(id);
+    }
+    public List<WarRecordEntity> getAllEndedWarsByGuildId(UUID id) {
+        return warRecordEntityManager.getWarRecordsByGuildId(id);
     }
 
-    public void addPointForGuild(War war, UUID guildId) {
+    public void addPointForGuild(WarEntity warEntity, UUID guildId) {
 
-
-        if(guildId.equals(war.getInvadedGuildId())) {
-            Bukkit.broadcastMessage("Invaded dostaje punkt");
-            int previousPoints = war.getInvadedScore();
+        if(guildId.equals(warEntity.getInvadedGuildId())) {
+            int previousPoints = warEntity.getInvadedScore();
             previousPoints++;
-            war.setInvadedScore(previousPoints);
-
+            warEntity.setInvadedScore(previousPoints);
         }
-
-        if(guildId.equals(war.getInvaderGuildId())) {
-            Bukkit.broadcastMessage("Invader dostaje punkt");
-
-            int previousPoints = war.getInvaderScore();
+        if(guildId.equals(warEntity.getInvaderGuildId())) {
+            int previousPoints = warEntity.getInvaderScore();
             previousPoints++;
-            war.setInvaderScore(previousPoints);
+            warEntity.setInvaderScore(previousPoints);
         }
-
-        warEntityManager.createOrUpdateWar(war);
+        warEntityManager.createOrUpdateWar(warEntity);
     }
 
     @Nullable
-    public UUID getWinnerGuildUUID(War war) {
+    public UUID getWinnerGuildUUID(WarEntity warEntity) {
 
-        int invaderKills = war.getInvaderScore();
-        int invadedKills = war.getInvadedScore();
+        int invaderKills = warEntity.getInvaderScore();
+        int invadedKills = warEntity.getInvadedScore();
 
         if(invaderKills == invadedKills) return null; // draw
 
-        if(invaderKills > invadedKills) return war.getInvaderGuildId();
+        if(invaderKills > invadedKills) return warEntity.getInvaderGuildId();
 
-        if(invaderKills < invadedKills) return war.getInvadedGuildId();
+        if(invaderKills < invadedKills) return warEntity.getInvadedGuildId();
 
         return null;
     }
     @Nullable
-    public UUID getLooserGuildUUID(War war) {
+    public UUID getLooserGuildUUID(WarEntity warEntity) {
 
-        int invaderKills = war.getInvaderScore();
-        int invadedKills = war.getInvadedScore();
+        int invaderKills = warEntity.getInvaderScore();
+        int invadedKills = warEntity.getInvadedScore();
 
         if(invaderKills == invadedKills) return null; // draw
 
-        if(invaderKills < invadedKills) return war.getInvaderGuildId();
 
-        if(invaderKills > invadedKills) return war.getInvadedGuildId();
+        if(invaderKills < invadedKills) return warEntity.getInvaderGuildId();
+
+        if(invaderKills > invadedKills) return warEntity.getInvadedGuildId();
 
         return null;
     }
 
-    public Optional<War> getActiveWarOfGuilds(UUID guild1Id, UUID guild2Id) {
+    public Optional<WarEntity> getActiveWarOfGuilds(UUID guild1Id, UUID guild2Id) {
 
-        List<War> warByGuildIds = warEntityManager.getWarByGuildIds(guild1Id, guild2Id, WAR_STATE.CURRENT);
+        List<WarEntity> warEntityByGuildIds = warEntityManager.getWarByGuildIds(guild1Id, guild2Id, WAR_STATE.CURRENT);
 
-        if(!warByGuildIds.isEmpty()) return warByGuildIds.stream().findFirst();
+        if(!warEntityByGuildIds.isEmpty()) return warEntityByGuildIds.stream().findFirst();
 
         return Optional.empty();
     }
 
-    public void endWar(War war) { // TODO DODAC SYSTEM REKORDU WOJNY
-        UUID winnerGuildUUID = getLooserGuildUUID(war);
 
-        if(winnerGuildUUID != null) {
-            GuildManager guildManager = funnyGuilds.getGuildManager();
-            Option<Guild> byUuid = guildManager.findByUuid(winnerGuildUUID);
+    public void endWar(WarEntity warEntity) {
+        UUID looserGuildUUID = getLooserGuildUUID(warEntity);
+
+        String invaderTag = "ERROR";
+        String invadedTag = "ERROR";
+        GuildManager guildManager = funnyGuilds.getGuildManager();
+
+        Option<Guild> invaderOptionalGuild = guildManager.findByUuid(warEntity.getInvaderGuildId());
+        if(invaderOptionalGuild.isPresent()) invaderTag = invaderOptionalGuild.get().getTag();
+
+        Option<Guild> invadedOptionalGuild = guildManager.findByUuid(warEntity.getInvadedGuildId());
+        if(invadedOptionalGuild.isPresent()) invadedTag = invadedOptionalGuild.get().getTag();
+
+
+        WarRecordEntity invaderRecord = new WarRecordEntity(warEntity.getInvaderGuildId(),
+                invaderTag,
+                invadedTag,
+                warEntity.getInvaderScore(),
+                warEntity.getInvadedScore(),
+                warEntity.getWarStart(),
+                warEntity.getWarEnd());
+
+        WarRecordEntity invadedRecord = new WarRecordEntity(warEntity.getInvadedGuildId(),
+                invadedTag,
+                invaderTag,
+                warEntity.getInvadedScore(),
+                warEntity.getInvaderScore(),
+                warEntity.getWarStart(),
+                warEntity.getWarEnd());
+
+        warRecordEntityManager.createWarRecordEntity(invaderRecord);
+        warRecordEntityManager.createWarRecordEntity(invadedRecord);
+
+        if(looserGuildUUID != null) {
+
+            Option<Guild> byUuid = guildManager.findByUuid(looserGuildUUID);
 
             if(byUuid.isPresent()){
                 Guild guild = byUuid.get();
@@ -180,9 +205,9 @@ public class WarManager {
                 Bukkit.getServer().getPluginManager().callEvent(new GuildLivesChangeEvent(FunnyEvent.EventCause.COMBAT, null, guild, oldLives));
             }
         }
-        war.setWarState(WAR_STATE.FINISHED);
-        warEntityManager.createOrUpdateWar(war);
+        warEntity.setWarState(WAR_STATE.FINISHED);
 
+        warEntityManager.deleteWarById(warEntity.getId());
     }
 
 

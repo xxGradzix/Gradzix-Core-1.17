@@ -3,6 +3,7 @@ package me.xxgradzix.gradzixcore.clansExtension.commands;
 import me.xxgradzix.gradzixcore.Gradzix_Core;
 import me.xxgradzix.gradzixcore.clansExtension.ClansExtension;
 import me.xxgradzix.gradzixcore.clansExtension.managers.WarManager;
+import me.xxgradzix.gradzixcore.clansExtension.messages.Messages;
 import net.dzikoysk.funnyguilds.FunnyGuilds;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -25,16 +26,15 @@ public class WarConfigCommand implements CommandExecutor {
 
         warManager.startWars();
 
-        Bukkit.broadcastMessage("zaczely sie wojny");
+        Bukkit.broadcastMessage(Messages.WARS_ARE_ACTIVE);
         ClansExtension.ARE_WARS_ACTIVE = true;
 
         Bukkit.getScheduler().runTaskLater(plugin, () -> {
             ClansExtension.ARE_WARS_ACTIVE = false;
             warManager.endWars();
-            Bukkit.broadcastMessage("skonczyly sie wojny");
+            Bukkit.broadcastMessage(Messages.WARS_ENDED);
 
         }, 20 * 30);
-
 
         return true;
 

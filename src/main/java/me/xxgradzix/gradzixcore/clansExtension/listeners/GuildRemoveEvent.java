@@ -38,7 +38,6 @@ public class GuildRemoveEvent implements Listener {
                 warEntity.setInvadedScore(0);
                 warEntity.setInvaderScore(enemyPoints);
             }
-            // TODO notify guilds about war end
 
             UUID enemyGuildId = guild.getUUID().equals(warEntity.getInvaderGuildId()) ? warEntity.getInvadedGuildId() : warEntity.getInvaderGuildId();
 

@@ -125,9 +125,26 @@ public class WarsCommand implements CommandExecutor {
 
         allEndedWarsByGuildId.forEach(warRecord -> {
             ItemStack warResultItem = ItemManager.endedWarResult(warRecord.getId(), warRecord.getOwnerTag(), warRecord.getEnemyTag(), warRecord.getOwnerScore(), warRecord.getEnemyScore());
-            endedWars.addItem(new GuiItem(warResultItem));
+            GuiItem warResultGuiItem = new GuiItem(warResultItem);
+
+            warResultGuiItem.setAction((a) -> {
+                if(guild.getOwner().getUUID().equals(player.getUniqueId())) {
+                    if(warManager.canCollectReward(warRecord)) {
+                        warManager.collectReward(player, warRecord);
+                        player.sendMessage(Messages.YOU_COLLECTED_REWARD);
+                    } else {
+                        player.sendMessage(Messages.REWARD_IS_ALREADY_COLLECTED);
+                    }
+                } else {
+                    player.sendMessage(Messages.THIS_REWARD_CAN_BE_COLLECTED_ONLY_BY_GUILD_OWNER);
+                }
+            });
+
+            endedWars.addItem(warResultGuiItem);
+
         });
 
         endedWars.open(player);
     }
+    
 }

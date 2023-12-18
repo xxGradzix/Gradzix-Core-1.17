@@ -50,36 +50,6 @@ public class WarEntityManager {
         }
     }
 
-//    public List<War> getWarsByGuildId(UUID id, @Nullable WAR_STATE warState) {
-//        try {
-//            List<War> wars;
-//
-//            if(warState != null) {
-//                Where where = entityDao.queryBuilder().where();
-//                wars = where
-//                        .or(
-//                                where.eq("invader_id", id),
-//                                where.eq("invaded_id", id)
-//                        )
-//                        .and()
-//                        .eq("warState", warState)
-//                        .query();
-//            } else {
-//                Where where = entityDao.queryBuilder().where();
-//                wars = where
-//                        .or(
-//                                where.eq("invader_id", id),
-//                                where.eq("invaded_id", id)
-//                        )
-//                        .query();
-//            }
-//
-//            return wars;
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//            return new ArrayList<>();
-//        }
-//    }
     public List<WarEntity> getWarsByGuildId(@NotNull UUID guildId, @Nullable WAR_STATE warState) {
         try {
             QueryBuilder<WarEntity, Long> queryBuilder = entityDao.queryBuilder();

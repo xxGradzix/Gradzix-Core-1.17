@@ -38,6 +38,9 @@ public class WarRecordEntity {
     @DatabaseField(persisterClass = LocalDateTimeClassPersister.class, columnDefinition = "LONGBLOB")
     private LocalDateTime warEnd;
 
+    @DatabaseField
+    private boolean isRewardCollected;
+
     public WarRecordEntity(UUID warRecordOwner, String ownerTag, String enemyTag, int ownerScore, int enemyScore, LocalDateTime warStart, LocalDateTime warEnd) {
         this.warRecordOwner = warRecordOwner;
         this.ownerTag = ownerTag;
@@ -46,5 +49,6 @@ public class WarRecordEntity {
         this.enemyScore = enemyScore;
         this.warStart = warStart;
         this.warEnd = warEnd;
+        this.isRewardCollected = false;
     }
 }

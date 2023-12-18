@@ -9,6 +9,10 @@ public class Messages {
     public static final String CLAN_DOES_NOT_EXISTS = ChatColor.RED + "Taki klan nie istnieje";
     public static final String YOU_ARE_CURRENTLY_IN_WAR = ChatColor.RED + "Obecnie prowadzisz już wojne";
     public static final String YOU_DECLARED_WAR_TO_CLAN_XXXX = ChatColor.GRAY + "Wypowiedziałeś wojne klanowi " + ChatColor.GREEN;
+    public static final String THIS_REWARD_CAN_BE_COLLECTED_ONLY_BY_GUILD_OWNER = ChatColor.RED + "Nagrode może odebrać jedynie właściciel klanu";
+    public static final String YOU_COLLECTED_REWARD = ChatColor.GREEN + "Odebrałeś nagrode za wojnę";
+    public static final String REWARD_IS_ALREADY_COLLECTED = ChatColor.GREEN + "Nagroda z tej wojny została już odebrana";
+
     public static final String CLAN_XXXX_DECLARED_WAR_TO_YOU(String clanTag) {
         return ChatColor.GRAY + "Klan " + ChatColor.GREEN + clanTag + ChatColor.GRAY + " wypowiedział wojne Twojemu klanowi";
     }

@@ -12,6 +12,9 @@ public class Messages {
     public static final String THIS_REWARD_CAN_BE_COLLECTED_ONLY_BY_GUILD_OWNER = ChatColor.RED + "Nagrode może odebrać jedynie właściciel klanu";
     public static final String YOU_COLLECTED_REWARD = ChatColor.GREEN + "Odebrałeś nagrode za wojnę";
     public static final String REWARD_IS_ALREADY_COLLECTED = ChatColor.GREEN + "Nagroda z tej wojny została już odebrana";
+    public static final String UPGRADED_CLAN_PERK = ChatColor.GREEN + "Ulepszyłeś perk rankingu klanowego!";
+    public static final String UPGRADED_WAR_AMOUNT_PERK = ChatColor.GREEN + "Ulepszyłeś perk ilości wojen klanowych!";
+    public static final String NOT_ENOUGH_MONEY = ChatColor.RED + "Nie masz wystarczająco pięniędzy aby ulepszyć ten perk";
 
     public static final String CLAN_XXXX_DECLARED_WAR_TO_YOU(String clanTag) {
         return ChatColor.GRAY + "Klan " + ChatColor.GREEN + clanTag + ChatColor.GRAY + " wypowiedział wojne Twojemu klanowi";

@@ -139,3 +139,6 @@ commands:
 
   wojny:
     description: menu wojen
+
+  ulepszeniaklanu:
+    description: menu ulepszen klanu

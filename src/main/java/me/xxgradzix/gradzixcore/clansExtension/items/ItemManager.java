@@ -73,7 +73,7 @@ public class ItemManager {
         lore.add("");
         lore.add(ChatColor.GRAY + "Kliknij aby ulepszyć!");
         lore.add("");
-        lore.add("Cena: " + ChatColor.DARK_GRAY + PerkModifierEntityManager.getPerkModifierEntityByID(clanPerk) + " " + ChatColor.GRAY + "waluty gildyjnej");
+        lore.add("Cena: " + ChatColor.DARK_GRAY + PerkModifierEntityManager.getPerkModifierEntityByID(clanPerk).getPerkPricePerLevel(clanPerks.getClanPerkLevel(clanPerk) + 1) + " " + ChatColor.GRAY + "waluty gildyjnej");
         itemMeta.setLore(lore);
         item.setItemMeta(itemMeta);
 

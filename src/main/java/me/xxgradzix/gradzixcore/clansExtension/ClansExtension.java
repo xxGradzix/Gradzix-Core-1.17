@@ -3,16 +3,22 @@ package me.xxgradzix.gradzixcore.clansExtension;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 import me.xxgradzix.gradzixcore.Gradzix_Core;
+import me.xxgradzix.gradzixcore.clansExtension.commands.ClanUpgradesCommand;
 import me.xxgradzix.gradzixcore.clansExtension.commands.WarConfigCommand;
 import me.xxgradzix.gradzixcore.clansExtension.commands.DeclareWarCommand;
 import me.xxgradzix.gradzixcore.clansExtension.commands.WarsCommand;
+import me.xxgradzix.gradzixcore.clansExtension.data.database.entities.ClanPerksEntity;
+import me.xxgradzix.gradzixcore.clansExtension.data.database.entities.PerkModifierEntity;
 import me.xxgradzix.gradzixcore.clansExtension.data.database.entities.WarEntity;
 import me.xxgradzix.gradzixcore.clansExtension.data.database.entities.WarRecordEntity;
+import me.xxgradzix.gradzixcore.clansExtension.data.database.managers.ClanPerksEntityManager;
+import me.xxgradzix.gradzixcore.clansExtension.data.database.managers.PerkModifierEntityManager;
 import me.xxgradzix.gradzixcore.clansExtension.data.database.managers.WarEntityManager;
 import me.xxgradzix.gradzixcore.clansExtension.data.database.managers.WarRecordEntityManager;
 import me.xxgradzix.gradzixcore.clansExtension.listeners.GuildLoseLivesEvent;
 import me.xxgradzix.gradzixcore.clansExtension.listeners.GuildRemoveEvent;
 import me.xxgradzix.gradzixcore.clansExtension.listeners.addScore.AddWarScoreAfterKill;
+import me.xxgradzix.gradzixcore.clansExtension.managers.ClanPerksManager;
 import me.xxgradzix.gradzixcore.clansExtension.managers.WarManager;
 import net.dzikoysk.funnyguilds.FunnyGuilds;
 
@@ -25,16 +31,23 @@ public class ClansExtension {
 
     private WarEntityManager warEntityManager;
     private WarRecordEntityManager warRecordEntityManager;
+    private ClanPerksEntityManager clanPerksEntityManager;
+    private PerkModifierEntityManager perkModifierEntityManager;
     private final WarManager warManager;
-
+    private final ClanPerksManager clanPerksManager;
     private final ConnectionSource connectionSource;
     public static boolean ARE_WARS_ACTIVE = false;
 
     public void configureDB() throws SQLException {
         TableUtils.createTableIfNotExists(connectionSource, WarEntity.class);
         TableUtils.createTableIfNotExists(connectionSource, WarRecordEntity.class);
+        TableUtils.createTableIfNotExists(connectionSource, PerkModifierEntity.class);
+        TableUtils.createTableIfNotExists(connectionSource, ClanPerksEntity.class);
+
         warEntityManager = new WarEntityManager(connectionSource);
         warRecordEntityManager = new WarRecordEntityManager(connectionSource);
+        clanPerksEntityManager = new ClanPerksEntityManager(connectionSource);
+        perkModifierEntityManager = new PerkModifierEntityManager(connectionSource);
     }
     public ClansExtension(Gradzix_Core plugin, ConnectionSource connectionSource, FunnyGuilds funnyGuilds) {
         this.funnyGuilds = funnyGuilds;
@@ -48,6 +61,7 @@ public class ClansExtension {
         }
 
         warManager = new WarManager(warEntityManager, warRecordEntityManager, funnyGuilds);
+        clanPerksManager = new ClanPerksManager(clanPerksEntityManager);
 
     }
 
@@ -57,6 +71,7 @@ public class ClansExtension {
         plugin.getCommand("configWojny").setExecutor(new WarConfigCommand(funnyGuilds, warManager, plugin));
         plugin.getCommand("wypowiedzwojne").setExecutor(new DeclareWarCommand(funnyGuilds, warManager));
         plugin.getCommand("wojny").setExecutor(new WarsCommand(funnyGuilds, warManager));
+        plugin.getCommand("ulepszeniaklanu").setExecutor(new ClanUpgradesCommand(funnyGuilds, clanPerksManager, clanPerksEntityManager));
 
         plugin.getServer().getPluginManager().registerEvents(new GuildLoseLivesEvent(funnyGuilds), plugin);
         plugin.getServer().getPluginManager().registerEvents(new AddWarScoreAfterKill(funnyGuilds, warManager), plugin);

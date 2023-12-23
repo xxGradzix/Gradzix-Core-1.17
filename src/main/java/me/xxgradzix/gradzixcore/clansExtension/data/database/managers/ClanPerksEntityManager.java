@@ -5,6 +5,7 @@ import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.support.ConnectionSource;
 import me.xxgradzix.gradzixcore.clansExtension.data.database.entities.ClanPerksEntity;
+import org.jetbrains.annotations.NotNull;
 
 import java.sql.SQLException;
 import java.util.*;
@@ -34,14 +35,17 @@ public class ClanPerksEntityManager {
             e.printStackTrace();
         }
     }
-    public Optional<ClanPerksEntity> getClanPerksEntityByID(UUID id) {
+    public ClanPerksEntity getClanPerksEntityByID(@NotNull UUID id) {
         try {
             ClanPerksEntity entity = entityDao.queryForId(id);
-            if(entity == null) return Optional.empty();
-            return Optional.of(entity);
+            if(entity == null) {
+                entity = new ClanPerksEntity(id);
+                createOrUpdateClanPerksEntity(entity);
+            }
+            return entity;
         } catch (SQLException e) {
             e.printStackTrace();
-            return Optional.empty();
+            return null;
         }
     }
 

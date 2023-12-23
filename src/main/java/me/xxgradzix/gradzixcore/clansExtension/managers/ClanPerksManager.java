@@ -18,25 +18,15 @@ public class ClanPerksManager {
         this.clanPerksEntityManager = clanPerksEntityManager;
     }
     public int getClanPerkLevel(ClanPerk perk, @NotNull Guild guild) {
-        ClanPerksEntity perksEntity;
-        Optional<ClanPerksEntity> clanPerksEntityByID = clanPerksEntityManager.getClanPerksEntityByID(guild.getUUID());
-        if (clanPerksEntityByID.isPresent()) {
-            perksEntity = clanPerksEntityByID.get();
-        } else {
-            perksEntity = new ClanPerksEntity(guild.getUUID());
-            clanPerksEntityManager.createOrUpdateClanPerksEntity(perksEntity);
-        }
+
+        ClanPerksEntity perksEntity = clanPerksEntityManager.getClanPerksEntityByID(guild.getUUID());
+
         return perksEntity.getClanPerkLevel(perk);
     }
     public void increaseClanPerkLevel(ClanPerk perk, Guild guild) {
-        ClanPerksEntity perksEntity;
-        Optional<ClanPerksEntity> clanPerksEntityByID = clanPerksEntityManager.getClanPerksEntityByID(guild.getUUID());
-        if (clanPerksEntityByID.isPresent()) {
-            perksEntity = clanPerksEntityByID.get();
-        } else {
-            perksEntity = new ClanPerksEntity(guild.getUUID());
-            clanPerksEntityManager.createOrUpdateClanPerksEntity(perksEntity);
-        }
+
+        ClanPerksEntity perksEntity = clanPerksEntityManager.getClanPerksEntityByID(guild.getUUID());
+
         perksEntity.setClanPerkLevel(perk, perksEntity.getClanPerkLevel(perk) + 1);
         clanPerksEntityManager.createOrUpdateClanPerksEntity(perksEntity);
     }

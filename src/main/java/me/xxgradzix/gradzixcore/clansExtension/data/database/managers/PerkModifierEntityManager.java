@@ -39,18 +39,45 @@ public class PerkModifierEntityManager {
             e.printStackTrace();
         }
     }
-    public static Optional<PerkModifierEntity> getPerkModifierEntityByID(ClanPerk id) {
+    public static PerkModifierEntity getPerkModifierEntityByID(ClanPerk id) {
         try {
             PerkModifierEntity entity = entityDao.queryForId(id);
-            if(entity == null) return Optional.empty();
-            return Optional.of(entity);
+            if(entity == null) {
+                switch (id) {
+                    case WAR_AMOUNT:
+                        entity = new PerkModifierEntity(id,
+                                1,
+                                2,
+                                3,
+                                4,
+                                64,
+                                126,
+                                256,
+                                512);
+                        break;
+                    case RANK:
+                        entity = new PerkModifierEntity(id,
+                                5,
+                                10,
+                                15,
+                                20,
+                                64,
+                                126,
+                                256,
+                                512);
+                        break;
+                    default: throw new IllegalArgumentException("Unknown ClanPerk: " + id);
+                }
+                createOrUpdateWarRecordEntity(entity);
+            }
+            return entity;
         } catch (SQLException e) {
             e.printStackTrace();
-            return Optional.empty();
+            return null;
         }
     }
 
-    public static void deletePerkModifierEntityById(Long id) {
+    public static void deletePerkModifierEntityById(ClanPerk id) {
         try {
             entityDao.deleteById(id);
         } catch (SQLException e) {

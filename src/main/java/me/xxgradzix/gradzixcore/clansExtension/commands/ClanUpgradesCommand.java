@@ -57,6 +57,7 @@ public class ClanUpgradesCommand implements CommandExecutor {
             player.sendMessage(Messages.YOU_DONT_HAVE_CLAN);
             return true;
         }
+
         Guild playerGuild = guildOption.get();
 
         Gui gui = Gui.gui()
@@ -65,64 +66,53 @@ public class ClanUpgradesCommand implements CommandExecutor {
                 .disableAllInteractions()
                 .create();
 
-        ClanPerksEntity clanPerksEntity = clanPerksEntityManager.getClanPerksEntityByID(playerGuild.getUUID());
-
-
-        GuiItem clanRankPerkButton = new GuiItem(ItemManager.createPerkUpgradeButtonForGuild(clanPerksEntity, ClanPerk.RANK));
-
-        clanRankPerkButton.setAction((a) -> {
-            if(!a.isLeftClick()) return;
-            gui.update();
-            
-            PerkModifierEntity perkModifierEntityByID = PerkModifierEntityManager.getPerkModifierEntityByID(ClanPerk.RANK);
-
-            int perkPriceForNextLevel = perkModifierEntityByID
-                    .getPerkPricePerLevel(clanPerksEntity.getClanPerkLevel(ClanPerk.RANK) + 1);
-
-            if(!takePriceAndReturn(player, perkPriceForNextLevel)) {
-                player.sendMessage(Messages.NOT_ENOUGH_MONEY);
-                return;
-            }
-
-            clanPerksManager.increaseClanPerkLevel(ClanPerk.RANK, playerGuild);
-            player.sendMessage(Messages.UPGRADED_CLAN_PERK);
-        });
-
-        gui.setItem(2, 3, clanRankPerkButton);
-
-        GuiItem warAmountPerkButton = new GuiItem(ItemManager.createPerkUpgradeButtonForGuild(clanPerksEntity, ClanPerk.WAR_AMOUNT));
-
-        warAmountPerkButton.setAction((a) -> {
-            if(!a.isLeftClick()) return;
-            gui.update();
-
-            PerkModifierEntity perkModifierEntityByID = PerkModifierEntityManager.getPerkModifierEntityByID(ClanPerk.WAR_AMOUNT);
-
-            int perkPriceForNextLevel = perkModifierEntityByID
-                    .getPerkPricePerLevel(clanPerksEntity.getClanPerkLevel(ClanPerk.WAR_AMOUNT) + 1);
-
-            if(!takePriceAndReturn(player, perkPriceForNextLevel)) {
-                player.sendMessage(Messages.NOT_ENOUGH_MONEY);
-                return;
-            }
-        
-            clanPerksManager.increaseClanPerkLevel(ClanPerk.WAR_AMOUNT, playerGuild);
-
-            player.sendMessage(Messages.UPGRADED_WAR_AMOUNT_PERK);
-        });
-
-        gui.setItem(2, 7, warAmountPerkButton);
+        setItemPerkButtonInGui(gui, 2, 4, ClanPerk.RANK, player, playerGuild);
+        setItemPerkButtonInGui(gui, 2, 6, ClanPerk.WAR_AMOUNT, player, playerGuild);
 
         gui.open(player);
 
         return true;
+    } // TODO ensure that other player cant buy perk for low level
+    private void setItemPerkButtonInGui(Gui gui, int row, int column, ClanPerk perk, Player player, Guild guild) {
+        ClanPerksEntity clanPerksEntity = clanPerksEntityManager.getClanPerksEntityByID(guild.getUUID());
 
+        GuiItem clanPerkButton = new GuiItem(ItemManager.createPerkUpgradeButtonForGuild(clanPerksEntity, perk));
+
+        clanPerkButton.setAction((a) -> {
+            if (!a.isLeftClick()) return;
+
+            boolean haveMonetForNextLevel;
+            try {
+                haveMonetForNextLevel = takePriceAndIncreasePerkLevel(player, guild, perk);
+            } catch (IllegalArgumentException e) {
+                player.sendMessage(Messages.MAX_PERK_LEVEL);
+                return;
+            }
+            if (!haveMonetForNextLevel) {
+                player.sendMessage(Messages.NOT_ENOUGH_MONEY);
+            } else {
+                player.sendMessage(Messages.UPGRADED_CLAN_PERK);
+                setItemPerkButtonInGui(gui, row, column, perk, player, guild);
+            }
+
+        });
+
+        gui.updateItem(row, column, clanPerkButton);
+        gui.update();
     }
+    private boolean takePriceAndIncreasePerkLevel(Player player, Guild guild, ClanPerk perk) throws IllegalArgumentException {
 
-    private boolean takePriceAndReturn(Player player, int price) {
+        PerkModifierEntity perkModifierEntity = PerkModifierEntityManager.getPerkModifierEntityByID(perk);
+
+        if(perkModifierEntity == null) throw new IllegalArgumentException("Unknown perk: " + perk);
+
+        int price = perkModifierEntity.getPerkPricePerLevel(clanPerksManager.getClanPerkLevel(perk, guild) + 1);
+
         ItemStack priceItem = new ItemStack(Material.NETHER_STAR, price);
+
         if(player.getInventory().containsAtLeast(priceItem, price)) {
             removeItems(player, priceItem, price);
+            clanPerksManager.increaseClanPerkLevel(perk, guild);
             return true;
         }
         return false;

@@ -51,7 +51,7 @@ public class PerkModifierEntityManager {
                                 3,
                                 4,
                                 64,
-                                126,
+                                128,
                                 256,
                                 512);
                         break;
@@ -62,7 +62,7 @@ public class PerkModifierEntityManager {
                                 15,
                                 20,
                                 64,
-                                126,
+                                128,
                                 256,
                                 512);
                         break;

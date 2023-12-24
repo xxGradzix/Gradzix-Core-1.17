@@ -62,14 +62,14 @@ public class PerkModifierEntity {
 
         return 1;
     }
-    public int getPerkPricePerLevel(int level) {
+    public int getPerkPricePerLevel(int level) throws IllegalArgumentException {
 
             if(level == 1) return level1Price;
             if(level == 2) return level2Price;
             if(level == 3) return level3Price;
             if(level == 4) return level4Price;
 
-            return 0;
+            throw new IllegalArgumentException("Unknown level: " + level);
     }
 
     public ClanPerk getAbilityName() {

@@ -15,6 +15,7 @@ public class Messages {
     public static final String UPGRADED_CLAN_PERK = ChatColor.GREEN + "Ulepszyłeś perk rankingu klanowego!";
     public static final String UPGRADED_WAR_AMOUNT_PERK = ChatColor.GREEN + "Ulepszyłeś perk ilości wojen klanowych!";
     public static final String NOT_ENOUGH_MONEY = ChatColor.RED + "Nie masz wystarczająco pięniędzy aby ulepszyć ten perk";
+    public static final String MAX_PERK_LEVEL = ChatColor.RED + "Ten perk jest już na maksymalnym poziomie";
 
     public static final String CLAN_XXXX_DECLARED_WAR_TO_YOU(String clanTag) {
         return ChatColor.GRAY + "Klan " + ChatColor.GREEN + clanTag + ChatColor.GRAY + " wypowiedział wojne Twojemu klanowi";

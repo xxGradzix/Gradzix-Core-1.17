@@ -73,7 +73,22 @@ public class ItemManager {
         lore.add("");
         lore.add(ChatColor.GRAY + "Kliknij aby ulepszyć!");
         lore.add("");
-        lore.add("Cena: " + ChatColor.DARK_GRAY + PerkModifierEntityManager.getPerkModifierEntityByID(clanPerk).getPerkPricePerLevel(clanPerks.getClanPerkLevel(clanPerk) + 1) + " " + ChatColor.GRAY + "waluty gildyjnej");
+        PerkModifierEntity perkModifierEntityByID = PerkModifierEntityManager.getPerkModifierEntityByID(clanPerk);
+
+        if(perkModifierEntityByID == null) throw new IllegalArgumentException("Unknown perk: " + clanPerk);
+
+        int perkPricePerLevel;
+        try {
+            perkPricePerLevel = perkModifierEntityByID.getPerkPricePerLevel(clanPerks.getClanPerkLevel(clanPerk) + 1);
+        } catch (IllegalArgumentException e) {
+            lore.add(ChatColor.GRAY + "Perk jest już na maksymalnym poziomie");
+            itemMeta.setLore(lore);
+            item.setItemMeta(itemMeta);
+            return item;
+        }
+
+
+        lore.add("Cena: " + ChatColor.DARK_GRAY + perkPricePerLevel + " " + ChatColor.GRAY + "waluty gildyjnej");
         itemMeta.setLore(lore);
         item.setItemMeta(itemMeta);
 

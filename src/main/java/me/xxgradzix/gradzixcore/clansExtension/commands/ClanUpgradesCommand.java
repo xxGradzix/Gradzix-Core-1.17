@@ -91,7 +91,14 @@ public class ClanUpgradesCommand implements CommandExecutor {
             if (!haveMonetForNextLevel) {
                 player.sendMessage(Messages.NOT_ENOUGH_MONEY);
             } else {
-                player.sendMessage(Messages.UPGRADED_CLAN_PERK);
+                switch (perk) {
+                    case RANK:
+                        player.sendMessage(Messages.UPGRADED_CLAN_PERK);
+                        break;
+                    case WAR_AMOUNT:
+                        player.sendMessage(Messages.UPGRADED_WAR_AMOUNT_PERK);
+                        break;
+                }
                 setItemPerkButtonInGui(gui, row, column, perk, player, guild);
             }
 

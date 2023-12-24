@@ -3,6 +3,7 @@ package me.xxgradzix.gradzixcore.clansExtension.managers;
 import me.xxgradzix.gradzixcore.clansExtension.data.database.entities.WAR_STATE;
 import me.xxgradzix.gradzixcore.clansExtension.data.database.entities.WarEntity;
 import me.xxgradzix.gradzixcore.clansExtension.data.database.entities.WarRecordEntity;
+import me.xxgradzix.gradzixcore.clansExtension.data.database.managers.ClanPerksEntityManager;
 import me.xxgradzix.gradzixcore.clansExtension.data.database.managers.WarEntityManager;
 import me.xxgradzix.gradzixcore.clansExtension.data.database.managers.WarRecordEntityManager;
 import me.xxgradzix.gradzixcore.clansExtension.exceptions.TheyAlreadyHaveWarException;
@@ -33,14 +34,15 @@ public class WarManager {
 
     private final WarEntityManager warEntityManager;
     private final WarRecordEntityManager warRecordEntityManager;
-
+    private final ClanPerksEntityManager clanPerksEntityManager;
     private final FunnyGuilds funnyGuilds;
-    public WarManager(WarEntityManager warEntityManager, WarRecordEntityManager warRecordEntityManager, FunnyGuilds funnyGuilds) {
+
+    public WarManager(WarEntityManager warEntityManager, WarRecordEntityManager warRecordEntityManager, FunnyGuilds funnyGuilds, ClanPerksEntityManager clanPerksEntityManager) {
         this.warEntityManager = warEntityManager;
         this.warRecordEntityManager = warRecordEntityManager;
         this.funnyGuilds = funnyGuilds;
+        this.clanPerksEntityManager = clanPerksEntityManager;
     }
-
     public void declareWar(Guild invaderGuild, Guild invadedGuild) throws YouAlreadyHaveWarException, TheyAlreadyHaveWarException {
 
         UUID invaderGuildId = invaderGuild.getUUID();
@@ -57,6 +59,10 @@ public class WarManager {
         nonEndedInvadedGuildWarEntities.addAll(warEntityManager.getWarsByGuildId(invadedGuildId, WAR_STATE.CURRENT));
 
         if(!nonEndedInvadedGuildWarEntities.isEmpty()) {
+//        int maxGuildWars = 1;
+//        clanPerksEntityManager.getClanPerksEntityByID(invaded)
+//        TODO pogadac z aftem a propo ilosci wojen (czy oboje gracze musza miec perk na tym samym poziomie?) czy liczy sie to jaki perk ma osoba wypowiadajaca wojne
+//        if(nonEndedInvadedGuildWarEntities.size() >= ) {
             throw new TheyAlreadyHaveWarException("This guild already is in war");
         }
 

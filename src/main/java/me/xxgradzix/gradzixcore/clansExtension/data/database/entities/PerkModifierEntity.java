@@ -53,14 +53,14 @@ public class PerkModifierEntity {
         this.level3Price = level3Price;
         this.level4Price = level4Price;
     }
-    public double getPerkModifierPerLevel(int level) {
+    public double getPerkModifierPerLevel(int level) throws IllegalArgumentException {
 
         if(level == 1) return level1Modifier;
         if(level == 2) return level2Modifier;
         if(level == 3) return level3Modifier;
         if(level == 4) return level4Modifier;
 
-        return 1;
+        throw new IllegalArgumentException("Unknown level: " + level);
     }
     public int getPerkPricePerLevel(int level) throws IllegalArgumentException {
 

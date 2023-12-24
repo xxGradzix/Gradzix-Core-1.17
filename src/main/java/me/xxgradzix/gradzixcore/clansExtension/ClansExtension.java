@@ -18,6 +18,7 @@ import me.xxgradzix.gradzixcore.clansExtension.data.database.managers.WarRecordE
 import me.xxgradzix.gradzixcore.clansExtension.listeners.GuildLoseLivesEvent;
 import me.xxgradzix.gradzixcore.clansExtension.listeners.GuildRemoveEvent;
 import me.xxgradzix.gradzixcore.clansExtension.listeners.addScore.AddWarScoreAfterKill;
+import me.xxgradzix.gradzixcore.clansExtension.listeners.perks.rankPerk.PointChangeEvent;
 import me.xxgradzix.gradzixcore.clansExtension.managers.ClanPerksManager;
 import me.xxgradzix.gradzixcore.clansExtension.managers.WarManager;
 import net.dzikoysk.funnyguilds.FunnyGuilds;
@@ -76,6 +77,7 @@ public class ClansExtension {
         plugin.getServer().getPluginManager().registerEvents(new GuildLoseLivesEvent(funnyGuilds), plugin);
         plugin.getServer().getPluginManager().registerEvents(new AddWarScoreAfterKill(funnyGuilds, warManager), plugin);
         plugin.getServer().getPluginManager().registerEvents(new GuildRemoveEvent(warManager, funnyGuilds), plugin);
+        plugin.getServer().getPluginManager().registerEvents(new PointChangeEvent(clanPerksEntityManager), plugin);
 
     }
 

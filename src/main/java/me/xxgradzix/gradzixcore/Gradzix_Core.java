@@ -18,6 +18,7 @@ import me.xxgradzix.gradzixcore.playerSettings.PlayerSettings;
 import me.xxgradzix.gradzixcore.rewardSystem.RewardSystem;
 import me.xxgradzix.gradzixcore.scratchCard.Zdrapka;
 import me.xxgradzix.gradzixcore.serverconfig.ServerConfig;
+import me.xxgradzix.gradzixcore.shulker.ShulkerRework;
 import me.xxgradzix.gradzixcore.socialMediaRewards.SocialMediaRewards;
 import me.xxgradzix.gradzixcore.upgradeItem.Ulepsz;
 import net.milkbowl.vault.economy.Economy;
@@ -55,6 +56,7 @@ public final class Gradzix_Core extends JavaPlugin {
     private Events events;
     private Binds binds;
     private MagicPond magicPond;
+    private ShulkerRework shulkerRework;
 
     private SocialMediaRewards socialMediaRewards;
 
@@ -188,6 +190,10 @@ public final class Gradzix_Core extends JavaPlugin {
         if (itemShop == null) {
             itemShop = new ItemShop(this, connectionSource);
             itemShop.onEnable();
+        }
+        if (shulkerRework == null) {
+            shulkerRework = new ShulkerRework(this);
+            shulkerRework.onEnable();
         }
     }
     private boolean setupEconomy() {

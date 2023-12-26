@@ -61,7 +61,7 @@ public class ClansExtension {
             throw new RuntimeException(e);
         }
 
-        warManager = new WarManager(warEntityManager, warRecordEntityManager, funnyGuilds);
+        warManager = new WarManager(warEntityManager, warRecordEntityManager, funnyGuilds, clanPerksEntityManager);
         clanPerksManager = new ClanPerksManager(clanPerksEntityManager);
 
     }

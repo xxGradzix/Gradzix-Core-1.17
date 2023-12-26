@@ -1,12 +1,12 @@
 package me.xxgradzix.gradzixcore.clansExtension.managers;
 
-import me.xxgradzix.gradzixcore.clansExtension.data.database.entities.WAR_STATE;
-import me.xxgradzix.gradzixcore.clansExtension.data.database.entities.WarEntity;
-import me.xxgradzix.gradzixcore.clansExtension.data.database.entities.WarRecordEntity;
+import me.xxgradzix.gradzixcore.clansExtension.data.database.entities.*;
 import me.xxgradzix.gradzixcore.clansExtension.data.database.managers.ClanPerksEntityManager;
+import me.xxgradzix.gradzixcore.clansExtension.data.database.managers.PerkModifierEntityManager;
 import me.xxgradzix.gradzixcore.clansExtension.data.database.managers.WarEntityManager;
 import me.xxgradzix.gradzixcore.clansExtension.data.database.managers.WarRecordEntityManager;
 import me.xxgradzix.gradzixcore.clansExtension.exceptions.TheyAlreadyHaveWarException;
+import me.xxgradzix.gradzixcore.clansExtension.exceptions.YouAlreadyHaveMaxAmountOfWarsException;
 import me.xxgradzix.gradzixcore.clansExtension.exceptions.YouAlreadyHaveWarException;
 import me.xxgradzix.gradzixcore.clansExtension.messages.Messages;
 import net.dzikoysk.funnyguilds.FunnyGuilds;
@@ -43,7 +43,7 @@ public class WarManager {
         this.funnyGuilds = funnyGuilds;
         this.clanPerksEntityManager = clanPerksEntityManager;
     }
-    public void declareWar(Guild invaderGuild, Guild invadedGuild) throws YouAlreadyHaveWarException, TheyAlreadyHaveWarException {
+    public void declareWar(Guild invaderGuild, Guild invadedGuild) throws YouAlreadyHaveMaxAmountOfWarsException {
 
         UUID invaderGuildId = invaderGuild.getUUID();
         UUID invadedGuildId = invadedGuild.getUUID();
@@ -51,20 +51,30 @@ public class WarManager {
         List<WarEntity> nonEndedInvaderGuildWarEntities = warEntityManager.getWarsByGuildId(invaderGuildId, WAR_STATE.FUTURE);
         nonEndedInvaderGuildWarEntities.addAll(warEntityManager.getWarsByGuildId(invaderGuildId, WAR_STATE.CURRENT));
 
-        if(!nonEndedInvaderGuildWarEntities.isEmpty()) {
-            throw new YouAlreadyHaveWarException("You already have war");
+        int maxInvaderWars = 1;
+        ClanPerksEntity clanPerksEntity = clanPerksEntityManager.getClanPerksEntityByID(invaderGuildId);
+        int clanPerkLevel = clanPerksEntity.getClanPerkLevel(ClanPerk.WAR_AMOUNT);
+
+        maxInvaderWars = (int) PerkModifierEntityManager.getPerkModifierEntityByID(ClanPerk.WAR_AMOUNT).getPerkModifierPerLevel(clanPerkLevel);
+
+//        if(!nonEndedInvaderGuildWarEntities.isEmpty()) {
+//            throw new YouAlreadyHaveWarException("You already have war");
+//        }
+
+        if(nonEndedInvaderGuildWarEntities.size() >= maxInvaderWars) {
+            throw new YouAlreadyHaveMaxAmountOfWarsException("You already have max amount of wars");
         }
 
         List<WarEntity> nonEndedInvadedGuildWarEntities = warEntityManager.getWarsByGuildId(invadedGuildId, WAR_STATE.FUTURE);
         nonEndedInvadedGuildWarEntities.addAll(warEntityManager.getWarsByGuildId(invadedGuildId, WAR_STATE.CURRENT));
 
-        if(!nonEndedInvadedGuildWarEntities.isEmpty()) {
-//        int maxGuildWars = 1;
-//        clanPerksEntityManager.getClanPerksEntityByID(invaded)
-//        TODO pogadac z aftem a propo ilosci wojen (czy oboje gracze musza miec perk na tym samym poziomie?) czy liczy sie to jaki perk ma osoba wypowiadajaca wojne
-//        if(nonEndedInvadedGuildWarEntities.size() >= ) {
-            throw new TheyAlreadyHaveWarException("This guild already is in war");
-        }
+//        if(!nonEndedInvadedGuildWarEntities.isEmpty()) {
+////        int maxGuildWars = 1;
+////        clanPerksEntityManager.getClanPerksEntityByID(invaded)
+////        TODO pogadac z aftem a propo ilosci wojen (czy oboje gracze musza miec perk na tym samym poziomie?) czy liczy sie to jaki perk ma osoba wypowiadajaca wojne
+////        if(nonEndedInvadedGuildWarEntities.size() >= ) {
+//            throw new TheyAlreadyHaveWarException("This guild already is in war");
+//        }
 
         LocalDate now = LocalDate.now();
 

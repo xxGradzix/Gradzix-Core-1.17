@@ -1,6 +1,7 @@
 package me.xxgradzix.gradzixcore.clansExtension.commands;
 
 import me.xxgradzix.gradzixcore.clansExtension.exceptions.TheyAlreadyHaveWarException;
+import me.xxgradzix.gradzixcore.clansExtension.exceptions.YouAlreadyHaveMaxAmountOfWarsException;
 import me.xxgradzix.gradzixcore.clansExtension.exceptions.YouAlreadyHaveWarException;
 import me.xxgradzix.gradzixcore.clansExtension.managers.WarManager;
 import me.xxgradzix.gradzixcore.clansExtension.messages.Messages;
@@ -70,8 +71,8 @@ public class DeclareWarCommand implements CommandExecutor {
 
         try {
             warManager.declareWar(guild, invadedGuild);
-        } catch (YouAlreadyHaveWarException e) {
-            player.sendMessage(Messages.YOU_ARE_CURRENTLY_IN_WAR);
+        } catch (YouAlreadyHaveMaxAmountOfWarsException e) {
+            player.sendMessage(Messages.YOU_ALREADY_HAVE_MAX_AMOUNT_OF_WARS);
             return false;
         } catch (TheyAlreadyHaveWarException e) {
             player.sendMessage(Messages.THIS_CLAN_IS_CURRENTLY_IN_WAR);

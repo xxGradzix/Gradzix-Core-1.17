@@ -10,6 +10,7 @@ import me.xxgradzix.gradzixcore.binds.Binds;
 import me.xxgradzix.gradzixcore.chatOptions.ChatOptions;
 import me.xxgradzix.gradzixcore.events.Events;
 import me.xxgradzix.gradzixcore.generators.Generators;
+import me.xxgradzix.gradzixcore.incognito.Incognito;
 import me.xxgradzix.gradzixcore.itemPickupPriorities.ItemPickupPriorities;
 import me.xxgradzix.gradzixcore.itemShop.ItemShop;
 import me.xxgradzix.gradzixcore.magicFirework.MagicFirework;
@@ -65,6 +66,7 @@ public final class Gradzix_Core extends JavaPlugin {
     private SocialMediaRewards socialMediaRewards;
 
     private ItemShop itemShop;
+    private Incognito incognito;
 
     private PlayerPerks playerPerks;
 
@@ -106,7 +108,7 @@ public final class Gradzix_Core extends JavaPlugin {
     @Override
     public void onEnable()  {
         instance = this;
-        if (!LocalDate.now().isBefore(LocalDate.of(2024, 2, 27))) {
+        if (!LocalDate.now().isBefore(LocalDate.of(2024, 5, 30))) {
             System.out.println("jeżeli wyświetliła się ta wiadomosc to skontaktuj sie z xxGradzix");
             return;
         }
@@ -200,6 +202,10 @@ public final class Gradzix_Core extends JavaPlugin {
         if (shulkerRework == null) {
             shulkerRework = new ShulkerRework(this);
             shulkerRework.onEnable();
+        }
+        if (incognito == null) {
+            incognito = new Incognito(this, connectionSource);
+            incognito.onEnable();
         }
         if (playerPerks == null) {
             playerPerks = new PlayerPerks(this, connectionSource);

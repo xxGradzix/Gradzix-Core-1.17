@@ -30,25 +30,11 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>3.2.4</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                        <configuration>
-                            <createDependencyReducedPom>false</createDependencyReducedPom>
-                            <outputFile>C:\Users\kuba\Desktop\serwery\BoxPvp_1\plugins\Gradzix-Core.jar</outputFile>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>3.2.4</version>
+                <version>3.5.0</version>
                 <configuration>
+                    <createDependencyReducedPom>false</createDependencyReducedPom>
+                    <!-- <outputFile>C:\Users\kuba\Desktop\serwery\BoxPvp_1\plugins\Gradzix-Core.jar</outputFile> -->
+                    <outputFile>C:\Users\kuba\Desktop\spigot1_17_1\plugins\Gradzix-Core.jar</outputFile>
                     <relocations>
                         <relocation>
                             <pattern>dev.triumphteam.gui</pattern>
@@ -79,6 +65,7 @@
             <id>spigotmc-repo</id>
             <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
         </repository>
+
         <repository>
             <id>sonatype</id>
             <url>https://oss.sonatype.org/content/groups/public/</url>
@@ -88,6 +75,7 @@
             <id>jitpack.io</id>
             <url>https://jitpack.io</url>
         </repository>
+
         <repository>
             <id>placeholderapi</id>
             <url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
@@ -98,6 +86,15 @@
             <url>https://maven.enginehub.org/repo/</url>
         </repository>
 
+        <repository>
+            <id>dmulloy2-repo</id>
+            <url>https://repo.dmulloy2.net/repository/public/</url>
+        </repository>
+<!--        -->
+<!--        <repository>-->
+<!--            <id>minecraft-repo</id>-->
+<!--            <url>https://libraries.minecraft.net/</url>-->
+<!--        </repository>-->
 
         <repository>
             <id>reposilite-snapshots-repository</id>
@@ -106,6 +103,11 @@
         <repository>
             <id>enginehub-maven</id>
             <url>https://maven.enginehub.org/repo/</url>
+        </repository>
+
+        <repository>
+            <id>lukasalt-repo</id>
+            <url>https://repo.lukasa.lt/repository/maven-public/</url>
         </repository>
 
     </repositories>
@@ -124,6 +126,7 @@
                 </exclusion>
             </exclusions>
         </dependency>
+
         <dependency>
             <groupId>com.sk89q.worldguard</groupId>
             <artifactId>worldguard-bukkit</artifactId>
@@ -174,8 +177,21 @@
         <dependency>
             <groupId>net.dzikoysk.funnyguilds</groupId>
             <artifactId>plugin</artifactId>
-
             <version>4.12.1-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.comphenix.protocol</groupId>
+            <artifactId>ProtocolLib</artifactId>
+            <version>5.1.0</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.comphenix.packetwrapper</groupId>
+            <artifactId>PacketWrapper</artifactId>
+            <version>1.20-2.2.1</version>
             <scope>provided</scope>
         </dependency>
 
@@ -184,11 +200,19 @@
             <artifactId>triumph-gui</artifactId>
             <version>3.1.5</version>
         </dependency>
+
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
             <version>1.17.1-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>org.spigotmc</groupId>
+            <artifactId>spigot</artifactId>
+            <version>1.17.1-R0.1-SNAPSHOT</version>
+        </dependency>
+
+
     </dependencies>
 </project>

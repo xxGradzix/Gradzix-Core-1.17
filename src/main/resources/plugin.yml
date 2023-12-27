@@ -4,8 +4,7 @@ main: me.xxgradzix.gradzixcore.Gradzix_Core
 api-version: 1.17
 authors: [xxGradzix]
 
-depend: [WorldGuard, WorldEdit]
-
+depend: [WorldGuard, WorldEdit, ProtocolLib]
 
 commands:
   givezdrapka:
@@ -130,6 +129,12 @@ commands:
     description: item shop balance
     permission: itemshop.stankonta
 
+  incognito:
+    description: incognito
+
+  incognitoAdmin:
+    permission: incognito.addIncognitoAdmin
+    description: incognito
   givePerkBook:
     description: testuje perksy
 

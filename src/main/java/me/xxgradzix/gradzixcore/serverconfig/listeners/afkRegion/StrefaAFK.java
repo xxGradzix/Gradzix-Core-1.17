@@ -1,4 +1,4 @@
-package me.xxgradzix.gradzixcore.serverconfig.listeners;
+package me.xxgradzix.gradzixcore.serverconfig.listeners.afkRegion;
 
 import com.sk89q.worldedit.bukkit.BukkitAdapter;
 import com.sk89q.worldguard.LocalPlayer;
@@ -6,32 +6,36 @@ import com.sk89q.worldguard.WorldGuard;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.protection.ApplicableRegionSet;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
+import me.xxgradzix.gradzixcore.Gradzix_Core;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 
-public class ElytraBLock implements Listener {
+public class StrefaAFK implements Listener {
+
+
+    private Gradzix_Core plugin;
+
+    public StrefaAFK(Gradzix_Core plugin) {
+        this.plugin = plugin;
+    }
 
     @EventHandler
-    public void elytraBlockEvent(PlayerMoveEvent event) {
-        
-
-        if (event.getPlayer() instanceof Player) {
-            Player player = event.getPlayer();
-
-            if (getPlayerRegionName(event.getPlayer()) != null && getPlayerRegionName(player).equals("strefabezelytry")) {
-
-                if (player.getInventory().getChestplate().equals(Material.ELYTRA) ||
-                        player.getInventory().getChestplate().getType() == Material.ELYTRA) {
-
-
-                    player.setGliding(false);
-                    event.setCancelled(true);
+    public void onPlayerMove(PlayerMoveEvent event) {
+        // TODO zrobic rework np eventy onJoin onLeave region i onEnter region
+        if (getPlayerRegionName(event.getPlayer()) != null && getPlayerRegionName(event.getPlayer()).equals("strefaafk")) {
+            for (org.bukkit.entity.Player onlinePlayer : event.getPlayer().getWorld().getPlayers()) {
+                if (onlinePlayer != event.getPlayer()) {
+                    onlinePlayer.hidePlayer(plugin, event.getPlayer());
                 }
-
+            }
+        } else {
+            for (org.bukkit.entity.Player onlinePlayer : event.getPlayer().getWorld().getPlayers()) {
+                if (onlinePlayer != event.getPlayer()) {
+                    onlinePlayer.showPlayer(plugin, event.getPlayer());
+                }
             }
         }
     }
@@ -50,4 +54,6 @@ public class ElytraBLock implements Listener {
 
         return null;
     }
+
+
 }

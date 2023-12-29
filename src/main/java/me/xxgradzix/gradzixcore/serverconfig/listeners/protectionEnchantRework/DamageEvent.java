@@ -1,4 +1,4 @@
-package me.xxgradzix.gradzixcore.serverconfig.listeners;
+package me.xxgradzix.gradzixcore.serverconfig.listeners.protectionEnchantRework;
 
 import me.xxgradzix.gradzixcore.serverconfig.data.DataManager;
 import org.bukkit.enchantments.Enchantment;

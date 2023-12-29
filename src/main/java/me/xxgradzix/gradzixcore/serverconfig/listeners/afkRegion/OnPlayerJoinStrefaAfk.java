@@ -1,4 +1,4 @@
-package me.xxgradzix.gradzixcore.serverconfig.listeners;
+package me.xxgradzix.gradzixcore.serverconfig.listeners.afkRegion;
 
 import com.sk89q.worldedit.bukkit.BukkitAdapter;
 import com.sk89q.worldguard.LocalPlayer;

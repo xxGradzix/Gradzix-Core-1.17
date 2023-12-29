@@ -23,7 +23,7 @@ import java.util.UUID;
 
 public class GiveArmorBackEvent implements Listener {
 
-    public static HashMap<UUID, ArrayList<ItemStack>> returnItems = new HashMap<>();
+    private static HashMap<UUID, ArrayList<ItemStack>> returnItems = new HashMap<>();
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onDeathEvent(PlayerDeathEvent event){

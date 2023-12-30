@@ -4,6 +4,7 @@ import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.support.ConnectionSource;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
+import lombok.Getter;
 import me.xxgradzix.gradzixcore.adminPanel.Panel;
 import me.xxgradzix.gradzixcore.binds.Binds;
 import me.xxgradzix.gradzixcore.chatOptions.ChatOptions;
@@ -40,6 +41,8 @@ public final class Gradzix_Core extends JavaPlugin {
     public static final boolean USEDB = true;
     private static final Logger log = Logger.getLogger("Minecraft");
     private static Economy econ = null;
+    @Getter
+    private static Gradzix_Core instance;
 
     private Zdrapka zdrapkaPlugin;
     private ChatOptions chatOptions;
@@ -100,6 +103,7 @@ public final class Gradzix_Core extends JavaPlugin {
 
     @Override
     public void onEnable()  {
+        instance = this;
         if (!LocalDate.now().isBefore(LocalDate.of(2024, 2, 27))) {
             System.out.println("jeżeli wyświetliła się ta wiadomosc to skontaktuj sie z xxGradzix");
             return;

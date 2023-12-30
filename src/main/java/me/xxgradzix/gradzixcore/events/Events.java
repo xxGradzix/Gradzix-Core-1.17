@@ -4,7 +4,9 @@ import com.j256.ormlite.support.ConnectionSource;
 import lombok.Getter;
 import me.xxgradzix.gradzixcore.Gradzix_Core;
 import me.xxgradzix.gradzixcore.events.commands.StartEvent;
+import me.xxgradzix.gradzixcore.events.listeners.bossEvent.BossDamageUpdateBossBar;
 import me.xxgradzix.gradzixcore.events.listeners.keyEvent.OnBlockBreak;
+import me.xxgradzix.gradzixcore.events.managers.BossManager;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
@@ -40,6 +42,9 @@ public class Events {
         Events.isMagicPondEventEnabled = isMagicPondEventEnabled;
     }
 
+    public static void setIsBossSpawned(boolean isBossSpawned) {
+        Events.isBossSpawned = isBossSpawned;
+    }
     @Getter
     private static boolean isGeneratorEventEnabled;
     @Getter
@@ -55,8 +60,12 @@ public class Events {
     @Getter
     private static int keyRewardItemAmount;
 
+
     @Getter
     private static boolean isMagicPondEventEnabled;
+
+    @Getter
+    private static boolean isBossSpawned;
 
 
     public Events(Gradzix_Core plugin, ConnectionSource connectionSource) {
@@ -72,12 +81,12 @@ public class Events {
 
     }
 
-
     public void onEnable() {
 
-        plugin.getCommand("events").setExecutor(new StartEvent(plugin));
+        plugin.getCommand("events").setExecutor(new StartEvent());
 
         plugin.getServer().getPluginManager().registerEvents(new OnBlockBreak(), plugin);
+        plugin.getServer().getPluginManager().registerEvents(new BossDamageUpdateBossBar(), plugin);
 
     }
 }

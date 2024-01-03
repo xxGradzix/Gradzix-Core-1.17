@@ -3,6 +3,7 @@ package me.xxgradzix.gradzixcore.events.managers;
 import lombok.Getter;
 import me.xxgradzix.gradzixcore.Gradzix_Core;
 import me.xxgradzix.gradzixcore.events.Messages;
+import me.xxgradzix.gradzixcore.events.items.ItemManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -16,6 +17,8 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.PiglinBrute;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 public class BossManager {
 
@@ -128,10 +131,14 @@ public class BossManager {
     }
     public static void giveFullReward(Player player) {
         player.sendMessage(Messages.YOU_KILLED_BOSS);
+//        Bukkit.broadcastMessage(Messages.PLAYER_X_TOOK_BOSS_SHARDS);
+        ItemStack reward = ItemManager.mainReward;
+        reward.setAmount(16);
         if(player.getInventory().firstEmpty() != -1) {
-            player.getInventory().addItem(new ItemStack(Material.DIAMOND_BLOCK, 1));
+            player.getInventory().addItem(reward);
         } else {
-            player.getWorld().dropItem(player.getLocation(), new ItemStack(Material.DIAMOND_BLOCK, 1));
+            player.getWorld().dropItem(player.getLocation(), reward);
         }
+        player.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 20, 1));
     }
 }

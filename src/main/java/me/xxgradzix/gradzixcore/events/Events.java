@@ -4,7 +4,9 @@ import com.j256.ormlite.support.ConnectionSource;
 import lombok.Getter;
 import me.xxgradzix.gradzixcore.Gradzix_Core;
 import me.xxgradzix.gradzixcore.events.commands.StartEvent;
+import me.xxgradzix.gradzixcore.events.items.ItemManager;
 import me.xxgradzix.gradzixcore.events.listeners.bossEvent.BossDamageUpdateBossBar;
+import me.xxgradzix.gradzixcore.events.listeners.bossEvent.GlowEffectListener;
 import me.xxgradzix.gradzixcore.events.listeners.keyEvent.OnBlockBreak;
 import me.xxgradzix.gradzixcore.events.managers.BossManager;
 import org.bukkit.Material;
@@ -83,10 +85,13 @@ public class Events {
 
     public void onEnable() {
 
+        ItemManager.init();
+
         plugin.getCommand("events").setExecutor(new StartEvent());
 
         plugin.getServer().getPluginManager().registerEvents(new OnBlockBreak(), plugin);
         plugin.getServer().getPluginManager().registerEvents(new BossDamageUpdateBossBar(), plugin);
+        plugin.getServer().getPluginManager().registerEvents(new GlowEffectListener(), plugin);
 
     }
 }

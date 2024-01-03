@@ -1,6 +1,7 @@
 package me.xxgradzix.gradzixcore.events.listeners.keyEvent;
 
 import me.xxgradzix.gradzixcore.events.Events;
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -24,6 +25,7 @@ public class OnBlockBreak implements Listener {
         double chance = Events.getKeyDropChance();
 
         if(shouldDrop(chance)) {
+            Bukkit.broadcastMessage("Tak");
             ItemStack reward = Events.getKeyRewardItem();
             reward.setAmount(Events.getKeyRewardItemAmount());
 
@@ -32,7 +34,7 @@ public class OnBlockBreak implements Listener {
             } else {
                 event.getBlock().getWorld().dropItemNaturally(player.getLocation(), reward);
             }
-        }
+        } else Bukkit.broadcastMessage("Nie");
 
     }
     public static boolean shouldDrop(double chance) {

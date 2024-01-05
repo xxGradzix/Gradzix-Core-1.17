@@ -96,21 +96,22 @@ public class StartEvent implements CommandExecutor, TabCompleter {
                 if(args.length > 2) {
 
                     try {
-                        chance = Double.parseDouble(args[2]);
+                        timeMinutes = Integer.parseInt(args[2]);
+                    } catch (Exception ignored) {};
+                } else {
+                    sender.sendMessage("Poprawne uzycie to /events START KLUCZ [czas] [szansa]");
+                }
+
+                if(args.length > 3) {
+                    try {
+                        chance = Double.parseDouble(args[3]);
                         if(chance < 1) {
                             Events.setKeyDropChance(chance);
                         }
                     } catch (Exception ignored) {
                         //todo correct command message
                     };
-                } else {
-                    sender.sendMessage("Poprawne uzycie to /events START KLUCZ [szansa] [czas]");
-                }
 
-                if(args.length > 3) {
-                    try {
-                        timeMinutes = Integer.parseInt(args[3]);
-                    } catch (Exception ignored) {};
                 }
 
                 startKeyEventTask(timeMinutes, reward, chance);

@@ -25,6 +25,7 @@ public class IncreasedDropAbilityOnBlockBreak implements Listener {
     @EventHandler
     public void onBlockBreak(BlockBreakEvent event) {
 
+        event.setDropItems(false);
         Player p  = event.getPlayer();
 
         if(p.getGameMode().equals(GameMode.CREATIVE)) return;

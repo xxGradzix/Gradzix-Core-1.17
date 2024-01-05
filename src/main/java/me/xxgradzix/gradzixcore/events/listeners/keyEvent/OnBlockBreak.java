@@ -38,8 +38,11 @@ public class OnBlockBreak implements Listener {
 
     }
     public static boolean shouldDrop(double chance) {
+
         Random random = new Random();
         double result = random.nextDouble();
+        Bukkit.broadcastMessage("result " + result);
+        Bukkit.broadcastMessage("chance " + chance);
         return result <= chance;
     }
 

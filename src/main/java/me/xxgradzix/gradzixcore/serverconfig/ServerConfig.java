@@ -11,6 +11,7 @@ import me.xxgradzix.gradzixcore.serverconfig.data.configfiles.ConfigServera;
 import me.xxgradzix.gradzixcore.serverconfig.data.database.entities.ServerConfigEntity;
 import me.xxgradzix.gradzixcore.serverconfig.data.database.managers.ServerConfigEntityManager;
 import me.xxgradzix.gradzixcore.serverconfig.listeners.BlockPlacingBlocks;
+import me.xxgradzix.gradzixcore.serverconfig.listeners.elytraAndFireworkBlock.ElytraAndFallDamageDecrease;
 import me.xxgradzix.gradzixcore.serverconfig.listeners.elytraAndFireworkBlock.OnTotemBreakBlockFirework;
 import me.xxgradzix.gradzixcore.serverconfig.listeners.protectionEnchantRework.DamageEvent;
 import me.xxgradzix.gradzixcore.serverconfig.listeners.FortuneSheers;
@@ -46,14 +47,13 @@ public class ServerConfig {
         }
 
         plugin.getServer().getPluginManager().registerEvents(new DamageEvent(), plugin);
-//        plugin.getServer().getPluginManager().registerEvents(new ElytraBLock(), plugin);
-//        plugin.getServer().getPluginManager().registerEvents(new PlayerFireworkListener(), plugin);
+
         plugin.getServer().getPluginManager().registerEvents(new VanishingPotionBottle(plugin), plugin);
         plugin.getServer().getPluginManager().registerEvents(new OnTotemBreakBlockFirework(), plugin);
 
-//        plugin.getServer().getPluginManager().registerEvents(new StrefaAFK(plugin), plugin);
+        plugin.getServer().getPluginManager().registerEvents(new ElytraAndFallDamageDecrease(), plugin);
         plugin.getServer().getPluginManager().registerEvents(new FortuneSheers(), plugin);
-//        plugin.getServer().getPluginManager().registerEvents(new OnPlayerJoinStrefaAfk(plugin), plugin);
+
         BlockPlacingBlocks blockPlacingBlocks = new BlockPlacingBlocks(plugin);
         blockPlacingBlocks.runTaskTimer(plugin, 0L, 20L * 5);
         plugin.getServer().getPluginManager().registerEvents(blockPlacingBlocks, plugin);

@@ -4,30 +4,20 @@ import me.xxgradzix.gradzixcore.Gradzix_Core;
 import me.xxgradzix.gradzixcore.events.Events;
 import me.xxgradzix.gradzixcore.events.Messages;
 import me.xxgradzix.gradzixcore.events.managers.BossManager;
-import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.attribute.Attribute;
-import org.bukkit.attribute.AttributeInstance;
-import org.bukkit.attribute.AttributeModifier;
-import org.bukkit.boss.BossBar;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.PiglinBrute;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitScheduler;
-import org.bukkit.util.StringUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.rmi.NoSuchObjectException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -114,7 +104,7 @@ public class StartEvent implements CommandExecutor, TabCompleter {
 
                 }
 
-                startKeyEventTask(timeMinutes, reward, chance);
+                startKeyEventTask(((Player) sender), timeMinutes, reward, chance);
             }
             break;
             case GENERATOR: {
@@ -184,14 +174,19 @@ public class StartEvent implements CommandExecutor, TabCompleter {
 
         startTask(EVENT_NAME.BOSS, timeMinutes);
     }
-    private void startKeyEventTask(int timeMinutes, ItemStack reward, double chance){
+    private void startKeyEventTask(@NotNull Player sender, int timeMinutes, ItemStack reward, double chance){
 
         if(reward == null || reward.getType().equals(Material.AIR)) {
             throw new NullPointerException("Reward cannot be null");
         }
-        // TODO rozpoczales event z przedmiotem
 
-        Bukkit.broadcastMessage(ChatColor.GRAY + "Rozpoczął się event " + ChatColor.GREEN +"key drop");
+        if(reward.getItemMeta().hasDisplayName()) {
+            sender.sendMessage("Rozpocząłeś event z przedmiotem " + reward.getItemMeta().getDisplayName() + " szansa na drop to " + chance);
+        } else {
+            sender.sendMessage("Rozpocząłeś event z przedmiotem " + reward.getType().name() + " szansa na drop to " + chance);
+        }
+
+        Bukkit.broadcastMessage(ChatColor.GRAY + "Rozpoczął się event " + ChatColor.GREEN + "key drop");
         Bukkit.broadcastMessage(ChatColor.GRAY + "Event zakończy sie za " + ChatColor.DARK_GRAY + timeMinutes + ChatColor.GRAY+ " minut");
 
         Events.setIsKeyEventEnabled(true);
@@ -209,7 +204,7 @@ public class StartEvent implements CommandExecutor, TabCompleter {
 
         startTask(EVENT_NAME.JEZIORKO, timeMinutes);
     }
-    private static void startTask(EVENT_NAME eventName, int timeMinutes) throws NoSuchElementException { // todo save id to map
+    private static void startTask(EVENT_NAME eventName, int timeMinutes) throws NoSuchElementException {
         int id;
 //        cancelTask(eventName);
         switch (eventName){

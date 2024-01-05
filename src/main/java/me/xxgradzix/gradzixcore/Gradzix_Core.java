@@ -15,6 +15,7 @@ import me.xxgradzix.gradzixcore.itemShop.ItemShop;
 import me.xxgradzix.gradzixcore.magicFirework.MagicFirework;
 import me.xxgradzix.gradzixcore.magicPond.MagicPond;
 import me.xxgradzix.gradzixcore.playerAbilities.PlayerAbilities;
+import me.xxgradzix.gradzixcore.playerPerks.PlayerPerks;
 import me.xxgradzix.gradzixcore.playerSettings.PlayerSettings;
 import me.xxgradzix.gradzixcore.rewardSystem.RewardSystem;
 import me.xxgradzix.gradzixcore.scratchCard.Zdrapka;
@@ -65,6 +66,8 @@ public final class Gradzix_Core extends JavaPlugin {
 
     private ItemShop itemShop;
 
+    private PlayerPerks playerPerks;
+
     private ConnectionSource connectionSource;
 
     Properties loadConfig() throws IOException {
@@ -97,7 +100,6 @@ public final class Gradzix_Core extends JavaPlugin {
         String password = config.getProperty("db.password");
 
         this.connectionSource = new JdbcConnectionSource(databaseUrl, user, password);
-
     }
 
 
@@ -198,6 +200,10 @@ public final class Gradzix_Core extends JavaPlugin {
         if (shulkerRework == null) {
             shulkerRework = new ShulkerRework(this);
             shulkerRework.onEnable();
+        }
+        if (playerPerks == null) {
+            playerPerks = new PlayerPerks(this, connectionSource);
+            playerPerks.onEnable();
         }
     }
     private boolean setupEconomy() {

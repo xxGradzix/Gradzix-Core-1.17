@@ -130,3 +130,11 @@ commands:
     description: item shop balance
     permission: itemshop.stankonta
 
+  givePerkBook:
+    description: testuje perksy
+
+  perki:
+    description: shows player perks levels
+    aliases:
+      - perks
+

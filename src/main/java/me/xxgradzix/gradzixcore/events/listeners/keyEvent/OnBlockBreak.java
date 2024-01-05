@@ -25,7 +25,7 @@ public class OnBlockBreak implements Listener {
         double chance = Events.getKeyDropChance();
 
         if(shouldDrop(chance)) {
-            Bukkit.broadcastMessage("Tak");
+
             ItemStack reward = Events.getKeyRewardItem();
             reward.setAmount(Events.getKeyRewardItemAmount());
 
@@ -34,15 +34,14 @@ public class OnBlockBreak implements Listener {
             } else {
                 event.getBlock().getWorld().dropItemNaturally(player.getLocation(), reward);
             }
-        } else Bukkit.broadcastMessage("Nie");
+        }
 
     }
     public static boolean shouldDrop(double chance) {
 
         Random random = new Random();
         double result = random.nextDouble();
-        Bukkit.broadcastMessage("result " + result);
-        Bukkit.broadcastMessage("chance " + chance);
+
         return result <= chance;
     }
 

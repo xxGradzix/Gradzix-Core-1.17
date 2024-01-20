@@ -52,10 +52,11 @@ public class WarManager {
         nonEndedInvaderGuildWarEntities.addAll(warEntityManager.getWarsByGuildId(invaderGuildId, WAR_STATE.CURRENT));
 
         int maxInvaderWars = 1;
-        ClanPerksEntity clanPerksEntity = clanPerksEntityManager.getClanPerksEntityByID(invaderGuildId);
-        int clanPerkLevel = clanPerksEntity.getClanPerkLevel(ClanPerk.WAR_AMOUNT);
 
-        maxInvaderWars = (int) PerkModifierEntityManager.getPerkModifierEntityByID(ClanPerk.WAR_AMOUNT).getPerkModifierPerLevel(clanPerkLevel);
+        ClanPerksEntity invaderClanPerksEntity = clanPerksEntityManager.getClanPerksEntityByID(invaderGuildId);
+        int invaderWarAmountPerkLevel = invaderClanPerksEntity.getClanPerkLevel(ClanPerk.WAR_AMOUNT);
+
+        maxInvaderWars = (int) PerkModifierEntityManager.getPerkModifierEntityByID(ClanPerk.WAR_AMOUNT).getPerkModifierPerLevel(invaderWarAmountPerkLevel);
 
 //        if(!nonEndedInvaderGuildWarEntities.isEmpty()) {
 //            throw new YouAlreadyHaveWarException("You already have war");

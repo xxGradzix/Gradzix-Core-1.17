@@ -74,10 +74,11 @@ public class DeclareWarCommand implements CommandExecutor {
         } catch (YouAlreadyHaveMaxAmountOfWarsException e) {
             player.sendMessage(Messages.YOU_ALREADY_HAVE_MAX_AMOUNT_OF_WARS);
             return false;
-        } catch (TheyAlreadyHaveWarException e) {
-            player.sendMessage(Messages.THIS_CLAN_IS_CURRENTLY_IN_WAR);
-            return false;
         }
+//        catch (TheyAlreadyHaveWarException e) {
+//            player.sendMessage(Messages.THIS_CLAN_IS_CURRENTLY_IN_WAR);
+//            return false;
+//        }
 
         player.sendMessage(Messages.YOU_DECLARED_WAR_TO_CLAN_XXXX + invadedGuild.getUUID());
 

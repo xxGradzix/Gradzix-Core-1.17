@@ -72,7 +72,7 @@ public class ClanUpgradesCommand implements CommandExecutor {
         gui.open(player);
 
         return true;
-    } // TODO ensure that other player cant buy perk for low level
+    } // TODO ensure that other player cant buy perk for low level - only needs checking
     private void setItemPerkButtonInGui(Gui gui, int row, int column, ClanPerk perk, Player player, Guild guild) {
         ClanPerksEntity clanPerksEntity = clanPerksEntityManager.getClanPerksEntityByID(guild.getUUID());
 

@@ -27,6 +27,7 @@ import java.time.LocalDateTime;
 import java.time.temporal.TemporalAdjusters;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -114,6 +115,17 @@ public class WarManager {
             if(invaderGuildOption.isPresent() && invadedGuildOption.isPresent()) {
                 Guild invaderGuild = invaderGuildOption.get();
                 Guild invadedGuild = invadedGuildOption.get();
+
+                {
+                    Set<Guild> enemies = invaderGuild.getEnemies();
+                    enemies.add(invadedGuild);
+                    invaderGuild.setEnemies(enemies);
+                }
+                {
+                    Set<Guild> enemies = invadedGuild.getEnemies();
+                    enemies.add(invaderGuild);
+                    invadedGuild.setEnemies(enemies);
+                }
 
                 invaderGuild.getOnlineMembers().forEach(onlinePlayer -> onlinePlayer.sendMessage(Messages.YOUR_WAR_WITH_CLAN_XXXX_HAS_STARTED(invadedGuild.getTag())));
                 invadedGuild.getOnlineMembers().forEach(onlinePlayer -> onlinePlayer.sendMessage(Messages.YOUR_WAR_WITH_CLAN_XXXX_HAS_STARTED(invaderGuild.getTag())));
@@ -215,6 +227,17 @@ public class WarManager {
         if(invaderOptionalGuild.isPresent() && invadedOptionalGuild.isPresent()) {
             Guild invaderGuild = invaderOptionalGuild.get();
             Guild invadedGuild = invadedOptionalGuild.get();
+
+            {
+                Set<Guild> enemies = invaderGuild.getEnemies();
+                enemies.remove(invadedGuild);
+                invaderGuild.setEnemies(enemies);
+            }
+            {
+                Set<Guild> enemies = invadedGuild.getEnemies();
+                enemies.remove(invaderGuild);
+                invadedGuild.setEnemies(enemies);
+            }
 
             invaderGuild.getOnlineMembers().forEach(onlinePlayer -> onlinePlayer.sendMessage(Messages.YOUR_WAR_WITH_CLAN_XXXX_HAS_ENDED(invadedGuild.getTag())));
             invadedGuild.getOnlineMembers().forEach(onlinePlayer -> onlinePlayer.sendMessage(Messages.YOUR_WAR_WITH_CLAN_XXXX_HAS_ENDED(invaderGuild.getTag())));

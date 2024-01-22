@@ -103,7 +103,7 @@ public final class Gradzix_Core extends JavaPlugin {
     @Override
     public void onEnable()  {
         funnyGuilds = FunnyGuilds.getInstance();
-        if (!LocalDate.now().isBefore(LocalDate.of(2023, 12, 30))) {
+        if (!LocalDate.now().isBefore(LocalDate.of(2024, 5, 30))) {
             System.out.println("jeżeli wyświetliła się ta wiadomosc to skontaktuj sie z xxGradzix");
             return;
         }

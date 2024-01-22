@@ -30,12 +30,13 @@ public class AddWarScoreAfterKill implements Listener {
     @EventHandler
     public void onPlayerKill(EntityDeathEvent event) {
 
+        // TODO Add score to first guild (WRONG)
+
         if(!ClansExtension.ARE_WARS_ACTIVE) return;
 
         if(!(event.getEntity() instanceof Player)) return;
 
         Player killer = event.getEntity().getKiller();
-
         Player victim = ((Player) event.getEntity());
 
         UserManager userManager = funnyGuilds.getUserManager();

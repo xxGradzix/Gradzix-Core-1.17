@@ -49,26 +49,28 @@ public class WarManager {
         UUID invaderGuildId = invaderGuild.getUUID();
         UUID invadedGuildId = invadedGuild.getUUID();
 
-        List<WarEntity> nonEndedInvaderGuildWarEntities = warEntityManager.getWarsByGuildId(invaderGuildId, WAR_STATE.FUTURE);
-        nonEndedInvaderGuildWarEntities.addAll(warEntityManager.getWarsByGuildId(invaderGuildId, WAR_STATE.CURRENT));
+        Set<WarEntity> nonEndedInvaderGuildWarEntities = warEntityManager.getInvaderWarsByGuildId(invaderGuildId, WAR_STATE.FUTURE);
+        nonEndedInvaderGuildWarEntities.addAll(warEntityManager.getInvaderWarsByGuildId(invaderGuildId, WAR_STATE.CURRENT)); /*** WOJNY NIEZAKONCZONE GDZIE GRACZ WYPOWIADAJACY ATAKUJE */
 
         int maxInvaderWars = 1;
 
         ClanPerksEntity invaderClanPerksEntity = clanPerksEntityManager.getClanPerksEntityByID(invaderGuildId);
         int invaderWarAmountPerkLevel = invaderClanPerksEntity.getClanPerkLevel(ClanPerk.WAR_AMOUNT);
 
-        maxInvaderWars = (int) PerkModifierEntityManager.getPerkModifierEntityByID(ClanPerk.WAR_AMOUNT).getPerkModifierPerLevel(invaderWarAmountPerkLevel);
+        // ZWIEKSZ ILOSC MAX WOJEN JEZELI LEVEL WIEKSZY NIZ 0
+        if(invaderWarAmountPerkLevel > 0) maxInvaderWars = (int) PerkModifierEntityManager.getPerkModifierEntityByID(ClanPerk.WAR_AMOUNT).getPerkModifierPerLevel(invaderWarAmountPerkLevel);
 
-//        if(!nonEndedInvaderGuildWarEntities.isEmpty()) {
-//            throw new YouAlreadyHaveWarException("You already have war");
-//        }
 
         if(nonEndedInvaderGuildWarEntities.size() >= maxInvaderWars) {
             throw new YouAlreadyHaveMaxAmountOfWarsException("You already have max amount of wars");
         }
+        // TODO gracze moga wypowiadac sobie wojny nawzajem majk - kafar, kafar -mike
 
-        List<WarEntity> nonEndedInvadedGuildWarEntities = warEntityManager.getWarsByGuildId(invadedGuildId, WAR_STATE.FUTURE);
-        nonEndedInvadedGuildWarEntities.addAll(warEntityManager.getWarsByGuildId(invadedGuildId, WAR_STATE.CURRENT));
+        // TODO gdy gracz usunie klan jest informacja o wygranie wojny a nie powinna
+
+
+//        List<WarEntity> nonEndedInvadedGuildWarEntities = warEntityManager.getInvaderWarsByGuildId(invaderGuildId, WAR_STATE.FUTURE);
+//        nonEndedInvadedGuildWarEntities.addAll(warEntityManager.getInvaderWarsByGuildId(invaderGuildId, WAR_STATE.CURRENT));
 
 //        if(!nonEndedInvadedGuildWarEntities.isEmpty()) {
 ////        int maxGuildWars = 1;
@@ -101,6 +103,7 @@ public class WarManager {
 //                        && LocalDateTime.now().isAfter(war.getWarStart()) && LocalDateTime.now().isAfter(war.getWarEnd())
                 )
                 .collect(Collectors.toList());
+
 
 
         warEntities.forEach((war) -> {
@@ -144,7 +147,7 @@ public class WarManager {
         });
     }
 
-    public List<WarEntity> getNonEndedGuildWars(UUID id) {
+    public Set<WarEntity> getNonEndedGuildWars(UUID id) {
 
         return warEntityManager.getActiveWarsByGuildId(id);
     }
@@ -199,7 +202,7 @@ public class WarManager {
 
     public Optional<WarEntity> getActiveWarOfGuilds(UUID guild1Id, UUID guild2Id) {
 
-        List<WarEntity> warEntityByGuildIds = warEntityManager.getWarByGuildIds(guild1Id, guild2Id, WAR_STATE.CURRENT);
+        Set<WarEntity> warEntityByGuildIds = warEntityManager.getWarByGuildIds(guild1Id, guild2Id, WAR_STATE.CURRENT);
 
         if(!warEntityByGuildIds.isEmpty()) return warEntityByGuildIds.stream().findFirst();
 

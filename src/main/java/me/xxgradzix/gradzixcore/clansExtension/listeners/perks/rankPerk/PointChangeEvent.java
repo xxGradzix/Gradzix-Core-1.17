@@ -46,7 +46,8 @@ public class PointChangeEvent implements Listener {
         if(clanPerkLevel == 0) return;
 
         try {
-            event.setAttackerPointsChange((int) (event.getAttackerPointsChange() + perkModifierEntity.getPerkModifierPerLevel(clanPerksEntity.getClanPerkLevel(ClanPerk.RANK))));
+            if(event.getAttackerPointsChange() > 0)
+                event.setAttackerPointsChange((int) (event.getAttackerPointsChange() + perkModifierEntity.getPerkModifierPerLevel(clanPerksEntity.getClanPerkLevel(ClanPerk.RANK))));
         } catch (IllegalArgumentException ignored) {
 
         }

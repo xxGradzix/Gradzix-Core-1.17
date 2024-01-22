@@ -15,6 +15,7 @@ import net.dzikoysk.funnyguilds.guild.GuildManager;
 import net.dzikoysk.funnyguilds.user.User;
 import net.dzikoysk.funnyguilds.user.UserManager;
 import net.kyori.adventure.text.Component;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -25,6 +26,7 @@ import org.jetbrains.annotations.NotNull;
 import panda.std.Option;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 public class WarsCommand implements CommandExecutor {
@@ -82,6 +84,7 @@ public class WarsCommand implements CommandExecutor {
     }
 
     private void openActiveWarsGui(Player player, Guild userGuild) {
+
         Gui activeWars = Gui.gui()
                 .title(Component.text("Aktywne wojny gildi"))
                 .rows(3)
@@ -90,7 +93,8 @@ public class WarsCommand implements CommandExecutor {
 
         GuildManager guildManager = funnyGuilds.getGuildManager();
 
-        List<WarEntity> allActiveWarsByGuildId = warManager.getNonEndedGuildWars(userGuild.getUUID());
+        Set<WarEntity> allActiveWarsByGuildId = warManager.getNonEndedGuildWars(userGuild.getUUID());
+        Bukkit.broadcastMessage("allActiveWarsByGuildId: " + allActiveWarsByGuildId.size());
 
         allActiveWarsByGuildId.forEach(warEntity -> {
             UUID userGuildId = userGuild.getUUID();
@@ -117,6 +121,7 @@ public class WarsCommand implements CommandExecutor {
                 .disableAllInteractions()
                 .create();
 
+        // TODO blad nie dziala odbieranie nagrod, mozna odebrac z remisu i przegranej
         endedWars.setItem(2, 1, ItemBuilder.from(Material.ARROW).setName("Poprzednia strona").asGuiItem(event -> endedWars.previous()));
         endedWars.getFiller().fillBetweenPoints(2, 2, 2, 8, new GuiItem(Material.GREEN_STAINED_GLASS_PANE));
         endedWars.setItem(2, 9, ItemBuilder.from(Material.ARROW).setName("Nastepna strona").asGuiItem(event -> endedWars.next()));

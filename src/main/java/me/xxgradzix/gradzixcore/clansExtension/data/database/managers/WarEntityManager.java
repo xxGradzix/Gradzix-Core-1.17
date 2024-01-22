@@ -13,6 +13,8 @@ import org.jetbrains.annotations.Nullable;
 
 import java.sql.SQLException;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class WarEntityManager {
     private Dao<WarEntity, Long> entityDao;
@@ -50,66 +52,108 @@ public class WarEntityManager {
         }
     }
 
-    public List<WarEntity> getWarsByGuildId(@NotNull UUID guildId, @Nullable WAR_STATE warState) {
+    public Set<WarEntity> getWarsByGuildId(@NotNull UUID guildId, @Nullable WAR_STATE warState) {
         try {
             QueryBuilder<WarEntity, Long> queryBuilder = entityDao.queryBuilder();
             Where<WarEntity, Long> where = queryBuilder.where();
+
             where.or(
                     where.eq("invader_id", guildId),
                     where.eq("invaded_id", guildId)
             );
-            if(warState != null) where.and().eq("warState", warState);
 
-            return queryBuilder.query();
+            List<WarEntity> wars = where.query();
+
+            if(warState != null) wars.stream().filter(war -> war.getWarState().equals(warState));
+
+            return new HashSet<>(queryBuilder.query());
         } catch (SQLException e) {
             // Handle SQLException
             e.printStackTrace();
-            return Collections.emptyList();
+            return Collections.emptySet();
         }
     }
-    public List<WarEntity> getActiveWarsByGuildId(@NotNull UUID guildId) {
+    public Set<WarEntity> getInvaderWarsByGuildId(@NotNull UUID guildId, @Nullable WAR_STATE warState) {
         try {
             QueryBuilder<WarEntity, Long> queryBuilder = entityDao.queryBuilder();
             Where<WarEntity, Long> where = queryBuilder.where();
+            where.eq("invader_id", guildId);
+
+            List<WarEntity> wars = where.query();
+
+
+            if(warState != null) wars.stream().filter(war -> war.getWarState().equals(warState));
+            List<WarEntity> query = queryBuilder.query();
+            return new HashSet<>(query);
+        } catch (SQLException e) {
+            // Handle SQLException
+            e.printStackTrace();
+            return Collections.emptySet();
+        }
+    }
+    public Set<WarEntity> getActiveWarsByGuildId(@NotNull UUID guildId) {
+        try {
+//            QueryBuilder<WarEntity, Long> queryBuilder = entityDao.queryBuilder();
+//            Where<WarEntity, Long> where = queryBuilder.where();
+//            where.or(
+//                    where.eq("invader_id", guildId),
+//                    where.eq("invaded_id", guildId)
+//            );
+//            where.and().or(
+//                    where.eq("warState", WAR_STATE.CURRENT),
+//                    where.eq("warState", WAR_STATE.FUTURE)
+//            );
+//            List<WarEntity> wars = queryBuilder.query();
+
+            Where<WarEntity, Long> where = entityDao.queryBuilder()
+                    .where();
             where.or(
                     where.eq("invader_id", guildId),
                     where.eq("invaded_id", guildId)
             );
-            where.and().or(
-                    where.eq("warState", WAR_STATE.CURRENT),
-                    where.eq("warState", WAR_STATE.FUTURE)
-            );
 
-            return queryBuilder.query();
+            List<WarEntity> wars = where.query();
+
+            wars.stream().filter(war -> war.getWarState().equals(WAR_STATE.CURRENT) || war.getWarState().equals(WAR_STATE.FUTURE));
+
+            return new HashSet<>(wars);
         } catch (SQLException e) {
             // Handle SQLException
             e.printStackTrace();
-            return Collections.emptyList();
+            return Collections.emptySet();
         }
     }
 
 
-    public List<WarEntity> getWarByGuildIds(@NotNull UUID id1, @NotNull UUID id2, @Nullable WAR_STATE warState) {
-        try {
-            QueryBuilder<WarEntity, Long> queryBuilder = entityDao.queryBuilder();
-            Where<WarEntity, Long> where = queryBuilder.where();
-            where.and(
-                    where.or(
-                            where.eq("invader_id", id1),
-                            where.eq("invaded_id", id1)
-                    ),
-                    where.or(
-                            where.eq("invader_id", id2),
-                            where.eq("invaded_id", id2)
-                    )
-            );
-            if(warState != null) where.and().eq("warState", warState);
+    public Set<WarEntity> getWarByGuildIds(@NotNull UUID id1, @NotNull UUID id2, @Nullable WAR_STATE warState) {
+//        try {
+//            QueryBuilder<WarEntity, Long> queryBuilder = entityDao.queryBuilder();
+//            Where<WarEntity, Long> where = queryBuilder.where();
+//
+//            where.or(
+//                    where.eq("invader_id", id1),
+//                    where.eq("invaded_id", id2)
+//            );
+//            where.and().or(
+//                    where.eq("invader_id", id2),
+//                    where.eq("invaded_id", id1)
+//            );
 
-            return queryBuilder.query();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return new ArrayList<>();
-        }
+            Set<WarEntity> wars = getActiveWarsByGuildId(id1);
+            // get only wars where only guilds id1 and id2 are involved
+
+        Stream<WarEntity> warEntityStream = wars.stream().filter(war -> (
+                (war.getInvaderGuildId().equals(id1) && war.getInvadedGuildId().equals(id2))
+                        || (war.getInvaderGuildId().equals(id2) && war.getInvadedGuildId().equals(id1))));
+        // TODO nie bierze wojny miedzy graczami
+
+        if(warState != null) warEntityStream.filter(war -> war.getWarState().equals(warState));
+
+            return new HashSet<>(warEntityStream.collect(Collectors.toSet()));
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//            return Collections.emptySet();
+//        }
     }
     public List<WarEntity> getAllWars() {
         try {

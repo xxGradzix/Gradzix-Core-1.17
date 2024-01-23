@@ -1,13 +1,12 @@
 package me.xxgradzix.gradzixcore.clansExtension.managers;
 
+import me.xxgradzix.gradzixcore.clansExtension.ClansExtension;
 import me.xxgradzix.gradzixcore.clansExtension.data.database.entities.*;
 import me.xxgradzix.gradzixcore.clansExtension.data.database.managers.ClanPerksEntityManager;
 import me.xxgradzix.gradzixcore.clansExtension.data.database.managers.PerkModifierEntityManager;
 import me.xxgradzix.gradzixcore.clansExtension.data.database.managers.WarEntityManager;
 import me.xxgradzix.gradzixcore.clansExtension.data.database.managers.WarRecordEntityManager;
-import me.xxgradzix.gradzixcore.clansExtension.exceptions.TheyAlreadyHaveWarException;
-import me.xxgradzix.gradzixcore.clansExtension.exceptions.YouAlreadyHaveMaxAmountOfWarsException;
-import me.xxgradzix.gradzixcore.clansExtension.exceptions.YouAlreadyHaveWarException;
+import me.xxgradzix.gradzixcore.clansExtension.exceptions.*;
 import me.xxgradzix.gradzixcore.clansExtension.messages.Messages;
 import net.dzikoysk.funnyguilds.FunnyGuilds;
 import net.dzikoysk.funnyguilds.event.FunnyEvent;
@@ -29,7 +28,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 public class WarManager {
 
@@ -44,44 +42,37 @@ public class WarManager {
         this.funnyGuilds = funnyGuilds;
         this.clanPerksEntityManager = clanPerksEntityManager;
     }
-    public void declareWar(Guild invaderGuild, Guild invadedGuild) throws YouAlreadyHaveMaxAmountOfWarsException {
+    public void declareWar(Guild invaderGuild, Guild invadedGuild) throws YouAlreadyHaveMaxAmountOfWarsException, CantDeclareWarDuringWarTimeException, YouAlreadyHaveWarWithThisGuildException {
+
+        if (ClansExtension.ARE_WARS_ACTIVE) {
+            throw new CantDeclareWarDuringWarTimeException("You already have war");
+        }
 
         UUID invaderGuildId = invaderGuild.getUUID();
         UUID invadedGuildId = invadedGuild.getUUID();
 
-        Set<WarEntity> nonEndedInvaderGuildWarEntities = warEntityManager.getInvaderWarsByGuildId(invaderGuildId, WAR_STATE.FUTURE);
-        nonEndedInvaderGuildWarEntities.addAll(warEntityManager.getInvaderWarsByGuildId(invaderGuildId, WAR_STATE.CURRENT)); /*** WOJNY NIEZAKONCZONE GDZIE GRACZ WYPOWIADAJACY ATAKUJE */
+        /*** WOJNY ZAPLANOWANE WYPOWIEDZIANE PRZEZ ATAKUJACEGO */
+        Set<WarEntity> nonEndedInvaderGuildWarEntities = warEntityManager.getInvaderWarsByGuildId(invaderGuildId, false, false);
 
         int maxInvaderWars = 1;
 
-        ClanPerksEntity invaderClanPerksEntity = clanPerksEntityManager.getClanPerksEntityByID(invaderGuildId);
-        int invaderWarAmountPerkLevel = invaderClanPerksEntity.getClanPerkLevel(ClanPerk.WAR_AMOUNT);
-
-        // ZWIEKSZ ILOSC MAX WOJEN JEZELI LEVEL WIEKSZY NIZ 0
-        if(invaderWarAmountPerkLevel > 0) maxInvaderWars = (int) PerkModifierEntityManager.getPerkModifierEntityByID(ClanPerk.WAR_AMOUNT).getPerkModifierPerLevel(invaderWarAmountPerkLevel);
+        {
+            ClanPerksEntity invaderClanPerksEntity = clanPerksEntityManager.getClanPerksEntityByID(invaderGuildId);
+            int invaderWarAmountPerkLevel = invaderClanPerksEntity.getClanPerkLevel(ClanPerk.WAR_AMOUNT);
+            if(invaderWarAmountPerkLevel > 0) maxInvaderWars = (int) PerkModifierEntityManager.getPerkModifierEntityByID(ClanPerk.WAR_AMOUNT).getPerkModifierPerLevel(invaderWarAmountPerkLevel);
+        }
 
 
         if(nonEndedInvaderGuildWarEntities.size() >= maxInvaderWars) {
             throw new YouAlreadyHaveMaxAmountOfWarsException("You already have max amount of wars");
         }
-        // TODO gracze moga wypowiadac sobie wojny nawzajem majk - kafar, kafar -mike
 
-        // TODO gdy gracz usunie klan jest informacja o wygranie wojny a nie powinna
-
-
-//        List<WarEntity> nonEndedInvadedGuildWarEntities = warEntityManager.getInvaderWarsByGuildId(invaderGuildId, WAR_STATE.FUTURE);
-//        nonEndedInvadedGuildWarEntities.addAll(warEntityManager.getInvaderWarsByGuildId(invaderGuildId, WAR_STATE.CURRENT));
-
-//        if(!nonEndedInvadedGuildWarEntities.isEmpty()) {
-////        int maxGuildWars = 1;
-////        clanPerksEntityManager.getClanPerksEntityByID(invaded)
-////        TODO pogadac z aftem a propo ilosci wojen (czy oboje gracze musza miec perk na tym samym poziomie?) czy liczy sie to jaki perk ma osoba wypowiadajaca wojne
-////        if(nonEndedInvadedGuildWarEntities.size() >= ) {
-//            throw new TheyAlreadyHaveWarException("This guild already is in war");
-//        }
+        Set<WarEntity> commonWars = warEntityManager.getWarByGuildIds(invaderGuildId, invadedGuildId, false, false);
+        if(!commonWars.isEmpty()) {
+            throw new YouAlreadyHaveWarWithThisGuildException("You already have war with this guild");
+        }
 
         LocalDate now = LocalDate.now();
-
         LocalDateTime warStart = now.with(TemporalAdjusters.next(DayOfWeek.FRIDAY)).atTime(12, 00);
         LocalDateTime warEnd = now.with(TemporalAdjusters.next(DayOfWeek.SUNDAY)).atTime(18, 00);
 
@@ -91,24 +82,18 @@ public class WarManager {
                 0,
                 0,
                 warStart,
-                warEnd,
-                WAR_STATE.FUTURE
+                warEnd
         );
+
         warEntityManager.createWar(warEntity);
     }
 
     public void startWars() {
-        List<WarEntity> warEntities = warEntityManager.getAllWars().stream()
-                .filter(war -> war.getWarState().equals(WAR_STATE.FUTURE)
-//                        && LocalDateTime.now().isAfter(war.getWarStart()) && LocalDateTime.now().isAfter(war.getWarEnd())
-                )
-                .collect(Collectors.toList());
 
-
+        List<WarEntity> warEntities = warEntityManager.getAllWars();
 
         warEntities.forEach((war) -> {
 
-            war.setWarState(WAR_STATE.CURRENT);
             UUID invaderGuildId = war.getInvaderGuildId();
             UUID invadedGuildId = war.getInvadedGuildId();
 
@@ -133,23 +118,25 @@ public class WarManager {
                 invaderGuild.getOnlineMembers().forEach(onlinePlayer -> onlinePlayer.sendMessage(Messages.YOUR_WAR_WITH_CLAN_XXXX_HAS_STARTED(invadedGuild.getTag())));
                 invadedGuild.getOnlineMembers().forEach(onlinePlayer -> onlinePlayer.sendMessage(Messages.YOUR_WAR_WITH_CLAN_XXXX_HAS_STARTED(invaderGuild.getTag())));
             }
-
+            war.setActive(true);
             warEntityManager.createOrUpdateWar(war);
         });
     }
     public void endWars() {
-        List<WarEntity> warEntities = warEntityManager.getAllWars().stream()
-                .filter(war -> war.getWarState().equals(WAR_STATE.CURRENT))
-                .collect(Collectors.toList());
+        List<WarEntity> warEntities = warEntityManager.getAllWars();
 
         warEntities.forEach(war -> {
             endWar(war);
         });
     }
 
-    public Set<WarEntity> getNonEndedGuildWars(UUID id) {
+    public Set<WarEntity> getNonEndedGuildWars(UUID clanId) {
 
-        return warEntityManager.getActiveWarsByGuildId(id);
+        Set<WarEntity> activeWars = warEntityManager.getWarsByGuildId(clanId, true, false);
+        Set<WarEntity> scheduledWars = warEntityManager.getWarsByGuildId(clanId, false, false);
+
+        activeWars.addAll(scheduledWars);
+        return activeWars;
     }
     public List<WarRecordEntity> getAllEndedWarsByGuildId(UUID id) {
         return warRecordEntityManager.getWarRecordsByGuildId(id);
@@ -202,7 +189,10 @@ public class WarManager {
 
     public Optional<WarEntity> getActiveWarOfGuilds(UUID guild1Id, UUID guild2Id) {
 
-        Set<WarEntity> warEntityByGuildIds = warEntityManager.getWarByGuildIds(guild1Id, guild2Id, WAR_STATE.CURRENT);
+
+
+
+        Set<WarEntity> warEntityByGuildIds = warEntityManager.getWarByGuildIds(guild1Id, guild2Id, true, false);
 
         if(!warEntityByGuildIds.isEmpty()) return warEntityByGuildIds.stream().findFirst();
 
@@ -211,14 +201,16 @@ public class WarManager {
 
 
     public boolean canCollectReward(WarRecordEntity warRecordEntity) {
-        return warRecordEntity.isRewardCollected();
+        return !warRecordEntity.isRewardCollected();
     }
 
     public void endWar(WarEntity warEntity) {
+
         UUID looserGuildUUID = getLooserGuildUUID(warEntity);
 
         String invaderTag = "ERROR";
         String invadedTag = "ERROR";
+
         GuildManager guildManager = funnyGuilds.getGuildManager();
 
         Option<Guild> invaderOptionalGuild = guildManager.findByUuid(warEntity.getInvaderGuildId());
@@ -246,7 +238,8 @@ public class WarManager {
             invadedGuild.getOnlineMembers().forEach(onlinePlayer -> onlinePlayer.sendMessage(Messages.YOUR_WAR_WITH_CLAN_XXXX_HAS_ENDED(invaderGuild.getTag())));
         }
 
-        WarRecordEntity invaderRecord = new WarRecordEntity(warEntity.getInvaderGuildId(),
+        WarRecordEntity invaderRecord = new WarRecordEntity(
+                warEntity.getInvaderGuildId(),
                 invaderTag,
                 invadedTag,
                 warEntity.getInvaderScore(),
@@ -277,7 +270,8 @@ public class WarManager {
                 Bukkit.getServer().getPluginManager().callEvent(new GuildLivesChangeEvent(FunnyEvent.EventCause.COMBAT, null, guild, oldLives));
             }
         }
-        warEntity.setWarState(WAR_STATE.FINISHED);
+        warEntity.setActive(false);
+        warEntity.setFinished(true);
 
         warEntityManager.deleteWarById(warEntity.getId());
     }
@@ -287,6 +281,6 @@ public class WarManager {
         warRecord.setRewardCollected(true);
         warRecordEntityManager.createOrUpdateWarRecordEntity(warRecord);
 
-        player.getInventory().addItem(new ItemStack(Material.FIRE));
+        player.getInventory().addItem(new ItemStack(Material.BARRIER));
     }
 }

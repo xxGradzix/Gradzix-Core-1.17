@@ -30,8 +30,6 @@ public class AddWarScoreAfterKill implements Listener {
     @EventHandler
     public void onPlayerKill(EntityDeathEvent event) {
 
-        // TODO Add score to first guild (WRONG)
-
         if(!ClansExtension.ARE_WARS_ACTIVE) return;
 
         if(!(event.getEntity() instanceof Player)) return;
@@ -55,7 +53,7 @@ public class AddWarScoreAfterKill implements Listener {
         if(!killerGuildOption.isPresent() || !victimGuildOption.isPresent()) return;
 
         Guild killerGuild = killerGuildOption.get();
-        Guild victinGuild = killerGuildOption.get();
+        Guild victinGuild = victimGuildOption.get();
 
         Optional<WarEntity> optionalWar = warManager.getActiveWarOfGuilds(killerGuild.getUUID(), victinGuild.getUUID());
 

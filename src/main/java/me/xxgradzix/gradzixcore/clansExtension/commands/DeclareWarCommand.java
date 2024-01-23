@@ -1,8 +1,7 @@
 package me.xxgradzix.gradzixcore.clansExtension.commands;
 
-import me.xxgradzix.gradzixcore.clansExtension.exceptions.TheyAlreadyHaveWarException;
-import me.xxgradzix.gradzixcore.clansExtension.exceptions.YouAlreadyHaveMaxAmountOfWarsException;
-import me.xxgradzix.gradzixcore.clansExtension.exceptions.YouAlreadyHaveWarException;
+import me.xxgradzix.gradzixcore.clansExtension.ClansExtension;
+import me.xxgradzix.gradzixcore.clansExtension.exceptions.*;
 import me.xxgradzix.gradzixcore.clansExtension.managers.WarManager;
 import me.xxgradzix.gradzixcore.clansExtension.messages.Messages;
 import net.dzikoysk.funnyguilds.FunnyGuilds;
@@ -33,6 +32,11 @@ public class DeclareWarCommand implements CommandExecutor {
         if(!(sender instanceof Player)) return false;
 
         Player player = (Player) sender;
+
+        if(ClansExtension.ARE_WARS_ACTIVE) {
+            player.sendMessage(Messages.YOU_CANNOT_DECLARE_WAR_WHILE_WARS_ARE_ACTIVE);
+            return false;
+        }
 
         UserManager userManager = funnyGuilds.getUserManager();
 
@@ -74,15 +78,20 @@ public class DeclareWarCommand implements CommandExecutor {
         } catch (YouAlreadyHaveMaxAmountOfWarsException e) {
             player.sendMessage(Messages.YOU_ALREADY_HAVE_MAX_AMOUNT_OF_WARS);
             return false;
+        } catch (CantDeclareWarDuringWarTimeException e) {
+            player.sendMessage(Messages.YOU_CANNOT_DECLARE_WAR_WHILE_WARS_ARE_ACTIVE);
+            return false;
+        } catch (YouAlreadyHaveWarWithThisGuildException e) {
+            player.sendMessage(Messages.You_ARE_ALREADY_IN_WAR_WITH_THIS_CLAN);
+            return false;
         }
-//        catch (TheyAlreadyHaveWarException e) {
-//            player.sendMessage(Messages.THIS_CLAN_IS_CURRENTLY_IN_WAR);
-//            return false;
-//        }
 
-        player.sendMessage(Messages.YOU_DECLARED_WAR_TO_CLAN_XXXX + invadedGuild.getUUID());
 
-        invadedGuild.getOnlineMembers().forEach(onlinePlayer -> onlinePlayer.sendMessage(Messages.CLAN_XXXX_DECLARED_WAR_TO_YOU(guild.getTag())));
+        player.sendMessage(Messages.YOU_DECLARED_WAR_TO_CLAN_XXXX + invadedGuild.getTag());
+
+        invadedGuild.getOnlineMembers().forEach(
+                onlinePlayer -> onlinePlayer.sendMessage(Messages.CLAN_XXXX_DECLARED_WAR_TO_YOU(guild.getTag()))
+        );
 
         return false;
     }

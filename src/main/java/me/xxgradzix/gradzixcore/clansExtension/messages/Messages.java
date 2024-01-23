@@ -17,6 +17,8 @@ public class Messages {
     public static final String NOT_ENOUGH_MONEY = ChatColor.RED + "Nie masz wystarczająco pięniędzy aby ulepszyć ten perk";
     public static final String MAX_PERK_LEVEL = ChatColor.RED + "Ten perk jest już na maksymalnym poziomie";
     public static final String YOU_ALREADY_HAVE_MAX_AMOUNT_OF_WARS = ChatColor.RED + "Posiadasz już maksymalną ilość wojen";
+    public static final String YOU_CANNOT_DECLARE_WAR_WHILE_WARS_ARE_ACTIVE = ChatColor.RED + "Nie możesz wypowiedzieć wojny gdy trwają już wojny";
+    public static String You_ARE_ALREADY_IN_WAR_WITH_THIS_CLAN = ChatColor.RED + "Jesteś już w wojnie z tym klanem";
 
     public static final String CLAN_XXXX_DECLARED_WAR_TO_YOU(String clanTag) {
         return ChatColor.GRAY + "Klan " + ChatColor.GREEN + clanTag + ChatColor.GRAY + " wypowiedział wojne Twojemu klanowi";
@@ -34,5 +36,9 @@ public class Messages {
     }
     public static final String YOUR_WAR_WITH_CLAN_XXXX_HAS_ENDED(String enemyTag) {
         return ChatColor.GREEN + "Wojna z klanem " + ChatColor.RED + enemyTag + ChatColor.GREEN + " zakończyła się!";
+    }
+
+    public static String WAR_CANCELED_VIA_GUILD_REMOVAL(String tag) {
+        return ChatColor.GREEN + "Wojna z klanem " + ChatColor.RED + tag + ChatColor.GREEN + " została anulowana gdyż gildia została usunięta!";
     }
 }

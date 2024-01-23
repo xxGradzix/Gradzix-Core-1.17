@@ -1,5 +1,6 @@
 package me.xxgradzix.gradzixcore.clansExtension.listeners;
 
+import me.xxgradzix.gradzixcore.clansExtension.ClansExtension;
 import me.xxgradzix.gradzixcore.clansExtension.managers.WarManager;
 import me.xxgradzix.gradzixcore.clansExtension.messages.Messages;
 import net.dzikoysk.funnyguilds.FunnyGuilds;
@@ -44,9 +45,17 @@ public class GuildRemoveEvent implements Listener {
             Option<Guild> guildOption = funnyGuilds.getGuildManager().findByUuid(enemyGuildId);
             if(guildOption.isPresent()) {
                 Guild enemyGuild = guildOption.get();
-                enemyGuild.getMembers().forEach(member -> {
-                    member.sendMessage(Messages.WAR_ENDED_VIA_GUILD_REMOVAL(guild.getTag()));
-                });
+                
+                if(ClansExtension.ARE_WARS_ACTIVE) {
+                    enemyGuild.getMembers().forEach(member -> {
+                        member.sendMessage(Messages.WAR_ENDED_VIA_GUILD_REMOVAL(guild.getTag()));
+                    });
+                } else {
+                    enemyGuild.getMembers().forEach(member -> {
+                        member.sendMessage(Messages.WAR_CANCELED_VIA_GUILD_REMOVAL(guild.getTag()));
+                    });
+                }
+
             }
 
             warManager.endWar(warEntity);

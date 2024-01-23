@@ -35,17 +35,26 @@ public class WarEntity {
     @DatabaseField(persisterClass = LocalDateTimeClassPersister.class, columnDefinition = "LONGBLOB")
     private LocalDateTime warEnd;
 
-    @DatabaseField(columnName = "warState")
-    private WAR_STATE warState;
+//    @DatabaseField(columnName = "warState")
+//    private WAR_STATE warState;
+    @DatabaseField(columnName = "isActive")
+    private boolean isActive;
 
-    public WarEntity(UUID invaderGuildId, UUID invadedGuildId, int invaderScore, int invadedScore, LocalDateTime warStart, LocalDateTime warEnd, WAR_STATE warState) {
+    @DatabaseField(columnName = "isFinished")
+    private boolean isFinished;
+
+    public WarEntity(UUID invaderGuildId, UUID invadedGuildId, int invaderScore, int invadedScore, LocalDateTime warStart, LocalDateTime warEnd
+//            , WAR_STATE warState
+    ) {
         this.invaderGuildId = invaderGuildId;
         this.invadedGuildId = invadedGuildId;
         this.invaderScore = invaderScore;
         this.invadedScore = invadedScore;
         this.warStart = warStart;
         this.warEnd = warEnd;
-        this.warState = warState;
+        this.isActive = false;
+        this.isFinished = false;
+//        this.warState = warState;
     }
 }
 

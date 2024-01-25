@@ -14,12 +14,47 @@ import java.util.ArrayList;
 
 public class ItemManager {
 
+    public static ItemStack currentWarsButton;
     public static void init() {
+        createCurrentWarsButton();
+    }
+
+    private static void createCurrentWarsButton() {
+        ItemStack item = new ItemStack(Material.IRON_SWORD);
+
+        ItemMeta itemMeta = item.getItemMeta();
+
+        itemMeta.setDisplayName(ChatColor.GRAY + "Aktualne wojny");
+
+        ArrayList<String> lore = new ArrayList<>();
+
+        lore.add("");
+        lore.add(ChatColor.GRAY + "Kliknij aby zobaczyć aktualne wojny");
+        itemMeta.setLore(lore);
+        item.setItemMeta(itemMeta);
+
+        currentWarsButton = item;
+
+    }
+    private static void createFinishedWarsButton() {
+        ItemStack item = new ItemStack(Material.SHIELD);
+
+        ItemMeta itemMeta = item.getItemMeta();
+
+        itemMeta.setDisplayName(ChatColor.GRAY + "Zakończone wojny");
+
+        ArrayList<String> lore = new ArrayList<>();
+
+        lore.add("");
+        lore.add(ChatColor.GRAY + "Kliknij aby zobaczyć zakończone wojny");
+        itemMeta.setLore(lore);
+        item.setItemMeta(itemMeta);
+
+        currentWarsButton = item;
 
     }
 
-
-    public static ItemStack endedWarResult(Long tempId, String userGuildTag, String enemyGuildTag, int hostPoints, int enemyPoints) {
+    public static ItemStack currentWarItem(Long tempId, String userGuildTag, String enemyGuildTag, int hostPoints, int enemyPoints) {
 
         ItemStack item = new ItemStack(Material.END_CRYSTAL);
 
@@ -28,16 +63,14 @@ public class ItemManager {
         String warResult;
 
         if(hostPoints > enemyPoints) {
-            warResult = ChatColor.BOLD + "" + ChatColor.GOLD + "ZWYCIĘSTWO";
+            warResult = ChatColor.BOLD + "" + ChatColor.GOLD + "Wygrywacie";
         } else if (hostPoints < enemyPoints) {
-            warResult = ChatColor.BOLD + "" + ChatColor.DARK_RED + "PRZEGRANA";
+            warResult = ChatColor.BOLD + "" + ChatColor.DARK_RED + "Przegrywacie";
         } else {
-            warResult = ChatColor.BOLD + "" + ChatColor.BLUE + "REMIS";
+            warResult = ChatColor.BOLD + "" + ChatColor.BLUE + "Remis";
         }
 
-        warResult += (" " + tempId);
-
-        itemMeta.setDisplayName(ChatColor.GRAY + "Wojna z " + ChatColor.YELLOW + enemyGuildTag + "!");
+        itemMeta.setDisplayName(warResult);
 
         ArrayList<String> lore = new ArrayList<>();
 
@@ -45,10 +78,56 @@ public class ItemManager {
 
         lore.add(ChatColor.GRAY + "Wojna toczona z " + ChatColor.BOLD + "" + ChatColor.YELLOW + enemyGuildTag);
         lore.add("");
-        lore.add(ChatColor.GRAY + "Status wojny: " + warResult);
-        lore.add("");
+//        lore.add(ChatColor.GRAY + "Status wojny: " + warResult + ChatColor.GRAY + "!");
+//        lore.add("");
         lore.add(ChatColor.GRAY + "Liczba punktów zdobytych przez Twoją gildię: " + ChatColor.DARK_GRAY + hostPoints);
         lore.add(ChatColor.GRAY + "Liczba punktów zdobytych przez gildię wroga: " + ChatColor.DARK_GRAY + enemyPoints);
+        lore.add("");
+//        lore.add(ChatColor.GRAY + "Wojna zakończy się ");
+        itemMeta.setLore(lore);
+        item.setItemMeta(itemMeta);
+
+        return item;
+    }
+    public static ItemStack endedWarResult(Long tempId, String userGuildTag, String enemyGuildTag, int hostPoints, int enemyPoints, boolean isRewardTaken) {
+
+        ItemStack item = new ItemStack(Material.END_CRYSTAL);
+
+        ItemMeta itemMeta = item.getItemMeta();
+
+        String warResult;
+        String rewardStatus;
+
+        if(hostPoints > enemyPoints) {
+            warResult = ChatColor.BOLD + "" + ChatColor.GOLD + "Zwycięstwo";
+            if(!isRewardTaken) {
+                rewardStatus = ChatColor.GRAY + "Kliknij aby odebrać nagrodę";
+            } else {
+                rewardStatus = ChatColor.GRAY + "Nagroda została już odebrana";
+            }
+        } else if (hostPoints < enemyPoints) {
+            warResult = ChatColor.BOLD + "" + ChatColor.DARK_RED + "Przegrana";
+            rewardStatus = ChatColor.GRAY + "Nie otrzymujesz nagrody za przegraną wojnę";
+        } else {
+            warResult = ChatColor.BOLD + "" + ChatColor.BLUE + "Remis";
+            rewardStatus = ChatColor.GRAY + "Nie otrzymujesz nagrody za remis w wojnie";
+        }
+
+        itemMeta.setDisplayName(warResult);
+
+        ArrayList<String> lore = new ArrayList<>();
+
+        lore.add("");
+
+        lore.add(ChatColor.GRAY + "Wojna toczona z " + ChatColor.BOLD + "" + ChatColor.YELLOW + enemyGuildTag);
+        lore.add("");
+//        lore.add(ChatColor.GRAY + "Status wojny: " + warResult + ChatColor.GRAY + "!");
+//        lore.add("");
+        lore.add(ChatColor.GRAY + "Liczba punktów zdobytych przez Twoją gildię: " + ChatColor.DARK_GRAY + hostPoints);
+        lore.add(ChatColor.GRAY + "Liczba punktów zdobytych przez gildię wroga: " + ChatColor.DARK_GRAY + enemyPoints);
+        lore.add("");
+
+        lore.add(rewardStatus);
         lore.add("");
         itemMeta.setLore(lore);
         item.setItemMeta(itemMeta);

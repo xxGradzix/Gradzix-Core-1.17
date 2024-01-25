@@ -86,7 +86,7 @@ public class WarsCommand implements CommandExecutor {
     private void openActiveWarsGui(Player player, Guild userGuild) {
 
         Gui activeWars = Gui.gui()
-                .title(Component.text("Aktywne wojny gildi"))
+                .title(Component.text("Aktywne wojny klanów"))
                 .rows(3)
                 .disableAllInteractions()
                 .create();
@@ -94,7 +94,6 @@ public class WarsCommand implements CommandExecutor {
         GuildManager guildManager = funnyGuilds.getGuildManager();
 
         Set<WarEntity> allActiveWarsByGuildId = warManager.getNonEndedGuildWars(userGuild.getUUID());
-        Bukkit.broadcastMessage("allActiveWarsByGuildId: " + allActiveWarsByGuildId.size());
 
         allActiveWarsByGuildId.forEach(warEntity -> {
             UUID userGuildId = userGuild.getUUID();
@@ -107,7 +106,7 @@ public class WarsCommand implements CommandExecutor {
             if(enemyGuildOption.isEmpty()) return;
             Guild enemyGuild = enemyGuildOption.get();
 
-            ItemStack warItem = ItemManager.endedWarResult(warEntity.getId(), userGuild.getTag(), enemyGuild.getTag(), userGuildPoints, enemyGuildPoints);
+            ItemStack warItem = ItemManager.currentWarItem(warEntity.getId(), userGuild.getTag(), enemyGuild.getTag(), userGuildPoints, enemyGuildPoints);
             activeWars.addItem(new GuiItem(warItem));
         });
 
@@ -116,7 +115,7 @@ public class WarsCommand implements CommandExecutor {
 
     private void openEndedWarsGui(Player player, Guild guild) {
         PaginatedGui endedWars = Gui.paginated()
-                .title(Component.text("Zakończone wojny gildi"))
+                .title(Component.text("Zakończone wojny klanów"))
                 .rows(2)
                 .disableAllInteractions()
                 .create();
@@ -129,7 +128,7 @@ public class WarsCommand implements CommandExecutor {
         List<WarRecordEntity> allEndedWarsByGuildId = warManager.getAllEndedWarsByGuildId(guild.getUUID());
 
         allEndedWarsByGuildId.forEach(warRecord -> {
-            ItemStack warResultItem = ItemManager.endedWarResult(warRecord.getId(), warRecord.getOwnerTag(), warRecord.getEnemyTag(), warRecord.getOwnerScore(), warRecord.getEnemyScore());
+            ItemStack warResultItem = ItemManager.endedWarResult(warRecord.getId(), warRecord.getOwnerTag(), warRecord.getEnemyTag(), warRecord.getOwnerScore(), warRecord.getEnemyScore(), warRecord.isRewardCollected());
             GuiItem warResultGuiItem = new GuiItem(warResultItem);
 
             warResultGuiItem.setAction((a) -> {

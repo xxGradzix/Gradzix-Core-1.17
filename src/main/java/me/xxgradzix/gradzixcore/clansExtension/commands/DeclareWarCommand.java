@@ -11,11 +11,16 @@ import net.dzikoysk.funnyguilds.user.UserManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import panda.std.Option;
 
-public class DeclareWarCommand implements CommandExecutor {
+import java.util.ArrayList;
+import java.util.List;
+
+public class DeclareWarCommand implements CommandExecutor, TabCompleter {
 
     private final FunnyGuilds funnyGuilds;
 
@@ -61,7 +66,7 @@ public class DeclareWarCommand implements CommandExecutor {
         }
         String guildTag = args[0];
 
-        Option<Guild> invadedGuildOption = funnyGuilds.getGuildManager().findByTag(guildTag);
+        Option<Guild> invadedGuildOption = funnyGuilds.getGuildManager().findByTag(guildTag, true);
 
         if(invadedGuildOption.isEmpty()) {
             player.sendMessage(Messages.CLAN_DOES_NOT_EXISTS);
@@ -94,5 +99,19 @@ public class DeclareWarCommand implements CommandExecutor {
         );
 
         return false;
+    }
+
+    @Nullable
+    @Override
+    public List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
+        ArrayList<String> completions = new ArrayList<>();
+
+        if(command.getName().equalsIgnoreCase("wypowiedzwojne")) {
+            if(strings.length == 1) {
+                funnyGuilds.getGuildManager().getGuilds().forEach(guild -> completions.add(guild.getTag()));
+                return completions;
+            }
+        }
+        return null;
     }
 }

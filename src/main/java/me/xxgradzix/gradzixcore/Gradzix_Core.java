@@ -239,6 +239,9 @@ public final class Gradzix_Core extends JavaPlugin {
 
     @Override
     public void onDisable() {
-
+        if (shulkerRework == null) {
+            shulkerRework = new ShulkerRework(this);
+            shulkerRework.onDisable();
+        }
     }
 }

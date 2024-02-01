@@ -7,6 +7,7 @@ public enum PerkType {
     LIFE_STEAL,
     SICKNESS,
 //    ADDITIONAL_HEARTS,
-    SLOWNESS
+    SLOWNESS,
+    PERK_FRAGMENT
 
 }

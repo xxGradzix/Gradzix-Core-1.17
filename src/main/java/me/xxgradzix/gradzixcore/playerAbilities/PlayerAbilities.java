@@ -61,7 +61,7 @@ public class PlayerAbilities {
             throw new RuntimeException(e);
         }
 
-        plugin.getCommand("umiejetnosci").setExecutor(new UmiejetnosciCommand());
+//        plugin.getCommand("umiejetnosci").setExecutor(new UmiejetnosciCommand());
         plugin.getCommand("modyfikatoryumiejetnosci").setExecutor(new AbilitiesModifierCommand());
         plugin.getCommand("giveodlamek").setExecutor(new GiveFragmentCommand());
 

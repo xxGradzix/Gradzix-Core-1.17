@@ -135,11 +135,12 @@ commands:
   incognitoAdmin:
     permission: incognito.addIncognitoAdmin
     description: incognito
+
   givePerkBook:
+    permission: perks.givePerkBook
     description: testuje perksy
 
   perki:
     description: shows player perks levels
     aliases:
       - perks
-

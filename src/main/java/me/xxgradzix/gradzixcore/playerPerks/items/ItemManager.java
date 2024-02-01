@@ -29,6 +29,9 @@ public class ItemManager {
     public static ItemStack slownessPerkBook;
 
     public static ItemStack perkFragment;
+    public static ItemStack perksItemButton;
+    public static ItemStack abilityItemButton;
+
     public static void init() {
 
         createStrengthPerkBook();
@@ -40,6 +43,8 @@ public class ItemManager {
         createSlownessPerkBook();
         createPerkFragment();
 
+        createPerksItemButton();
+        createAbilitiesItemButton();
     }
 
     // strength
@@ -233,6 +238,49 @@ public class ItemManager {
 
         perkFragment = item;
     }
+
+    private static void createPerksItemButton() {
+        ItemStack item = new ItemStack(Material.BOOK, 1);
+
+        ItemMeta meta = item.getItemMeta();
+
+        meta.setDisplayName(ChatColor.LIGHT_PURPLE + "Perki");
+        ArrayList<String> lore = new ArrayList<>();
+
+        lore.add(" ");
+        lore.add("Wybierz aby wylosować księgę perku");
+        lore.add(" ");
+        lore.add(ChatColor.GRAY + "Cena: 50 Fragmentów Perku");
+        lore.add(ChatColor.GRAY + " ");
+
+        meta.addEnchant(Enchantment.LUCK, 1, false);
+        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+
+        meta.setLore(lore);
+        item.setItemMeta(meta);
+
+        perksItemButton = item;
+    }
+    private static void createAbilitiesItemButton() {
+        ItemStack item = new ItemStack(Material.EXPERIENCE_BOTTLE, 1);
+
+        ItemMeta meta = item.getItemMeta();
+
+        meta.setDisplayName(ChatColor.LIGHT_PURPLE + "Umiejętności");
+        ArrayList<String> lore = new ArrayList<>();
+
+        lore.add(ChatColor.GRAY + " ");
+        lore.add(ChatColor.GRAY + "Wybierz aby otworzyć menu umiejętności");
+        lore.add(ChatColor.GRAY + " ");
+
+        meta.addEnchant(Enchantment.LUCK, 1, false);
+        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+
+        meta.setLore(lore);
+        item.setItemMeta(meta);
+
+        abilityItemButton = item;
+    }
     private static String convertColorText(String text) {
         StringBuilder convertedText = new StringBuilder();
         String[] parts = text.split("&#");
@@ -259,8 +307,12 @@ public class ItemManager {
                 return lifeStealPerkBook;
             case SICKNESS:
                 return sicknessPerkBook;
+            case SLOWNESS:
+                return slownessPerkBook;
+            case PERK_FRAGMENT:
+                return perkFragment;
             default:
-                throw new IllegalStateException("Unexpected value: " + perkType);
+                return perkFragment;
         }
     }
 }

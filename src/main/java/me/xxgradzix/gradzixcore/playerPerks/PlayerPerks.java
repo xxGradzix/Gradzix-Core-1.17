@@ -3,9 +3,9 @@ package me.xxgradzix.gradzixcore.playerPerks;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 import me.xxgradzix.gradzixcore.Gradzix_Core;
-import me.xxgradzix.gradzixcore.playerAbilities.data.database.entities.PlayerAbilitiesEntity;
+import me.xxgradzix.gradzixcore.playerPerks.commands.UpgradePerksCommand;
 import me.xxgradzix.gradzixcore.playerPerks.commands.PerksCommand;
-import me.xxgradzix.gradzixcore.playerPerks.commands.TestPerksCommand;
+import me.xxgradzix.gradzixcore.playerPerks.commands.GivePerkBooksCommand;
 import me.xxgradzix.gradzixcore.playerPerks.data.database.entities.PlayerPerksEntity;
 import me.xxgradzix.gradzixcore.playerPerks.data.database.managers.PlayerPerkEntityManager;
 import me.xxgradzix.gradzixcore.playerPerks.items.ItemManager;
@@ -45,8 +45,9 @@ public class PlayerPerks {
         plugin.getServer().getPluginManager().registerEvents(new PotionEffectAfflictionOnDamage(playerPerksEntityManager), plugin);
         plugin.getServer().getPluginManager().registerEvents(new StrengthPerkIncreaseDamage(playerPerksEntityManager), plugin);
 
-        plugin.getCommand("givePerkBook").setExecutor(new TestPerksCommand());
+        plugin.getCommand("givePerkBook").setExecutor(new GivePerkBooksCommand());
         plugin.getCommand("perki").setExecutor(new PerksCommand(playerPerksEntityManager));
+        plugin.getCommand("umiejetnosci").setExecutor(new UpgradePerksCommand(plugin));
 
         ItemManager.init();
     }

@@ -34,7 +34,7 @@ public class IncreasedDropAbilityOnBlockBreak implements Listener {
 
         Block block = event.getBlock();
 
-        if(!isLocationInGeneratorRegion(block.getLocation())) return;
+//        if(!isLocationInGeneratorRegion(block.getLocation())) return;
 
         ItemStack itemInHand = event.getPlayer().getInventory().getItemInMainHand();
 

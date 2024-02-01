@@ -140,6 +140,9 @@ commands:
     permission: perks.givePerkBook
     description: testuje perksy
 
+  gamma:
+    description: gamma
+    permission: gamma.gamma
   perki:
     description: shows player perks levels
     aliases:

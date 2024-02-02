@@ -151,3 +151,6 @@ commands:
   setarmorattribute:
     description: sets armor atribute
     permission: armor.setarmoratribute
+  ustawPerk:
+    description: ustawia poziom perkow
+    permission: perks.ustawPerk

@@ -101,6 +101,36 @@ public class PlayerPerksEntity {
                 break;
         }
     }
+
+    public void setPerkLevel(PerkType perkType, int level) {
+        switch (perkType) {
+            case STRENGTH: {
+                strengthLevel = level;
+            }
+            break;
+            case POISON: {
+                poisonLevel = level;
+            }
+            break;
+            case RESISTANCE: {
+                resistanceLevel = level;
+            }
+            break;
+            case LIFE_STEAL: {
+                lifeStealLevel = level;
+            }
+            break;
+            case SICKNESS: {
+                sicknessLevel = level;
+            }
+            break;
+            case SLOWNESS: {
+                slownessLevel = level;
+
+            }
+            break;
+        }
+    }
     public int getPerkTypeLevel(PerkType perkType) {
         switch (perkType) {
             case STRENGTH: {

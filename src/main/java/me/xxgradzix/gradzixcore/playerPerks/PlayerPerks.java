@@ -3,6 +3,7 @@ package me.xxgradzix.gradzixcore.playerPerks;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 import me.xxgradzix.gradzixcore.Gradzix_Core;
+import me.xxgradzix.gradzixcore.playerPerks.commands.SetPerkLevelCommand;
 import me.xxgradzix.gradzixcore.playerPerks.commands.UpgradePerksCommand;
 import me.xxgradzix.gradzixcore.playerPerks.commands.PerksCommand;
 import me.xxgradzix.gradzixcore.playerPerks.commands.GivePerkBooksCommand;
@@ -46,6 +47,7 @@ public class PlayerPerks {
         plugin.getServer().getPluginManager().registerEvents(new StrengthPerkIncreaseDamage(playerPerksEntityManager), plugin);
 
         plugin.getCommand("givePerkBook").setExecutor(new GivePerkBooksCommand());
+        plugin.getCommand("ustawPerk").setExecutor(new SetPerkLevelCommand(playerPerksEntityManager));
         plugin.getCommand("perki").setExecutor(new PerksCommand(playerPerksEntityManager));
         plugin.getCommand("umiejetnosci").setExecutor(new UpgradePerksCommand(plugin));
 

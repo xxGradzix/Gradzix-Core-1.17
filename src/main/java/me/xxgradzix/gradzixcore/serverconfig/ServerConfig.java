@@ -6,6 +6,7 @@ import lombok.Getter;
 import me.xxgradzix.gradzixcore.Gradzix_Core;
 import me.xxgradzix.gradzixcore.serverconfig.commands.AgePlayItemShopCommand;
 import me.xxgradzix.gradzixcore.serverconfig.commands.BazarWystawCommand;
+import me.xxgradzix.gradzixcore.serverconfig.commands.SetArmorAttributeOnItem;
 import me.xxgradzix.gradzixcore.serverconfig.commands.GammaCommand;
 import me.xxgradzix.gradzixcore.serverconfig.commands.SetDamageCommand;
 import me.xxgradzix.gradzixcore.serverconfig.data.configfiles.ConfigServera;
@@ -62,6 +63,7 @@ public class ServerConfig {
         plugin.getCommand("setserverdamagemultiplier").setExecutor(new SetDamageCommand());
         plugin.getCommand("bazarwystaw").setExecutor(new BazarWystawCommand());
         plugin.getCommand("ais").setExecutor(new AgePlayItemShopCommand());
+        plugin.getCommand("setarmorattribute").setExecutor(new SetArmorAttributeOnItem());
         plugin.getCommand("gamma").setExecutor(new GammaCommand());
 
         ConfigServera.setup();

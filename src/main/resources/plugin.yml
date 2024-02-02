@@ -147,3 +147,7 @@ commands:
     description: shows player perks levels
     aliases:
       - perks
+
+  setarmorattribute:
+    description: sets armor atribute
+    permission: armor.setarmoratribute

@@ -9,7 +9,6 @@ import me.xxgradzix.gradzixcore.itemPickupPriorities.PriorytetyGui.PrioritiesGui
 import me.xxgradzix.gradzixcore.itemPickupPriorities.commands.SetPrioritiesCommand;
 import me.xxgradzix.gradzixcore.itemPickupPriorities.data.database.entities.PickupPrioritiesEntity;
 import me.xxgradzix.gradzixcore.itemPickupPriorities.data.database.managers.PickupPrioritiesEntityManager;
-import me.xxgradzix.gradzixcore.itemPickupPriorities.listeners.GiveArmorBackEvent;
 import me.xxgradzix.gradzixcore.itemPickupPriorities.listeners.GiveItemsBackWithPriorities;
 
 import java.sql.SQLException;
@@ -44,7 +43,6 @@ public final class ItemPickupPriorities {
 
         plugin.getServer().getPluginManager().registerEvents(new PrioritiesGuiClick(), plugin);
         plugin.getServer().getPluginManager().registerEvents(new PrioritiesGuiClose(), plugin);
-//        plugin.getServer().getPluginManager().registerEvents(new GiveArmorBackEvent(), plugin);
         plugin.getServer().getPluginManager().registerEvents(new GiveItemsBackWithPriorities(), plugin);
 
 

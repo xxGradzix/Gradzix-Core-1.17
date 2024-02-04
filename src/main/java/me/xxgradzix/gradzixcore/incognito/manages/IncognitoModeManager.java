@@ -62,12 +62,17 @@ public class IncognitoModeManager {
             incognitoModeEntityManager.createIncognitoModeEntity(incognitoModeEntity);
         }
         incognitoModeEntity.setIncognitoNick(incognitoNick);
+        if(incognitoModeEntity.isIncognitoModeEnabled()) {
+            player.sendMessage("§aWyłaczono tryb incognito!");
+        } else {
+            player.sendMessage("§aWłączono tryb incognito!");
+        }
         incognitoModeEntity.setIncognitoModeEnabled(!incognitoModeEntity.isIncognitoModeEnabled());
         incognitoModeEntityManager.createOrIncognitoModeEntity(incognitoModeEntity);
 
         refreshNick(player);
 
-
+        setPrefix(player);
     }
 
     private static void refreshNick(Player player) { // refreshes nick of given player for all players
@@ -110,6 +115,7 @@ public class IncognitoModeManager {
             InternalStructure struct = optStruct.get();
 
             struct.getChatComponents().write(0, WrappedChatComponent.fromText(incognitoModeEntityById.getIncognitoNick()));//TeamName
+
             struct.getChatComponents().write(2, WrappedChatComponent.fromText(" §8[§7" + player.getName() + "§8]"));//Team Suffix
             struct.getIntegers().write(0, 1); // Bit mask. 0x01: Allow friendly fire, 0x02: can see invisible players on same team.
             struct.getEnumModifier(ChatColor.class, MinecraftReflection.getMinecraftClass("EnumChatFormat")).write(0, ChatColor.AQUA);
@@ -167,7 +173,6 @@ public class IncognitoModeManager {
 
                     newPlayerInfoDataList.add(newPlayerInfoData);
 
-                    setPrefix(player);
                 }
 
                 event.getPacket().getPlayerInfoDataLists().write(0, newPlayerInfoDataList);

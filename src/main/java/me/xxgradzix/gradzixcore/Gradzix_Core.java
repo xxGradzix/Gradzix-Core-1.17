@@ -24,6 +24,7 @@ import me.xxgradzix.gradzixcore.serverconfig.ServerConfig;
 import me.xxgradzix.gradzixcore.shulker.ShulkerRework;
 import me.xxgradzix.gradzixcore.socialMediaRewards.SocialMediaRewards;
 import me.xxgradzix.gradzixcore.upgradeItem.Ulepsz;
+import me.xxgradzix.gradzixcore.webRemover.WebRemover;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
@@ -69,6 +70,8 @@ public final class Gradzix_Core extends JavaPlugin {
     private Incognito incognito;
 
     private PlayerPerks playerPerks;
+
+    private WebRemover webRemover;
 
     private ConnectionSource connectionSource;
 
@@ -210,6 +213,10 @@ public final class Gradzix_Core extends JavaPlugin {
         if (playerPerks == null) {
             playerPerks = new PlayerPerks(this, connectionSource);
             playerPerks.onEnable();
+        }
+        if (webRemover == null) {
+            webRemover = new WebRemover(this, connectionSource);
+            webRemover.onEnable();
         }
     }
     private boolean setupEconomy() {

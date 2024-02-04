@@ -154,3 +154,7 @@ commands:
   ustawPerk:
     description: ustawia poziom perkow
     permission: perks.ustawPerk
+
+  giveusuwacz:
+    description: daje usuwacz
+    permission: webremover.giveusuwacz

@@ -8,6 +8,7 @@ import me.xxgradzix.gradzixcore.playerPerks.messages.Messages;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -53,7 +54,8 @@ public class BookClickIncreaseLevel implements Listener {
         if (item.isSimilar(ItemManager.resistancePerkBook)) return PerkType.RESISTANCE;
         if (item.isSimilar(ItemManager.lifeStealPerkBook)) return PerkType.LIFE_STEAL;
         if (item.isSimilar(ItemManager.sicknessPerkBook)) return PerkType.SICKNESS;
-//        if (item.isSimilar(ItemManager.additionalHeartsPerkBook)) return PerkType.ADDITIONAL_HEARTS;
+        if (item.isSimilar(ItemManager.additionalHeartsPerkBook)) return PerkType.ADDITIONAL_HEARTS;
+        if (item.isSimilar(ItemManager.weaknessPerkBook)) return PerkType.WEAKNESS;
         if (item.isSimilar(ItemManager.slownessPerkBook)) return PerkType.SLOWNESS;
         return null;
     }
@@ -90,12 +92,20 @@ public class BookClickIncreaseLevel implements Listener {
                 player.sendMessage(Messages.UPGRADED_SICKNESS_PERK + ChatColor.DARK_GRAY + " +" + playerPerksEntity.getPerkTypeLevel(PerkType.SICKNESS) + "%");
             }
             break;
-//            case ADDITIONAL_HEARTS: {
-//                playerPerksEntity.increasePerkLevelRandomly(PerkType.ADDITIONAL_HEARTS);
-//                removeItems(player, ItemManager.additionalHeartsPerkBook, 1);
-//                player.sendMessage(Messages.UPGRADED_ADDITIONAL_HEARTS + ChatColor.RED + " +" + playerPerksEntity.getPerkTypeLevel(PerkType.ADDITIONAL_HEARTS) + "<3");
-//            }
-//            break;
+            case ADDITIONAL_HEARTS: {
+                playerPerksEntity.increasePerkLevelRandomly(PerkType.ADDITIONAL_HEARTS);
+                removeItems(player, ItemManager.additionalHeartsPerkBook, 1);
+                player.sendMessage(Messages.UPGRADED_ADDITIONAL_HEARTS + ChatColor.DARK_RED + " +" + playerPerksEntity.getPerkTypeLevel(PerkType.ADDITIONAL_HEARTS) + "<3");
+
+                player.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(playerPerksEntity.getPerkTypeLevel(PerkType.ADDITIONAL_HEARTS) + 20);
+            }
+            break;
+            case WEAKNESS: {
+                playerPerksEntity.increasePerkLevelRandomly(PerkType.WEAKNESS);
+                removeItems(player, ItemManager.weaknessPerkBook, 1);
+                player.sendMessage(Messages.UPGRADED_WEAKNESS_PERK + ChatColor.YELLOW + " +" + playerPerksEntity.getPerkTypeLevel(PerkType.WEAKNESS) + "%");
+            }
+            break;
             case SLOWNESS: {
                 playerPerksEntity.increasePerkLevelRandomly(PerkType.SLOWNESS);
                 removeItems(player, ItemManager.slownessPerkBook, 1);

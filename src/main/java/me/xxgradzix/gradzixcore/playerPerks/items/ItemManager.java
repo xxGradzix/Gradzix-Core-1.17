@@ -25,7 +25,8 @@ public class ItemManager {
     public static ItemStack resistancePerkBook;
     public static ItemStack lifeStealPerkBook;
     public static ItemStack sicknessPerkBook;
-//    public static ItemStack additionalHeartsPerkBook;
+    public static ItemStack additionalHeartsPerkBook;
+    public static ItemStack weaknessPerkBook;
     public static ItemStack slownessPerkBook;
 
     public static ItemStack perkFragment;
@@ -39,10 +40,10 @@ public class ItemManager {
         createResistancePerkBook();
         createLifeStealPerkBook();
         createSicknessPerkBook();
-//        createAdditionalHeartsPerkBook();
+        createAdditionalHeartsPerkBook();
         createSlownessPerkBook();
         createPerkFragment();
-
+        createWeaknessPerkBook();
         createPerksItemButton();
         createAbilitiesItemButton();
     }
@@ -168,30 +169,54 @@ public class ItemManager {
 
         sicknessPerkBook = item;
     }
-//    private static void createAdditionalHeartsPerkBook() {
-//
-//        ItemStack item = new ItemStack(Material.BOOK, 1);
-//
-//        ItemMeta meta = item.getItemMeta();
-//        meta.setDisplayName(ChatColor.RED + "" + ChatColor.BOLD + "Księga Dodatkowych Serc");
-//        ArrayList<String> lore = new ArrayList<>();
-//
-//        lore.add(" ");
-//        lore.add(ChatColor.GRAY + "Użycie tej księgi zwiększy");
-//        lore.add(ChatColor.GRAY + "ilość twoich serc od 0 do 2");
-//        lore.add(ChatColor.GRAY + "serc");
-//        lore.add(ChatColor.GRAY + " ");
-//        lore.add(ChatColor.GRAY + "Kliknij PPM aby użyć");
-//        lore.add(ChatColor.GRAY + " ");
+    private static void createAdditionalHeartsPerkBook() {
 
-//        meta.addEnchant(Enchantment.LUCK, 1, false);
-//        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-//
-//        meta.setLore(lore);
-//        item.setItemMeta(meta);
-//
-//        additionalHeartsPerkBook = item;
-//    }
+        ItemStack item = new ItemStack(Material.BOOK, 1);
+
+        ItemMeta meta = item.getItemMeta();
+        meta.setDisplayName(ChatColor.DARK_RED + "" + ChatColor.BOLD + "Księga Dodatkowych Serc");
+        ArrayList<String> lore = new ArrayList<>();
+
+        lore.add(" ");
+        lore.add(ChatColor.GRAY + "Użycie tej księgi zwiększy");
+        lore.add(ChatColor.GRAY + "ilość twoich serc od 0 do 2");
+        lore.add(ChatColor.GRAY + "serc");
+        lore.add(ChatColor.GRAY + " ");
+        lore.add(ChatColor.GRAY + "Kliknij PPM aby użyć");
+        lore.add(ChatColor.GRAY + " ");
+
+        meta.addEnchant(Enchantment.LUCK, 1, false);
+        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+
+        meta.setLore(lore);
+        item.setItemMeta(meta);
+
+        additionalHeartsPerkBook = item;
+    }
+    private static void createWeaknessPerkBook() {
+
+        ItemStack item = new ItemStack(Material.BOOK, 1);
+
+        ItemMeta meta = item.getItemMeta();
+        meta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.BOLD + "Księga Osłabienia");
+        ArrayList<String> lore = new ArrayList<>();
+
+        lore.add(" ");
+        lore.add(ChatColor.GRAY + "Użycie tej księgi osłabi");
+        lore.add(ChatColor.GRAY + "gracza zwiększając otrzymane");
+        lore.add(ChatColor.GRAY + "przez niego obrażenia");
+        lore.add(ChatColor.GRAY + " ");
+        lore.add(ChatColor.GRAY + "Kliknij PPM aby użyć");
+        lore.add(ChatColor.GRAY + " ");
+
+        meta.addEnchant(Enchantment.LUCK, 1, false);
+        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+
+        meta.setLore(lore);
+        item.setItemMeta(meta);
+
+        weaknessPerkBook = item;
+    }
     private static void createSlownessPerkBook() {
 
         ItemStack item = new ItemStack(Material.BOOK, 1);
@@ -223,12 +248,12 @@ public class ItemManager {
 
         ItemMeta meta = item.getItemMeta();
 
-        meta.setDisplayName(ChatColor.BOLD + "" + convertColorText("&#6de1fbF&#78d8f9r&#83cff8a&#8fc6f6g&#9abcf5m&#a5b3f3e&#b0aaf2n&#bca1f0t &#c798efK&#d28feds&#dd85eci&#e97ceaę&#f473e9g&#ff6ae7i"));
+        meta.setDisplayName(ChatColor.BOLD + "" + convertColorText("&#04aafbF&#0dadfbR&#16b0fbA&#1fb3fbG&#28b6fcM&#31b9fcE&#3abcfcN&#43bffcT &#4cc2fcK&#55c5fcS&#5ec8fdI&#67cbfdĘ&#70cefdG&#79d1fdI"));
         ArrayList<String> lore = new ArrayList<>();
 
         lore.add(" ");
         lore.add(ChatColor.GRAY + "Użyj aby wymienić na magiczne księgi");
-        lore.add(ChatColor.GRAY + " ");
+        lore.add(ChatColor.AQUA + "ᴡᴀʟᴜᴛᴀ ᴘʀᴇᴍɪᴜᴍ, ᴋᴛóʀᴀ sᴌóżʏ ᴅᴏ ᴜʟᴇᴘsᴢᴀɴɪᴀ sᴡᴏᴊᴇᴊ ᴘᴏsᴛᴀᴄɪ");
 
         meta.addEnchant(Enchantment.LUCK, 1, false);
         meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
@@ -309,8 +334,10 @@ public class ItemManager {
                 return sicknessPerkBook;
             case SLOWNESS:
                 return slownessPerkBook;
-            case PERK_FRAGMENT:
-                return perkFragment;
+            case WEAKNESS:
+                return weaknessPerkBook;
+            case ADDITIONAL_HEARTS:
+                return additionalHeartsPerkBook;
             default:
                 return perkFragment;
         }

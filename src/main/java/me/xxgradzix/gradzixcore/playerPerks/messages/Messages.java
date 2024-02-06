@@ -18,6 +18,7 @@ public class Messages {
     public static final String PLAYER_IS_NOT_ONLINE = ChatColor.GRAY + "Gracz nie jest online!";
     public static final String THERE_IS_NO_SUCH_PERK = ChatColor.GRAY + "Nie ma takiego perk'u!";
     public static final String YOU_MUST_SPECIFY_PERK_TYPE = ChatColor.GRAY + "Musisz podać perk!";
+    public static final String UPGRADED_WEAKNESS_PERK = ChatColor.GRAY + "Twój perk osłabienia został ulepszony do poziomu:";
 
     public static void sendPerksLevelsToPlayer(Player player, PlayerPerksEntity playerPerksEntity) {
         player.sendMessage(ChatColor.GRAY + "*----------------------------*");

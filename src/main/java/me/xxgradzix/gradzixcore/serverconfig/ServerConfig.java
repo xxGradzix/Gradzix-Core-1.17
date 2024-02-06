@@ -4,11 +4,7 @@ import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 import lombok.Getter;
 import me.xxgradzix.gradzixcore.Gradzix_Core;
-import me.xxgradzix.gradzixcore.serverconfig.commands.AgePlayItemShopCommand;
-import me.xxgradzix.gradzixcore.serverconfig.commands.BazarWystawCommand;
-import me.xxgradzix.gradzixcore.serverconfig.commands.SetArmorAttributeOnItem;
-import me.xxgradzix.gradzixcore.serverconfig.commands.GammaCommand;
-import me.xxgradzix.gradzixcore.serverconfig.commands.SetDamageCommand;
+import me.xxgradzix.gradzixcore.serverconfig.commands.*;
 import me.xxgradzix.gradzixcore.serverconfig.data.configfiles.ConfigServera;
 import me.xxgradzix.gradzixcore.serverconfig.data.database.entities.ServerConfigEntity;
 import me.xxgradzix.gradzixcore.serverconfig.data.database.managers.ServerConfigEntityManager;
@@ -61,7 +57,7 @@ public class ServerConfig {
         plugin.getServer().getPluginManager().registerEvents(blockPlacingBlocks, plugin);
 
         plugin.getCommand("setserverdamagemultiplier").setExecutor(new SetDamageCommand());
-        plugin.getCommand("bazarwystaw").setExecutor(new BazarWystawCommand());
+        plugin.getCommand("bazar").setExecutor(new ActionHouseRenameCommand());
         plugin.getCommand("ais").setExecutor(new AgePlayItemShopCommand());
         plugin.getCommand("setarmorattribute").setExecutor(new SetArmorAttributeOnItem());
         plugin.getCommand("gamma").setExecutor(new GammaCommand());

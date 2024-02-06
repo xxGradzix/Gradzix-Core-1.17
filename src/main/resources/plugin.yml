@@ -4,7 +4,7 @@ main: me.xxgradzix.gradzixcore.Gradzix_Core
 api-version: 1.17
 authors: [xxGradzix]
 
-depend: [WorldGuard, WorldEdit, ProtocolLib]
+depend: [WorldGuard, WorldEdit, ProtocolLib, DecentHolograms]
 
 commands:
   givezdrapka:
@@ -65,8 +65,8 @@ commands:
     permission: umiejetnosci.resetumiejetnosci
     usage: /resetumiejetnosci
 
-  bazarwystaw:
-    description: ma zastapic /bazar sell
+#  bazarwystaw:
+#    description: ma zastapic /bazar sell
 
   setpriorities:
     description: otwiera gui priorytetow
@@ -158,3 +158,6 @@ commands:
   giveusuwacz:
     description: daje usuwacz
     permission: webremover.giveusuwacz
+
+  bazar:
+    description: otwiera bazar

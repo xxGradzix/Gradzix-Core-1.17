@@ -6,7 +6,8 @@ public enum PerkType {
     RESISTANCE,
     LIFE_STEAL,
     SICKNESS,
-//    ADDITIONAL_HEARTS,
+    ADDITIONAL_HEARTS,
+    WEAKNESS,
     SLOWNESS,
     PERK_FRAGMENT
 

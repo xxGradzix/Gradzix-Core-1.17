@@ -36,6 +36,8 @@ public class PlayerPerksEntity {
 
     /** Represents percent additional hearts per level (every book have a chance to give from zero to two hearts) */
     @DatabaseField
+    private int weaknessLevel;
+    @DatabaseField
     private int additionalHeartsLevel;
 
     /** Represents percent chance of afflicting slowness effect on player */
@@ -85,18 +87,25 @@ public class PlayerPerksEntity {
                     if(sicknessLevel > 50) sicknessLevel = 50;
                 }
                 break;
-//                case ADDITIONAL_HEARTS: {
-//                    if (additionalHeartsLevel >= 8) throw new RuntimeException("Additional hearts level already have maximum value");
-//                    int additionalPercent = generateRandomNumber(0, 2);
-//                    additionalHeartsLevel += additionalPercent;
-//                    if(additionalHeartsLevel > 8) additionalHeartsLevel = 8;
-//                }
-//                break;
+                case ADDITIONAL_HEARTS: {
+                    if (additionalHeartsLevel >= 4) throw new RuntimeException("Additional hearts level already have maximum value");
+                    int additionalHeart = 1;
+                    additionalHeartsLevel += additionalHeart;
+                    if(additionalHeartsLevel > 4) additionalHeartsLevel = 4;
+                }
+                break;
                 case SLOWNESS: {
                     if (slownessLevel >= 50) throw new RuntimeException("Slowness level already have maximum value");
                     int additionalPercent = generateRandomNumber(1, 3);
                     slownessLevel += additionalPercent;
                     if(slownessLevel > 50) slownessLevel = 50;
+                }
+                break;
+                case WEAKNESS: {
+                    if (weaknessLevel >= 10) throw new RuntimeException("Weakness level already have maximum value");
+                    int additionalPercent = generateRandomNumber(1, 2);
+                    weaknessLevel += additionalPercent;
+                    if(weaknessLevel > 10) slownessLevel = 10;
                 }
                 break;
         }
@@ -126,7 +135,14 @@ public class PlayerPerksEntity {
             break;
             case SLOWNESS: {
                 slownessLevel = level;
-
+            }
+            break;
+            case ADDITIONAL_HEARTS: {
+                additionalHeartsLevel = level;
+            }
+            break;
+            case WEAKNESS: {
+                weaknessLevel = level;
             }
             break;
         }
@@ -148,11 +164,14 @@ public class PlayerPerksEntity {
             case SICKNESS: {
                 return sicknessLevel;
             }
-//            case ADDITIONAL_HEARTS: {
-//                return additionalHeartsLevel;
-//            }
+            case ADDITIONAL_HEARTS: {
+                return additionalHeartsLevel;
+            }
             case SLOWNESS: {
                 return slownessLevel;
+            }
+            case WEAKNESS: {
+                return weaknessLevel;
             }
             default: {
                 return 0;

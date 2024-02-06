@@ -12,6 +12,7 @@ import me.xxgradzix.gradzixcore.playerPerks.data.database.managers.PlayerPerkEnt
 import me.xxgradzix.gradzixcore.playerPerks.items.ItemManager;
 import me.xxgradzix.gradzixcore.playerPerks.listeners.BookClickIncreaseLevel;
 import me.xxgradzix.gradzixcore.playerPerks.listeners.PotionEffectAfflictionOnDamage;
+import me.xxgradzix.gradzixcore.playerPerks.listeners.SetHeartsOnJoin;
 import me.xxgradzix.gradzixcore.playerPerks.listeners.StrengthPerkIncreaseDamage;
 
 import java.sql.SQLException;
@@ -45,6 +46,7 @@ public class PlayerPerks {
         plugin.getServer().getPluginManager().registerEvents(new BookClickIncreaseLevel(playerPerksEntityManager), plugin);
         plugin.getServer().getPluginManager().registerEvents(new PotionEffectAfflictionOnDamage(playerPerksEntityManager), plugin);
         plugin.getServer().getPluginManager().registerEvents(new StrengthPerkIncreaseDamage(playerPerksEntityManager), plugin);
+        plugin.getServer().getPluginManager().registerEvents(new SetHeartsOnJoin(playerPerksEntityManager), plugin);
 
         plugin.getCommand("givePerkBook").setExecutor(new GivePerkBooksCommand());
         plugin.getCommand("ustawPerk").setExecutor(new SetPerkLevelCommand(playerPerksEntityManager));

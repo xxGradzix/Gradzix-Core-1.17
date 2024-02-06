@@ -39,22 +39,24 @@ public class GiveItemsBackWithPriorities implements Listener {
 
         User user = userManager.getUser(victim.getUniqueId());
 
+
         if(user == null) return;
 
         double returnPercent = getPlayerReturnPercent(user);
 
         List<ItemStack> inventoryItems = Arrays.asList(victim.getInventory().getContents());
-        List<ItemStack> armorItems = Arrays.asList(victim.getInventory().getArmorContents());
+//        List<ItemStack> armorItems = Arrays.asList(victim.getInventory().getArmorContents());
 
         ArrayList<ItemStack> itemsToReturn = new ArrayList<>();
         itemsToReturn.addAll(inventoryItems);
-        itemsToReturn.addAll(armorItems);
+
 
         itemsToReturn.removeAll(Collections.singleton(null));
 
         int amountOfItemsToReturn = (int) Math.round(itemsToReturn.size() * returnPercent);
 
         ArrayList<ItemStack> itemsForVictim = new ArrayList<>();
+
         for(int i = 0; i < amountOfItemsToReturn; i++) {
             if(itemsToReturn.isEmpty()) break;
             int randomIndex = new Random().nextInt(itemsToReturn.size());
@@ -69,6 +71,7 @@ public class GiveItemsBackWithPriorities implements Listener {
         Player killer = victim.getKiller();
 
         if(killer == null) return;
+        Bukkit.broadcastMessage("death test final");
 
         addItemsWithPriorities(killer, itemsToReturn);
 
@@ -91,6 +94,7 @@ public class GiveItemsBackWithPriorities implements Listener {
         if(returnItems == null) {
             return;
         }
+
         ArrayList<ItemStack> itemsToGive = returnItems.getOrDefault(e.getPlayer().getUniqueId(), new ArrayList<>());
 
         Player player = e.getPlayer();

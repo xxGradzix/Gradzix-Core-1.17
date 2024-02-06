@@ -128,6 +128,15 @@ public class IncognitoModeManager {
         packet.getModifier().write(2, Collections.singletonList(incognitoNick));
 
         for(IncognitoAdminEntity incognitoAdminEntity: incognitoAdminEntityManager.getAllIncognitoAdminEntities()) {
+            Player observer = Bukkit.getPlayer(incognitoAdminEntity.getUuid());
+
+            if(observer == null) continue;
+            if(observer.equals(player)) continue;
+            PlayerConnection connection = ((CraftPlayer) observer).getHandle().b;
+            PlayerConnection connection2 = ((CraftPlayer) player).getHandle().b;
+            if(connection == null) continue;
+            if(connection2 == null) continue;
+
             protocolManager.sendServerPacket(Bukkit.getPlayer(incognitoAdminEntity.getUuid()), packet); // Send the packet to the player = osoba oglądająca
         }
     }

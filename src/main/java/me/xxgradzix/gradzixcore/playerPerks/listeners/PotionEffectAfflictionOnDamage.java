@@ -4,6 +4,7 @@ import me.xxgradzix.gradzixcore.playerPerks.PerkType;
 import me.xxgradzix.gradzixcore.playerPerks.data.database.entities.PlayerPerksEntity;
 import me.xxgradzix.gradzixcore.playerPerks.data.database.managers.PlayerPerkEntityManager;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -33,12 +34,15 @@ public class PotionEffectAfflictionOnDamage implements Listener {
 
         if(shouldApplyEffect(damagerPerks.getPerkTypeLevel(PerkType.POISON))) {
             damaged.addPotionEffect(PotionEffectType.POISON.createEffect(20*3, 1));
+            damager.sendMessage(ChatColor.GREEN + "Udało Ci się nałożyć efekt trucizny na przeciwnika!");
         }
         if(shouldApplyEffect(damagerPerks.getPerkTypeLevel(PerkType.SICKNESS))) {
             damaged.addPotionEffect(PotionEffectType.WEAKNESS.createEffect(20*3, 1));
+            damager.sendMessage(ChatColor.GREEN + "Udało Ci się nałożyć efekt słabości na przeciwnika!");
         }
         if(shouldApplyEffect(damagerPerks.getPerkTypeLevel(PerkType.SLOWNESS))) {
             damaged.addPotionEffect(PotionEffectType.SLOW.createEffect(20*3, 1));
+            damager.sendMessage(ChatColor.GREEN + "Udało Ci się nałożyć efekt spowolnienia na przeciwnika!");
         }
         if(shouldApplyEffect(damagerPerks.getPerkTypeLevel(PerkType.LIFE_STEAL))) {
             double damage = event.getDamage();

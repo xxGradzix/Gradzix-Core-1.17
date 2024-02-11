@@ -2,8 +2,9 @@ package me.xxgradzix.gradzixcore.generators.commands;
 
 
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
-import me.xxgradzix.gradzixcore.generators.data.database.entities.Generator;
-import me.xxgradzix.gradzixcore.generators.data.database.managers.GeneratorManager;
+import me.xxgradzix.gradzixcore.generators.data.database.entities.GeneratorEntity;
+import me.xxgradzix.gradzixcore.generators.data.database.managers.GeneratorEntityManager;
+import me.xxgradzix.gradzixcore.generators.managers.GeneratorManager;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -34,7 +35,7 @@ public class CreateGeneratorCommand implements CommandExecutor {
         }
 
         String name = args[0];
-        int coolDownSeconds = 0;
+        int coolDownSeconds;
         try {
             coolDownSeconds = Integer.parseInt(args[1]);
         } catch (Exception e) {
@@ -59,20 +60,24 @@ public class CreateGeneratorCommand implements CommandExecutor {
                 return false;
             }
         }
-        if(!materials.isEmpty()) {
-            Generator generator = new Generator(name, coolDownSeconds, materials);
-            generatorManager.createGenerator(generator);
-            player.sendMessage("Utworzyles generator "
-                    + generator.getName()
-                    + " z cooldownem "
-                    + generator.getCoolDownSeconds()
-                    + " sekund oraz materialami");
-            for (Material material : generator.getMaterials()) {
-                player.sendMessage(material.name());
-            }
-        } else {
+
+        if(materials.isEmpty()) {
             player.sendMessage("Musisz sprecyzować bloki ktore beda w generatorze");
+            return false;
         }
+        generatorManager.createGenerator(name, coolDownSeconds, materials);
+
+        player.sendMessage("Utworzyles generator "
+                + name
+                + " z cooldownem "
+                + coolDownSeconds
+                + " sekund oraz materialami");
+
+        for (Material material : materials) {
+            player.sendMessage(material.name());
+        }
+
+
         return true;
     }
 

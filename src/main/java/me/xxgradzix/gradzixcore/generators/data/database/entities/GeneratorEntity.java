@@ -12,17 +12,17 @@ import java.util.ArrayList;
 @DatabaseTable(tableName = "gradzixcore_generator")
 @Data
 @NoArgsConstructor
-public class Generator {
-    public Generator(String name, Integer coolDownSeconds, ArrayList<Material> materials) {
+public class GeneratorEntity {
+    public GeneratorEntity(String name, Integer coolDownSeconds, ArrayList<Material> materials) {
         this.name = name;
-        this.coolDownSeconds = coolDownSeconds;
+        setCoolDownSeconds(coolDownSeconds);
         this.materials = materials;
     }
 
-    @DatabaseField(generatedId = true)
-    private Long id;
+//    @DatabaseField(generatedId = true)
+//    private Long id;
 
-    @DatabaseField
+    @DatabaseField(id = true, unique = true, columnName = "generator_name")
     private String name;
 
     @DatabaseField
@@ -30,6 +30,15 @@ public class Generator {
 
     @DatabaseField(persisterClass = MaterialListClassPersister.class, columnDefinition = "LONGBLOB")
     private ArrayList<Material> materials;
+
+    public void setCoolDownSeconds(Integer coolDownSeconds) {
+        if(coolDownSeconds <= 180) {
+            this.coolDownSeconds = 180;
+        } else {
+            this.coolDownSeconds = 300;
+        }
+    }
+
 
 }
 

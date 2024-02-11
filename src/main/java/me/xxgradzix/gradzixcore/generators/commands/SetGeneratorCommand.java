@@ -3,12 +3,12 @@ package me.xxgradzix.gradzixcore.generators.commands;
 import com.sk89q.worldedit.IncompleteRegionException;
 import com.sk89q.worldedit.bukkit.BukkitAdapter;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
-import com.sk89q.worldedit.internal.annotation.Selection;
 import com.sk89q.worldedit.regions.Region;
-import me.xxgradzix.gradzixcore.generators.data.database.entities.Generator;
-import me.xxgradzix.gradzixcore.generators.data.database.entities.GeneratorLocation;
-import me.xxgradzix.gradzixcore.generators.data.database.managers.GeneratorLocationManager;
-import me.xxgradzix.gradzixcore.generators.data.database.managers.GeneratorManager;
+import me.xxgradzix.gradzixcore.generators.data.database.entities.GeneratorEntity;
+import me.xxgradzix.gradzixcore.generators.data.database.entities.GeneratorLocationEntity;
+import me.xxgradzix.gradzixcore.generators.data.database.managers.GeneratorLocationEntityManager;
+import me.xxgradzix.gradzixcore.generators.data.database.managers.GeneratorEntityManager;
+import me.xxgradzix.gradzixcore.generators.managers.GeneratorManager;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.Command;
@@ -28,22 +28,16 @@ import java.util.stream.Collectors;
 public class SetGeneratorCommand implements CommandExecutor, TabCompleter {
 
     private final WorldEditPlugin worldEdit;
-
     private final GeneratorManager generatorManager;
-    private final GeneratorLocationManager generatorLocationManager;
-
-    public SetGeneratorCommand(WorldEditPlugin worldEdit, GeneratorManager generatorManager, GeneratorLocationManager generatorLocationManager) {
+    public SetGeneratorCommand(WorldEditPlugin worldEdit, GeneratorManager generatorManager) {
         this.worldEdit = worldEdit;
         this.generatorManager = generatorManager;
-        this.generatorLocationManager = generatorLocationManager;
     }
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
 
-        if(!(sender instanceof Player)) {
-            return false;
-        }
+        if(!(sender instanceof Player)) return false;
 
         Player player = (Player) sender;
 
@@ -65,19 +59,21 @@ public class SetGeneratorCommand implements CommandExecutor, TabCompleter {
             return false;
         }
 
-        Long userInputId;
+        String userInputName = args[0];
+//        long userInputId;
 
         try {
-            userInputId = Long.parseLong(args[0]);
+//            userInputId = Long.parseLong(args[0]);
         } catch (NumberFormatException e) {
             player.sendMessage("Musisz podać id generatora");
             return false;
         }
 
-        Optional<Generator> optionalGenerator = generatorManager.getGeneratorByID(userInputId);
+//        Optional<GeneratorEntity> optionalGenerator = generatorManager.getGeneratorByID(userInputId);
+        Optional<GeneratorEntity> optionalGenerator = generatorManager.getGeneratorByName(userInputName);
 
         if(!optionalGenerator.isPresent()) {
-            player.sendMessage("Nie ma generatora o id " + userInputId);
+            player.sendMessage("Nie ma generatora o nazwie " + userInputName);
             return false;
         }
 
@@ -94,27 +90,8 @@ public class SetGeneratorCommand implements CommandExecutor, TabCompleter {
         Location minLocation = new Location(world, minX, minY, minZ);
         Location maxLocation = new Location(world, maxX, maxY, maxZ);
 
-        GeneratorLocation generatorLocation = new GeneratorLocation(
-                optionalGenerator.get(),
-                world.getUID(),
-                minLocation,
-                maxLocation
-        );
-        generatorLocationManager.createOrUpdateGeneratorLocation(selection, generatorLocation);
-//        RegionManager regionManager = WorldGuard.getInstance().getPlatform().getRegionContainer().get(selection.getWorld());
-//        ProtectedCuboidRegion newRegion = new ProtectedCuboidRegion("generator",
-//                selection.getMinimumPoint(),
-//                selection.getMaximumPoint());
-//
-//        try {
-//
-//            regionManager.addRegion(newRegion);
-//            regionManager.save();
-//
-//            player.sendMessage("Region został utworzony na podstawie zaznaczenia!");
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+        generatorManager.createGeneratorLocation(selection, optionalGenerator.get(), world.getUID(), minLocation, maxLocation);
+//        generatorLocationManager.createOrUpdateGeneratorLocation(selection, generatorLocation);
 
         return true;
     }
@@ -125,9 +102,8 @@ public class SetGeneratorCommand implements CommandExecutor, TabCompleter {
     public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, @NotNull String[] args) {
         if(command.getName().equalsIgnoreCase("setGenerator") && args.length >= 0){
             if(sender instanceof Player){
-                Player player = (Player) sender;
 
-                List<String> nameList = generatorManager.getAllGenerators().stream().map(Generator::getId).map(Objects::toString).collect(Collectors.toList());
+                List<String> nameList = generatorManager.getAllGenerators().stream().map(GeneratorEntity::getName).collect(Collectors.toList());
 
                 return new ArrayList<>(nameList);
             }

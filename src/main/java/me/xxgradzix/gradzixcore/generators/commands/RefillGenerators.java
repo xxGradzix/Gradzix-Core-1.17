@@ -11,9 +11,10 @@ import com.sk89q.worldedit.regions.Region;
 import com.sk89q.worldedit.world.block.BlockType;
 import com.sk89q.worldedit.world.block.BlockTypes;
 import me.xxgradzix.gradzixcore.Gradzix_Core;
-import me.xxgradzix.gradzixcore.generators.data.database.entities.Generator;
-import me.xxgradzix.gradzixcore.generators.data.database.entities.GeneratorLocation;
-import me.xxgradzix.gradzixcore.generators.data.database.managers.GeneratorLocationManager;
+import me.xxgradzix.gradzixcore.generators.data.database.entities.GeneratorEntity;
+import me.xxgradzix.gradzixcore.generators.data.database.entities.GeneratorLocationEntity;
+import me.xxgradzix.gradzixcore.generators.managers.GeneratorManager;
+import me.xxgradzix.gradzixcore.generators.managers.HologramManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -33,16 +34,14 @@ public class RefillGenerators implements CommandExecutor {
 
     private final Gradzix_Core plugin;
     private final WorldEditPlugin worldEdit;
-    private final GeneratorLocationManager generatorLocationManager;
+    private final GeneratorManager generatorManager;
     private final BukkitScheduler scheduler = Bukkit.getScheduler();
-
-//    private static final HashMap<World, Integer> taskIdByWorld = new HashMap<>();
     private static final ArrayList<Integer> taskIds = new ArrayList<>();
 
-    public RefillGenerators(Gradzix_Core plugin, WorldEditPlugin worldEdit, GeneratorLocationManager generatorLocationManager) {
+    public RefillGenerators(Gradzix_Core plugin, WorldEditPlugin worldEdit, GeneratorManager generatorManager) {
         this.plugin = plugin;
         this.worldEdit = worldEdit;
-        this.generatorLocationManager = generatorLocationManager;
+        this.generatorManager = generatorManager;
         refreshRefilling();
     }
 
@@ -64,20 +63,20 @@ public class RefillGenerators implements CommandExecutor {
 
         for(World world : worlds) {
 
-            List<GeneratorLocation> generators = generatorLocationManager.getAllGeneratorLocationsByWorldUUID(world.getUID());
-            List<GeneratorLocation> threeMinGenerators = generators.stream().filter(generatorLocation -> generatorLocation.getGenerator().getCoolDownSeconds() <=240).collect(Collectors.toList());
-            List<GeneratorLocation> fiveMinGenerators = new ArrayList<>(generators);
+            List<GeneratorLocationEntity> generators = generatorManager.getAllGeneratorLocationsByWorldUUID(world.getUID());
+            List<GeneratorLocationEntity> threeMinGenerators = generators.stream().filter(generatorLocation -> generatorLocation.getGenerator().getCoolDownSeconds() <=240).collect(Collectors.toList());
+            List<GeneratorLocationEntity> fiveMinGenerators = new ArrayList<>(generators);
             fiveMinGenerators.removeAll(threeMinGenerators);
 
             EditSession editSession = createGeneralEditSession(BukkitAdapter.adapt(world));
 
             int threeMinuteTaskId = scheduler.runTaskTimer(plugin, () -> {
 
-                for(GeneratorLocation generator : threeMinGenerators) {
+                for(GeneratorLocationEntity generator : threeMinGenerators) {
 
                     if(generator == null) continue;
 
-                    Generator generatorType = generator.getGenerator();
+                    GeneratorEntity generatorType = generator.getGenerator();
 
                     if(generatorType == null || generatorType.getMaterials().isEmpty()) continue;
 
@@ -87,16 +86,20 @@ public class RefillGenerators implements CommandExecutor {
                     List<Material> materials = generatorType.getMaterials();
 
                     fillTerrain(editSession, world, minLocation, maxLocation, materials);
+
+                    Location location = new Location(world,(minLocation.getX() + maxLocation.getX())/2, maxLocation.getY() + 2, (minLocation.getZ() + maxLocation.getZ())/2);
+                    HologramManager.addHologram(location, generatorType);
                 }
 
             }, 0, 20L * 180L).getTaskId();
+
             int fiveMinuteTaskId = scheduler.runTaskTimer(plugin, () -> {
 
-                for(GeneratorLocation generator : fiveMinGenerators) {
+                for(GeneratorLocationEntity generator : fiveMinGenerators) {
 
                     if(generator == null) continue;
 
-                    Generator generatorType = generator.getGenerator();
+                    GeneratorEntity generatorType = generator.getGenerator();
 
                     if(generatorType == null || generatorType.getMaterials().isEmpty()) continue;
 
@@ -106,13 +109,14 @@ public class RefillGenerators implements CommandExecutor {
                     List<Material> materials = generatorType.getMaterials();
 
                     fillTerrain(editSession, world, minLocation, maxLocation, materials);
+                    Location location = new Location(world,(minLocation.getX() + maxLocation.getX())/2, maxLocation.getY() + 2, (minLocation.getZ() + maxLocation.getZ())/2);
+                    HologramManager.addHologram(location, generatorType);
                 }
 
             }, 0, 20L * 300L).getTaskId();
 
             taskIds.add(threeMinuteTaskId);
             taskIds.add(fiveMinuteTaskId);
-
         }
     }
     private void cancelTask() {

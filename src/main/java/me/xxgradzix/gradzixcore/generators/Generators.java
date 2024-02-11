@@ -9,11 +9,12 @@ import me.xxgradzix.gradzixcore.generators.commands.CreateGeneratorCommand;
 import me.xxgradzix.gradzixcore.generators.commands.RefillGenerators;
 import me.xxgradzix.gradzixcore.generators.commands.SetGeneratorCommand;
 import me.xxgradzix.gradzixcore.generators.commands.ShowGeneratorsCommand;
-import me.xxgradzix.gradzixcore.generators.data.database.entities.Generator;
-import me.xxgradzix.gradzixcore.generators.data.database.entities.GeneratorLocation;
-import me.xxgradzix.gradzixcore.generators.data.database.managers.GeneratorLocationManager;
-import me.xxgradzix.gradzixcore.generators.data.database.managers.GeneratorManager;
+import me.xxgradzix.gradzixcore.generators.data.database.entities.GeneratorEntity;
+import me.xxgradzix.gradzixcore.generators.data.database.entities.GeneratorLocationEntity;
+import me.xxgradzix.gradzixcore.generators.data.database.managers.GeneratorLocationEntityManager;
+import me.xxgradzix.gradzixcore.generators.data.database.managers.GeneratorEntityManager;
 import me.xxgradzix.gradzixcore.generators.items.ItemManager;
+import me.xxgradzix.gradzixcore.generators.managers.GeneratorManager;
 
 import java.sql.SQLException;
 
@@ -24,14 +25,15 @@ public final class Generators {
     private final WorldEditPlugin worldEditPlugin;
     private final WorldGuardPlugin worldGuardPlugin;
 
-    private GeneratorManager generatorManager;
-    private GeneratorLocationManager generatorLocationManager;
+    private GeneratorEntityManager generatorEntityManager;
+    private GeneratorLocationEntityManager generatorLocationEntityManager;
 
+    private GeneratorManager generatorManager;
     public void configureDB() throws SQLException {
-        TableUtils.createTableIfNotExists(connectionSource, Generator.class);
-        TableUtils.createTableIfNotExists(connectionSource, GeneratorLocation.class);
-        generatorManager = new GeneratorManager(connectionSource);
-        generatorLocationManager = new GeneratorLocationManager(connectionSource);
+        TableUtils.createTableIfNotExists(connectionSource, GeneratorEntity.class);
+        TableUtils.createTableIfNotExists(connectionSource, GeneratorLocationEntity.class);
+        generatorEntityManager = new GeneratorEntityManager(connectionSource);
+        generatorLocationEntityManager = new GeneratorLocationEntityManager(connectionSource);
     }
 
     public Generators(Gradzix_Core plugin, WorldEditPlugin worldEditPlugin, WorldGuardPlugin worldGuardPlugin, ConnectionSource connectionSource) {
@@ -47,12 +49,15 @@ public final class Generators {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+        generatorManager = new GeneratorManager(generatorLocationEntityManager, generatorEntityManager);
+
         ItemManager.init();
 //        plugin.getServer().getPluginManager().registerEvents(new PrioritiesGuiClick(), plugin);
-        plugin.getCommand("showGenerators").setExecutor(new ShowGeneratorsCommand(generatorManager, generatorLocationManager));
-        plugin.getCommand("refreshGenerators").setExecutor(new RefillGenerators(plugin, worldEditPlugin, generatorLocationManager));
+        plugin.getCommand("showGenerators").setExecutor(new ShowGeneratorsCommand(generatorManager));
+        plugin.getCommand("refreshGenerators").setExecutor(new RefillGenerators(plugin, worldEditPlugin, generatorManager));
         plugin.getCommand("createGenerator").setExecutor(new CreateGeneratorCommand(worldEditPlugin, generatorManager));
-        plugin.getCommand("setGenerator").setExecutor(new SetGeneratorCommand(worldEditPlugin, generatorManager, generatorLocationManager));
+        plugin.getCommand("setGenerator").setExecutor(new SetGeneratorCommand(worldEditPlugin, generatorManager));
     }
 
     public void onDisable() {

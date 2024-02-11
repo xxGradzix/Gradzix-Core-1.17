@@ -4,11 +4,12 @@ package me.xxgradzix.gradzixcore.generators.commands;
 import dev.triumphteam.gui.builder.item.ItemBuilder;
 import dev.triumphteam.gui.guis.Gui;
 import dev.triumphteam.gui.guis.GuiItem;
-import me.xxgradzix.gradzixcore.generators.data.database.entities.Generator;
-import me.xxgradzix.gradzixcore.generators.data.database.entities.GeneratorLocation;
-import me.xxgradzix.gradzixcore.generators.data.database.managers.GeneratorLocationManager;
-import me.xxgradzix.gradzixcore.generators.data.database.managers.GeneratorManager;
+import me.xxgradzix.gradzixcore.generators.data.database.entities.GeneratorEntity;
+import me.xxgradzix.gradzixcore.generators.data.database.entities.GeneratorLocationEntity;
+import me.xxgradzix.gradzixcore.generators.data.database.managers.GeneratorLocationEntityManager;
+import me.xxgradzix.gradzixcore.generators.data.database.managers.GeneratorEntityManager;
 import me.xxgradzix.gradzixcore.generators.items.ItemManager;
+import me.xxgradzix.gradzixcore.generators.managers.GeneratorManager;
 import net.kyori.adventure.text.Component;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -19,11 +20,12 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 public class ShowGeneratorsCommand implements CommandExecutor {
-    private final GeneratorManager generatorManager;
-    private final GeneratorLocationManager generatorLocationManager;
+//    private final GeneratorEntityManager generatorManager;
+//    private final GeneratorLocationEntityManager generatorLocationManager;
 
-    public ShowGeneratorsCommand(GeneratorManager generatorManager, GeneratorLocationManager generatorLocationManager) {
-        this.generatorLocationManager = generatorLocationManager;
+    private final GeneratorManager generatorManager;
+
+    public ShowGeneratorsCommand(GeneratorManager generatorManager) {
         this.generatorManager = generatorManager;
     }
 
@@ -50,17 +52,16 @@ public class ShowGeneratorsCommand implements CommandExecutor {
                     .disableAllInteractions()
                     .create();
 
-            List<Generator> generatorsList = generatorManager.getAllGenerators();
+            List<GeneratorEntity> generatorsList = generatorManager.getAllGenerators();
 
-            for(Generator generator : generatorsList) {
+            for(GeneratorEntity generator : generatorsList) {
 
                 GuiItem generatorButton = ItemBuilder.from(ItemManager.createGeneratorTypeButton(generator)).asGuiItem();
 
                 generatorButton.setAction(buttonEvent -> {
 
                     if(buttonEvent.isRightClick()) {
-                        generatorManager.deleteGeneratorById(generator.getId());
-                        generatorLocationManager.deleteAllGeneratorLocationsByGenerator(generator);
+                        generatorManager.deleteGeneratorByName(generator.getName());
                         generatorTypesGui.removeItem(generatorButton);
                     }
 
@@ -81,14 +82,14 @@ public class ShowGeneratorsCommand implements CommandExecutor {
                     .disableAllInteractions()
                     .create();
 
-            List<GeneratorLocation> generatorsList = generatorLocationManager.getAllGeneratorLocationsByWorldUUID(player.getWorld().getUID());
+            List<GeneratorLocationEntity> generatorsList = generatorManager.getAllGeneratorLocationsByWorldUUID(player.getWorld().getUID());
 
-            for(GeneratorLocation generator : generatorsList) {
+            for(GeneratorLocationEntity generator : generatorsList) {
                 GuiItem generatorButton = ItemBuilder.from(ItemManager.createGeneratorLocationButton(generator)).asGuiItem();
 
                 generatorButton.setAction(buttonEvent -> {
                     if(buttonEvent.isRightClick()) {
-                        generatorLocationManager.deleteGeneratorLocationById(generator.getId());
+                        generatorManager.deleteGeneratorLocationById(generator.getId());
 
                         generatorLocationsGui.removeItem(generatorButton);
                     }

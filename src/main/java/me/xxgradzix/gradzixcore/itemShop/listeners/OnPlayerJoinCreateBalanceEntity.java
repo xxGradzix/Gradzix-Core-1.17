@@ -1,20 +1,14 @@
 package me.xxgradzix.gradzixcore.itemShop.listeners;
 
 import me.xxgradzix.gradzixcore.Gradzix_Core;
-import me.xxgradzix.gradzixcore.generators.data.database.entities.Generator;
-import me.xxgradzix.gradzixcore.generators.data.database.entities.GeneratorLocation;
 import me.xxgradzix.gradzixcore.itemShop.data.DataManager;
 import me.xxgradzix.gradzixcore.itemShop.data.database.enums.ShopType;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.scheduler.BukkitScheduler;
-
-import java.util.List;
 
 public class OnPlayerJoinCreateBalanceEntity implements Listener {
 

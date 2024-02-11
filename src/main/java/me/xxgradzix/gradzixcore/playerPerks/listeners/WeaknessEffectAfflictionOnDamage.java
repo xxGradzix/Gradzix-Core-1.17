@@ -8,15 +8,18 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitScheduler;
 
 import java.util.*;
 
-public class WeaknessEffectAfflictionOnDamage {
+public class WeaknessEffectAfflictionOnDamage implements Listener {
 
     private static Map<UUID, Integer> weakenedPlayers = new HashMap<>();
+
+    private final BukkitScheduler scheduler = Bukkit.getScheduler();
     private final PlayerPerkEntityManager playerPerksEntityManager;
 
     public WeaknessEffectAfflictionOnDamage(PlayerPerkEntityManager playerPerksEntityManager) {
@@ -38,10 +41,7 @@ public class WeaknessEffectAfflictionOnDamage {
 
         PlayerPerksEntity damagerPerks = playerPerksEntityManager.getPlayerPerksEntityById(damager.getUniqueId());
 
-        if(!shouldApplyEffect(damagerPerks.getPerkTypeLevel(PerkType.POISON))) {
-            return;
-        }
-        BukkitScheduler scheduler = Bukkit.getScheduler();
+        if(!shouldApplyEffect(damagerPerks.getPerkTypeLevel(PerkType.WEAKNESS))) return;
 
         if(weakenedPlayers.containsKey(damaged.getUniqueId())) {
             scheduler.cancelTask(weakenedPlayers.get(damaged.getUniqueId()));

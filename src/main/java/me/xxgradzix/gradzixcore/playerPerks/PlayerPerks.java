@@ -45,6 +45,7 @@ public class PlayerPerks {
         plugin.getServer().getPluginManager().registerEvents(new StrengthPerkIncreaseDamage(playerPerksEntityManager), plugin);
         plugin.getServer().getPluginManager().registerEvents(new SetHeartsOnJoin(playerPerksEntityManager), plugin);
         plugin.getServer().getPluginManager().registerEvents(new DropFragmentOnKill(playerPerksEntityManager), plugin);
+        plugin.getServer().getPluginManager().registerEvents(new WeaknessEffectAfflictionOnDamage(playerPerksEntityManager), plugin);
 
         plugin.getCommand("givePerkBook").setExecutor(new GivePerkBooksCommand());
         plugin.getCommand("ustawPerk").setExecutor(new SetPerkLevelCommand(playerPerksEntityManager));

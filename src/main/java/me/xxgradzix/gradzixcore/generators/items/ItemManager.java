@@ -1,7 +1,7 @@
 package me.xxgradzix.gradzixcore.generators.items;
 
-import me.xxgradzix.gradzixcore.generators.data.database.entities.Generator;
-import me.xxgradzix.gradzixcore.generators.data.database.entities.GeneratorLocation;
+import me.xxgradzix.gradzixcore.generators.data.database.entities.GeneratorEntity;
+import me.xxgradzix.gradzixcore.generators.data.database.entities.GeneratorLocationEntity;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
@@ -57,11 +57,12 @@ public class ItemManager {
 
         generatorLocationsButton = item;
     }
-    public static ItemStack createGeneratorTypeButton(Generator generator) {
+    public static ItemStack createGeneratorTypeButton(GeneratorEntity generator) {
         ItemStack item = new ItemStack(generator.getMaterials().stream().findAny().orElse(Material.BARRIER), 1);
 
         ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(generator.getId() + ": " + generator.getName());
+//        meta.setDisplayName(generator.getId() + ": " + generator.getName());
+        meta.setDisplayName(generator.getName());
         ArrayList<String> lore = new ArrayList<>();
 
         lore.add("§7CoolDown: " + generator.getCoolDownSeconds());
@@ -74,7 +75,7 @@ public class ItemManager {
 
         return item;
     }
-    public static ItemStack createGeneratorLocationButton(GeneratorLocation generator) {
+    public static ItemStack createGeneratorLocationButton(GeneratorLocationEntity generator) {
         ItemStack item = new ItemStack(Material.MAP, 1);
 
         ItemMeta meta = item.getItemMeta();
@@ -82,7 +83,7 @@ public class ItemManager {
 
         ArrayList<String> lore = new ArrayList<>();
 
-        lore.add("§7Rodzaj generatora: (" + generator.getGenerator().getId() + ". " + generator.getGenerator().getName() + ")");
+        lore.add("§7Rodzaj generatora: (" + generator.getGenerator().getName() + ")");
         lore.add("§7Pierwszy naroznik generatora znajduje sie na kordach:");
         lore.add("§Dx: " + generator.getMinLocation().getBlockX() +
                 "y: " + generator.getMinLocation().getBlockY() +

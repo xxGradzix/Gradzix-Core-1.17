@@ -4,34 +4,44 @@ package me.xxgradzix.gradzixcore.generators.data.database.managers;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.support.ConnectionSource;
-import me.xxgradzix.gradzixcore.generators.data.database.entities.Generator;
+import me.xxgradzix.gradzixcore.generators.data.database.entities.GeneratorEntity;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class GeneratorManager {
-    private Dao<Generator, Long> entityDao;
+public class GeneratorEntityManager {
+    private Dao<GeneratorEntity, String> entityDao;
 
-    public GeneratorManager(ConnectionSource connectionSource) {
+    public GeneratorEntityManager(ConnectionSource connectionSource) {
         try {
-            entityDao = DaoManager.createDao(connectionSource, Generator.class);
+            entityDao = DaoManager.createDao(connectionSource, GeneratorEntity.class);
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public void createGenerator(Generator entity) {
+    public void createGenerator(GeneratorEntity entity) {
         try {
             entityDao.create(entity);
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-    public Optional<Generator> getGeneratorByID(Long id) {
+//    public Optional<GeneratorEntity> getGeneratorByID(Long id) {
+//        try {
+//            GeneratorEntity entity = entityDao.queryForId(id);
+//            if(entity == null) return Optional.empty();
+//            return Optional.of(entity);
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//            return Optional.empty();
+//        }
+//    }
+    public Optional<GeneratorEntity> getGeneratorByName(String name) {
         try {
-            Generator entity = entityDao.queryForId(id);
+            GeneratorEntity entity = entityDao.queryForId(name);
             if(entity == null) return Optional.empty();
             return Optional.of(entity);
         } catch (SQLException e) {
@@ -40,7 +50,7 @@ public class GeneratorManager {
         }
     }
 
-    public List<Generator> getAllGenerators() {
+    public List<GeneratorEntity> getAllGenerators() {
         try {
             return entityDao.queryForAll();
         } catch (SQLException e) {
@@ -48,11 +58,12 @@ public class GeneratorManager {
             return new ArrayList<>();
         }
     }
-    public void deleteGeneratorById(Long id) {
+    public void deleteGeneratorById(String id) {
         try {
             entityDao.deleteById(id);
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
 }

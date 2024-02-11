@@ -12,10 +12,10 @@ import java.util.UUID;
 @DatabaseTable(tableName = "gradzixcore_generator_location")
 @Data
 @NoArgsConstructor
-public class GeneratorLocation {
+public class GeneratorLocationEntity {
 
 
-    public GeneratorLocation(Generator generator, UUID worldUUID, Location minLocation, Location maxLocation) {
+    public GeneratorLocationEntity(GeneratorEntity generator, UUID worldUUID, Location minLocation, Location maxLocation) {
         this.generator = generator;
         this.worldUUID = worldUUID;
         this.minLocation = minLocation;
@@ -26,7 +26,7 @@ public class GeneratorLocation {
     private Long id;
 
     @DatabaseField(foreign = true, foreignAutoRefresh = true, columnName = "generator_id")
-    private Generator generator;
+    private GeneratorEntity generator;
 
     @DatabaseField
     private UUID worldUUID;

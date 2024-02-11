@@ -6,6 +6,7 @@ import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import lombok.Getter;
 import me.xxgradzix.gradzixcore.adminPanel.Panel;
+import me.xxgradzix.gradzixcore.afkRegion.AfkRegion;
 import me.xxgradzix.gradzixcore.binds.Binds;
 import me.xxgradzix.gradzixcore.chatOptions.ChatOptions;
 import me.xxgradzix.gradzixcore.events.Events;
@@ -72,6 +73,7 @@ public final class Gradzix_Core extends JavaPlugin {
     private PlayerPerks playerPerks;
 
     private WebRemover webRemover;
+    private AfkRegion afkRegion;
 
     private ConnectionSource connectionSource;
 
@@ -218,6 +220,10 @@ public final class Gradzix_Core extends JavaPlugin {
             webRemover = new WebRemover(this, connectionSource);
             webRemover.onEnable();
         }
+        if (afkRegion == null) {
+            afkRegion = new AfkRegion(this, connectionSource);
+            afkRegion.onEnable();
+        }
     }
     private boolean setupEconomy() {
         if (getServer().getPluginManager().getPlugin("Vault") == null) {
@@ -238,7 +244,7 @@ public final class Gradzix_Core extends JavaPlugin {
         if (p instanceof WorldEditPlugin) return (WorldEditPlugin) p;
         else return null;
     }
-    private WorldGuardPlugin getWorldGuard() {
+    public static WorldGuardPlugin getWorldGuard() {
         Plugin p = Bukkit.getServer().getPluginManager().getPlugin("WorldGuard");
         if (p instanceof WorldGuardPlugin) return (WorldGuardPlugin) p;
         else return null;

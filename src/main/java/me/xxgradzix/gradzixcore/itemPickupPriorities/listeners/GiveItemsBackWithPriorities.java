@@ -71,7 +71,6 @@ public class GiveItemsBackWithPriorities implements Listener {
         Player killer = victim.getKiller();
 
         if(killer == null) return;
-        Bukkit.broadcastMessage("death test final");
 
         addItemsWithPriorities(killer, itemsToReturn);
 

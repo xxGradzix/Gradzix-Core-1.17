@@ -18,14 +18,6 @@ import org.bukkit.event.player.PlayerInteractEvent;
 public class BossDamageUpdateBossBar implements Listener {
 
     @EventHandler
-    public void onBossClick(EntityInteractEvent event) {
-        if(!Events.isBossSpawned()) return;
-
-        if(BossManager.isEntityBoss(event.getEntity())) {
-            Bukkit.broadcastMessage("Boss health: " + ((int) BossManager.getBoss().getHealth()));
-        }
-    }
-    @EventHandler
     public void onEntityDamage(EntityDamageEvent event) {
         if(!Events.isBossSpawned()) return;
 

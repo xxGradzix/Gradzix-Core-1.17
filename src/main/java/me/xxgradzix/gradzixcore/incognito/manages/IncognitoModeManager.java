@@ -12,6 +12,8 @@ import com.comphenix.protocol.wrappers.EnumWrappers;
 import com.comphenix.protocol.wrappers.PlayerInfoData;
 import com.comphenix.protocol.wrappers.WrappedChatComponent;
 import com.comphenix.protocol.wrappers.WrappedGameProfile;
+import com.mojang.authlib.GameProfile;
+import com.mojang.authlib.properties.Property;
 import me.xxgradzix.gradzixcore.Gradzix_Core;
 import me.xxgradzix.gradzixcore.incognito.data.database.entities.IncognitoAdminEntity;
 import me.xxgradzix.gradzixcore.incognito.data.database.entities.IncognitoModeEntity;
@@ -73,6 +75,8 @@ public class IncognitoModeManager {
         refreshNick(player);
 
         setPrefix(player);
+
+        changeSkin(player);
     }
 
     private static void refreshNick(Player player) { // refreshes nick of given player for all players
@@ -139,6 +143,26 @@ public class IncognitoModeManager {
 
             protocolManager.sendServerPacket(Bukkit.getPlayer(incognitoAdminEntity.getUuid()), packet); // Send the packet to the player = osoba oglądająca
         }
+    }
+    private static void changeSkin(Player player) {
+
+        GameProfile profile = ((CraftPlayer) player).getProfile();
+        PlayerConnection connection = ((CraftPlayer) player).getHandle().b;
+
+        connection.sendPacket(new PacketPlayOutPlayerInfo(
+                PacketPlayOutPlayerInfo.EnumPlayerInfoAction.b, ((CraftPlayer) player).getHandle()));
+
+        profile.getProperties().removeAll("textures");
+        profile.getProperties().put("textures", getSkin());
+
+        connection.sendPacket(new PacketPlayOutPlayerInfo(
+                PacketPlayOutPlayerInfo.EnumPlayerInfoAction.a, ((CraftPlayer) player).getHandle()));
+
+
+
+    }
+    private static Property getSkin() {
+        return new Property("textures", generateRandomString(320));
     }
 
     private static void changeNicks() {

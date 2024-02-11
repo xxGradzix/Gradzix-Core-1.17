@@ -36,10 +36,10 @@ public class PotionEffectAfflictionOnDamage implements Listener {
             damaged.addPotionEffect(PotionEffectType.POISON.createEffect(20*3, 1));
             damager.sendMessage(ChatColor.GREEN + "Udało Ci się nałożyć efekt trucizny na przeciwnika!");
         }
-        if(shouldApplyEffect(damagerPerks.getPerkTypeLevel(PerkType.SICKNESS))) {
-            damaged.addPotionEffect(PotionEffectType.WEAKNESS.createEffect(20*3, 1));
-            damager.sendMessage(ChatColor.GREEN + "Udało Ci się nałożyć efekt słabości na przeciwnika!");
-        }
+//        if(shouldApplyEffect(damagerPerks.getPerkTypeLevel(PerkType.SICKNESS))) {
+//            damaged.addPotionEffect(PotionEffectType.WEAKNESS.createEffect(20*3, 1));
+//            damager.sendMessage(ChatColor.GREEN + "Udało Ci się nałożyć efekt słabości na przeciwnika!");
+//        }
         if(shouldApplyEffect(damagerPerks.getPerkTypeLevel(PerkType.SLOWNESS))) {
             damaged.addPotionEffect(PotionEffectType.SLOW.createEffect(20*3, 1));
             damager.sendMessage(ChatColor.GREEN + "Udało Ci się nałożyć efekt spowolnienia na przeciwnika!");

@@ -24,10 +24,13 @@ public class ItemManager {
     public static ItemStack poisonPerkBook;
     public static ItemStack resistancePerkBook;
     public static ItemStack lifeStealPerkBook;
-    public static ItemStack sicknessPerkBook;
+//    public static ItemStack sicknessPerkBook;
     public static ItemStack additionalHeartsPerkBook;
     public static ItemStack weaknessPerkBook;
+//    public static ItemStack sicknessPerkBook;
+//    public static ItemStack additionalHeartsPerkBook;
     public static ItemStack slownessPerkBook;
+    public static ItemStack perlFragmentDrop;
 
     public static ItemStack perkFragment;
     public static ItemStack perksItemButton;
@@ -39,13 +42,15 @@ public class ItemManager {
         createPoisonPerkBook();
         createResistancePerkBook();
         createLifeStealPerkBook();
-        createSicknessPerkBook();
+//        createSicknessPerkBook();
         createAdditionalHeartsPerkBook();
         createSlownessPerkBook();
         createPerkFragment();
-        createWeaknessPerkBook();
+        createPerkFragmentDropBook();
+
         createPerksItemButton();
         createAbilitiesItemButton();
+
     }
 
     // strength
@@ -145,30 +150,30 @@ public class ItemManager {
 
         lifeStealPerkBook = item;
     }
-    private static void createSicknessPerkBook() {
-
-        ItemStack item = new ItemStack(Material.BOOK, 1);
-
-        ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(ChatColor.DARK_GRAY + "" + ChatColor.BOLD + "Księga Słabości");
-        ArrayList<String> lore = new ArrayList<>();
-
-        lore.add(" ");
-        lore.add(ChatColor.GRAY + "Użycie tej księgi zwiększy");
-        lore.add(ChatColor.GRAY + "twoją szanse na nałożenie");
-        lore.add(ChatColor.GRAY + "efektu słabości na wroga od 1 do 3%");
-        lore.add(ChatColor.GRAY + " ");
-        lore.add(ChatColor.GRAY + "Kliknij PPM aby użyć");
-        lore.add(ChatColor.GRAY + " ");
-
-        meta.addEnchant(Enchantment.LUCK, 1, false);
-        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-
-        meta.setLore(lore);
-        item.setItemMeta(meta);
-
-        sicknessPerkBook = item;
-    }
+//    private static void createSicknessPerkBook() {
+//
+//        ItemStack item = new ItemStack(Material.BOOK, 1);
+//
+//        ItemMeta meta = item.getItemMeta();
+//        meta.setDisplayName(ChatColor.DARK_GRAY + "" + ChatColor.BOLD + "Księga Słabości");
+//        ArrayList<String> lore = new ArrayList<>();
+//
+//        lore.add(" ");
+//        lore.add(ChatColor.GRAY + "Użycie tej księgi zwiększy");
+//        lore.add(ChatColor.GRAY + "twoją szanse na nałożenie");
+//        lore.add(ChatColor.GRAY + "efektu słabości na wroga od 1 do 3%");
+//        lore.add(ChatColor.GRAY + " ");
+//        lore.add(ChatColor.GRAY + "Kliknij PPM aby użyć");
+//        lore.add(ChatColor.GRAY + " ");
+//
+//        meta.addEnchant(Enchantment.LUCK, 1, false);
+//        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+//
+//        meta.setLore(lore);
+//        item.setItemMeta(meta);
+//
+//        sicknessPerkBook = item;
+//    }
     private static void createAdditionalHeartsPerkBook() {
 
         ItemStack item = new ItemStack(Material.BOOK, 1);
@@ -187,6 +192,45 @@ public class ItemManager {
 
         meta.addEnchant(Enchantment.LUCK, 1, false);
         meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+//    private static void createSicknessPerkBook() {
+//
+//        ItemStack item = new ItemStack(Material.BOOK, 1);
+//
+//        ItemMeta meta = item.getItemMeta();
+//        meta.setDisplayName(ChatColor.DARK_GRAY + "" + ChatColor.BOLD + "Księga Słabości");
+//        ArrayList<String> lore = new ArrayList<>();
+//
+//        lore.add(" ");
+//        lore.add(ChatColor.GRAY + "Użycie tej księgi zwiększy");
+//        lore.add(ChatColor.GRAY + "twoją szanse na nałożenie");
+//        lore.add(ChatColor.GRAY + "efektu słabości na wroga od 1 do 3%");
+//        lore.add(ChatColor.GRAY + " ");
+//        lore.add(ChatColor.GRAY + "Kliknij PPM aby użyć");
+//        lore.add(ChatColor.GRAY + " ");
+//
+//        meta.addEnchant(Enchantment.LUCK, 1, false);
+//        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+//
+//        meta.setLore(lore);
+//        item.setItemMeta(meta);
+//
+//        sicknessPerkBook = item;
+//    }
+//    private static void createAdditionalHeartsPerkBook() {
+//
+//        ItemStack item = new ItemStack(Material.BOOK, 1);
+//
+//        ItemMeta meta = item.getItemMeta();
+//        meta.setDisplayName(ChatColor.RED + "" + ChatColor.BOLD + "Księga Dodatkowych Serc");
+//        ArrayList<String> lore = new ArrayList<>();
+//
+//        lore.add(" ");
+//        lore.add(ChatColor.GRAY + "Użycie tej księgi zwiększy");
+//        lore.add(ChatColor.GRAY + "ilość twoich serc od 0 do 2");
+//        lore.add(ChatColor.GRAY + "serc");
+//        lore.add(ChatColor.GRAY + " ");
+//        lore.add(ChatColor.GRAY + "Kliknij PPM aby użyć");
+//        lore.add(ChatColor.GRAY + " ");
 
         meta.setLore(lore);
         item.setItemMeta(meta);
@@ -205,6 +249,30 @@ public class ItemManager {
         lore.add(ChatColor.GRAY + "Użycie tej księgi osłabi");
         lore.add(ChatColor.GRAY + "gracza zwiększając otrzymane");
         lore.add(ChatColor.GRAY + "przez niego obrażenia");
+        lore.add(ChatColor.GRAY + " ");
+        lore.add(ChatColor.GRAY + "Kliknij PPM aby użyć");
+        lore.add(ChatColor.GRAY + " ");
+
+        meta.addEnchant(Enchantment.LUCK, 1, false);
+        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+
+        meta.setLore(lore);
+        item.setItemMeta(meta);
+
+        weaknessPerkBook = item;
+    }
+    private static void createPerkFragmentDropBook() {
+
+        ItemStack item = new ItemStack(Material.BOOK, 1);
+
+        ItemMeta meta = item.getItemMeta();
+        meta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.BOLD + "Księga Dropu Fragmentów Perku");
+        ArrayList<String> lore = new ArrayList<>();
+
+        lore.add(" ");
+        lore.add(ChatColor.GRAY + "Użycie tej księgi zwiększy");
+        lore.add(ChatColor.GRAY + "szanse na otrzymanie fragmentu");
+        lore.add(ChatColor.GRAY + "perku po zabiciu gracza od 1 do 3%");
         lore.add(ChatColor.GRAY + " ");
         lore.add(ChatColor.GRAY + "Kliknij PPM aby użyć");
         lore.add(ChatColor.GRAY + " ");
@@ -330,10 +398,12 @@ public class ItemManager {
                 return resistancePerkBook;
             case LIFE_STEAL:
                 return lifeStealPerkBook;
-            case SICKNESS:
-                return sicknessPerkBook;
-            case SLOWNESS:
-                return slownessPerkBook;
+//            case SICKNESS:
+//                return sicknessPerkBook;
+//            case SLOWNESS:
+//                return slownessPerkBook;
+            case PERK_FRAGMENT_DROP:
+                return perkFragment;
             case WEAKNESS:
                 return weaknessPerkBook;
             case ADDITIONAL_HEARTS:

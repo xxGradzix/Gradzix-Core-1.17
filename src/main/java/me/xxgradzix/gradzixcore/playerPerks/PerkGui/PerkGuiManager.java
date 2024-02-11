@@ -43,13 +43,17 @@ public class PerkGuiManager {
         perkBooks.add(me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.slownessPerkBook);
         perkBooks.add(me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.resistancePerkBook);
         perkBooks.add(me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.lifeStealPerkBook);
-        perkBooks.add(me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.sicknessPerkBook);
+        perkBooks.add(me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.weaknessPerkBook);
+        perkBooks.add(me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.perlFragmentDrop);
+//        perkBooks.add(me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.sicknessPerkBook);
         perkBooks.add(me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.poisonPerkBook);
         perkBooks.add(me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.strengthPerkBook);
         perkBooks.add(me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.slownessPerkBook);
         perkBooks.add(me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.resistancePerkBook);
         perkBooks.add(me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.lifeStealPerkBook);
-        perkBooks.add(me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.sicknessPerkBook);
+        perkBooks.add(me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.weaknessPerkBook);
+        perkBooks.add(me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.perlFragmentDrop);
+//        perkBooks.add(me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.sicknessPerkBook);
 
         ScrollItems scrollItems;
         scrollItems = new ScrollItems(perkBooks, player, gui, 2);

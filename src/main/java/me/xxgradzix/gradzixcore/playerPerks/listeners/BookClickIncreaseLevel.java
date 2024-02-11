@@ -53,10 +53,11 @@ public class BookClickIncreaseLevel implements Listener {
         if (item.isSimilar(ItemManager.poisonPerkBook)) return PerkType.POISON;
         if (item.isSimilar(ItemManager.resistancePerkBook)) return PerkType.RESISTANCE;
         if (item.isSimilar(ItemManager.lifeStealPerkBook)) return PerkType.LIFE_STEAL;
-        if (item.isSimilar(ItemManager.sicknessPerkBook)) return PerkType.SICKNESS;
+//        if (item.isSimilar(ItemManager.sicknessPerkBook)) return PerkType.SICKNESS;
         if (item.isSimilar(ItemManager.additionalHeartsPerkBook)) return PerkType.ADDITIONAL_HEARTS;
         if (item.isSimilar(ItemManager.weaknessPerkBook)) return PerkType.WEAKNESS;
         if (item.isSimilar(ItemManager.slownessPerkBook)) return PerkType.SLOWNESS;
+        if (item.isSimilar(ItemManager.perlFragmentDrop)) return PerkType.PERK_FRAGMENT_DROP;
         return null;
     }
     private void upgradePerk(Player player, PerkType perkType) throws RuntimeException {
@@ -86,12 +87,12 @@ public class BookClickIncreaseLevel implements Listener {
                 player.sendMessage(Messages.UPGRADED_LIFE_STEAL_PERK + ChatColor.DARK_PURPLE + " +" + playerPerksEntity.getPerkTypeLevel(PerkType.LIFE_STEAL) + "%");
             }
             break;
-            case SICKNESS: {
-                playerPerksEntity.increasePerkLevelRandomly(PerkType.SICKNESS);
-                removeItems(player, ItemManager.sicknessPerkBook, 1);
-                player.sendMessage(Messages.UPGRADED_SICKNESS_PERK + ChatColor.DARK_GRAY + " +" + playerPerksEntity.getPerkTypeLevel(PerkType.SICKNESS) + "%");
-            }
-            break;
+//            case SICKNESS: {
+//                playerPerksEntity.increasePerkLevelRandomly(PerkType.SICKNESS);
+//                removeItems(player, ItemManager.sicknessPerkBook, 1);
+//                player.sendMessage(Messages.UPGRADED_SICKNESS_PERK + ChatColor.DARK_GRAY + " +" + playerPerksEntity.getPerkTypeLevel(PerkType.SICKNESS) + "%");
+//            }
+//            break;
             case ADDITIONAL_HEARTS: {
                 playerPerksEntity.increasePerkLevelRandomly(PerkType.ADDITIONAL_HEARTS);
                 removeItems(player, ItemManager.additionalHeartsPerkBook, 1);
@@ -110,6 +111,12 @@ public class BookClickIncreaseLevel implements Listener {
                 playerPerksEntity.increasePerkLevelRandomly(PerkType.SLOWNESS);
                 removeItems(player, ItemManager.slownessPerkBook, 1);
                 player.sendMessage(Messages.UPGRADED_SLOWNESS_PERK + ChatColor.BLUE + " +" + playerPerksEntity.getPerkTypeLevel(PerkType.SLOWNESS) + "%");
+            }
+            break;
+            case PERK_FRAGMENT_DROP: {
+                playerPerksEntity.increasePerkLevelRandomly(PerkType.PERK_FRAGMENT_DROP);
+                removeItems(player, ItemManager.perlFragmentDrop, 1);
+                player.sendMessage(Messages.UPGRADED_FRAGMENT_DROP_PERK + ChatColor.BLUE + " +" + playerPerksEntity.getPerkTypeLevel(PerkType.PERK_FRAGMENT_DROP) + "%");
             }
             break;
 

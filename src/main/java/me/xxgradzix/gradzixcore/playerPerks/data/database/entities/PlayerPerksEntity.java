@@ -30,9 +30,9 @@ public class PlayerPerksEntity {
     @DatabaseField
     private int lifeStealLevel;
 
-    /** Represents percent chance of afflicting sickness effect on player*/
-    @DatabaseField
-    private int sicknessLevel;
+//    /** Represents percent chance of afflicting sickness effect on player*/
+//    @DatabaseField
+//    private int sicknessLevel;
 
     /** Represents percent additional hearts per level (every book have a chance to give from zero to two hearts) */
     @DatabaseField
@@ -43,6 +43,10 @@ public class PlayerPerksEntity {
     /** Represents percent chance of afflicting slowness effect on player */
     @DatabaseField
     private int slownessLevel;
+
+    /** Represents percent chance of getting perk fragment after kill */
+    @DatabaseField
+    private int fragmentDropLevel;
 
     public PlayerPerksEntity() {
     }
@@ -80,13 +84,13 @@ public class PlayerPerksEntity {
                     if(lifeStealLevel > 30) lifeStealLevel = 30;
                 }
                 break;
-                case SICKNESS: {
-                    if (sicknessLevel >= 50) throw new RuntimeException("Sickness level already have maximum value");
-                    int additionalPercent = generateRandomNumber(1, 3);
-                    sicknessLevel += additionalPercent;
-                    if(sicknessLevel > 50) sicknessLevel = 50;
-                }
-                break;
+//                case SICKNESS: {
+//                    if (sicknessLevel >= 50) throw new RuntimeException("Sickness level already have maximum value");
+//                    int additionalPercent = generateRandomNumber(1, 3);
+//                    sicknessLevel += additionalPercent;
+//                    if(sicknessLevel > 50) sicknessLevel = 50;
+//                }
+//                break;
                 case ADDITIONAL_HEARTS: {
                     if (additionalHeartsLevel >= 4) throw new RuntimeException("Additional hearts level already have maximum value");
                     int additionalHeart = 1;
@@ -106,6 +110,12 @@ public class PlayerPerksEntity {
                     int additionalPercent = generateRandomNumber(1, 2);
                     weaknessLevel += additionalPercent;
                     if(weaknessLevel > 10) slownessLevel = 10;
+                }
+                case PERK_FRAGMENT_DROP: {
+                    if (fragmentDropLevel >= 20) throw new RuntimeException("Fragment drop level already have maximum value");
+                    int additionalPercent = generateRandomNumber(1, 3);
+                    fragmentDropLevel += additionalPercent;
+                    if(fragmentDropLevel > 20) fragmentDropLevel = 20;
                 }
                 break;
         }
@@ -129,10 +139,10 @@ public class PlayerPerksEntity {
                 lifeStealLevel = level;
             }
             break;
-            case SICKNESS: {
-                sicknessLevel = level;
-            }
-            break;
+//            case SICKNESS: {
+//                sicknessLevel = level;
+//            }
+//            break;
             case SLOWNESS: {
                 slownessLevel = level;
             }
@@ -143,6 +153,10 @@ public class PlayerPerksEntity {
             break;
             case WEAKNESS: {
                 weaknessLevel = level;
+            }
+            break;
+            case PERK_FRAGMENT_DROP: {
+                fragmentDropLevel = level;
             }
             break;
         }
@@ -161,9 +175,9 @@ public class PlayerPerksEntity {
             case LIFE_STEAL: {
                 return lifeStealLevel;
             }
-            case SICKNESS: {
-                return sicknessLevel;
-            }
+//            case SICKNESS: {
+//                return sicknessLevel;
+//            }
             case ADDITIONAL_HEARTS: {
                 return additionalHeartsLevel;
             }
@@ -172,6 +186,9 @@ public class PlayerPerksEntity {
             }
             case WEAKNESS: {
                 return weaknessLevel;
+            }
+            case PERK_FRAGMENT_DROP: {
+                return fragmentDropLevel;
             }
             default: {
                 return 0;

@@ -15,12 +15,9 @@ public class BlockBreakExchange implements Listener {
     public void onBlockBreak(BlockBreakEvent event) {
         Player player = event.getPlayer();
 
-
         if (!DataManager.getAutoExchangeStatus(player)) return;
 
-
         Map<ItemStack, ItemStack> itemMap = DataManager.getAutoExchangeItems();
-
 
         for(ItemStack item : itemMap.keySet()) {
 
@@ -38,7 +35,6 @@ public class BlockBreakExchange implements Listener {
             final int priceToPay = (rewardLoops * item.getAmount());
 
             final int valueAmount = (rewardLoops * itemValue.getAmount());
-
 
             removeItems(player, item, priceToPay);
             ItemStack reward = itemValue.clone();

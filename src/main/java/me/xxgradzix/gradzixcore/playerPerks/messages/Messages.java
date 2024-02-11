@@ -19,6 +19,7 @@ public class Messages {
     public static final String THERE_IS_NO_SUCH_PERK = ChatColor.GRAY + "Nie ma takiego perk'u!";
     public static final String YOU_MUST_SPECIFY_PERK_TYPE = ChatColor.GRAY + "Musisz podać perk!";
     public static final String UPGRADED_WEAKNESS_PERK = ChatColor.GRAY + "Twój perk osłabienia został ulepszony do poziomu:";
+    public static final String UPGRADED_FRAGMENT_DROP_PERK = ChatColor.GRAY + "Twój perk dropu fragmentów został ulepszony do poziomu:"; 
 
     public static void sendPerksLevelsToPlayer(Player player, PlayerPerksEntity playerPerksEntity) {
         player.sendMessage(ChatColor.GRAY + "*----------------------------*");
@@ -27,7 +28,7 @@ public class Messages {
         player.sendMessage(ChatColor.GREEN + "Perk Trucizny: +" + playerPerksEntity.getPerkTypeLevel(PerkType.POISON) + "% szansy na zatrucie");
         player.sendMessage(ChatColor.GOLD + "Perk Odporności: +" + playerPerksEntity.getPerkTypeLevel(PerkType.RESISTANCE) + "% odporności na uzyskanie odporności");
         player.sendMessage(ChatColor.DARK_PURPLE + "Perk Kradzieży Zdrowia: +" + playerPerksEntity.getPerkTypeLevel(PerkType.LIFE_STEAL) + "% szansy na kradzież zdrowia");
-        player.sendMessage(ChatColor.DARK_GRAY + "Perk Osłąbienia: +" + playerPerksEntity.getPerkTypeLevel(PerkType.SICKNESS) + "% szansy na osłabienie wroga");
+//        player.sendMessage(ChatColor.DARK_GRAY + "Perk Osłąbienia: +" + playerPerksEntity.getPerkTypeLevel(PerkType.SICKNESS) + "% szansy na osłabienie wroga");
 //        player.sendMessage(ChatColor.AQUA + "Perk Dodatkowych Serc: +" + playerPerksEntity.getPerkTypeLevel(PerkType.ADDITIONAL_HEARTS) + " serc");
         player.sendMessage(ChatColor.BLUE + "Perk Spowolnienia: +" + playerPerksEntity.getPerkTypeLevel(PerkType.SLOWNESS) + "% szansy na spowolnienie wroga");
         player.sendMessage(ChatColor.GRAY + "*----------------------------*");

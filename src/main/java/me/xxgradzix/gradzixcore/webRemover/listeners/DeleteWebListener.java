@@ -37,6 +37,8 @@ public class DeleteWebListener implements Listener {
         if(!ItemManager.webRemover.isSimilar(event.getItem())) return;
         Player player = event.getPlayer();
 
+        if(player.getCooldown(Material.BONE) > 0) return;
+
         Location location = player.getLocation();
 
         World world = location.getWorld();
@@ -51,6 +53,7 @@ public class DeleteWebListener implements Listener {
 
         player.getInventory().removeItem(ItemManager.webRemover);
         player.sendMessage(ChatColor.GREEN + "Usunąłeś pajęczyny");
+        player.setCooldown(Material.BONE, 20*15);
     }
     private void fillTerrain(EditSession editSession, World world, Location minLocation, Location maxLocation) {
         com.sk89q.worldedit.world.World weWorld = BukkitAdapter.adapt(world);

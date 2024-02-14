@@ -5,9 +5,7 @@ import me.xxgradzix.gradzixcore.playerPerks.data.database.entities.PlayerPerksEn
 import me.xxgradzix.gradzixcore.playerPerks.data.database.managers.PlayerPerkEntityManager;
 import me.xxgradzix.gradzixcore.playerPerks.items.ItemManager;
 import me.xxgradzix.gradzixcore.playerPerks.messages.Messages;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -15,7 +13,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.PlayerInventory;
 
 public class BookClickIncreaseLevel implements Listener {
 
@@ -57,7 +54,7 @@ public class BookClickIncreaseLevel implements Listener {
         if (item.isSimilar(ItemManager.additionalHeartsPerkBook)) return PerkType.ADDITIONAL_HEARTS;
         if (item.isSimilar(ItemManager.weaknessPerkBook)) return PerkType.WEAKNESS;
         if (item.isSimilar(ItemManager.slownessPerkBook)) return PerkType.SLOWNESS;
-        if (item.isSimilar(ItemManager.perlFragmentDrop)) return PerkType.PERK_FRAGMENT_DROP;
+        if (item.isSimilar(ItemManager.perkFragmentDrop)) return PerkType.PERK_FRAGMENT_DROP;
         return null;
     }
     private void upgradePerk(Player player, PerkType perkType) throws RuntimeException {
@@ -66,7 +63,7 @@ public class BookClickIncreaseLevel implements Listener {
             case STRENGTH: {
                 playerPerksEntity.increasePerkLevelRandomly(PerkType.STRENGTH);
                 removeItems(player, ItemManager.strengthPerkBook, 1);
-                player.sendMessage(Messages.UPGRADED_STRENGTH_PERK + ChatColor.DARK_RED + " +" + playerPerksEntity.getPerkTypeLevel(PerkType.STRENGTH) + "%");
+                player.sendMessage(Messages.UPGRADED_STRENGTH_PERK + ChatColor.YELLOW + " +" + playerPerksEntity.getPerkTypeLevel(PerkType.STRENGTH) + "%");
             }
             break;
             case POISON: {
@@ -84,7 +81,7 @@ public class BookClickIncreaseLevel implements Listener {
             case LIFE_STEAL: {
                 playerPerksEntity.increasePerkLevelRandomly(PerkType.LIFE_STEAL);
                 removeItems(player, ItemManager.lifeStealPerkBook, 1);
-                player.sendMessage(Messages.UPGRADED_LIFE_STEAL_PERK + ChatColor.DARK_PURPLE + " +" + playerPerksEntity.getPerkTypeLevel(PerkType.LIFE_STEAL) + "%");
+                player.sendMessage(Messages.UPGRADED_LIFE_STEAL_PERK + ChatColor.RED + " +" + playerPerksEntity.getPerkTypeLevel(PerkType.LIFE_STEAL) + "%");
             }
             break;
 //            case SICKNESS: {
@@ -104,19 +101,19 @@ public class BookClickIncreaseLevel implements Listener {
             case WEAKNESS: {
                 playerPerksEntity.increasePerkLevelRandomly(PerkType.WEAKNESS);
                 removeItems(player, ItemManager.weaknessPerkBook, 1);
-                player.sendMessage(Messages.UPGRADED_WEAKNESS_PERK + ChatColor.YELLOW + " +" + playerPerksEntity.getPerkTypeLevel(PerkType.WEAKNESS) + "%");
+                player.sendMessage(Messages.UPGRADED_WEAKNESS_PERK + ChatColor.LIGHT_PURPLE + " +" + playerPerksEntity.getPerkTypeLevel(PerkType.WEAKNESS) + "%");
             }
             break;
             case SLOWNESS: {
                 playerPerksEntity.increasePerkLevelRandomly(PerkType.SLOWNESS);
                 removeItems(player, ItemManager.slownessPerkBook, 1);
-                player.sendMessage(Messages.UPGRADED_SLOWNESS_PERK + ChatColor.BLUE + " +" + playerPerksEntity.getPerkTypeLevel(PerkType.SLOWNESS) + "%");
+                player.sendMessage(Messages.UPGRADED_SLOWNESS_PERK + ChatColor.DARK_PURPLE + " +" + playerPerksEntity.getPerkTypeLevel(PerkType.SLOWNESS) + "%");
             }
             break;
             case PERK_FRAGMENT_DROP: {
                 playerPerksEntity.increasePerkLevelRandomly(PerkType.PERK_FRAGMENT_DROP);
-                removeItems(player, ItemManager.perlFragmentDrop, 1);
-                player.sendMessage(Messages.UPGRADED_FRAGMENT_DROP_PERK + ChatColor.BLUE + " +" + playerPerksEntity.getPerkTypeLevel(PerkType.PERK_FRAGMENT_DROP) + "%");
+                removeItems(player, ItemManager.perkFragmentDrop, 1);
+                player.sendMessage(Messages.UPGRADED_FRAGMENT_DROP_PERK + ChatColor.AQUA + " +" + playerPerksEntity.getPerkTypeLevel(PerkType.PERK_FRAGMENT_DROP) + "%");
             }
             break;
 

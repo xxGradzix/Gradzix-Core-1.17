@@ -2,6 +2,7 @@ package me.xxgradzix.gradzixcore.afkRegion.listeners;
 
 import me.xxgradzix.gradzixcore.Gradzix_Core;
 import me.xxgradzix.gradzixcore.afkRegion.AfkRegion;
+import me.xxgradzix.gradzixcore.afkRegion.data.database.managers.RewardsEntityManager;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.model.user.User;
@@ -22,6 +23,7 @@ public class GetRewardInAfkRegion {
 
     private static HashMap<Player, Integer> playersInAfkRegion = new HashMap();
 
+
     public static void startCounterForPlayer(Player player) {
 
         cancelPlayerTask(player);
@@ -29,12 +31,10 @@ public class GetRewardInAfkRegion {
         int id = scheduler.runTaskLater(plugin, () -> {
 
             if(!AfkRegion.isPlayerInAfkRegion(player)) {
-                player.sendMessage("Nie jestes juz w afk regionie");
                 return;
             }
 
-
-            player.sendMessage("Dostales nagrode");
+            drawReward(player);
 
             if(AfkRegion.isPlayerInAfkRegion(player)) {
                 playersInAfkRegion.remove(player);
@@ -48,7 +48,7 @@ public class GetRewardInAfkRegion {
 
     }
 
-    private void drawReward(Player player) {
+    private static void drawReward(Player player) {
 
         LuckPerms luckPerms = LuckPermsProvider.get();
 
@@ -65,7 +65,7 @@ public class GetRewardInAfkRegion {
         }
         player.getInventory().addItem(AfkRegion.getSmallReward());
     }
-    private double getPlayerRewardChance(User player) {
+    private static double getPlayerRewardChance(User player) {
         switch (player.getPrimaryGroup()) {
             case "age":
                 return 0.5;

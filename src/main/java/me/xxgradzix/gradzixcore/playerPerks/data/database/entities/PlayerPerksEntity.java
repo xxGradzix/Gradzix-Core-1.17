@@ -64,10 +64,10 @@ public class PlayerPerksEntity {
                 }
                 break;
                 case POISON: {
-                    if(poisonLevel >= 50) throw new RuntimeException("Poison level already have maximum value");
-                    int additionalPercent = generateRandomNumber(1, 3);
+                    if(poisonLevel >= 10) throw new RuntimeException("Poison level already have maximum value");
+                    int additionalPercent = generateRandomNumber(1, 2);
                     poisonLevel += additionalPercent;
-                    if(poisonLevel > 50) poisonLevel = 50;
+                    if(poisonLevel > 10) poisonLevel = 10;
                 }
                 break;
                 case RESISTANCE: {

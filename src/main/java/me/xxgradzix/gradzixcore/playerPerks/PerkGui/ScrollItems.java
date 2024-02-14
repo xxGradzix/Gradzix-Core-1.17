@@ -4,6 +4,7 @@ import dev.triumphteam.gui.guis.Gui;
 import dev.triumphteam.gui.guis.GuiItem;
 import me.xxgradzix.gradzixcore.chatOptions.items.ItemManager;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -64,9 +65,9 @@ public class ScrollItems extends BukkitRunnable {
                     gui.update();
                 }
 
-                    player.getWorld().playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 0.3F, 2F);
+                player.getWorld().playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 0.3F, 2F);
 
-                if (rep < (itemStackList.size() * 4)) {
+                if (rep < (itemStackList.size() * 1.5)) {
                     shiftRewardsList(itemStackList);
                 } else {
                     if (!winningSlotItem.equals(reward)) {
@@ -82,7 +83,7 @@ public class ScrollItems extends BukkitRunnable {
 
         rep++;
 
-        if(rep > (itemStackList.size()*5.5)) {
+        if(rep > (itemStackList.size()*2.0)) {
             gui.updateItem(9, ItemManager.greenGlass);
             gui.updateItem(10, ItemManager.greenGlass);
             gui.updateItem(11, ItemManager.greenGlass);
@@ -91,13 +92,15 @@ public class ScrollItems extends BukkitRunnable {
             gui.updateItem(15, ItemManager.greenGlass);
             gui.updateItem(16, ItemManager.greenGlass);
             gui.updateItem(17, ItemManager.greenGlass);
+            gui.updateItem(1, 5, new ItemStack(Material.HOPPER));
+            gui.updateItem(3, 5, ItemManager.limeGlass);
             if(winningSlotItem.equals(reward)) {
                 cancel();
                 player.getInventory().addItem(reward);
                 if(reward.hasItemMeta() && reward.getItemMeta().hasDisplayName()) {
-                    player.sendMessage(ChatColor.GRAY + "Wygrałeś "+ reward.getAmount() + " " + reward.getItemMeta().getDisplayName());
+                    player.sendMessage(ChatColor.GRAY + "Wygrałeś " + reward.getItemMeta().getDisplayName());
                 } else {
-                    player.sendMessage(ChatColor.GRAY + "Wygrałeś "+ reward.getAmount() + " " + reward.getType().toString());
+                    player.sendMessage(ChatColor.GRAY + "Wygrałeś " + reward.getType().toString());
                 }
             }
         }

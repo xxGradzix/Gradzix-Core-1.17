@@ -15,7 +15,7 @@ public class GiveFragmentCommand implements CommandExecutor {
 
             Player p = (Player) sender;
 
-            p.getInventory().addItem(ItemManager.fragment);
+//            p.getInventory().addItem(ItemManager.fragment);
 
         }
 

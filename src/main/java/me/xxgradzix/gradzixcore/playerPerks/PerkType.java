@@ -11,6 +11,7 @@ public enum PerkType {
 //    ADDITIONAL_HEARTS,
     WEAKNESS,
     SLOWNESS,
-    PERK_FRAGMENT_DROP
+    PERK_FRAGMENT_DROP,
+    FRAGMENT
 
 }

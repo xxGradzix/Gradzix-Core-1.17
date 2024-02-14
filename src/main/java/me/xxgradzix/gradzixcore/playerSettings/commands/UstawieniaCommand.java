@@ -24,52 +24,26 @@ public class UstawieniaCommand implements CommandExecutor {
 
             Gui gui = Gui.gui()
                     .title(Component.text(ChatColor.GREEN + ChatColor.BOLD.toString() + "USTAWIENIA " + ChatColor.GRAY + "(/ustawienia)"))
-                    .rows(5)
+                    .rows(3)
                     .disableAllInteractions()
                     .create();
 
             // glass
 
-            ArrayList<Integer> black = new ArrayList<>();
-
-            black.add(2);
-            black.add(3);
-            black.add(4);
-            black.add(5);
-            black.add(6);
-
-            black.add(18);
-            black.add(26);
-
-            black.add(38);
-            black.add(39);
-            black.add(40);
-            black.add(41);
-            black.add(42);
-
             GuiItem blackGlass = new GuiItem(me.xxgradzix.gradzixcore.chatOptions.items.ItemManager.blackGlass);
 
-            gui.setItem(black, blackGlass);
+            gui.getFiller().fillBetweenPoints(1, 2, 1, 8, blackGlass);
+            gui.getFiller().fillBetweenPoints(3, 2, 3, 8, blackGlass);
 
-            ArrayList<Integer> lime = new ArrayList<>();
-
-            lime.add(0);
-            lime.add(1);
-            lime.add(7);
-            lime.add(8);
-            lime.add(9);
-            lime.add(17);
-
-            lime.add(27);
-            lime.add(35);
-            lime.add(36);
-            lime.add(37);
-            lime.add(43);
-            lime.add(44);
+            gui.setItem(2, 1, blackGlass);
+            gui.setItem(2, 9, blackGlass);
 
             GuiItem limeGlass = new GuiItem(me.xxgradzix.gradzixcore.chatOptions.items.ItemManager.limeGlass);
 
-            gui.setItem(lime, limeGlass);
+            gui.setItem(1, 1, limeGlass);
+            gui.setItem(1, 9, limeGlass);
+            gui.setItem(3, 1, limeGlass);
+            gui.setItem(3, 9, limeGlass);
 
 
             // exchange
@@ -89,9 +63,9 @@ public class UstawieniaCommand implements CommandExecutor {
 
 
             if(DataManager.getAutoExchangeStatus(p)) {
-                gui.setItem(3, 4, exchangeButtonOff);
+                gui.setItem(2, 4, exchangeButtonOff);
             } else {
-                gui.setItem(3, 4, exchangeButtonOn);
+                gui.setItem(2, 4, exchangeButtonOn);
             }
 
 
@@ -114,9 +88,9 @@ public class UstawieniaCommand implements CommandExecutor {
             });
 
             if(DataManager.getAutoSellStatus(p)) {
-                gui.setItem(3, 6, sellButtonOff);
+                gui.setItem(2, 6, sellButtonOff);
             } else {
-                gui.setItem(3, 6, sellButtonOn);
+                gui.setItem(2, 6, sellButtonOn);
             }
             gui.open(p);
         }

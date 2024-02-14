@@ -54,6 +54,7 @@ public class ServerConfig {
 
         BlockPlacingBlocks blockPlacingBlocks = new BlockPlacingBlocks(plugin);
         blockPlacingBlocks.runTaskTimer(plugin, 0L, 20L * 5);
+
         plugin.getServer().getPluginManager().registerEvents(blockPlacingBlocks, plugin);
 
         plugin.getCommand("setserverdamagemultiplier").setExecutor(new SetDamageCommand());

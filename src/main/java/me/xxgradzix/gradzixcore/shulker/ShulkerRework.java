@@ -47,7 +47,7 @@ public class ShulkerRework implements Listener {
     }
 
     public void onEnable() {
-//        plugin.getServer().getPluginManager().registerEvents(new OpenShulkerListener(plugin), plugin);
+//        plugin.getServer().getPluginManager().registerEvents(new ShulkerRework(plugin), plugin);
     }
 
     public void onDisable() {

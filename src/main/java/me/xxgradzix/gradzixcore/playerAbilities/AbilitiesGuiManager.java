@@ -22,72 +22,36 @@ public class AbilitiesGuiManager {
 
 
 
+//        Gui gui = Gui.gui()
+//                .title(Component.text(ChatColor.GREEN + ChatColor.BOLD.toString() + "UMIEJĘTNOŚCI " + ChatColor.GRAY + "(/umiejetnosci)"))
+//                .disableAllInteractions()
+//                .rows(5)
+//                .create();
         Gui gui = Gui.gui()
                 .title(Component.text(ChatColor.GREEN + ChatColor.BOLD.toString() + "UMIEJĘTNOŚCI " + ChatColor.GRAY + "(/umiejetnosci)"))
                 .disableAllInteractions()
-                .rows(5)
+                .rows(3)
                 .create();
 
 
         // szklo
 
-        ArrayList<Integer> czarne = new ArrayList<>();
-
-
-        czarne.add(2);
-        czarne.add(3);
-        czarne.add(4);
-        czarne.add(5);
-        czarne.add(6);
-
-        czarne.add(18);
-        czarne.add(26);
-
-        czarne.add(38);
-        czarne.add(39);
-        czarne.add(40);
-        czarne.add(41);
-        czarne.add(42);
-
         GuiItem blackGlass = new GuiItem(me.xxgradzix.gradzixcore.chatOptions.items.ItemManager.blackGlass);
 
-        gui.setItem(czarne, blackGlass);
+        gui.getFiller().fillBetweenPoints(1, 2, 1, 8, blackGlass);
+        gui.getFiller().fillBetweenPoints(3, 2, 3, 8, blackGlass);
 
-
-//            ArrayList<Integer> zielone = new ArrayList<>();
-//
-//            zielone.add(3);
-//            zielone.add(5);
-//            zielone.add(9);
-//            zielone.add(17);
-//            zielone.add(27);
-//            zielone.add(35);
-//            zielone.add(39);
-//            zielone.add(41);
-//
-//            GuiItem greenGlass = new GuiItem(me.xxgradzix.gradzixcore.chatopcje.items.ItemManager.greenGlass);
-//
-//            gui.setItem(zielone, greenGlass);
-
-        ArrayList<Integer> lime = new ArrayList<>();
-
-        lime.add(0);
-        lime.add(1);
-        lime.add(7);
-        lime.add(8);
-        lime.add(9);
-        lime.add(17);
-
-        lime.add(27);
-        lime.add(35);
-        lime.add(36);
-        lime.add(37);
-        lime.add(43);
-        lime.add(44);
+        gui.setItem(2, 1, blackGlass);
+        gui.setItem(2, 9, blackGlass);
 
         GuiItem limeGlass = new GuiItem(me.xxgradzix.gradzixcore.chatOptions.items.ItemManager.limeGlass);
 
-        gui.setItem(lime, limeGlass);
+        gui.setItem(1, 1, limeGlass);
+        gui.setItem(1, 9, limeGlass);
+        gui.setItem(3, 1, limeGlass);
+        gui.setItem(3, 9, limeGlass);
+
+
 
 
         // sila
@@ -102,9 +66,9 @@ public class AbilitiesGuiManager {
 //
 //            sila0.setAction((action) -> {
 //                int requiredAmount = 64;
-//                if(p.getInventory().containsAtLeast(ItemManager.fragment, requiredAmount)) {
+//                if(p.getInventory().containsAtLeast(me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.perkFragment, requiredAmount)) {
 //
-//                    removeItems(p, ItemManager.fragment, requiredAmount);
+//                    removeItems(p, me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.perkFragment, requiredAmount);
 //
 //                    gui.updateItem(action.getSlot(), sila1);
 //
@@ -116,9 +80,9 @@ public class AbilitiesGuiManager {
 //            });
 //            sila1.setAction((action) -> {
 //                int requiredAmount = 128;
-//                if(p.getInventory().containsAtLeast(ItemManager.fragment, requiredAmount)) {
+//                if(p.getInventory().containsAtLeast(me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.perkFragment, requiredAmount)) {
 //
-//                    removeItems(p, ItemManager.fragment, requiredAmount);
+//                    removeItems(p, me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.perkFragment, requiredAmount);
 //
 //                    gui.updateItem(action.getSlot(), sila2);
 //
@@ -129,9 +93,9 @@ public class AbilitiesGuiManager {
 //            });
 //            sila2.setAction((action) -> {
 //                int requiredAmount = 192;
-//                if(p.getInventory().containsAtLeast(ItemManager.fragment, requiredAmount)) {
+//                if(p.getInventory().containsAtLeast(me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.perkFragment, requiredAmount)) {
 //
-//                    removeItems(p, ItemManager.fragment, requiredAmount);
+//                    removeItems(p, me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.perkFragment, requiredAmount);
 //
 //                    gui.updateItem(action.getSlot(), sila3);
 //                    DataManager.incrementAbilityLevel(Ability.STRENGTH, p);
@@ -142,9 +106,9 @@ public class AbilitiesGuiManager {
 //            });
 //            sila3.setAction((action) -> {
 //                int requiredAmount = 256;
-//                if(p.getInventory().containsAtLeast(ItemManager.fragment, requiredAmount)) {
+//                if(p.getInventory().containsAtLeast(me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.perkFragment, requiredAmount)) {
 //
-//                    removeItems(p, ItemManager.fragment, requiredAmount);
+//                    removeItems(p, me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.perkFragment, requiredAmount);
 //
 //                    gui.updateItem(action.getSlot(), sila4);
 //                    DataManager.incrementAbilityLevel(Ability.STRENGTH, p);
@@ -190,9 +154,9 @@ public class AbilitiesGuiManager {
 
         drop0.setAction((action) -> {
             int requiredAmount = 64;
-            if(p.getInventory().containsAtLeast(ItemManager.fragment, requiredAmount)) {
+            if(p.getInventory().containsAtLeast(me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.perkFragment, requiredAmount)) {
 
-                removeItems(p, ItemManager.fragment, requiredAmount);
+                removeItems(p, me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.perkFragment, requiredAmount);
 
                 gui.updateItem(action.getSlot(), drop1);
 
@@ -204,9 +168,9 @@ public class AbilitiesGuiManager {
         });
         drop1.setAction((action) -> {
             int requiredAmount = 128;
-            if(p.getInventory().containsAtLeast(ItemManager.fragment, requiredAmount)) {
+            if(p.getInventory().containsAtLeast(me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.perkFragment, requiredAmount)) {
 
-                removeItems(p, ItemManager.fragment, requiredAmount);
+                removeItems(p, me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.perkFragment, requiredAmount);
 
                 gui.updateItem(action.getSlot(), drop2);
 
@@ -218,9 +182,9 @@ public class AbilitiesGuiManager {
         });
         drop2.setAction((action) -> {
             int requiredAmount = 192;
-            if(p.getInventory().containsAtLeast(ItemManager.fragment, requiredAmount)) {
+            if(p.getInventory().containsAtLeast(me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.perkFragment, requiredAmount)) {
 
-                removeItems(p, ItemManager.fragment, requiredAmount);
+                removeItems(p, me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.perkFragment, requiredAmount);
 
                 gui.updateItem(action.getSlot(), drop3);
                 DataManager.incrementAbilityLevel(Ability.DROP, p);
@@ -231,9 +195,9 @@ public class AbilitiesGuiManager {
         });
         drop3.setAction((action) -> {
             int requiredAmount = 256;
-            if(p.getInventory().containsAtLeast(ItemManager.fragment, requiredAmount)) {
+            if(p.getInventory().containsAtLeast(me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.perkFragment, requiredAmount)) {
 
-                removeItems(p, ItemManager.fragment, requiredAmount);
+                removeItems(p, me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.perkFragment, requiredAmount);
 
                 gui.updateItem(action.getSlot(), drop4);
 //                    UmiejetnosciConfigFile.incrementDropLevel(p);
@@ -252,22 +216,22 @@ public class AbilitiesGuiManager {
 
         switch (playerDropLevel) {
             case 0:
-                gui.setItem(3, 4, drop0);
+                gui.setItem(2, 4, drop0);
                 break;
             case 1:
-                gui.setItem(3, 4, drop1);
+                gui.setItem(2, 4, drop1);
                 break;
             case 2:
-                gui.setItem(3, 4, drop2);
+                gui.setItem(2, 4, drop2);
                 break;
             case 3:
-                gui.setItem(3, 4, drop3);
+                gui.setItem(2, 4, drop3);
                 break;
             case 4:
-                gui.setItem(3, 4, drop4);
+                gui.setItem(2, 4, drop4);
                 break;
             default:
-                gui.setItem(3, 4, new GuiItem(Material.BARRIER));
+                gui.setItem(2, 4, new GuiItem(Material.BARRIER));
                 break;
         }
 
@@ -283,9 +247,9 @@ public class AbilitiesGuiManager {
 
         rank0.setAction((action) -> {
             int requiredAmount = 64;
-            if(p.getInventory().containsAtLeast(ItemManager.fragment, requiredAmount)) {
+            if(p.getInventory().containsAtLeast(me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.perkFragment, requiredAmount)) {
 
-                removeItems(p, ItemManager.fragment, requiredAmount);
+                removeItems(p, me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.perkFragment, requiredAmount);
 
                 gui.updateItem(action.getSlot(), rank1);
 
@@ -299,9 +263,9 @@ public class AbilitiesGuiManager {
         });
         rank1.setAction((action) -> {
             int requiredAmount = 128;
-            if(p.getInventory().containsAtLeast(ItemManager.fragment, requiredAmount)) {
+            if(p.getInventory().containsAtLeast(me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.perkFragment, requiredAmount)) {
 
-                removeItems(p, ItemManager.fragment, requiredAmount);
+                removeItems(p, me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.perkFragment, requiredAmount);
 
                 gui.updateItem(action.getSlot(), rank2);
 
@@ -312,9 +276,9 @@ public class AbilitiesGuiManager {
         });
         rank2.setAction((action) -> {
             int requiredAmount = 192;
-            if(p.getInventory().containsAtLeast(ItemManager.fragment, requiredAmount)) {
+            if(p.getInventory().containsAtLeast(me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.perkFragment, requiredAmount)) {
 
-                removeItems(p, ItemManager.fragment, requiredAmount);
+                removeItems(p, me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.perkFragment, requiredAmount);
 
                 gui.updateItem(action.getSlot(), rank3);
                 DataManager.incrementAbilityLevel(Ability.RANK, p);
@@ -325,9 +289,9 @@ public class AbilitiesGuiManager {
         });
         rank3.setAction((action) -> {
             int requiredAmount = 256;
-            if(p.getInventory().containsAtLeast(ItemManager.fragment, requiredAmount)) {
+            if(p.getInventory().containsAtLeast(me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.perkFragment, requiredAmount)) {
 
-                removeItems(p, ItemManager.fragment, requiredAmount);
+                removeItems(p, me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.perkFragment, requiredAmount);
 
                 gui.updateItem(action.getSlot(), rank4);
                 DataManager.incrementAbilityLevel(Ability.RANK, p);
@@ -345,22 +309,22 @@ public class AbilitiesGuiManager {
 
         switch (playerRankLevel) {
             case 0:
-                gui.setItem(3, 6, rank0);
+                gui.setItem(2, 6, rank0);
                 break;
             case 1:
-                gui.setItem(3, 6, rank1);
+                gui.setItem(2, 6, rank1);
                 break;
             case 2:
-                gui.setItem(3, 6, rank2);
+                gui.setItem(2, 6, rank2);
                 break;
             case 3:
-                gui.setItem(3, 6, rank3);
+                gui.setItem(2, 6, rank3);
                 break;
             case 4:
-                gui.setItem(3, 6, rank4);
+                gui.setItem(2, 6, rank4);
                 break;
             default:
-                gui.setItem(3, 6, new GuiItem(Material.BARRIER));
+                gui.setItem(2, 6, new GuiItem(Material.BARRIER));
                 break;
         }
 

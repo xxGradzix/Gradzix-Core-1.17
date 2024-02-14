@@ -1,15 +1,10 @@
 package me.xxgradzix.gradzixcore.afkRegion.listeners;
 
-import com.sk89q.worldedit.bukkit.BukkitAdapter;
-import com.sk89q.worldguard.WorldGuard;
-import com.sk89q.worldguard.protection.ApplicableRegionSet;
-import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import me.xxgradzix.gradzixcore.Gradzix_Core;
 import me.xxgradzix.gradzixcore.afkRegion.AfkRegion;
+import me.xxgradzix.gradzixcore.afkRegion.data.database.managers.RewardsEntityManager;
 import net.raidstone.wgevents.events.RegionEnteredEvent;
 import net.raidstone.wgevents.events.RegionLeftEvent;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -22,11 +17,9 @@ public class EnterRegionListener implements Listener {
 
     @EventHandler
     public void enterRegionListener(RegionEnteredEvent event) {
-        Bukkit.broadcastMessage("test");
         Player player = event.getPlayer();
 
         if(!event.getRegionName().startsWith(AfkRegion.afkRegionName)) return;
-        Bukkit.broadcastMessage("wbita");
         showPlayersInAfkRegion(player);
         GetRewardInAfkRegion.startCounterForPlayer(player);
     }
@@ -52,6 +45,7 @@ public class EnterRegionListener implements Listener {
 
     }
     private void showPlayerOutsideAfkRegion(Player player) {
+
         for (Player onlinePlayer : player.getWorld().getPlayers()) {
 
             if(onlinePlayer == player) continue;

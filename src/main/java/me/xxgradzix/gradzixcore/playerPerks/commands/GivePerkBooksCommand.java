@@ -28,11 +28,14 @@ public class GivePerkBooksCommand implements CommandExecutor, TabCompleter {
             return true;
         }
         String perkBookTypeString = args[0];
-        PerkType perkType = PerkType.valueOf(perkBookTypeString);
-        if(perkType == null) {
+        PerkType perkType;
+        try {
+            perkType = PerkType.valueOf(perkBookTypeString);
+        } catch (IllegalArgumentException e) {
             player.sendMessage(Messages.THERE_IS_NO_SUCH_PERK);
             return true;
         }
+
         Player targetPlayer = player;
         if(args.length >= 2) {
             String playerNick = args[1];

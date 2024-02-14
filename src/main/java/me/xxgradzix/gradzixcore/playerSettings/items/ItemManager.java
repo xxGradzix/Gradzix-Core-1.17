@@ -60,24 +60,26 @@ public class ItemManager {
     }
 
     private static void crateAutoExchangeOn() {
-        ItemStack item = new ItemStack(Material.END_CRYSTAL, 1);
+        ItemStack item = new ItemStack(Material.FEATHER, 1);
 
         ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(ChatColor.GRAY + "Automatyczna wymiana " + ChatColor.RED + "OFF");
+//        meta.setDisplayName(ChatColor.GRAY + "§3Automatyczna wymiana" + ChatColor.RED + "OFF");
+        meta.setDisplayName(ChatColor.GRAY + "§3Automatyczna wymiana");
         List<String> lore = new ArrayList<>();
-        lore.add(ChatColor.GRAY + "Kliknij aby włączyć");
+        lore.add(ChatColor.GRAY + "§8» §7Kliknij aby §awłączyć");
         meta.setLore(lore);
         item.setItemMeta(meta);
 
         autoExchangeOn = item;
     }
     private static void crateAutoExchangeOff() {
-        ItemStack item = new ItemStack(Material.END_CRYSTAL, 1);
+        ItemStack item = new ItemStack(Material.FEATHER, 1);
 
         ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(ChatColor.GRAY + "Automatyczną wymiana " + ChatColor.GREEN + "ON");
+//        meta.setDisplayName(ChatColor.GRAY + "Automatyczną wymiana " + ChatColor.GREEN + "ON");
+        meta.setDisplayName(ChatColor.GRAY + "§3Automatyczna wymiana");
         List<String> lore = new ArrayList<>();
-        lore.add(ChatColor.GRAY + "Kliknij aby wyłączyć");
+        lore.add(ChatColor.GRAY + "§8» §7Kliknij aby §4wyłączyć");
         meta.setLore(lore);
         item.setItemMeta(meta);
 
@@ -85,24 +87,26 @@ public class ItemManager {
     }
 
     private static void createAutoSellOn() {
-        ItemStack item = new ItemStack(Material.SUNFLOWER, 1);
+        ItemStack item = new ItemStack(Material.MAP, 1);
 
         ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(ChatColor.GRAY + "Automatyczną sprzedaż " + ChatColor.RED + "OFF");
+//        meta.setDisplayName(ChatColor.GRAY + "§3Automatyczna sprzedaż" + ChatColor.RED + "OFF");
+        meta.setDisplayName(ChatColor.GRAY + "§3Automatyczna sprzedaż");
         List<String> lore = new ArrayList<>();
-        lore.add(ChatColor.GRAY + "Kliknij aby włączyć");
+        lore.add(ChatColor.GRAY + "§8» §7Kliknij aby §awłączyć");
         meta.setLore(lore);
         item.setItemMeta(meta);
 
         autoSellOn = item;
     }
     private static void createAutoSellOff() {
-        ItemStack item = new ItemStack(Material.SUNFLOWER, 1);
+        ItemStack item = new ItemStack(Material.MAP, 1);
 
         ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(ChatColor.GRAY + "Automatyczną sprzedaż " + ChatColor.GREEN + "ON");
+//        meta.setDisplayName(ChatColor.GRAY + "Automatyczną sprzedaż " + ChatColor.GREEN + "ON");
+        meta.setDisplayName(ChatColor.GRAY + "§3Automatyczna sprzedaż");
         List<String> lore = new ArrayList<>();
-        lore.add(ChatColor.GRAY + "Kliknij aby wyłączyć");
+        lore.add(ChatColor.GRAY + "§8» §7Kliknij aby §4wyłączyć");
         meta.setLore(lore);
         item.setItemMeta(meta);
 

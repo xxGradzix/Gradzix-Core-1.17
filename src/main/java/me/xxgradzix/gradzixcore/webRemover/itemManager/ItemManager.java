@@ -19,10 +19,10 @@ public class ItemManager {
 
         ItemMeta meta = item.getItemMeta();
 
-        meta.setDisplayName("§c§bUsuwacz pajęczyn");
+        meta.setDisplayName("§c§lUsuwacz pajęczyn");
         ArrayList<String> lore = new ArrayList<>();
 
-        lore.add("§7Kliknij prawym, aby użyć");
+        lore.add("§8» §7Kliknij prawym, aby użyć");
 
         meta.setLore(lore);
 

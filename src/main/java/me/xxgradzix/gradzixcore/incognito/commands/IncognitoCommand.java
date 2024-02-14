@@ -43,6 +43,14 @@ public class IncognitoCommand implements CommandExecutor {
             return true;
         }
         Player player = (Player) sender;
+
+        if(args.length > 0) {
+            IncognitoModeManager.toggleIncognitoMode(player);
+
+            return false;
+        }
+
+
         IncognitoModeManager.toggleIncognitoMode(player);
 
         return true;

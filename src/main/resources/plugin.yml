@@ -161,3 +161,7 @@ commands:
 
   bazar:
     description: otwiera bazar
+
+  setAfkReward:
+    description: ustawia nagrode za afk
+    permission: afk.setAfkReward

@@ -25,6 +25,7 @@ import me.xxgradzix.gradzixcore.serverconfig.ServerConfig;
 import me.xxgradzix.gradzixcore.shulker.ShulkerRework;
 import me.xxgradzix.gradzixcore.socialMediaRewards.SocialMediaRewards;
 import me.xxgradzix.gradzixcore.upgradeItem.Ulepsz;
+import me.xxgradzix.gradzixcore.warps.Warps;
 import me.xxgradzix.gradzixcore.webRemover.WebRemover;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
@@ -74,6 +75,7 @@ public final class Gradzix_Core extends JavaPlugin {
 
     private WebRemover webRemover;
     private AfkRegion afkRegion;
+    private Warps warps;
 
     private ConnectionSource connectionSource;
 
@@ -224,6 +226,11 @@ public final class Gradzix_Core extends JavaPlugin {
             afkRegion = new AfkRegion(this, connectionSource);
             afkRegion.onEnable();
         }
+        if (warps == null) {
+            warps = new Warps(this, connectionSource);
+            warps.onEnable();
+        }
+
     }
     private boolean setupEconomy() {
         if (getServer().getPluginManager().getPlugin("Vault") == null) {

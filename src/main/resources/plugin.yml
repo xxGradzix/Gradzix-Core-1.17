@@ -165,3 +165,7 @@ commands:
   setAfkReward:
     description: ustawia nagrode za afk
     permission: afk.setAfkReward
+
+  warp:
+    description: otwiera gui warpow
+    aliases: [warpy, warps]

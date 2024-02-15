@@ -142,7 +142,6 @@ commands:
 
   gamma:
     description: gamma
-    permission: gamma.gamma
   perki:
     description: shows player perks levels
     aliases:

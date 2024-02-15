@@ -2,7 +2,7 @@ package me.xxgradzix.gradzixcore.afkRegion.listeners;
 
 import me.xxgradzix.gradzixcore.Gradzix_Core;
 import me.xxgradzix.gradzixcore.afkRegion.AfkRegion;
-import me.xxgradzix.gradzixcore.afkRegion.data.database.managers.RewardsEntityManager;
+import me.xxgradzix.gradzixcore.afkRegion.GetRewardInAfkRegion;
 import net.raidstone.wgevents.events.RegionEnteredEvent;
 import net.raidstone.wgevents.events.RegionLeftEvent;
 import org.bukkit.entity.Player;

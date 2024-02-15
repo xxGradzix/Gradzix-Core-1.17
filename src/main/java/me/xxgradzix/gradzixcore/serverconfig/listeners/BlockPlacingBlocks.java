@@ -1,10 +1,7 @@
 package me.xxgradzix.gradzixcore.serverconfig.listeners;
 
 import me.xxgradzix.gradzixcore.Gradzix_Core;
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -22,7 +19,6 @@ public class BlockPlacingBlocks extends BukkitRunnable implements Listener {
     private final Set<Location> placedBlocks = new HashSet<>();
 
     private final Gradzix_Core plugin;
-    private final BukkitScheduler scheduler = Bukkit.getScheduler();
 
     public BlockPlacingBlocks(Gradzix_Core plugin) {
         this.plugin = plugin;
@@ -37,8 +33,10 @@ public class BlockPlacingBlocks extends BukkitRunnable implements Listener {
             if (block.getType() != org.bukkit.Material.AIR && placedBlocks.contains(location)) {
                 // Usuń blok
                 block.setType(org.bukkit.Material.AIR);
+
             }
         }
+        Bukkit.broadcastMessage(ChatColor.GREEN + "Usunięto bloki z mapy");
     }
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent event) {

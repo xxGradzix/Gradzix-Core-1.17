@@ -41,18 +41,26 @@ import java.util.Properties;
 import java.util.logging.Logger;
 
 public final class Gradzix_Core extends JavaPlugin {
-
-
+    
     public static final boolean USEDB = true;
+    
+    public static final long WEAKNESS_EFFECT_DURATION_TIME_SECONDS = 20;
+    public static final long AFK_REWARD_DELAY_SECONDS = 15L * 60;
+    public static final long BOSS_SPAWN_DELAY_SECONDS = 60;
+    public static final long REMOVE_BLOCKS_INTERVAL_SECONDS = 300;
+    public static final long FAST_GENERATOR_REGENERATION_TIME_SECONDS = 180;
+    public static final long SLOW_GENERATOR_REGENERATION_TIME_SECONDS = 300;
+
     private static final Logger log = Logger.getLogger("Minecraft");
+    
     private static Economy econ = null;
+    
     @Getter
     private static Gradzix_Core instance;
 
     private Zdrapka zdrapkaPlugin;
     private ChatOptions chatOptions;
     private MagicFirework magicFirework;
-
     private PlayerSettings playerSettings;
     private Panel panel;
     private PlayerAbilities playerAbilities;
@@ -65,14 +73,10 @@ public final class Gradzix_Core extends JavaPlugin {
     private Binds binds;
     private MagicPond magicPond;
     private ShulkerRework shulkerRework;
-
     private SocialMediaRewards socialMediaRewards;
-
     private ItemShop itemShop;
     private Incognito incognito;
-
     private PlayerPerks playerPerks;
-
     private WebRemover webRemover;
     private AfkRegion afkRegion;
     private Warps warps;
@@ -195,7 +199,6 @@ public final class Gradzix_Core extends JavaPlugin {
             magicPond = new MagicPond(this, connectionSource);
             magicPond.onEnable();
         }
-
 
         if (socialMediaRewards == null) {
             socialMediaRewards = new SocialMediaRewards(this, connectionSource);

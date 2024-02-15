@@ -150,10 +150,10 @@ public class StartEvent implements CommandExecutor, TabCompleter {
     }
     private void scheduleBossSpawn(int timeMinutes, Location location) {
         if(Events.isBossSpawned()) return;
-        Bukkit.broadcastMessage(ChatColor.GRAY + "Boss pojawi sie za 15 sekund");
+        Bukkit.broadcastMessage(ChatColor.GRAY + "Boss pojawi sie za " + Gradzix_Core.BOSS_SPAWN_DELAY_SECONDS + " sekund");
         scheduler.runTaskLater(plugin, () -> {
             startBossEventTask(timeMinutes, location);
-        }, 20L * 4);
+        }, 20L * Gradzix_Core.BOSS_SPAWN_DELAY_SECONDS);
     }
 
     private void startGeneratorEventTask(int timeMinutes){

@@ -296,8 +296,8 @@ public class ItemManager {
         ArrayList<String> lore = new ArrayList<>();
 
         lore.add(" ");
-        lore.add("§7Można wylosować jedną z §28 ksiąg");
-        lore.add(ChatColor.GRAY + "§7Koszt§8: §2100x Fragment Księgi");
+        lore.add("§8» §7Można wylosować jedną z §28 ksiąg");
+        lore.add(ChatColor.GRAY + "§8» §7Koszt§8: §2100x Fragment Księgi");
 
         meta.addEnchant(Enchantment.LUCK, 1, false);
         meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
@@ -335,8 +335,8 @@ public class ItemManager {
         meta.setDisplayName(ChatColor.LIGHT_PURPLE + "§aTwoje Księgi");
         ArrayList<String> lore = new ArrayList<>();
 
-//        lore.add(ChatColor.GRAY + " ");
-//        lore.add(ChatColor.GRAY + "Aby zobaczyc perki");
+        lore.add(ChatColor.GRAY + " ");
+        lore.add(ChatColor.GRAY + "§8» §7Twoje ulepszenia możesz sprawdzić pod §a/perki");
 //        lore.add(ChatColor.GRAY + " ");
 
         meta.addEnchant(Enchantment.LUCK, 1, false);

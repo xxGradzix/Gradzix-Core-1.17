@@ -14,29 +14,29 @@ import java.util.ArrayList;
 public class ItemManager {
 
 //    public static ItemStack fragment;
-
-    // strength
+//
+//    // strength
 //    public static ItemStack sila0;
 //    public static ItemStack sila1;
 //    public static ItemStack sila2;
 //    public static ItemStack sila3;
 //    public static ItemStack sila4;
-
-    // drop
-
-    public static ItemStack drop0;
-    public static ItemStack drop1;
-    public static ItemStack drop2;
-    public static ItemStack drop3;
-    public static ItemStack drop4;
-
-    // rank
-
-    public static ItemStack rank0;
-    public static ItemStack rank1;
-    public static ItemStack rank2;
-    public static ItemStack rank3;
-    public static ItemStack rank4;
+//
+//    // drop
+//
+//    public static ItemStack drop0;
+//    public static ItemStack drop1;
+//    public static ItemStack drop2;
+//    public static ItemStack drop3;
+//    public static ItemStack drop4;
+//
+//    // rank
+//
+//    public static ItemStack rank0;
+//    public static ItemStack rank1;
+//    public static ItemStack rank2;
+//    public static ItemStack rank3;
+//    public static ItemStack rank4;
 
 
     private static int sila1Percent;
@@ -75,7 +75,6 @@ public class ItemManager {
         rank3Mod = (int) ((DataManager.getAbilityModifier(Ability.RANK, 3) * 100) - 100);
         rank4Mod = (int) ((DataManager.getAbilityModifier(Ability.RANK, 4) * 100) - 100);
 
-
         // strength
 //        createSila0();
 //        createSila1();
@@ -83,24 +82,18 @@ public class ItemManager {
 //        createSila3();
 //        createSila4();
 
-
-
-
         // drop
-        createDrop0();
-        createDrop1();
-        createDrop2();
-        createDrop3();
-        createDrop4();
-
-        createRank0();
-        createRank1();
-        createRank2();
-        createRank3();
-        createRank4();
-
-
-
+//        createDrop0();
+//        createDrop1();
+//        createDrop2();
+//        createDrop3();
+//        createDrop4();
+//
+//        createRank0();
+//        createRank1();
+//        createRank2();
+//        createRank3();
+//        createRank4();
     }
 
     // strength
@@ -233,228 +226,294 @@ public class ItemManager {
 
 
     // drop
+
     private static final Material DROP_MATERIAL = Material.NETHERITE_PICKAXE;
 
-    private static void createDrop0() {
+    public static ItemStack createDropByLevel(int level) {
+
+        if(level > 4 || level < 0) throw new IllegalArgumentException("Level must be between 0 and 4");
 
         ItemStack item = new ItemStack(DROP_MATERIAL, 1);
-
         ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(ChatColor.DARK_GRAY + "§2Dodatkowy drop");
+
+        meta.setDisplayName("§2Dodatkowy drop");
+
         ArrayList<String> lore = new ArrayList<>();
-        lore.add(ChatColor.GRAY + "Twój poziom: " + ChatColor.RED + "0");
+        lore.add("§8» §7Twój poziom: " + ChatColor.DARK_GREEN + (level));
         lore.add(" ");
-        lore.add(ChatColor.RED + "Poziom I" + ChatColor.GRAY + ": " + ChatColor.DARK_RED + "Zwiększa drop " + ChatColor.RED + "x" + drop1Mod);
-        lore.add(ChatColor.RED + "Poziom II" + ChatColor.GRAY + ": " + ChatColor.DARK_RED + "Zwiększa drop " + ChatColor.RED + "x" + drop2Mod);
-        lore.add(ChatColor.RED + "Poziom III" + ChatColor.GRAY + ": " + ChatColor.DARK_RED + "Zwiększa drop " + ChatColor.RED + "x" + drop3Mod);
-        lore.add(ChatColor.RED + "Poziom IV" + ChatColor.GRAY + ": " + ChatColor.DARK_RED + "Zwiększa drop " + ChatColor.RED  + "x" + drop4Mod);
+
+        lore.add("§8» " + getLevelFirstColor(1, level) + "Poziom I" + ChatColor.GRAY + ": " + getLevelSecondColor(1, level) + "Zwiększa drop " + getLevelFirstColor(1, level) + "x" + drop1Mod);
+        lore.add("§8» " + getLevelFirstColor(2, level) + "Poziom II" + ChatColor.GRAY + ": " + getLevelSecondColor(2, level) + "Zwiększa drop " + getLevelFirstColor(2, level) + "x" + drop2Mod);
+        lore.add("§8» " + getLevelFirstColor(3, level) + "Poziom III" + ChatColor.GRAY + ": " + getLevelSecondColor(3, level) + "Zwiększa drop " + getLevelFirstColor(3, level) + "x" + drop3Mod);
+        lore.add("§8» " + getLevelFirstColor(4, level) + "Poziom IV" + ChatColor.GRAY + ": " + getLevelSecondColor(4, level) + "Zwiększa drop " + getLevelFirstColor(4, level) + "x" + drop4Mod);
         lore.add(" ");
-        lore.add(ChatColor.GRAY + "Cena: " +  ChatColor.DARK_GRAY + "64x odłamki jaskiniowca");
+
+        String price = level == 4 ? ChatColor.DARK_GRAY + "Masz już najwyższy poziom tej umiejętności" : ChatColor.DARK_GREEN + "64 fragmenty księgi";
+
+        lore.add(ChatColor.GRAY + "Cena: " +  price);
 
         meta.setLore(lore);
         item.setItemMeta(meta);
 
-        drop0 = item;
+        return item;
     }
-
-    private static void createDrop1() {
-
-        ItemStack item = new ItemStack(DROP_MATERIAL, 1);
-
-        ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(ChatColor.DARK_GRAY + "§2Dodatkowy drop");
-        ArrayList<String> lore = new ArrayList<>();
-        lore.add(ChatColor.GRAY + "Twój poziom: " + ChatColor.RED + "1");
-        lore.add(" ");
-        lore.add(ChatColor.GREEN + "Poziom I" + ChatColor.GRAY + ": " + ChatColor.DARK_GREEN + "Zwiększa drop " + ChatColor.GREEN + "x" + drop1Mod);
-        lore.add(ChatColor.RED + "Poziom II" + ChatColor.GRAY + ": " + ChatColor.DARK_RED + "Zwiększa drop " + ChatColor.RED + "x" + drop2Mod);
-        lore.add(ChatColor.RED + "Poziom III" + ChatColor.GRAY + ": " + ChatColor.DARK_RED + "Zwiększa drop " + ChatColor.RED + "x" + drop3Mod);
-        lore.add(ChatColor.RED + "Poziom IV" + ChatColor.GRAY + ": " + ChatColor.DARK_RED + "Zwiększa drop " + ChatColor.RED  + "x" + drop4Mod);
-        lore.add(" ");
-        lore.add(ChatColor.GRAY + "Cena: " +  ChatColor.DARK_GRAY + "128x odłamki jaskiniowca");
-
-        meta.setLore(lore);
-        item.setItemMeta(meta);
-
-        drop1 = item;
-    }
-    private static void createDrop2() {
-
-        ItemStack item = new ItemStack(DROP_MATERIAL, 1);
-
-        ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(ChatColor.DARK_GRAY + "§2Dodatkowy drop");
-        ArrayList<String> lore = new ArrayList<>();
-        lore.add(ChatColor.GRAY + "Twój poziom: " + ChatColor.RED + "2");
-        lore.add(" ");
-        lore.add(ChatColor.GREEN + "Poziom I" + ChatColor.GRAY + ": " + ChatColor.DARK_GREEN + "Zwiększa drop " + ChatColor.GREEN + "x" + drop1Mod);
-        lore.add(ChatColor.GREEN + "Poziom II" + ChatColor.GRAY + ": " + ChatColor.DARK_GREEN + "Zwiększa drop " + ChatColor.GREEN + "x" + drop2Mod);
-        lore.add(ChatColor.RED + "Poziom III" + ChatColor.GRAY + ": " + ChatColor.DARK_RED + "Zwiększa drop " + ChatColor.RED + "x" + drop3Mod);
-        lore.add(ChatColor.RED + "Poziom IV" + ChatColor.GRAY + ": " + ChatColor.DARK_RED + "Zwiększa drop " + ChatColor.RED  + "x" + drop4Mod);
-        lore.add(" ");
-        lore.add(ChatColor.GRAY + "Cena: " +  ChatColor.DARK_GRAY + "192x odłamki jaskiniowca");
-
-        meta.setLore(lore);
-        item.setItemMeta(meta);
-
-        drop2 = item;
-    }
-    private static void createDrop3() {
-
-        ItemStack item = new ItemStack(DROP_MATERIAL, 1);
-
-        ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(ChatColor.DARK_GRAY + "§2Dodatkowy drop");
-        ArrayList<String> lore = new ArrayList<>();
-        lore.add(ChatColor.GRAY + "Twój poziom: " + ChatColor.RED + "3");
-        lore.add(" ");
-        lore.add(ChatColor.GREEN + "Poziom I" + ChatColor.GRAY + ": " + ChatColor.DARK_GREEN + "Zwiększa drop " + ChatColor.GREEN + "x" + drop1Mod);
-        lore.add(ChatColor.GREEN + "Poziom II" + ChatColor.GRAY + ": " + ChatColor.DARK_GREEN + "Zwiększa drop " + ChatColor.GREEN + "x" + drop2Mod);
-        lore.add(ChatColor.GREEN + "Poziom III" + ChatColor.GRAY + ": " + ChatColor.DARK_GREEN + "Zwiększa drop " + ChatColor.GREEN + "x" + drop3Mod);
-        lore.add(ChatColor.RED + "Poziom IV" + ChatColor.GRAY + ": " + ChatColor.DARK_RED + "Zwiększa drop " + ChatColor.RED  + "x" + drop4Mod);
-        lore.add(" ");
-        lore.add(ChatColor.GRAY + "Cena: " +  ChatColor.DARK_GRAY + "256x odłamki jaskiniowca");
-
-        meta.setLore(lore);
-        item.setItemMeta(meta);
-
-        drop3 = item;
-    }
-    private static void createDrop4() {
-
-        ItemStack item = new ItemStack(DROP_MATERIAL, 1);
-
-        ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(ChatColor.DARK_GRAY + "§2Dodatkowy drop");
-        ArrayList<String> lore = new ArrayList<>();
-        lore.add(ChatColor.GRAY + "Twój poziom: " + ChatColor.RED + "4");
-        lore.add(" ");
-        lore.add(ChatColor.GREEN + "Poziom I" + ChatColor.GRAY + ": " + ChatColor.DARK_GREEN + "Zwiększa drop " + ChatColor.GREEN + "x" + drop1Mod);
-        lore.add(ChatColor.GREEN + "Poziom II" + ChatColor.GRAY + ": " + ChatColor.DARK_GREEN + "Zwiększa drop " + ChatColor.GREEN + "x" + drop2Mod);
-        lore.add(ChatColor.GREEN + "Poziom III" + ChatColor.GRAY + ": " + ChatColor.DARK_GREEN + "Zwiększa drop " + ChatColor.GREEN + "x" + drop3Mod);
-        lore.add(ChatColor.GREEN + "Poziom IV" + ChatColor.GRAY + ": " + ChatColor.DARK_GREEN + "Zwiększa drop " + ChatColor.GREEN  + "x" + drop4Mod);
-        lore.add(" ");
-        lore.add(ChatColor.GRAY + "Cena: " + ChatColor.DARK_GRAY + "Masz już najwyższy poziom tej umiejętności");
-
-        meta.setLore(lore);
-        item.setItemMeta(meta);
-
-        drop4 = item;
-    }
-
-    // rank
-
 
     private static final Material rankMat = Material.EXPERIENCE_BOTTLE;
 
-    private static void createRank0() {
+    public static ItemStack createRankByLevel(int level) {
 
-
+        if(level > 4 || level < 0) throw new IllegalArgumentException("Level must be between 0 and 4");
 
         ItemStack item = new ItemStack(rankMat, 1);
-
         ItemMeta meta = item.getItemMeta();
+
         meta.setDisplayName(ChatColor.DARK_GRAY + "§2Dodatkowy ranking");
         ArrayList<String> lore = new ArrayList<>();
-        lore.add(ChatColor.GRAY + "Twój poziom: " + ChatColor.RED + "0");
+        lore.add("§8» §7Twój poziom: " + ChatColor.DARK_GREEN + (level));
         lore.add(" ");
-        lore.add(ChatColor.RED + "Poziom I" + ChatColor.GRAY + ": " + ChatColor.DARK_RED + "Zwiększa ranking o " + ChatColor.RED + rank1Mod + "%");
-        lore.add(ChatColor.RED + "Poziom II" + ChatColor.GRAY + ": " + ChatColor.DARK_RED + "Zwiększa ranking o " + ChatColor.RED + rank2Mod+ "%");
-        lore.add(ChatColor.RED + "Poziom III" + ChatColor.GRAY + ": " + ChatColor.DARK_RED + "Zwiększa ranking o " + ChatColor.RED + rank3Mod+ "%");
-        lore.add(ChatColor.RED + "Poziom IV" + ChatColor.GRAY + ": " + ChatColor.DARK_RED + "Zwiększa ranking o " + ChatColor.RED  + rank4Mod+ "%");
+
+        lore.add("§8» " + getLevelFirstColor(1, level) + "Poziom I" + ChatColor.GRAY + ": " + getLevelSecondColor(1, level) + "Zwiększa ranking o " + getLevelFirstColor(1, level) + rank1Mod + "%");
+        lore.add("§8» " + getLevelFirstColor(2, level) + "Poziom II" + ChatColor.GRAY + ": " + getLevelSecondColor(2, level) + "Zwiększa ranking o " + getLevelFirstColor(2, level) + rank2Mod + "%");
+        lore.add("§8» " + getLevelFirstColor(3, level) + "Poziom III" + ChatColor.GRAY + ": " + getLevelSecondColor(3, level) + "Zwiększa ranking o " + getLevelFirstColor(3, level) + rank3Mod + "%");
+        lore.add("§8» " + getLevelFirstColor(4, level) + "Poziom IV" + ChatColor.GRAY + ": " + getLevelSecondColor(4, level) + "Zwiększa ranking o " + getLevelFirstColor(4, level) + rank4Mod + "%");
         lore.add(" ");
-        lore.add(ChatColor.GRAY + "Cena: " +  ChatColor.DARK_GRAY + "64x odłamki jaskiniowca");
+
+        String price = level == 4 ? ChatColor.DARK_GRAY + "Masz już najwyższy poziom tej umiejętności" : ChatColor.DARK_GREEN + "64 fragmenty księgi";
+
+        lore.add(ChatColor.GRAY + "Cena: " +  price);
 
         meta.setLore(lore);
         item.setItemMeta(meta);
 
-        rank0 = item;
+        return item;
     }
 
-    private static void createRank1() {
-
-        ItemStack item = new ItemStack(rankMat, 1);
-
-        ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(ChatColor.DARK_GRAY + "§2Dodatkowy ranking");
-        ArrayList<String> lore = new ArrayList<>();
-        lore.add(ChatColor.GRAY + "Twój poziom: " + ChatColor.RED + "1");
-        lore.add(" ");
-        lore.add(ChatColor.GREEN + "Poziom I" + ChatColor.GRAY + ": " + ChatColor.DARK_GREEN + "Zwiększa ranking o " + ChatColor.GREEN + rank1Mod + "%");
-        lore.add(ChatColor.RED + "Poziom II" + ChatColor.GRAY + ": " + ChatColor.DARK_RED + "Zwiększa ranking o " + ChatColor.RED + rank2Mod+ "%");
-        lore.add(ChatColor.RED + "Poziom III" + ChatColor.GRAY + ": " + ChatColor.DARK_RED + "Zwiększa ranking o " + ChatColor.RED + rank3Mod+ "%");
-        lore.add(ChatColor.RED + "Poziom IV" + ChatColor.GRAY + ": " + ChatColor.DARK_RED + "Zwiększa ranking o " + ChatColor.RED  + rank4Mod+ "%");
-        lore.add(" ");
-        lore.add(ChatColor.GRAY + "Cena: " +  ChatColor.DARK_GRAY + "128x odłamki jaskiniowca");
-
-        meta.setLore(lore);
-        item.setItemMeta(meta);
-
-        rank1 = item;
+    private static ChatColor getLevelFirstColor(int abilityLevel, int level) {
+        return level >= abilityLevel ? ChatColor.GREEN : ChatColor.RED;
     }
-    private static void createRank2() {
-
-        ItemStack item = new ItemStack(rankMat, 1);
-
-        ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(ChatColor.DARK_GRAY + "§2Dodatkowy ranking");
-        ArrayList<String> lore = new ArrayList<>();
-        lore.add(ChatColor.GRAY + "Twój poziom: " + ChatColor.RED + "2");
-        lore.add(" ");
-        lore.add(ChatColor.GREEN + "Poziom I" + ChatColor.GRAY + ": " + ChatColor.DARK_GREEN + "Zwiększa ranking o " + ChatColor.GREEN + rank1Mod + "%");
-        lore.add(ChatColor.GREEN + "Poziom II" + ChatColor.GRAY + ": " + ChatColor.DARK_GREEN + "Zwiększa ranking o " + ChatColor.GREEN + rank2Mod+ "%");
-        lore.add(ChatColor.RED + "Poziom III" + ChatColor.GRAY + ": " + ChatColor.DARK_RED + "Zwiększa ranking o " + ChatColor.RED + rank3Mod+ "%");
-        lore.add(ChatColor.RED + "Poziom IV" + ChatColor.GRAY + ": " + ChatColor.DARK_RED + "Zwiększa ranking o " + ChatColor.RED  + rank4Mod+ "%");
-        lore.add(" ");
-        lore.add(ChatColor.GRAY + "Cena: " +  ChatColor.DARK_GRAY + "192x odłamki jaskiniowca");
-
-        meta.setLore(lore);
-        item.setItemMeta(meta);
-
-        rank2 = item;
-    }
-    private static void createRank3() {
-
-        ItemStack item = new ItemStack(rankMat, 1);
-
-        ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(ChatColor.DARK_GRAY + "§2Dodatkowy ranking");
-        ArrayList<String> lore = new ArrayList<>();
-        lore.add(ChatColor.GRAY + "Twój poziom: " + ChatColor.RED + "3");
-        lore.add(" ");
-        lore.add(ChatColor.GREEN + "Poziom I" + ChatColor.GRAY + ": " + ChatColor.DARK_GREEN + "Zwiększa ranking o " + ChatColor.GREEN + rank1Mod + "%");
-        lore.add(ChatColor.GREEN + "Poziom II" + ChatColor.GRAY + ": " + ChatColor.DARK_GREEN + "Zwiększa ranking o " + ChatColor.GREEN + rank2Mod+ "%");
-        lore.add(ChatColor.GREEN + "Poziom III" + ChatColor.GRAY + ": " + ChatColor.DARK_GREEN + "Zwiększa ranking o " + ChatColor.GREEN + rank3Mod+ "%");
-        lore.add(ChatColor.RED + "Poziom IV" + ChatColor.GRAY + ": " + ChatColor.DARK_RED + "Zwiększa ranking o " + ChatColor.RED  + rank4Mod+ "%");
-        lore.add(" ");
-        lore.add(ChatColor.GRAY + "Cena: " +  ChatColor.DARK_GRAY + "256x odłamki jaskiniowca");
-
-        meta.setLore(lore);
-        item.setItemMeta(meta);
-
-        rank3 = item;
-    }
-    private static void createRank4() {
-
-        ItemStack item = new ItemStack(rankMat, 1);
-
-        ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(ChatColor.DARK_GRAY + "§2Dodatkowy ranking");
-        ArrayList<String> lore = new ArrayList<>();
-        lore.add(ChatColor.GRAY + "Twój poziom: " + ChatColor.RED + "4");
-        lore.add(" ");
-        lore.add(ChatColor.GREEN + "Poziom I" + ChatColor.GRAY + ": " + ChatColor.DARK_GREEN + "Zwiększa ranking o " + ChatColor.GREEN + rank1Mod + "%");
-        lore.add(ChatColor.GREEN + "Poziom II" + ChatColor.GRAY + ": " + ChatColor.DARK_GREEN + "Zwiększa ranking o " + ChatColor.GREEN + rank2Mod+ "%");
-        lore.add(ChatColor.GREEN + "Poziom III" + ChatColor.GRAY + ": " + ChatColor.DARK_GREEN + "Zwiększa ranking o " + ChatColor.GREEN + rank3Mod+ "%");
-        lore.add(ChatColor.GREEN + "Poziom IV" + ChatColor.GRAY + ": " + ChatColor.DARK_GREEN + "Zwiększa ranking o " + ChatColor.GREEN  + rank4Mod+ "%");
-        lore.add(" ");
-        lore.add(ChatColor.GRAY + "Cena: " + ChatColor.DARK_GRAY + "Masz już najwyższy poziom tej umiejętności");
-
-        meta.setLore(lore);
-        item.setItemMeta(meta);
-
-        rank4 = item;
+    private static ChatColor getLevelSecondColor(int abilityLevel, int level) {
+        return level >= abilityLevel ? ChatColor.DARK_GREEN : ChatColor.DARK_RED;
     }
 
+//
+//    private static void createDrop0() {
+//
+//        ItemStack item = new ItemStack(DROP_MATERIAL, 1);
+//
+//        ItemMeta meta = item.getItemMeta();
+//        meta.setDisplayName(ChatColor.DARK_GRAY + "§2Dodatkowy drop");
+//        ArrayList<String> lore = new ArrayList<>();
+//        lore.add(ChatColor.GRAY + "Twój poziom: " + ChatColor.RED + "0");
+//        lore.add(" ");
+//        lore.add(ChatColor.RED + "Poziom I" + ChatColor.GRAY + ": " + ChatColor.DARK_RED + "Zwiększa drop " + ChatColor.RED + "x" + drop1Mod);
+//        lore.add(ChatColor.RED + "Poziom II" + ChatColor.GRAY + ": " + ChatColor.DARK_RED + "Zwiększa drop " + ChatColor.RED + "x" + drop2Mod);
+//        lore.add(ChatColor.RED + "Poziom III" + ChatColor.GRAY + ": " + ChatColor.DARK_RED + "Zwiększa drop " + ChatColor.RED + "x" + drop3Mod);
+//        lore.add(ChatColor.RED + "Poziom IV" + ChatColor.GRAY + ": " + ChatColor.DARK_RED + "Zwiększa drop " + ChatColor.RED  + "x" + drop4Mod);
+//        lore.add(" ");
+//        lore.add(ChatColor.GRAY + "Cena: " +  ChatColor.DARK_GRAY + "64x odłamki jaskiniowca");
+//
+//        meta.setLore(lore);
+//        item.setItemMeta(meta);
+//
+//        drop0 = item;
+//    }
+//
+//    private static void createDrop1() {
+//
+//        ItemStack item = new ItemStack(DROP_MATERIAL, 1);
+//
+//        ItemMeta meta = item.getItemMeta();
+//        meta.setDisplayName(ChatColor.DARK_GRAY + "§2Dodatkowy drop");
+//        ArrayList<String> lore = new ArrayList<>();
+//        lore.add(ChatColor.GRAY + "Twój poziom: " + ChatColor.RED + "1");
+//        lore.add(" ");
+//        lore.add(ChatColor.GREEN + "Poziom I" + ChatColor.GRAY + ": " + ChatColor.DARK_GREEN + "Zwiększa drop " + ChatColor.GREEN + "x" + drop1Mod);
+//        lore.add(ChatColor.RED + "Poziom II" + ChatColor.GRAY + ": " + ChatColor.DARK_RED + "Zwiększa drop " + ChatColor.RED + "x" + drop2Mod);
+//        lore.add(ChatColor.RED + "Poziom III" + ChatColor.GRAY + ": " + ChatColor.DARK_RED + "Zwiększa drop " + ChatColor.RED + "x" + drop3Mod);
+//        lore.add(ChatColor.RED + "Poziom IV" + ChatColor.GRAY + ": " + ChatColor.DARK_RED + "Zwiększa drop " + ChatColor.RED  + "x" + drop4Mod);
+//        lore.add(" ");
+//        lore.add(ChatColor.GRAY + "Cena: " +  ChatColor.DARK_GRAY + "128x odłamki jaskiniowca");
+//
+//        meta.setLore(lore);
+//        item.setItemMeta(meta);
+//
+//        drop1 = item;
+//    }
+//    private static void createDrop2() {
+//
+//        ItemStack item = new ItemStack(DROP_MATERIAL, 1);
+//
+//        ItemMeta meta = item.getItemMeta();
+//        meta.setDisplayName(ChatColor.DARK_GRAY + "§2Dodatkowy drop");
+//        ArrayList<String> lore = new ArrayList<>();
+//        lore.add(ChatColor.GRAY + "Twój poziom: " + ChatColor.RED + "2");
+//        lore.add(" ");
+//        lore.add(ChatColor.GREEN + "Poziom I" + ChatColor.GRAY + ": " + ChatColor.DARK_GREEN + "Zwiększa drop " + ChatColor.GREEN + "x" + drop1Mod);
+//        lore.add(ChatColor.GREEN + "Poziom II" + ChatColor.GRAY + ": " + ChatColor.DARK_GREEN + "Zwiększa drop " + ChatColor.GREEN + "x" + drop2Mod);
+//        lore.add(ChatColor.RED + "Poziom III" + ChatColor.GRAY + ": " + ChatColor.DARK_RED + "Zwiększa drop " + ChatColor.RED + "x" + drop3Mod);
+//        lore.add(ChatColor.RED + "Poziom IV" + ChatColor.GRAY + ": " + ChatColor.DARK_RED + "Zwiększa drop " + ChatColor.RED  + "x" + drop4Mod);
+//        lore.add(" ");
+//        lore.add(ChatColor.GRAY + "Cena: " +  ChatColor.DARK_GRAY + "192x odłamki jaskiniowca");
+//
+//        meta.setLore(lore);
+//        item.setItemMeta(meta);
+//
+//        drop2 = item;
+//    }
+//    private static void createDrop3() {
+//
+//        ItemStack item = new ItemStack(DROP_MATERIAL, 1);
+//
+//        ItemMeta meta = item.getItemMeta();
+//        meta.setDisplayName(ChatColor.DARK_GRAY + "§2Dodatkowy drop");
+//        ArrayList<String> lore = new ArrayList<>();
+//        lore.add(ChatColor.GRAY + "Twój poziom: " + ChatColor.RED + "3");
+//        lore.add(" ");
+//        lore.add(ChatColor.GREEN + "Poziom I" + ChatColor.GRAY + ": " + ChatColor.DARK_GREEN + "Zwiększa drop " + ChatColor.GREEN + "x" + drop1Mod);
+//        lore.add(ChatColor.GREEN + "Poziom II" + ChatColor.GRAY + ": " + ChatColor.DARK_GREEN + "Zwiększa drop " + ChatColor.GREEN + "x" + drop2Mod);
+//        lore.add(ChatColor.GREEN + "Poziom III" + ChatColor.GRAY + ": " + ChatColor.DARK_GREEN + "Zwiększa drop " + ChatColor.GREEN + "x" + drop3Mod);
+//        lore.add(ChatColor.RED + "Poziom IV" + ChatColor.GRAY + ": " + ChatColor.DARK_RED + "Zwiększa drop " + ChatColor.RED  + "x" + drop4Mod);
+//        lore.add(" ");
+//        lore.add(ChatColor.GRAY + "Cena: " +  ChatColor.DARK_GRAY + "256x odłamki jaskiniowca");
+//
+//        meta.setLore(lore);
+//        item.setItemMeta(meta);
+//
+//        drop3 = item;
+//    }
+//    private static void createDrop4() {
+//
+//        ItemStack item = new ItemStack(DROP_MATERIAL, 1);
+//
+//        ItemMeta meta = item.getItemMeta();
+//        meta.setDisplayName(ChatColor.DARK_GRAY + "§2Dodatkowy drop");
+//        ArrayList<String> lore = new ArrayList<>();
+//        lore.add(ChatColor.GRAY + "Twój poziom: " + ChatColor.RED + "4");
+//        lore.add(" ");
+//        lore.add(ChatColor.GREEN + "Poziom I" + ChatColor.GRAY + ": " + ChatColor.DARK_GREEN + "Zwiększa drop " + ChatColor.GREEN + "x" + drop1Mod);
+//        lore.add(ChatColor.GREEN + "Poziom II" + ChatColor.GRAY + ": " + ChatColor.DARK_GREEN + "Zwiększa drop " + ChatColor.GREEN + "x" + drop2Mod);
+//        lore.add(ChatColor.GREEN + "Poziom III" + ChatColor.GRAY + ": " + ChatColor.DARK_GREEN + "Zwiększa drop " + ChatColor.GREEN + "x" + drop3Mod);
+//        lore.add(ChatColor.GREEN + "Poziom IV" + ChatColor.GRAY + ": " + ChatColor.DARK_GREEN + "Zwiększa drop " + ChatColor.GREEN  + "x" + drop4Mod);
+//        lore.add(" ");
+//        lore.add(ChatColor.GRAY + "Cena: " + ChatColor.DARK_GRAY + "Masz już najwyższy poziom tej umiejętności");
+//
+//        meta.setLore(lore);
+//        item.setItemMeta(meta);
+//
+//        drop4 = item;
+//    }
+//
+//    // rank
+//
+//
+//
+//    private static void createRank0() {
+//
+//
+//
+//        ItemStack item = new ItemStack(rankMat, 1);
+//
+//        ItemMeta meta = item.getItemMeta();
+//        meta.setDisplayName(ChatColor.DARK_GRAY + "§2Dodatkowy ranking");
+//        ArrayList<String> lore = new ArrayList<>();
+//        lore.add(ChatColor.GRAY + "Twój poziom: " + ChatColor.RED + "0");
+//        lore.add(" ");
+//        lore.add(ChatColor.RED + "Poziom I" + ChatColor.GRAY + ": " + ChatColor.DARK_RED + "Zwiększa ranking o " + ChatColor.RED + rank1Mod + "%");
+//        lore.add(ChatColor.RED + "Poziom II" + ChatColor.GRAY + ": " + ChatColor.DARK_RED + "Zwiększa ranking o " + ChatColor.RED + rank2Mod+ "%");
+//        lore.add(ChatColor.RED + "Poziom III" + ChatColor.GRAY + ": " + ChatColor.DARK_RED + "Zwiększa ranking o " + ChatColor.RED + rank3Mod+ "%");
+//        lore.add(ChatColor.RED + "Poziom IV" + ChatColor.GRAY + ": " + ChatColor.DARK_RED + "Zwiększa ranking o " + ChatColor.RED  + rank4Mod+ "%");
+//        lore.add(" ");
+//        lore.add(ChatColor.GRAY + "Cena: " +  ChatColor.DARK_GRAY + "64x odłamki jaskiniowca");
+//
+//        meta.setLore(lore);
+//        item.setItemMeta(meta);
+//
+//        rank0 = item;
+//    }
+//
+//    private static void createRank1() {
+//
+//        ItemStack item = new ItemStack(rankMat, 1);
+//
+//        ItemMeta meta = item.getItemMeta();
+//        meta.setDisplayName(ChatColor.DARK_GRAY + "§2Dodatkowy ranking");
+//        ArrayList<String> lore = new ArrayList<>();
+//        lore.add(ChatColor.GRAY + "Twój poziom: " + ChatColor.RED + "1");
+//        lore.add(" ");
+//        lore.add(ChatColor.GREEN + "Poziom I" + ChatColor.GRAY + ": " + ChatColor.DARK_GREEN + "Zwiększa ranking o " + ChatColor.GREEN + rank1Mod + "%");
+//        lore.add(ChatColor.RED + "Poziom II" + ChatColor.GRAY + ": " + ChatColor.DARK_RED + "Zwiększa ranking o " + ChatColor.RED + rank2Mod+ "%");
+//        lore.add(ChatColor.RED + "Poziom III" + ChatColor.GRAY + ": " + ChatColor.DARK_RED + "Zwiększa ranking o " + ChatColor.RED + rank3Mod+ "%");
+//        lore.add(ChatColor.RED + "Poziom IV" + ChatColor.GRAY + ": " + ChatColor.DARK_RED + "Zwiększa ranking o " + ChatColor.RED  + rank4Mod+ "%");
+//        lore.add(" ");
+//        lore.add(ChatColor.GRAY + "Cena: " +  ChatColor.DARK_GRAY + "128x odłamki jaskiniowca");
+//
+//        meta.setLore(lore);
+//        item.setItemMeta(meta);
+//
+//        rank1 = item;
+//    }
+//    private static void createRank2() {
+//
+//        ItemStack item = new ItemStack(rankMat, 1);
+//
+//        ItemMeta meta = item.getItemMeta();
+//        meta.setDisplayName(ChatColor.DARK_GRAY + "§2Dodatkowy ranking");
+//        ArrayList<String> lore = new ArrayList<>();
+//        lore.add(ChatColor.GRAY + "Twój poziom: " + ChatColor.RED + "2");
+//        lore.add(" ");
+//        lore.add(ChatColor.GREEN + "Poziom I" + ChatColor.GRAY + ": " + ChatColor.DARK_GREEN + "Zwiększa ranking o " + ChatColor.GREEN + rank1Mod + "%");
+//        lore.add(ChatColor.GREEN + "Poziom II" + ChatColor.GRAY + ": " + ChatColor.DARK_GREEN + "Zwiększa ranking o " + ChatColor.GREEN + rank2Mod+ "%");
+//        lore.add(ChatColor.RED + "Poziom III" + ChatColor.GRAY + ": " + ChatColor.DARK_RED + "Zwiększa ranking o " + ChatColor.RED + rank3Mod+ "%");
+//        lore.add(ChatColor.RED + "Poziom IV" + ChatColor.GRAY + ": " + ChatColor.DARK_RED + "Zwiększa ranking o " + ChatColor.RED  + rank4Mod+ "%");
+//        lore.add(" ");
+//        lore.add(ChatColor.GRAY + "Cena: " +  ChatColor.DARK_GRAY + "192x odłamki jaskiniowca");
+//
+//        meta.setLore(lore);
+//        item.setItemMeta(meta);
+//
+//        rank2 = item;
+//    }
+//    private static void createRank3() {
+//
+//        ItemStack item = new ItemStack(rankMat, 1);
+//
+//        ItemMeta meta = item.getItemMeta();
+//        meta.setDisplayName(ChatColor.DARK_GRAY + "§2Dodatkowy ranking");
+//        ArrayList<String> lore = new ArrayList<>();
+//        lore.add(ChatColor.GRAY + "Twój poziom: " + ChatColor.RED + "3");
+//        lore.add(" ");
+//        lore.add(ChatColor.GREEN + "Poziom I" + ChatColor.GRAY + ": " + ChatColor.DARK_GREEN + "Zwiększa ranking o " + ChatColor.GREEN + rank1Mod + "%");
+//        lore.add(ChatColor.GREEN + "Poziom II" + ChatColor.GRAY + ": " + ChatColor.DARK_GREEN + "Zwiększa ranking o " + ChatColor.GREEN + rank2Mod+ "%");
+//        lore.add(ChatColor.GREEN + "Poziom III" + ChatColor.GRAY + ": " + ChatColor.DARK_GREEN + "Zwiększa ranking o " + ChatColor.GREEN + rank3Mod+ "%");
+//        lore.add(ChatColor.RED + "Poziom IV" + ChatColor.GRAY + ": " + ChatColor.DARK_RED + "Zwiększa ranking o " + ChatColor.RED  + rank4Mod+ "%");
+//        lore.add(" ");
+//        lore.add(ChatColor.GRAY + "Cena: " +  ChatColor.DARK_GRAY + "256x odłamki jaskiniowca");
+//
+//        meta.setLore(lore);
+//        item.setItemMeta(meta);
+//
+//        rank3 = item;
+//    }
+//    private static void createRank4() {
+//
+//        ItemStack item = new ItemStack(rankMat, 1);
+//
+//        ItemMeta meta = item.getItemMeta();
+//        meta.setDisplayName(ChatColor.DARK_GRAY + "§2Dodatkowy ranking");
+//        ArrayList<String> lore = new ArrayList<>();
+//        lore.add(ChatColor.GRAY + "Twój poziom: " + ChatColor.RED + "4");
+//        lore.add(" ");
+//        lore.add(ChatColor.GREEN + "Poziom I" + ChatColor.GRAY + ": " + ChatColor.DARK_GREEN + "Zwiększa ranking o " + ChatColor.GREEN + rank1Mod + "%");
+//        lore.add(ChatColor.GREEN + "Poziom II" + ChatColor.GRAY + ": " + ChatColor.DARK_GREEN + "Zwiększa ranking o " + ChatColor.GREEN + rank2Mod+ "%");
+//        lore.add(ChatColor.GREEN + "Poziom III" + ChatColor.GRAY + ": " + ChatColor.DARK_GREEN + "Zwiększa ranking o " + ChatColor.GREEN + rank3Mod+ "%");
+//        lore.add(ChatColor.GREEN + "Poziom IV" + ChatColor.GRAY + ": " + ChatColor.DARK_GREEN + "Zwiększa ranking o " + ChatColor.GREEN  + rank4Mod+ "%");
+//        lore.add(" ");
+//        lore.add(ChatColor.GRAY + "Cena: " + ChatColor.DARK_GRAY + "Masz już najwyższy poziom tej umiejętności");
+//
+//        meta.setLore(lore);
+//        item.setItemMeta(meta);
+//
+//        rank4 = item;
+//    }
 
 }

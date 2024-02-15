@@ -53,7 +53,7 @@ public class ServerConfig {
         plugin.getServer().getPluginManager().registerEvents(new FortuneSheers(), plugin);
 
         BlockPlacingBlocks blockPlacingBlocks = new BlockPlacingBlocks(plugin);
-        blockPlacingBlocks.runTaskTimer(plugin, 0L, 20L * 5);
+        blockPlacingBlocks.runTaskTimer(plugin, 0L, 20L * Gradzix_Core.REMOVE_BLOCKS_INTERVAL_SECONDS);
 
         plugin.getServer().getPluginManager().registerEvents(blockPlacingBlocks, plugin);
 

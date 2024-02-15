@@ -4,11 +4,15 @@ import com.sk89q.worldedit.IncompleteRegionException;
 import com.sk89q.worldedit.bukkit.BukkitAdapter;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import com.sk89q.worldedit.regions.Region;
+import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
+import com.sk89q.worldguard.protection.managers.storage.StorageException;
+import me.xxgradzix.gradzixcore.generators.Generators;
 import me.xxgradzix.gradzixcore.generators.data.database.entities.GeneratorEntity;
 import me.xxgradzix.gradzixcore.generators.data.database.entities.GeneratorLocationEntity;
 import me.xxgradzix.gradzixcore.generators.data.database.managers.GeneratorLocationEntityManager;
 import me.xxgradzix.gradzixcore.generators.data.database.managers.GeneratorEntityManager;
 import me.xxgradzix.gradzixcore.generators.managers.GeneratorManager;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.Command;
@@ -29,6 +33,7 @@ public class SetGeneratorCommand implements CommandExecutor, TabCompleter {
 
     private final WorldEditPlugin worldEdit;
     private final GeneratorManager generatorManager;
+
     public SetGeneratorCommand(WorldEditPlugin worldEdit, GeneratorManager generatorManager) {
         this.worldEdit = worldEdit;
         this.generatorManager = generatorManager;
@@ -69,7 +74,6 @@ public class SetGeneratorCommand implements CommandExecutor, TabCompleter {
             return false;
         }
 
-//        Optional<GeneratorEntity> optionalGenerator = generatorManager.getGeneratorByID(userInputId);
         Optional<GeneratorEntity> optionalGenerator = generatorManager.getGeneratorByName(userInputName);
 
         if(!optionalGenerator.isPresent()) {
@@ -90,12 +94,15 @@ public class SetGeneratorCommand implements CommandExecutor, TabCompleter {
         Location minLocation = new Location(world, minX, minY, minZ);
         Location maxLocation = new Location(world, maxX, maxY, maxZ);
 
-        generatorManager.createGeneratorLocation(selection, optionalGenerator.get(), world.getUID(), minLocation, maxLocation);
-//        generatorLocationManager.createOrUpdateGeneratorLocation(selection, generatorLocation);
+        try {
+            generatorManager.createGeneratorLocation(selection, optionalGenerator.get(), world.getUID(), minLocation, maxLocation);
+        } catch (StorageException e) {
+            player.sendMessage("Wystąpił błąd podczas zapisywania regionu generatora");
+            player.sendMessage("Ustaw mu region ponownie jak plugin worldguard bedzie dzialal");
+        }
 
         return true;
     }
-
 
     @Nullable
     @Override

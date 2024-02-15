@@ -51,7 +51,7 @@ public class WeaknessEffectAfflictionOnDamage implements Listener {
 
         int taskId = scheduler.runTaskLater(Gradzix_Core.getInstance(), () -> {
             weakenedPlayers.remove(damaged.getUniqueId());
-        }, 20 * 10).getTaskId();
+        }, 20 * Gradzix_Core.WEAKNESS_EFFECT_DURATION_TIME_SECONDS).getTaskId();
 
         weakenedPlayers.put(damaged.getUniqueId(), taskId);
         damager.sendMessage(ChatColor.GREEN + "Udało Ci się nałożyć efekt osłabienia na przeciwnika!");

@@ -20,6 +20,9 @@ import java.sql.SQLException;
 
 public final class Generators {
 
+    public static final String GENERATOR_REGION_PREFIX = "generator_region_";
+
+
     private final Gradzix_Core plugin;
     private final ConnectionSource connectionSource;
     private final WorldEditPlugin worldEditPlugin;
@@ -50,7 +53,7 @@ public final class Generators {
             throw new RuntimeException(e);
         }
 
-        generatorManager = new GeneratorManager(generatorLocationEntityManager, generatorEntityManager);
+        generatorManager = new GeneratorManager(generatorLocationEntityManager, generatorEntityManager, worldGuardPlugin);
 
         ItemManager.init();
 //        plugin.getServer().getPluginManager().registerEvents(new PrioritiesGuiClick(), plugin);

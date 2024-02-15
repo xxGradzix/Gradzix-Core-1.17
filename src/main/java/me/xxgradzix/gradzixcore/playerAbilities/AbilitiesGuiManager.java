@@ -146,11 +146,11 @@ public class AbilitiesGuiManager {
 
         // drop
 
-        GuiItem drop0 = ItemBuilder.from(ItemManager.drop0).asGuiItem();
-        GuiItem drop1 = ItemBuilder.from(ItemManager.drop1).asGuiItem();
-        GuiItem drop2 = ItemBuilder.from(ItemManager.drop2).asGuiItem();
-        GuiItem drop3 = ItemBuilder.from(ItemManager.drop3).asGuiItem();
-        GuiItem drop4 = ItemBuilder.from(ItemManager.drop4).asGuiItem();
+        GuiItem drop0 = ItemBuilder.from(ItemManager.createDropByLevel(0)).asGuiItem();
+        GuiItem drop1 = ItemBuilder.from(ItemManager.createDropByLevel(1)).asGuiItem();
+        GuiItem drop2 = ItemBuilder.from(ItemManager.createDropByLevel(2)).asGuiItem();
+        GuiItem drop3 = ItemBuilder.from(ItemManager.createDropByLevel(3)).asGuiItem();
+        GuiItem drop4 = ItemBuilder.from(ItemManager.createDropByLevel(4)).asGuiItem();
 
         drop0.setAction((action) -> {
             int requiredAmount = 64;
@@ -239,11 +239,11 @@ public class AbilitiesGuiManager {
         // rank
 
 
-        GuiItem rank0 = ItemBuilder.from(ItemManager.rank0).asGuiItem();
-        GuiItem rank1 = ItemBuilder.from(ItemManager.rank1).asGuiItem();
-        GuiItem rank2 = ItemBuilder.from(ItemManager.rank2).asGuiItem();
-        GuiItem rank3 = ItemBuilder.from(ItemManager.rank3).asGuiItem();
-        GuiItem rank4 = ItemBuilder.from(ItemManager.rank4).asGuiItem();
+        GuiItem rank0 = ItemBuilder.from(ItemManager.createRankByLevel(0)).asGuiItem();
+        GuiItem rank1 = ItemBuilder.from(ItemManager.createRankByLevel(1)).asGuiItem();
+        GuiItem rank2 = ItemBuilder.from(ItemManager.createRankByLevel(2)).asGuiItem();
+        GuiItem rank3 = ItemBuilder.from(ItemManager.createRankByLevel(3)).asGuiItem();
+        GuiItem rank4 = ItemBuilder.from(ItemManager.createRankByLevel(4)).asGuiItem();
 
         rank0.setAction((action) -> {
             int requiredAmount = 64;

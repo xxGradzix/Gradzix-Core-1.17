@@ -91,7 +91,7 @@ public class RefillGenerators implements CommandExecutor {
                     HologramManager.addHologram(location, generatorType);
                 }
 
-            }, 0, 20L * 180L).getTaskId();
+            }, 0, 20L * Gradzix_Core.FAST_GENERATOR_REGENERATION_TIME_SECONDS).getTaskId();
 
             int fiveMinuteTaskId = scheduler.runTaskTimer(plugin, () -> {
 
@@ -113,7 +113,7 @@ public class RefillGenerators implements CommandExecutor {
                     HologramManager.addHologram(location, generatorType);
                 }
 
-            }, 0, 20L * 300L).getTaskId();
+            }, 0, 20L * Gradzix_Core.SLOW_GENERATOR_REGENERATION_TIME_SECONDS).getTaskId();
 
             taskIds.add(threeMinuteTaskId);
             taskIds.add(fiveMinuteTaskId);

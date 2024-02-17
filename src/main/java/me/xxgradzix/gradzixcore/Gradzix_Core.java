@@ -44,7 +44,7 @@ public final class Gradzix_Core extends JavaPlugin {
     
     public static final boolean USEDB = true;
     
-    public static final long WEAKNESS_EFFECT_DURATION_TIME_SECONDS = 20;
+    public static final long WEAKNESS_EFFECT_DURATION_TIME_SECONDS = 3;
     public static final long AFK_REWARD_DELAY_SECONDS = 15L * 60;
     public static final long BOSS_SPAWN_DELAY_SECONDS = 60;
     public static final long REMOVE_BLOCKS_INTERVAL_SECONDS = 300;
@@ -58,7 +58,7 @@ public final class Gradzix_Core extends JavaPlugin {
     @Getter
     private static Gradzix_Core instance;
 
-    private Zdrapka zdrapkaPlugin;
+    private Zdrapka scratchCardPlugin;
     private ChatOptions chatOptions;
     private MagicFirework magicFirework;
     private PlayerSettings playerSettings;
@@ -83,7 +83,7 @@ public final class Gradzix_Core extends JavaPlugin {
 
     private ConnectionSource connectionSource;
 
-    Properties loadConfig() throws IOException {
+    Properties loadConfig() {
         Properties prop = new Properties();
         InputStream input = getClass().getClassLoader().getResourceAsStream("application.properties");
 
@@ -141,9 +141,9 @@ public final class Gradzix_Core extends JavaPlugin {
             chatOptions = new ChatOptions(this, connectionSource);
             chatOptions.onEnable();
         }
-        if (zdrapkaPlugin == null) {
-            zdrapkaPlugin = new Zdrapka(this, connectionSource);
-            zdrapkaPlugin.onEnable();
+        if (scratchCardPlugin == null) {
+            scratchCardPlugin = new Zdrapka(this, connectionSource);
+            scratchCardPlugin.onEnable();
         }
 
         if (magicFirework == null) {

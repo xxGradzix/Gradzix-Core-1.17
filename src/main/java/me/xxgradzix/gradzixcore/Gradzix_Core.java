@@ -115,7 +115,6 @@ public final class Gradzix_Core extends JavaPlugin {
         this.connectionSource = new JdbcConnectionSource(databaseUrl, user, password);
     }
 
-
     @Override
     public void onEnable()  {
         instance = this;
@@ -127,7 +126,6 @@ public final class Gradzix_Core extends JavaPlugin {
             log.severe(String.format("[%s] - Disabled due to no Vault dependency found!", getDescription().getName()));
             return;
         }
-//        WorldEditPlugin worldEdit = Bukkit.getPluginManager().getPlugin("WorldEdit");
         if (Bukkit.getPluginManager().getPlugin("WorldEdit") != null) {
         } else {
             getLogger().severe("WorldEdit is not available.");

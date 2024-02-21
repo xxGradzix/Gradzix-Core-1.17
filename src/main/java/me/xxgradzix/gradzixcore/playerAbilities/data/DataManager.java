@@ -34,6 +34,7 @@ public class DataManager {
     }
 
     private static final Map<UUID, Double> dropAbilityModifierCache = new HashMap<>();
+
     public static double getDropAbilityModifier(Player player) {
         if (!dropAbilityModifierCache.containsKey(player.getUniqueId())) {
             refreshDropAbilityModifier(player);
@@ -45,6 +46,7 @@ public class DataManager {
     }
 
     private static final Map<UUID, Double> rankAbilityModifierCache = new HashMap<>();
+
     public static double getRankAbilityModifier(Player player) {
         if (!rankAbilityModifierCache.containsKey(player.getUniqueId())) {
             refreshRankAbilityModifier(player);

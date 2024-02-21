@@ -2,8 +2,7 @@ package me.xxgradzix.gradzixcore.playerPerks.listeners;
 
 import me.xxgradzix.gradzixcore.Gradzix_Core;
 import me.xxgradzix.gradzixcore.playerPerks.PerkType;
-import me.xxgradzix.gradzixcore.playerPerks.data.database.entities.PlayerPerksEntity;
-import me.xxgradzix.gradzixcore.playerPerks.data.database.managers.PlayerPerkEntityManager;
+import me.xxgradzix.gradzixcore.playerPerks.data.database.DataManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -13,18 +12,17 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitScheduler;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
+import java.util.UUID;
 
 public class WeaknessEffectAfflictionOnDamage implements Listener {
 
     private static Map<UUID, Integer> weakenedPlayers = new HashMap<>();
 
     private final BukkitScheduler scheduler = Bukkit.getScheduler();
-    private final PlayerPerkEntityManager playerPerksEntityManager;
 
-    public WeaknessEffectAfflictionOnDamage(PlayerPerkEntityManager playerPerksEntityManager) {
-        this.playerPerksEntityManager = playerPerksEntityManager;
-    }
 
     @EventHandler
     public void onPlayerDamage(EntityDamageByEntityEvent event) {
@@ -39,9 +37,7 @@ public class WeaknessEffectAfflictionOnDamage implements Listener {
             event.setDamage(event.getDamage() * 1.5);
         }
 
-        PlayerPerksEntity damagerPerks = playerPerksEntityManager.getPlayerPerksEntityById(damager.getUniqueId());
-
-        if(!shouldApplyEffect(damagerPerks.getPerkTypeLevel(PerkType.WEAKNESS))) return;
+        if(!shouldApplyEffect(DataManager.getPerkEntity(damager).getPerkTypeLevel(PerkType.WEAKNESS))) return;
 
         if(weakenedPlayers.containsKey(damaged.getUniqueId())) {
             scheduler.cancelTask(weakenedPlayers.get(damaged.getUniqueId()));

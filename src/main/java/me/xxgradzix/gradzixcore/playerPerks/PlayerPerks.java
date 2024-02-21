@@ -24,7 +24,12 @@ public class PlayerPerks {
 
     private final PerkGuiManager perkGuiManager = new PerkGuiManager();
 
-    private PlayerPerkEntityManager playerPerksEntityManager;
+    private static PlayerPerkEntityManager playerPerksEntityManager;
+
+    public static PlayerPerkEntityManager getPlayerPerkEntityManager() {
+        return playerPerksEntityManager;
+    }
+
     public void configureDB() throws SQLException {
         TableUtils.createTableIfNotExists(connectionSource, PlayerPerksEntity.class);
         playerPerksEntityManager = new PlayerPerkEntityManager(connectionSource);
@@ -44,11 +49,11 @@ public class PlayerPerks {
         }
 
         plugin.getServer().getPluginManager().registerEvents(new BookClickIncreaseLevel(playerPerksEntityManager), plugin);
-        plugin.getServer().getPluginManager().registerEvents(new PotionEffectAfflictionOnDamage(playerPerksEntityManager), plugin);
-        plugin.getServer().getPluginManager().registerEvents(new StrengthPerkIncreaseDamage(playerPerksEntityManager), plugin);
-        plugin.getServer().getPluginManager().registerEvents(new SetHeartsOnJoin(playerPerksEntityManager), plugin);
-        plugin.getServer().getPluginManager().registerEvents(new DropFragmentOnKill(playerPerksEntityManager), plugin);
-        plugin.getServer().getPluginManager().registerEvents(new WeaknessEffectAfflictionOnDamage(playerPerksEntityManager), plugin);
+        plugin.getServer().getPluginManager().registerEvents(new PotionEffectAfflictionOnDamage(), plugin);
+        plugin.getServer().getPluginManager().registerEvents(new StrengthPerkIncreaseDamage(), plugin);
+        plugin.getServer().getPluginManager().registerEvents(new SetHeartsOnJoin(), plugin);
+        plugin.getServer().getPluginManager().registerEvents(new DropFragmentOnKill(), plugin);
+        plugin.getServer().getPluginManager().registerEvents(new WeaknessEffectAfflictionOnDamage(), plugin);
 
         plugin.getCommand("givePerkBook").setExecutor(new GivePerkBooksCommand());
         plugin.getCommand("ustawPerk").setExecutor(new SetPerkLevelCommand(playerPerksEntityManager));

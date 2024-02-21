@@ -32,7 +32,6 @@ public class BookClickIncreaseLevel implements Listener {
         if(item == null) return;
 
         PerkType perkType = getPerkTypeByPerkBook(item);
-//        PerkType perkType = PerkType.STRENGTH;
 
         if (perkType == null) return;
 
@@ -50,7 +49,6 @@ public class BookClickIncreaseLevel implements Listener {
         if (item.isSimilar(ItemManager.poisonPerkBook)) return PerkType.POISON;
         if (item.isSimilar(ItemManager.resistancePerkBook)) return PerkType.RESISTANCE;
         if (item.isSimilar(ItemManager.lifeStealPerkBook)) return PerkType.LIFE_STEAL;
-//        if (item.isSimilar(ItemManager.sicknessPerkBook)) return PerkType.SICKNESS;
         if (item.isSimilar(ItemManager.additionalHeartsPerkBook)) return PerkType.ADDITIONAL_HEARTS;
         if (item.isSimilar(ItemManager.weaknessPerkBook)) return PerkType.WEAKNESS;
         if (item.isSimilar(ItemManager.slownessPerkBook)) return PerkType.SLOWNESS;

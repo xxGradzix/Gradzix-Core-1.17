@@ -52,6 +52,7 @@ public final class Gradzix_Core extends JavaPlugin {
     public static final long FAST_GENERATOR_REGENERATION_TIME_SECONDS = 180;
     public static final long SLOW_GENERATOR_REGENERATION_TIME_SECONDS = 300;
     public static final int MESSAGE_BUTTON_COOLDOWN_SECONDS = 3;
+    public static final int SETTINGS_BUTTON_COOLDOWN_SECONDS = 5;
 
     private static final Logger log = Logger.getLogger("Minecraft");
 

@@ -4,6 +4,7 @@ import dev.triumphteam.gui.builder.item.ItemBuilder;
 import dev.triumphteam.gui.guis.Gui;
 import me.xxgradzix.gradzixcore.Gradzix_Core;
 import me.xxgradzix.gradzixcore.chatOptions.items.ItemManager;
+import me.xxgradzix.gradzixcore.playerPerks.PerkType;
 import net.kyori.adventure.text.Component;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -17,9 +18,6 @@ public class PerkGuiManager {
 
     private static final Gradzix_Core plugin = Gradzix_Core.getInstance();
 
-//    public static void drawPerk(Player player) {
-//        drawPerk(plugin, perkBooks, player);
-//    }
     public void drawPerk(Gradzix_Core plugin, Player player) {
 
         Gui gui = Gui.gui()
@@ -35,25 +33,9 @@ public class PerkGuiManager {
         gui.open(player);
 
         List<ItemStack> perkBooks = new ArrayList<>();
-        perkBooks.add(me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.poisonPerkBook);
-        perkBooks.add(me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.strengthPerkBook);
-        perkBooks.add(me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.slownessPerkBook);
-        perkBooks.add(me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.additionalHeartsPerkBook);
-        perkBooks.add(me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.resistancePerkBook);
-        perkBooks.add(me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.lifeStealPerkBook);
-        perkBooks.add(me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.weaknessPerkBook);
-        perkBooks.add(me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.perkFragmentDrop);
-//        perkBooks.add(me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.sicknessPerkBook);
-        perkBooks.add(me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.poisonPerkBook);
-        perkBooks.add(me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.strengthPerkBook);
-        perkBooks.add(me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.slownessPerkBook);
-        perkBooks.add(me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.additionalHeartsPerkBook);
-        perkBooks.add(me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.resistancePerkBook);
-        perkBooks.add(me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.lifeStealPerkBook);
-        perkBooks.add(me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.weaknessPerkBook);
-        perkBooks.add(me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.perkFragmentDrop);
-//        perkBooks.add(me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.sicknessPerkBook);
-
+        for(PerkType perkType : PerkType.values()) {
+            perkBooks.add(me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.getPerkBook(perkType));
+        }
         ScrollItems scrollItems;
         scrollItems = new ScrollItems(perkBooks, player, gui, 2);
 

@@ -26,7 +26,8 @@ public class ScrollItems extends BukkitRunnable {
     public ScrollItems(List<ItemStack> items, Player player, Gui gui, int row) {
 
         if (items.size() < 9) {
-            throw new RuntimeException("liczba nagród nie moze byc mniejsza niz 9");
+            items = new ArrayList<>(items);
+            items.addAll(items);
         }
 
         this.player = player;

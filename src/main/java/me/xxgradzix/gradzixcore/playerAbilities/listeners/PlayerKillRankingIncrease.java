@@ -2,10 +2,8 @@ package me.xxgradzix.gradzixcore.playerAbilities.listeners;
 
 import me.xxgradzix.gradzixcore.chatOptions.ChatOptions;
 import me.xxgradzix.gradzixcore.chatOptions.data.database.entities.ChatOptionsEntity;
+import me.xxgradzix.gradzixcore.clansCore.events.UserPointsChangeEvent;
 import me.xxgradzix.gradzixcore.playerAbilities.data.DataManager;
-import me.xxgradzix.gradzixcore.playerAbilities.data.database.entities.enums.Ability;
-
-import net.dzikoysk.funnyguilds.event.rank.CombatPointsChangeEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -19,12 +17,12 @@ import java.util.stream.Collectors;
 public class PlayerKillRankingIncrease implements Listener {
 
     @EventHandler
-    public void onPlayerKill(CombatPointsChangeEvent event) {
+    public void onPlayerKill(UserPointsChangeEvent event) {
 
-        int killerPoints = event.getAttackerPointsChange();
-        int preyPoints = event.getAttackerPointsChange();
+        int killerPoints = event.getKillerPointsToGet();
+        int preyPoints = event.getVictimPointsToLose();
 
-        Player p = Bukkit.getPlayer(event.getAttacker().getUUID());
+        Player p = event.getKiller();
 
         double multiplier = DataManager.getRankAbilityModifier(p);
 
@@ -32,7 +30,7 @@ public class PlayerKillRankingIncrease implements Listener {
             killerPoints *= multiplier;
         }
 
-        event.setAttackerPointsChange(killerPoints);
+        event.setKillerPointsToGet(killerPoints);
 
         List<ChatOptionsEntity> chatOptionsEntityList = ChatOptions.getChatOptionsEntityManager().getChatOptionsEntitiesWhereShowDeathMessageIs(false);
 
@@ -41,7 +39,7 @@ public class PlayerKillRankingIncrease implements Listener {
 
         for(Player player : Bukkit.getOnlinePlayers()) {
             if(!blockedMessagePlayerUUIDs.contains(player.getUniqueId())) {
-                player.sendMessage(ChatColor.DARK_RED + "⚔ " + ChatColor.GRAY + "| " + ChatColor.RED +  event.getAttacker().getName() + ChatColor.GRAY + " (" + ChatColor.GREEN +"+" + ChatColor.GRAY + killerPoints +  ") zabił " + ChatColor.RED + event.getVictim().getName() + ChatColor.GRAY +" (" + ChatColor.RED + "-" + ChatColor.GRAY + preyPoints + ")");
+                player.sendMessage(ChatColor.DARK_RED + "⚔ " + ChatColor.GRAY + "| " + ChatColor.RED +  event.getKiller().getName() + ChatColor.GRAY + " (" + ChatColor.GREEN +"+" + ChatColor.GRAY + killerPoints +  ") zabił " + ChatColor.RED + event.getVictim().getName() + ChatColor.GRAY +" (" + ChatColor.RED + "-" + ChatColor.GRAY + preyPoints + ")");
             }
         }
 

@@ -6,6 +6,8 @@ authors: [xxGradzix]
 
 depend: [WorldGuard, WorldEdit, ProtocolLib, DecentHolograms]
 
+softdepend: [PlaceholderAPI]
+
 commands:
   givezdrapka:
     description: Daje 1 zdrapke
@@ -191,3 +193,19 @@ commands:
 
   kosz:
     description: otwiera kosz
+
+
+  test:
+    description: test
+
+  gracz:
+    description: pokazuje informacje o graczu
+
+  klan:
+    description: pokazuje informacje o klanie
+    aliases:
+      - k
+
+  autosprzedaz:
+    description:
+    permission: gradzixcore.autosprzedaz

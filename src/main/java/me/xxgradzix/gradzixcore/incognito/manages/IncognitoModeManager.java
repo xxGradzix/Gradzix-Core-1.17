@@ -9,16 +9,15 @@ import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.events.PacketEvent;
 import com.comphenix.protocol.utility.MinecraftReflection;
 import com.comphenix.protocol.wrappers.*;
-import com.mojang.authlib.GameProfile;
-import com.mojang.authlib.properties.Property;
 import me.xxgradzix.gradzixcore.Gradzix_Core;
+import me.xxgradzix.gradzixcore.clansCore.data.database.entities.ClanEntity;
+import me.xxgradzix.gradzixcore.clansCore.data.database.entities.UserEntity;
+import me.xxgradzix.gradzixcore.clansCore.managers.ClanManager;
+import me.xxgradzix.gradzixcore.clansCore.managers.UserManager;
 import me.xxgradzix.gradzixcore.incognito.data.database.entities.IncognitoAdminEntity;
 import me.xxgradzix.gradzixcore.incognito.data.database.entities.IncognitoModeEntity;
 import me.xxgradzix.gradzixcore.incognito.data.database.managers.IncognitoAdminEntityManager;
 import me.xxgradzix.gradzixcore.incognito.data.database.managers.IncognitoModeEntityManager;
-import net.dzikoysk.funnyguilds.FunnyGuilds;
-import net.dzikoysk.funnyguilds.guild.Guild;
-import net.dzikoysk.funnyguilds.user.User;
 import net.minecraft.network.protocol.game.PacketPlayOutEntityDestroy;
 import net.minecraft.network.protocol.game.PacketPlayOutNamedEntitySpawn;
 import net.minecraft.network.protocol.game.PacketPlayOutPlayerInfo;
@@ -29,7 +28,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.craftbukkit.libs.org.apache.commons.io.IOUtils;
 import org.bukkit.craftbukkit.v1_17_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
-import panda.std.Option;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -38,13 +36,13 @@ import java.net.URLConnection;
 import java.security.SecureRandom;
 import java.util.*;
 
+import static com.comphenix.protocol.ProtocolLibrary.*;
 
 public class IncognitoModeManager {
 
 
     private static final Gradzix_Core plugin = Gradzix_Core.getInstance();
 
-    private static FunnyGuilds funnyGuilds = FunnyGuilds.getInstance();
     private static IncognitoModeEntityManager incognitoModeEntityManager;
     private static IncognitoAdminEntityManager incognitoAdminEntityManager;
 
@@ -118,7 +116,7 @@ public class IncognitoModeManager {
     }
 
     public static void setPrefix(Player player) {
-        ProtocolManager protocolManager = ProtocolLibrary.getProtocolManager();
+        ProtocolManager protocolManager = getProtocolManager();
 
         IncognitoModeEntity incognitoModeEntityById = incognitoModeEntityManager.getIncognitoModeEntityById(player.getUniqueId());
 
@@ -141,7 +139,7 @@ public class IncognitoModeManager {
 
             struct.getChatComponents().write(2, WrappedChatComponent.fromText(" §8[§7" + player.getName() + "§8]"));//Team Suffix
             struct.getIntegers().write(0, 1); // Bit mask. 0x01: Allow friendly fire, 0x02: can see invisible players on same team.
-            struct.getEnumModifier(ChatColor.class, MinecraftReflection.getMinecraftClass("EnumChatFormat")).write(0, ChatColor.AQUA);
+//            struct.getEnumModifier(ChatColor.class, MinecraftReflection.getMinecraftClass("EnumChatFormat")).write(0, ChatColor.AQUA); //TODO sprawdzam czy mozna zakomentowac, jak bedzie blad to odkomentowac i sprawdzic
             packet.getOptionalStructures().write(0, Optional.of(struct));
 
         }
@@ -166,7 +164,8 @@ public class IncognitoModeManager {
 
     public static String getResponse(String _url){
         try {
-            URL url = new URL(_url);
+            URL url;
+            url = new URL(_url);
             URLConnection con = url.openConnection();
             InputStream in = con.getInputStream();
             String encoding = con.getContentEncoding();
@@ -181,7 +180,7 @@ public class IncognitoModeManager {
 
     private static void changeNicks() {
 
-        ProtocolLibrary.getProtocolManager().addPacketListener(new PacketAdapter(plugin, PacketType.Play.Server.PLAYER_INFO) {
+        getProtocolManager().addPacketListener(new PacketAdapter(plugin, PacketType.Play.Server.PLAYER_INFO) {
 
             @Override
             public void onPacketSending(PacketEvent event) {
@@ -238,27 +237,21 @@ public class IncognitoModeManager {
 
         if(isObserverAdmin) return "";
 
-        Option<User> playerUserOption = funnyGuilds.getUserManager().findByPlayer(player);
-        Option<User> observerUserOption = funnyGuilds.getUserManager().findByPlayer(observer);
+        UserEntity playerUser = UserManager.getOrCreateUserEntity(player);
+        UserEntity observerUser = UserManager.getOrCreateUserEntity(observer);
 
-        if(playerUserOption.isEmpty()) return "";
-        if(observerUserOption.isEmpty()) return "";
+        if(!ClanManager.getClanEntityOfMember(playerUser).isPresent()) return "§f"; // gracz nie ma gildii
 
-        User playerUser = playerUserOption.get();
-        User observerUser = observerUserOption.get();
+        if(!ClanManager.getClanEntityOfMember(observerUser).isPresent()) return "§7"; // gracz ma gildie ale obserwator nie ma = szary
 
-        if(playerUser.getGuild().isEmpty()) return "§f"; // gracz nie ma gildii
+        ClanEntity clanEntity = ClanManager.getClanEntityOfMember(playerUser).get();
+        ClanEntity observerClan = ClanManager.getClanEntityOfMember(observerUser).get();
 
-        if(observerUser.getGuild().isEmpty()) return "§7"; // gracz ma gildie ale obserwator nie ma = szary
+        if(clanEntity.equals(observerClan)) return "§a"; // gracz i obserwator maja ta sama gildie = zielony
 
-        Guild guild = playerUser.getGuild().get();
-        Guild observerGuild = observerUser.getGuild().get();
+        if(clanEntity.getAlliesUUIDs().contains(observerClan.getUuid())) return "§9"; // gracz i obserwator maja sojusznice = niebieski
 
-        if(guild.equals(observerGuild)) return "§a"; // gracz i obserwator maja ta sama gildie = zielony
-
-        if(guild.getAllies().contains(observerGuild)) return "§9"; // gracz i obserwator maja sojusznice = niebieski
-
-        if(guild.getEnemies().contains(observerGuild)) return "§c"; // gracz i obserwator maja wrogow = czerwony
+        if(clanEntity.getEnemiesUUIDs().contains(observerClan.getUuid())) return "§c"; // gracz i obserwator maja wrogow = czerwony
 
         return "";
     }

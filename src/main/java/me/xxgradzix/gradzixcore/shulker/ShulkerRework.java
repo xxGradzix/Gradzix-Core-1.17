@@ -11,8 +11,11 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.inventory.InventoryAction;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerDropItemEvent;
@@ -32,7 +35,6 @@ public class ShulkerRework implements Listener {
 
     private final HashMap<UUID, ShulkerUser> shulkers = new HashMap<>();
 
-    private NamespacedKey key;
     private final Gradzix_Core plugin;
 
     public ShulkerRework(Gradzix_Core plugin) {
@@ -40,7 +42,7 @@ public class ShulkerRework implements Listener {
     }
 
     public void onEnable() {
-//        plugin.getServer().getPluginManager().registerEvents(new ShulkerRework(plugin), plugin);
+        plugin.getServer().getPluginManager().registerEvents(new ShulkerRework(plugin), plugin);
     }
 
     public void onDisable() {
@@ -64,7 +66,6 @@ public class ShulkerRework implements Listener {
         ItemStack item = event.getItem();
         if (item == null)
             return;
-        event.setCancelled(true);
         if (event.getHand() == null) {
             return;
         }
@@ -77,8 +78,11 @@ public class ShulkerRework implements Listener {
     }
 
     private void openShulkerBox(Player player, ItemStack shulkerItem) {
+
         BlockStateMeta blockStateMeta = (BlockStateMeta) shulkerItem.getItemMeta();
+
         if (blockStateMeta != null && blockStateMeta.getBlockState() instanceof ShulkerBox) {
+
             ShulkerBox shulkerBox = (ShulkerBox) blockStateMeta.getBlockState();
 
             StorageGui gui = new StorageGui(3, "Shulker");
@@ -96,15 +100,35 @@ public class ShulkerRework implements Listener {
                    player.sendMessage("Nie możesz tego zrobić!");
                    event.setCancelled(true);
                }
+                if(((BlockStateMeta) event.getCurrentItem().getItemMeta()).getBlockState() instanceof ShulkerBox) {
+                    event.setCancelled(true);
+                }
+
             });
+            gui.setCloseGuiAction(event -> {
+                shulkerBox.getInventory().setContents(gui.getInventory().getContents());
+                blockStateMeta.setBlockState(shulkerBox);
+                shulkerItem.setItemMeta(blockStateMeta);
+                this.shulkers.remove(player.getUniqueId());
+            });
+            gui.disableItemSwap();
+            gui.disableItemDrop();
+
             gui.open(player);
 
         }
     }
+    @EventHandler
+    public void placeBlock(BlockPlaceEvent event) {
+        if(event.getItemInHand().getItemMeta() == null) return;
+        if(event.getBlock().getState() instanceof ShulkerBox) {
+            event.setCancelled(true);
+        }
+    }
     @EventHandler(priority = EventPriority.LOWEST)
     public void handle(PlayerDeathEvent event) {
-        if (!this.shulkers.containsKey(event.getEntity().getUniqueId()))
-            return;
+//        if (!this.shulkers.containsKey(event.getEntity().getUniqueId()))
+//            return;
         event.getEntity().closeInventory();
     }
 
@@ -123,13 +147,13 @@ public class ShulkerRework implements Listener {
 ////                event.setCancelled(true);
 //        }
 //    }
-
-    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void handle(PlayerSwapHandItemsEvent event) {
-        if (!this.shulkers.containsKey(event.getPlayer().getUniqueId()))
-            return;
-        event.setCancelled(true);
-    }
+//
+//    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+//    public void handle(PlayerSwapHandItemsEvent event) {
+//        if (!this.shulkers.containsKey(event.getPlayer().getUniqueId()))
+//            return;
+//        event.setCancelled(true);
+//    }
 
 //    @EventHandler(ignoreCancelled = true)
 //    public void handle(BlockPlaceEvent event) {
@@ -139,31 +163,29 @@ public class ShulkerRework implements Listener {
 ////        Platform.getServer().sendError(event.getPlayer().getUniqueId(), MessagePosition.CHAT, "&cNie motego zrobiw trakcie modyfikowania shulkera!");
 //    }
 
-    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
-    public void handle(EntityDamageEvent event) {
-        if (!(event.getEntity() instanceof Player))
-            return;
-        Player player = (Player)event.getEntity();
-        if (!this.shulkers.containsKey(player.getUniqueId()))
-            return;
-        player.closeInventory();
-//        Platform.getServer().sendError(player.getUniqueId(), MessagePosition.CHAT, "&cOtrzymaobrazapisuje shulker!");
-    }
-
-    @EventHandler(priority = EventPriority.MONITOR)
-    public void handle(PlayerDropItemEvent event) {
-        ShulkerUser shulkerUser = this.shulkers.get(event.getPlayer().getUniqueId());
-        if (shulkerUser == null)
-            return;
-        ItemStack item = event.getItemDrop().getItemStack();
-//        if (!Tag.SHULKER_BOXES.isTagged((Keyed)item.getType()))
+//    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
+//    public void handle(EntityDamageEvent event) {
+//        if (!(event.getEntity() instanceof Player))
 //            return;
-        if (!item.getItemMeta().getPersistentDataContainer().has(this.key, PersistentDataType.BYTE))
-            return;
-        event.setCancelled(false);
-        event.getItemDrop().remove();
-        event.getPlayer().closeInventory();
-    }
+//        Player player = (Player)event.getEntity();
+//        if (!this.shulkers.containsKey(player.getUniqueId()))
+//            return;
+//        player.closeInventory();
+////        Platform.getServer().sendError(player.getUniqueId(), MessagePosition.CHAT, "&cOtrzymaobrazapisuje shulker!");
+//    }
+//
+//    @EventHandler(priority = EventPriority.MONITOR)
+//    public void handle(PlayerDropItemEvent event) {
+//        ShulkerUser shulkerUser = this.shulkers.get(event.getPlayer().getUniqueId());
+//        if (shulkerUser == null)
+//            return;
+//        ItemStack item = event.getItemDrop().getItemStack();
+////        if (!Tag.SHULKER_BOXES.isTagged((Keyed)item.getType()))
+////            return;
+//        event.setCancelled(false);
+//        event.getItemDrop().remove();
+//        event.getPlayer().closeInventory();
+//    }
 
     @EventHandler
     public void handle(InventoryCloseEvent event) {
@@ -189,7 +211,6 @@ public class ShulkerRework implements Listener {
 //                give = true;
 //            }
             ItemMeta itemMeta = itemStack.getItemMeta();
-            itemMeta.getPersistentDataContainer().remove(this.key);
             BlockStateMeta meta = (BlockStateMeta)itemMeta;
             ShulkerBox shulker = (ShulkerBox)meta.getBlockState();
             shulker.getInventory().setContents(event.getInventory().getContents());

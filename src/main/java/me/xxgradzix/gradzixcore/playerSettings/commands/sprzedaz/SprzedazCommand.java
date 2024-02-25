@@ -15,18 +15,12 @@ public class SprzedazCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-
         if(!(sender instanceof Player)) return false;
         Player p = (Player) sender;
-
         SellGui sellGui;
-
         HashMap<ItemStack, Integer> map = (HashMap<ItemStack, Integer>) DataManager.getAutoSellItems();
-
         sellGui = new SellGui(map);
-
         sellGui.open(p);
-
         return true;
     }
 }

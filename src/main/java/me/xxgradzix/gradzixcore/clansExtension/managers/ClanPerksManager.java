@@ -1,14 +1,10 @@
 package me.xxgradzix.gradzixcore.clansExtension.managers;
 
-import me.xxgradzix.gradzixcore.Gradzix_Core;
+import me.xxgradzix.gradzixcore.clansCore.data.database.entities.ClanEntity;
 import me.xxgradzix.gradzixcore.clansExtension.data.database.entities.ClanPerk;
 import me.xxgradzix.gradzixcore.clansExtension.data.database.entities.ClanPerksEntity;
 import me.xxgradzix.gradzixcore.clansExtension.data.database.managers.ClanPerksEntityManager;
-import net.dzikoysk.funnyguilds.guild.Guild;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.Optional;
-import java.util.UUID;
 
 public class ClanPerksManager {
 
@@ -17,16 +13,15 @@ public class ClanPerksManager {
     public ClanPerksManager(ClanPerksEntityManager clanPerksEntityManager) {
         this.clanPerksEntityManager = clanPerksEntityManager;
     }
-    public int getClanPerkLevel(ClanPerk perk, @NotNull Guild guild) {
+    public int getClanPerkLevel(ClanPerk perk, @NotNull ClanEntity clanEntity) {
 
-        ClanPerksEntity perksEntity = clanPerksEntityManager.getClanPerksEntityByID(guild.getUUID());
+        ClanPerksEntity perksEntity = clanPerksEntityManager.getClanPerksEntityByID(clanEntity.getUuid());
 
         return perksEntity.getClanPerkLevel(perk);
     }
-    public void increaseClanPerkLevel(ClanPerk perk, Guild guild) {
+    public void increaseClanPerkLevel(ClanPerk perk, ClanEntity clanEntity) {
 
-        ClanPerksEntity perksEntity = clanPerksEntityManager.getClanPerksEntityByID(guild.getUUID());
-
+        ClanPerksEntity perksEntity = clanPerksEntityManager.getClanPerksEntityByID(clanEntity.getUuid());
         perksEntity.setClanPerkLevel(perk, perksEntity.getClanPerkLevel(perk) + 1);
         clanPerksEntityManager.createOrUpdateClanPerksEntity(perksEntity);
     }

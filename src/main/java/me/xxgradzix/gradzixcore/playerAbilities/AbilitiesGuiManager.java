@@ -321,7 +321,7 @@ public class AbilitiesGuiManager {
                 gui.setItem(2, 6, new GuiItem(Material.BARRIER));
                 break;
         }
-
+        DataManager.refreshAbilities(p);
         gui.open(p);
 
     }

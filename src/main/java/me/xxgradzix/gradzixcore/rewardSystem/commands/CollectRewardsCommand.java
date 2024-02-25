@@ -4,6 +4,7 @@ package me.xxgradzix.gradzixcore.rewardSystem.commands;
 import dev.triumphteam.gui.builder.item.ItemBuilder;
 import dev.triumphteam.gui.guis.Gui;
 import dev.triumphteam.gui.guis.GuiItem;
+import me.xxgradzix.gradzixcore.rewardSystem.RewardSystem;
 import me.xxgradzix.gradzixcore.rewardSystem.database.entities.PlayerRewardsEntity;
 import me.xxgradzix.gradzixcore.rewardSystem.database.managers.PlayerRewardsEntityManager;
 import me.xxgradzix.gradzixcore.rewardSystem.items.ItemManager;
@@ -25,13 +26,9 @@ import static org.bukkit.Bukkit.getServer;
 
 public class CollectRewardsCommand implements CommandExecutor {
 
-    private final PlayerRewardsEntityManager playerRewardsEntityManager;
-    private final RewardManager rewardManager;
+//    private final PlayerRewardsEntityManager playerRewardsEntityManager;
+    private final RewardManager rewardManager = RewardSystem.rewardManager;
 
-    public CollectRewardsCommand(PlayerRewardsEntityManager playerRewardsEntityManager, RewardManager rewardManager) {
-        this.playerRewardsEntityManager = playerRewardsEntityManager;
-        this.rewardManager = rewardManager;
-    }
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -40,25 +37,9 @@ public class CollectRewardsCommand implements CommandExecutor {
 
         Player player = (Player) sender;
 
-        PlayerRewardsEntity playerRewardsEntity = playerRewardsEntityManager.getPlayerRewardsEntityByMinecraftId(player.getUniqueId());
-        HashMap<String, Integer> rewards;
-
-        if(playerRewardsEntity == null) {
-            rewards = new HashMap<>();
-        } else {
-            rewards = playerRewardsEntity.getRewards();
-        }
-
-//        if(rewards == null) {
-//
-////            player.sendMessage("Nie masz żadnych nagród do odebrania");
-//            rewards = new HashMap<>();
-////            return false;
-//        }
-
-        player.sendMessage("Twoje nagrody:");
-        for(String reward : rewards.keySet()) {
-            player.sendMessage(reward + ": " + rewards.get(reward));
+        if(!rewardManager.hasAnyRewards(player)) {
+            player.sendMessage(ChatColor.GRAY + "Nie masz zadnych nagrod do odebrania");
+            return true;
         }
 
         Gui gui = Gui.gui()
@@ -67,108 +48,84 @@ public class CollectRewardsCommand implements CommandExecutor {
                 .disableAllInteractions()
                 .create();
 
-        GuiItem vipReward = ItemBuilder.from(ItemManager.createRewardCollectButton(Material.COPPER_INGOT, ChatColor.YELLOW + "VIP", rewards.getOrDefault("vip", 0))).asGuiItem();
-        GuiItem svipReward = ItemBuilder.from(ItemManager.createRewardCollectButton(Material.GOLD_INGOT, ChatColor.GOLD + "SVIP", rewards.getOrDefault("svip", 0))).asGuiItem();
-        GuiItem ageReward = ItemBuilder.from(ItemManager.createRewardCollectButton(Material.EMERALD, ChatColor.GREEN + "AGE", rewards.getOrDefault("age", 0))).asGuiItem();
-        GuiItem bogaczReward = ItemBuilder.from(ItemManager.createRewardCollectButton(Material.DIAMOND, ChatColor.BLUE + "Zestaw Bogacz", rewards.getOrDefault("bogacz", 0))).asGuiItem();
-        GuiItem jaskiniowcaReward = ItemBuilder.from(ItemManager.createRewardCollectButton(Material.GOLD_INGOT, ChatColor.DARK_GREEN + "Zestaw Jaskiniowca", rewards.getOrDefault("jaskiniowca", 0))).asGuiItem();
-//        GuiItem ageReward = ItemBuilder.from(ItemManager.createVipCollectButton(rewards.get("age"))).asGuiItem();
-        // TODO keys
+        GuiItem limeGlass = ItemBuilder.from(Material.LIME_STAINED_GLASS_PANE).setName(" ").asGuiItem();
+        gui.setItem(1, 1, limeGlass);
+        gui.setItem(1, 9, limeGlass);
+        gui.setItem(5, 1, limeGlass);
+        gui.setItem(5, 9, limeGlass);
 
-        gui.setItem(2, 3, vipReward);
-        gui.setItem(2, 5, svipReward);
-        gui.setItem(2, 7, ageReward);
+        GuiItem blackGlass = ItemBuilder.from(Material.BLACK_STAINED_GLASS_PANE).setName(" ").asGuiItem();
+        gui.getFiller().fillBetweenPoints(1, 2, 1, 8, blackGlass);
+        gui.getFiller().fillBetweenPoints(5, 2, 5, 8, blackGlass);
 
-        gui.setItem(4, 4, bogaczReward);
-        gui.setItem(4, 6, jaskiniowcaReward);
+        gui.getFiller().fillBetweenPoints(2, 1, 4, 1, blackGlass);
+        gui.getFiller().fillBetweenPoints(2, 9, 4, 9, blackGlass);
+
+        setUpdatableButtonOnSlot(player, gui, 3, 3, PlayerRewardsEntity.Reward.magic_key);
+        setUpdatableButtonOnSlot(player, gui, 3, 4, PlayerRewardsEntity.Reward.caveman_key);
+        setUpdatableButtonOnSlot(player, gui, 3, 5, PlayerRewardsEntity.Reward.scratchcard);
 
         gui.open(player);
-
-        vipReward.setAction((action) -> {
-
-            if(action.isLeftClick()) {
-                if(rewardManager.removeRewardToPlayer(player.getUniqueId(), PlayerRewardsEntity.Reward.vip, 1)) {
-
-                    getServer().dispatchCommand(getConsoleSender(), "lp user " + player.getName() + " parent addtemp vip 30d");
-                    Bukkit.broadcastMessage("§7Gracz §2" + player.getName() + " §7zakupił §eRanga VIP");
-                    Bukkit.broadcastMessage("§aZakupy zrobisz na stronie §2www.ageplay.pl");
-
-                } else {
-                    player.sendMessage(ChatColor.GRAY + "Nie mozesz odebrac tej nagrody");
-                }
-                gui.close(player);
-            }
-        });
-        svipReward.setAction((action) -> {
-            if(action.isLeftClick()) {
-                if(rewardManager.removeRewardToPlayer(player.getUniqueId(), PlayerRewardsEntity.Reward.svip, 1)) {
-
-                    getServer().dispatchCommand(getConsoleSender(), "lp user " + player.getName() + " parent addtemp svip 30d");
-                    Bukkit.broadcastMessage("§7Gracz §2" + player.getName() + " §7zakupił §6Ranga SVIP");
-                    Bukkit.broadcastMessage("§aZakupy zrobisz na stronie §2www.ageplay.pl");
-
-                } else {
-                    player.sendMessage(ChatColor.GRAY + "Nie mozesz odebrac tej nagrody");
-                }
-                gui.close(player);
-            }
-        });
-        ageReward.setAction((action) -> {
-            if(action.isLeftClick()) {
-                if(rewardManager.removeRewardToPlayer(player.getUniqueId(), PlayerRewardsEntity.Reward.age, 1)) {
-
-                    getServer().dispatchCommand(getConsoleSender(), "lp user " + player.getName() + " parent addtemp age 30d");
-                    Bukkit.broadcastMessage("§7Gracz §2" + player.getName() + " §7zakupił §9Ranga AGE");
-                    Bukkit.broadcastMessage("§aZakupy zrobisz na stronie §2www.ageplay.pl");
-
-                } else {
-                    player.sendMessage(ChatColor.GRAY + "Nie mozesz odebrac tej nagrody");
-                }
-                gui.close(player);
-            }
-        });
-        bogaczReward.setAction((action) -> {
-
-            if(action.isLeftClick()) {
-                if(rewardManager.removeRewardToPlayer(player.getUniqueId(), PlayerRewardsEntity.Reward.bogacz, 1)) {
-
-                    getServer().dispatchCommand(getConsoleSender(), "lp user " + player.getName() + " parent addtemp age 30d");
-                    Bukkit.broadcastMessage("§7Gracz §2" + player.getName() + " §7zakupił §4Zestaw Bogacz");
-                    Bukkit.broadcastMessage("§aZakupy zrobisz na stronie §2www.ageplay.pl");
-                    ItemStack itemToGive = new ItemStack(me.xxgradzix.gradzixcore.scratchCard.items.ItemManager.zdrapka);
-                    itemToGive.setAmount(3);
-                    player.getInventory().addItem(itemToGive);
-                    getServer().dispatchCommand(getConsoleSender(), "excellentcrates key give " +
-                            player.getName() +
-                            " jaskiniowca 10");
-
-                } else {
-                    player.sendMessage(ChatColor.GRAY + "Nie mozesz odebrac tej nagrody");
-                }
-                gui.close(player);
-            }
-        });
-        jaskiniowcaReward.setAction((action) -> {
-
-            if(action.isLeftClick()) {
-
-                if(rewardManager.removeRewardToPlayer(player.getUniqueId(), PlayerRewardsEntity.Reward.jaskiniowca, 1)) {
-
-                    getServer().dispatchCommand(getConsoleSender(), "lp user " + player.getName() + " parent addtemp svip 30d");
-                    Bukkit.broadcastMessage("§7Gracz §2" + player.getName() + " §7zakupił §5Zestaw Jaskiniowca");
-                    Bukkit.broadcastMessage("§aZakupy zrobisz na stronie §2www.ageplay.pl");
-                    player.getInventory().addItem(me.xxgradzix.gradzixcore.scratchCard.items.ItemManager.zdrapka);
-                    getServer().dispatchCommand(getConsoleSender(), "excellentcrates key give " +
-                            player.getName() +
-                            " magiczna 32");
-
-                } else {
-                    player.sendMessage(ChatColor.GRAY + "Nie mozesz odebrac tej nagrody");
-                }
-                gui.close(player);
-            }
-        });
-
         return true;
     }
+    private void setUpdatableButtonOnSlot(Player player, Gui gui, int x, int y, PlayerRewardsEntity.Reward reward) {
+        int rewardOfPlayer = rewardManager.getRewardOfPlayer(player.getUniqueId(), reward);
+        if(rewardOfPlayer <= 0) {
+            gui.removeItem(x, y);
+            return;
+        }
+        GuiItem item = new GuiItem(ItemManager.createRewardCollectButton(reward, rewardOfPlayer));
+        item.setAction((action) -> {
+            if(action.isLeftClick()) {
+                collectReward(player, reward);
+                setUpdatableButtonOnSlot(player, gui, x, y, reward);
+            }
+        });
+        gui.setItem(x, y, item);
+        gui.update();
+    }
+
+    private void collectReward(Player player, PlayerRewardsEntity.Reward reward) {
+
+        if(player.getInventory().firstEmpty() == -1) {
+            player.sendMessage(ChatColor.GRAY + "Nie masz miejsca w ekwipunku na te nagrode");
+            return;
+        }
+
+        int amount = rewardManager.getRewardOfPlayer(player.getUniqueId(), reward);
+        if(amount <= 0) {
+            player.sendMessage(ChatColor.GRAY + "Nie masz tej nagrody");
+            return;
+        }
+
+        if(amount > 64) amount = 64;
+
+        rewardManager.removeRewardFromPlayer(player.getUniqueId(), reward, amount);
+
+        switch (reward) {
+            case magic_key: {
+                getServer().dispatchCommand(getConsoleSender(), "excellentcrates key give " +
+                            player.getName() +
+                            " magiczna " + amount);
+            }
+            break;
+            case caveman_key: {
+                getServer().dispatchCommand(getConsoleSender(), "excellentcrates key give " +
+                        player.getName() +
+                        " jaskiniowca " + amount);
+            }
+            break;
+            case scratchcard: {
+                for (int i = 0; i < amount; i++) {
+                    player.getInventory().addItem(me.xxgradzix.gradzixcore.scratchCard.items.ItemManager.zdrapka);
+                }
+            }
+            break;
+        }
+
+
+    }
+
+
+
 }

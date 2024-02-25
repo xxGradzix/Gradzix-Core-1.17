@@ -5,10 +5,12 @@ import com.j256.ormlite.support.ConnectionSource;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import lombok.Getter;
+import me.clip.placeholderapi.PlaceholderAPI;
 import me.xxgradzix.gradzixcore.adminPanel.Panel;
 import me.xxgradzix.gradzixcore.afkRegion.AfkRegion;
 import me.xxgradzix.gradzixcore.binds.Binds;
 import me.xxgradzix.gradzixcore.chatOptions.ChatOptions;
+import me.xxgradzix.gradzixcore.clansCore.Clans;
 import me.xxgradzix.gradzixcore.clansExtension.ClansExtension;
 import me.xxgradzix.gradzixcore.events.Events;
 import me.xxgradzix.gradzixcore.generators.Generators;
@@ -27,7 +29,6 @@ import me.xxgradzix.gradzixcore.socialMediaRewards.SocialMediaRewards;
 import me.xxgradzix.gradzixcore.upgradeItem.Ulepsz;
 import me.xxgradzix.gradzixcore.warps.Warps;
 import me.xxgradzix.gradzixcore.webRemover.WebRemover;
-import net.dzikoysk.funnyguilds.FunnyGuilds;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
@@ -45,7 +46,7 @@ public final class Gradzix_Core extends JavaPlugin {
 
     public static final boolean USEDB = true;
 
-    public static final long WEAKNESS_EFFECT_DURATION_TIME_SECONDS = 3;
+    public static final int WEAKNESS_EFFECT_DURATION_TIME_SECONDS = 3;
     public static final long AFK_REWARD_DELAY_SECONDS = 15L * 60;
     public static final long BOSS_SPAWN_DELAY_SECONDS = 60;
     public static final long REMOVE_BLOCKS_INTERVAL_SECONDS = 300;
@@ -86,7 +87,9 @@ public final class Gradzix_Core extends JavaPlugin {
     private ClansExtension clansExtension;
 
     private ConnectionSource connectionSource;
-    private FunnyGuilds funnyGuilds;
+
+
+    private Clans clans;
 
     Properties loadConfig() {
         Properties prop = new Properties();
@@ -123,6 +126,7 @@ public final class Gradzix_Core extends JavaPlugin {
     @Override
     public void onEnable()  {
         instance = this;
+//        funnyGuilds = FunnyGuilds.getInstance();
         if (!LocalDate.now().isBefore(LocalDate.of(2024, 5, 30))) {
             System.out.println("jeżeli wyświetliła się ta wiadomosc to skontaktuj sie z xxGradzix");
             return;
@@ -169,6 +173,10 @@ public final class Gradzix_Core extends JavaPlugin {
             ulepsz = new Ulepsz(this, connectionSource);
             ulepsz.onEnable();
         }
+        if (rewardSystem == null) {
+            rewardSystem = new RewardSystem(this, connectionSource);
+            rewardSystem.onEnable();
+        }
         if (serverConfig == null) {
             serverConfig = new ServerConfig(this, connectionSource);
             serverConfig.onEnable();
@@ -181,10 +189,7 @@ public final class Gradzix_Core extends JavaPlugin {
             itemPickupPriorities = new ItemPickupPriorities(this, connectionSource);
             itemPickupPriorities.onEnable();
         }
-        if (rewardSystem == null) {
-            rewardSystem = new RewardSystem(this, connectionSource);
-            rewardSystem.onEnable();
-        }
+
         if (generators == null) {
             generators = new Generators(this, getWorldEdit(), getWorldGuard(), connectionSource);
             generators.onEnable();
@@ -207,11 +212,6 @@ public final class Gradzix_Core extends JavaPlugin {
             socialMediaRewards = new SocialMediaRewards(this, connectionSource);
             socialMediaRewards.onEnable();
         }
-
-//        if (itemShop == null) {
-//            itemShop = new ItemShop(this, connectionSource);
-//            itemShop.onEnable();
-//        }
         if (shulkerRework == null) {
             shulkerRework = new ShulkerRework(this);
             shulkerRework.onEnable();
@@ -238,8 +238,12 @@ public final class Gradzix_Core extends JavaPlugin {
         }
 
         if (clansExtension == null) {
-            clansExtension = new ClansExtension(this, connectionSource, funnyGuilds);
+            clansExtension = new ClansExtension(this, connectionSource);
             clansExtension.onEnable();
+        }
+        if (clans == null) {
+            clans = new Clans(this, connectionSource);
+            clans.onEnable();
         }
     }
     private boolean setupEconomy() {

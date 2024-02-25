@@ -4,7 +4,6 @@ import me.xxgradzix.gradzixcore.clansExtension.data.database.entities.ClanPerk;
 import me.xxgradzix.gradzixcore.clansExtension.data.database.entities.ClanPerksEntity;
 import me.xxgradzix.gradzixcore.clansExtension.data.database.entities.PerkModifierEntity;
 import me.xxgradzix.gradzixcore.clansExtension.data.database.managers.PerkModifierEntityManager;
-import net.dzikoysk.funnyguilds.guild.Guild;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -15,43 +14,35 @@ import java.util.ArrayList;
 public class ItemManager {
 
     public static ItemStack currentWarsButton;
+    public static ItemStack finishedWarsButton;
+
     public static void init() {
-        createCurrentWarsButton();
+        createActiveWarsButton();
+        createFinishedWarsButton();
     }
 
-    private static void createCurrentWarsButton() {
+    private static void createActiveWarsButton() {
         ItemStack item = new ItemStack(Material.IRON_SWORD);
-
         ItemMeta itemMeta = item.getItemMeta();
-
-        itemMeta.setDisplayName(ChatColor.GRAY + "Aktualne wojny");
-
+        itemMeta.setDisplayName("§dAktywne wojny");
         ArrayList<String> lore = new ArrayList<>();
-
         lore.add("");
-        lore.add(ChatColor.GRAY + "Kliknij aby zobaczyć aktualne wojny");
+        lore.add("§8» §7Kliknij aby zobaczyć status wojny");
         itemMeta.setLore(lore);
         item.setItemMeta(itemMeta);
-
         currentWarsButton = item;
-
     }
+
     private static void createFinishedWarsButton() {
-        ItemStack item = new ItemStack(Material.SHIELD);
-
+        ItemStack item = new ItemStack(Material.IRON_SWORD);
         ItemMeta itemMeta = item.getItemMeta();
-
-        itemMeta.setDisplayName(ChatColor.GRAY + "Zakończone wojny");
-
+        itemMeta.setDisplayName("§5Zakończone wojny");
         ArrayList<String> lore = new ArrayList<>();
-
         lore.add("");
-        lore.add(ChatColor.GRAY + "Kliknij aby zobaczyć zakończone wojny");
+        lore.add("§8» §7Kliknij aby zobaczyć zakończone wojny");
         itemMeta.setLore(lore);
         item.setItemMeta(itemMeta);
-
-        currentWarsButton = item;
-
+        finishedWarsButton = item;
     }
 
     public static ItemStack currentWarItem(Long tempId, String userGuildTag, String enemyGuildTag, int hostPoints, int enemyPoints) {
@@ -60,36 +51,20 @@ public class ItemManager {
 
         ItemMeta itemMeta = item.getItemMeta();
 
-        String warResult;
-
-        if(hostPoints > enemyPoints) {
-            warResult = ChatColor.BOLD + "" + ChatColor.GOLD + "Wygrywacie";
-        } else if (hostPoints < enemyPoints) {
-            warResult = ChatColor.BOLD + "" + ChatColor.DARK_RED + "Przegrywacie";
-        } else {
-            warResult = ChatColor.BOLD + "" + ChatColor.BLUE + "Remis";
-        }
-
-        itemMeta.setDisplayName(warResult);
+        itemMeta.setDisplayName("§4Trwa wojna");
 
         ArrayList<String> lore = new ArrayList<>();
 
         lore.add("");
+        lore.add("§8» §7Liczba zabitych osób przez twój klan§8: §2" + hostPoints);
+        lore.add("§8» §7Liczba zabitych osób przez wrogi klan§8: §2" + enemyPoints);
 
-        lore.add(ChatColor.GRAY + "Wojna toczona z " + ChatColor.BOLD + "" + ChatColor.YELLOW + enemyGuildTag);
-        lore.add("");
-//        lore.add(ChatColor.GRAY + "Status wojny: " + warResult + ChatColor.GRAY + "!");
-//        lore.add("");
-        lore.add(ChatColor.GRAY + "Liczba punktów zdobytych przez Twoją gildię: " + ChatColor.DARK_GRAY + hostPoints);
-        lore.add(ChatColor.GRAY + "Liczba punktów zdobytych przez gildię wroga: " + ChatColor.DARK_GRAY + enemyPoints);
-        lore.add("");
-//        lore.add(ChatColor.GRAY + "Wojna zakończy się ");
         itemMeta.setLore(lore);
         item.setItemMeta(itemMeta);
 
         return item;
     }
-    public static ItemStack endedWarResult(Long tempId, String userGuildTag, String enemyGuildTag, int hostPoints, int enemyPoints, boolean isRewardTaken) {
+    public static ItemStack endedWarResult(int hostPoints, int enemyPoints, boolean isRewardTaken) {
 
         ItemStack item = new ItemStack(Material.END_CRYSTAL);
 
@@ -99,18 +74,18 @@ public class ItemManager {
         String rewardStatus;
 
         if(hostPoints > enemyPoints) {
-            warResult = ChatColor.BOLD + "" + ChatColor.GOLD + "Zwycięstwo";
+            warResult = "&aWygrana wojna";
             if(!isRewardTaken) {
-                rewardStatus = ChatColor.GRAY + "Kliknij aby odebrać nagrodę";
+                rewardStatus = "&8» &aKliknij aby odebrać nagrodę za wygraną wojnę";
             } else {
-                rewardStatus = ChatColor.GRAY + "Nagroda została już odebrana";
+                rewardStatus = "&8» &eNagroda została już odebrana";
             }
         } else if (hostPoints < enemyPoints) {
-            warResult = ChatColor.BOLD + "" + ChatColor.DARK_RED + "Przegrana";
-            rewardStatus = ChatColor.GRAY + "Nie otrzymujesz nagrody za przegraną wojnę";
+            warResult = "&cPrzegrana wojna";
+            rewardStatus = "&8» &cNie otrzymujesz nagrody za przegraną w wojnie";
         } else {
-            warResult = ChatColor.BOLD + "" + ChatColor.BLUE + "Remis";
-            rewardStatus = ChatColor.GRAY + "Nie otrzymujesz nagrody za remis w wojnie";
+            warResult = "&9Remis";
+            rewardStatus = "&8» &9Nie otrzymujesz nagrody za remis w wojnie";
         }
 
         itemMeta.setDisplayName(warResult);
@@ -119,12 +94,9 @@ public class ItemManager {
 
         lore.add("");
 
-        lore.add(ChatColor.GRAY + "Wojna toczona z " + ChatColor.BOLD + "" + ChatColor.YELLOW + enemyGuildTag);
-        lore.add("");
-//        lore.add(ChatColor.GRAY + "Status wojny: " + warResult + ChatColor.GRAY + "!");
-//        lore.add("");
-        lore.add(ChatColor.GRAY + "Liczba punktów zdobytych przez Twoją gildię: " + ChatColor.DARK_GRAY + hostPoints);
-        lore.add(ChatColor.GRAY + "Liczba punktów zdobytych przez gildię wroga: " + ChatColor.DARK_GRAY + enemyPoints);
+        lore.add("&8» &7Liczba zabitych osób przez twój klan&8: &2(liczba)" + hostPoints);
+        lore.add("&8» &7Liczba zabitych osób przez wrogi klan&8: &2(liczba)" + enemyPoints);
+        lore.add("&8» &7Osoba która zabiła najwięcej osób&8: &e" + "WKRÓTCE");
         lore.add("");
 
         lore.add(rewardStatus);

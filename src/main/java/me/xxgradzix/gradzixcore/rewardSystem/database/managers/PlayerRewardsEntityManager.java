@@ -6,6 +6,7 @@ import com.j256.ormlite.support.ConnectionSource;
 import me.xxgradzix.gradzixcore.rewardSystem.database.entities.PlayerRewardsEntity;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -46,7 +47,12 @@ public class PlayerRewardsEntityManager {
 
     public PlayerRewardsEntity getPlayerRewardsEntityByMinecraftId(UUID id) {
         try {
-            return entityDao.queryForId(id);
+            PlayerRewardsEntity playerRewardsEntity = entityDao.queryForId(id);
+            if(playerRewardsEntity == null) {
+                playerRewardsEntity = new PlayerRewardsEntity(id, new HashMap<>());
+                createPlayerRewardsEntity(playerRewardsEntity);
+            }
+            return playerRewardsEntity;
         } catch (SQLException e) {
             e.printStackTrace();
             return null;

@@ -43,7 +43,7 @@ public class WeaknessEffectAfflictionOnDamage implements Listener {
             scheduler.cancelTask(weakenedPlayers.get(damaged.getUniqueId()));
         }
 
-        damaged.addPotionEffect(PotionEffectType.GLOWING.createEffect(20*10, 1));
+        damaged.addPotionEffect(PotionEffectType.GLOWING.createEffect(20 * Gradzix_Core.WEAKNESS_EFFECT_DURATION_TIME_SECONDS, 1));
 
         int taskId = scheduler.runTaskLater(Gradzix_Core.getInstance(), () -> {
             weakenedPlayers.remove(damaged.getUniqueId());

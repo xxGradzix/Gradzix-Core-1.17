@@ -1,29 +1,25 @@
 package me.xxgradzix.gradzixcore.clansExtension.listeners.addScore;
 
+import me.xxgradzix.gradzixcore.clansCore.data.database.entities.ClanEntity;
+import me.xxgradzix.gradzixcore.clansCore.data.database.entities.UserEntity;
+import me.xxgradzix.gradzixcore.clansCore.managers.ClanManager;
+import me.xxgradzix.gradzixcore.clansCore.managers.UserManager;
 import me.xxgradzix.gradzixcore.clansExtension.ClansExtension;
 import me.xxgradzix.gradzixcore.clansExtension.data.database.entities.WarEntity;
 import me.xxgradzix.gradzixcore.clansExtension.managers.WarManager;
 import me.xxgradzix.gradzixcore.clansExtension.messages.Messages;
-import net.dzikoysk.funnyguilds.FunnyGuilds;
-import net.dzikoysk.funnyguilds.guild.Guild;
-import net.dzikoysk.funnyguilds.user.User;
-import net.dzikoysk.funnyguilds.user.UserManager;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
-import panda.std.Option;
 
 import java.util.Optional;
 
 public class AddWarScoreAfterKill implements Listener {
 
-    private final FunnyGuilds funnyGuilds;
     private final WarManager warManager;
 
-    public AddWarScoreAfterKill(FunnyGuilds funnyGuilds, WarManager warManager) {
-        this.funnyGuilds = funnyGuilds;
+    public AddWarScoreAfterKill(WarManager warManager) {
         this.warManager = warManager;
     }
 
@@ -37,31 +33,24 @@ public class AddWarScoreAfterKill implements Listener {
         Player killer = event.getEntity().getKiller();
         Player victim = ((Player) event.getEntity());
 
-        UserManager userManager = funnyGuilds.getUserManager();
+        UserEntity userEntity = UserManager.getOrCreateUserEntity(killer);
+        UserEntity victimEntity = UserManager.getOrCreateUserEntity(victim);
 
-        Option<User> optionalKiller = userManager.findByPlayer(killer);
-        Option<User> optionalVictim = userManager.findByPlayer(victim);
+        Optional<ClanEntity> killerClanOptional = ClanManager.getClanEntityOfMember(userEntity);
+        Optional<ClanEntity> victimClanOptional = ClanManager.getClanEntityOfMember(victimEntity);
 
-        if(!optionalKiller.isPresent() || !optionalVictim.isPresent()) return;
+        if(!killerClanOptional.isPresent() || !victimClanOptional.isPresent()) return;
 
-        User killerUser = optionalKiller.get();
-        User victimUser = optionalVictim.get();
+        ClanEntity killerGuild = killerClanOptional.get();
+        ClanEntity victimGuild = victimClanOptional.get();
 
-        Option<Guild> killerGuildOption = killerUser.getGuild();
-        Option<Guild> victimGuildOption = victimUser.getGuild();
-
-        if(!killerGuildOption.isPresent() || !victimGuildOption.isPresent()) return;
-
-        Guild killerGuild = killerGuildOption.get();
-        Guild victinGuild = victimGuildOption.get();
-
-        Optional<WarEntity> optionalWar = warManager.getActiveWarOfGuilds(killerGuild.getUUID(), victinGuild.getUUID());
+        Optional<WarEntity> optionalWar = warManager.getActiveWarOfGuilds(killerGuild.getUuid(), victimGuild.getUuid());
 
         if(!optionalWar.isPresent()) return;
 
         WarEntity warEntity = optionalWar.get();
 
-        warManager.addPointForGuild(warEntity, killerGuild.getUUID());
+        warManager.addPointForGuild(warEntity, killerGuild.getUuid());
 
         killer.sendMessage(Messages.YOU_KILLED_MEMBER_OF_ENEMY_GUILD);
 

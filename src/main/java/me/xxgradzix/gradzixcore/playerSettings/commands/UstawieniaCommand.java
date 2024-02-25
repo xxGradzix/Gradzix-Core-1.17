@@ -47,7 +47,6 @@ public class UstawieniaCommand implements CommandExecutor {
                     exchangeButtonCooldown.remove(uplayerUuid);
                 }, 20 * Gradzix_Core.SETTINGS_BUTTON_COOLDOWN_SECONDS);
                 break;
-
         }
     }
     private static boolean isOnCooldown(UUID uplayerUuid,ButtonType buttonType) {
@@ -88,13 +87,9 @@ public class UstawieniaCommand implements CommandExecutor {
             gui.setItem(1, 9, limeGlass);
             gui.setItem(3, 1, limeGlass);
             gui.setItem(3, 9, limeGlass);
-
-
             // exchange
-
             GuiItem exchangeButtonOff = ItemBuilder.from(ItemManager.autoExchangeOff).asGuiItem();
             GuiItem exchangeButtonOn = ItemBuilder.from(ItemManager.autoExchangeOn).asGuiItem();
-
             exchangeButtonOn.setAction((action) -> {
                 if(isOnCooldown(player.getUniqueId(),ButtonType.EXCHANGE)) {
                     player.sendMessage(ChatColor.RED + "Poczekaj chwilę przed ponownym użyciem przycisku.");
@@ -104,7 +99,6 @@ public class UstawieniaCommand implements CommandExecutor {
                 DataManager.setAutoExchangeStatus(player, true);
                 gui.updateItem(action.getSlot(), exchangeButtonOff);
             });
-
             exchangeButtonOff.setAction((action) -> {
                 if(isOnCooldown(player.getUniqueId(),ButtonType.EXCHANGE)) {
                     player.sendMessage(ChatColor.RED + "Poczekaj chwilę przed ponownym użyciem przycisku.");
@@ -114,23 +108,14 @@ public class UstawieniaCommand implements CommandExecutor {
                 DataManager.setAutoExchangeStatus(player, false);
                 gui.updateItem(action.getSlot(), exchangeButtonOn);
             });
-
-
             if(DataManager.getAutoExchangeStatus(player)) {
                 gui.setItem(2, 4, exchangeButtonOff);
             } else {
                 gui.setItem(2, 4, exchangeButtonOn);
             }
-
-
             // auto sell
-
             GuiItem sellButtonOff = ItemBuilder.from(ItemManager.autoSellOff).asGuiItem();
-
             GuiItem sellButtonOn = ItemBuilder.from(ItemManager.autoSellOn).asGuiItem();
-
-
-
             sellButtonOn.setAction((action) -> {
                 if(isOnCooldown(player.getUniqueId(),ButtonType.SELL)) {
                     player.sendMessage(ChatColor.RED + "Poczekaj chwilę przed ponownym użyciem przycisku.");
@@ -140,7 +125,6 @@ public class UstawieniaCommand implements CommandExecutor {
                 DataManager.setAutoSellStatus(player, true);
                 gui.updateItem(action.getSlot(), sellButtonOff);
             });
-
             sellButtonOff.setAction((action) -> {
                 if(isOnCooldown(player.getUniqueId(),ButtonType.SELL)) {
                     player.sendMessage(ChatColor.RED + "Poczekaj chwilę przed ponownym użyciem przycisku.");
@@ -150,7 +134,6 @@ public class UstawieniaCommand implements CommandExecutor {
                 DataManager.setAutoSellStatus(player, false);
                 gui.updateItem(action.getSlot(), sellButtonOn);
             });
-
             if(DataManager.getAutoSellStatus(player)) {
                 gui.setItem(2, 6, sellButtonOff);
             } else {

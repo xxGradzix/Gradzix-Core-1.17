@@ -3,6 +3,10 @@ package me.xxgradzix.gradzixcore.playerSettings;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 import me.xxgradzix.gradzixcore.Gradzix_Core;
+import me.xxgradzix.gradzixcore.playerSettings.commands.AutoSellCommand;
+import me.xxgradzix.gradzixcore.playerSettings.data.database.entities.AutoSellEntity;
+import me.xxgradzix.gradzixcore.playerSettings.data.database.managers.AutoSellEntityManager;
+import me.xxgradzix.gradzixcore.playerSettings.listeners.BlockBreakAutoSellEvent;
 import me.xxgradzix.gradzixcore.playerSettings.listeners.OnJoin;
 import me.xxgradzix.gradzixcore.playerSettings.commands.UstawieniaCommand;
 import me.xxgradzix.gradzixcore.playerSettings.commands.sprzedaz.SprzedazCommand;
@@ -34,18 +38,28 @@ public class PlayerSettings {
     private static SettingOptionsEntityManager settingOptionsEntityManager;
     private static SettingItemsEntityManager settingItemsEntityManager;
 
+    private static AutoSellEntityManager autoSellEntityManager;
+
     public static SettingOptionsEntityManager getSettingOptionsEntityManager() {
         return settingOptionsEntityManager;
     }
     public static SettingItemsEntityManager getSettingItemsEntityManager() {
         return settingItemsEntityManager;
     }
-    public void configureDB() throws SQLException {
 
+    public static AutoSellEntityManager getAutoSellEntityManager() {
+        return autoSellEntityManager;
+    }
+
+    public void configureDB() throws SQLException {
+        /** Classic player setting version
         TableUtils.createTableIfNotExists(connectionSource, SettingsEntity.class);
         TableUtils.createTableIfNotExists(connectionSource, SettingsItemsEntity.class);
         settingOptionsEntityManager= new SettingOptionsEntityManager(connectionSource);
         settingItemsEntityManager = new SettingItemsEntityManager(connectionSource);
+         */
+        TableUtils.createTableIfNotExists(connectionSource, AutoSellEntity.class);
+        autoSellEntityManager = new AutoSellEntityManager(connectionSource);
     }
 
     public PlayerSettings(Gradzix_Core plugin, ConnectionSource connectionSource) {
@@ -54,25 +68,22 @@ public class PlayerSettings {
     }
 
     public void onEnable() {
-
         try {
             configureDB();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        /** Classic player setting version
 
         List<String> defaultPlayers = new ArrayList<>();
-
         UstawieniaOpcjeConfigFile.setup();
         UstawieniaOpcjeConfigFile.getCustomFile().addDefault("players", defaultPlayers);
         UstawieniaOpcjeConfigFile.getCustomFile().options().copyDefaults(true);
         UstawieniaOpcjeConfigFile.save();
 
-
         WymianaUstawieniaItemsConfigFile.setup();
         WymianaUstawieniaItemsConfigFile.getCustomFile().options().copyDefaults(true);
         WymianaUstawieniaItemsConfigFile.save();
-
         ItemManager.init();
 
         plugin.getCommand("ustawienia").setExecutor(new UstawieniaCommand());
@@ -81,7 +92,6 @@ public class PlayerSettings {
 
         plugin.getServer().getPluginManager().registerEvents(new BlockBreakExchange(), plugin);
         plugin.getServer().getPluginManager().registerEvents(new BlockBreakSell(), plugin);
-
         plugin.getServer().getPluginManager().registerEvents(new ExchangeGuiClose(), plugin);
         plugin.getServer().getPluginManager().registerEvents(new ExchangeGuiClick(), plugin);
 
@@ -89,6 +99,11 @@ public class PlayerSettings {
         plugin.getServer().getPluginManager().registerEvents(new SellGuiClick(), plugin);
 
         plugin.getServer().getPluginManager().registerEvents(new OnJoin(), plugin);
+         */
+
+        plugin.getCommand("autosprzedaz").setExecutor(new AutoSellCommand());
+        plugin.getServer().getPluginManager().registerEvents(new BlockBreakAutoSellEvent(), plugin);
+        BlockBreakAutoSellEvent.refreshBlockPrices();
 
     }
 

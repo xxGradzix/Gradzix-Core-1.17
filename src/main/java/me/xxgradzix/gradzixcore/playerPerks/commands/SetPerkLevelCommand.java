@@ -3,7 +3,6 @@ package me.xxgradzix.gradzixcore.playerPerks.commands;
 import me.xxgradzix.gradzixcore.playerPerks.PerkType;
 import me.xxgradzix.gradzixcore.playerPerks.data.database.entities.PlayerPerksEntity;
 import me.xxgradzix.gradzixcore.playerPerks.data.database.managers.PlayerPerkEntityManager;
-import net.dzikoysk.funnyguilds.feature.ban.BanUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.command.Command;

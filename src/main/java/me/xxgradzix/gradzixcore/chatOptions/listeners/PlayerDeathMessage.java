@@ -1,8 +1,12 @@
 package me.xxgradzix.gradzixcore.chatOptions.listeners;
 
+import me.xxgradzix.gradzixcore.chatOptions.data.configfiles.ChatOpcjeConfigFile;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
+
+import java.util.List;
 
 public class PlayerDeathMessage implements Listener {
 

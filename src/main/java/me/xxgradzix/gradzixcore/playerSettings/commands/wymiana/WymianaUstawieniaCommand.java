@@ -17,14 +17,10 @@ public class WymianaUstawieniaCommand implements CommandExecutor {
 
         if(sender instanceof Player) {
             Player p = (Player) sender;
-
             ExchangeGui exchangeGui;
-
             HashMap<ItemStack, ItemStack> map = (HashMap<ItemStack, ItemStack>) DataManager.getAutoExchangeItems();
             exchangeGui = new ExchangeGui(map);
-
             exchangeGui.open(p);
-
         }
         return true;
     }

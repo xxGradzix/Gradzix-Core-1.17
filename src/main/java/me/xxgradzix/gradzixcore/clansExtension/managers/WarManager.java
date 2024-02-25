@@ -1,25 +1,28 @@
 package me.xxgradzix.gradzixcore.clansExtension.managers;
 
+import me.xxgradzix.gradzixcore.clansCore.data.database.entities.ClanEntity;
+import me.xxgradzix.gradzixcore.clansCore.events.ClanLivesChangeEvent;
+import me.xxgradzix.gradzixcore.clansCore.managers.ClanManager;
+import me.xxgradzix.gradzixcore.clansCore.managers.UserManager;
 import me.xxgradzix.gradzixcore.clansExtension.ClansExtension;
-import me.xxgradzix.gradzixcore.clansExtension.data.database.entities.*;
+import me.xxgradzix.gradzixcore.clansExtension.data.database.entities.ClanPerk;
+import me.xxgradzix.gradzixcore.clansExtension.data.database.entities.ClanPerksEntity;
+import me.xxgradzix.gradzixcore.clansExtension.data.database.entities.WarEntity;
+import me.xxgradzix.gradzixcore.clansExtension.data.database.entities.WarRecordEntity;
 import me.xxgradzix.gradzixcore.clansExtension.data.database.managers.ClanPerksEntityManager;
 import me.xxgradzix.gradzixcore.clansExtension.data.database.managers.PerkModifierEntityManager;
 import me.xxgradzix.gradzixcore.clansExtension.data.database.managers.WarEntityManager;
 import me.xxgradzix.gradzixcore.clansExtension.data.database.managers.WarRecordEntityManager;
-import me.xxgradzix.gradzixcore.clansExtension.exceptions.*;
+import me.xxgradzix.gradzixcore.clansExtension.exceptions.CantDeclareWarDuringWarTimeException;
+import me.xxgradzix.gradzixcore.clansExtension.exceptions.YouAlreadyHaveMaxAmountOfWarsException;
+import me.xxgradzix.gradzixcore.clansExtension.exceptions.YouAlreadyHaveWarWithThisGuildException;
 import me.xxgradzix.gradzixcore.clansExtension.messages.Messages;
-import net.dzikoysk.funnyguilds.FunnyGuilds;
-import net.dzikoysk.funnyguilds.event.FunnyEvent;
-import net.dzikoysk.funnyguilds.event.guild.GuildLivesChangeEvent;
-import net.dzikoysk.funnyguilds.guild.Guild;
-import net.dzikoysk.funnyguilds.guild.GuildManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.jetbrains.annotations.Nullable;
-import panda.std.Option;
 
+import javax.annotation.Nullable;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -34,22 +37,20 @@ public class WarManager {
     private final WarEntityManager warEntityManager;
     private final WarRecordEntityManager warRecordEntityManager;
     private final ClanPerksEntityManager clanPerksEntityManager;
-    private final FunnyGuilds funnyGuilds;
 
-    public WarManager(WarEntityManager warEntityManager, WarRecordEntityManager warRecordEntityManager, FunnyGuilds funnyGuilds, ClanPerksEntityManager clanPerksEntityManager) {
+    public WarManager(WarEntityManager warEntityManager, WarRecordEntityManager warRecordEntityManager, ClanPerksEntityManager clanPerksEntityManager) {
         this.warEntityManager = warEntityManager;
         this.warRecordEntityManager = warRecordEntityManager;
-        this.funnyGuilds = funnyGuilds;
         this.clanPerksEntityManager = clanPerksEntityManager;
     }
-    public void declareWar(Guild invaderGuild, Guild invadedGuild) throws YouAlreadyHaveMaxAmountOfWarsException, CantDeclareWarDuringWarTimeException, YouAlreadyHaveWarWithThisGuildException {
+    public void declareWar(ClanEntity invaderGuild, ClanEntity invadedGuild) throws YouAlreadyHaveMaxAmountOfWarsException, CantDeclareWarDuringWarTimeException, YouAlreadyHaveWarWithThisGuildException {
 
         if (ClansExtension.ARE_WARS_ACTIVE) {
             throw new CantDeclareWarDuringWarTimeException("You already have war");
         }
 
-        UUID invaderGuildId = invaderGuild.getUUID();
-        UUID invadedGuildId = invadedGuild.getUUID();
+        UUID invaderGuildId = invaderGuild.getUuid();
+        UUID invadedGuildId = invadedGuild.getUuid();
 
         /*** WOJNY ZAPLANOWANE WYPOWIEDZIANE PRZEZ ATAKUJACEGO */
         Set<WarEntity> nonEndedInvaderGuildWarEntities = warEntityManager.getInvaderWarsByGuildId(invaderGuildId, false, false);
@@ -77,8 +78,8 @@ public class WarManager {
         LocalDateTime warEnd = now.with(TemporalAdjusters.next(DayOfWeek.SUNDAY)).atTime(18, 00);
 
         WarEntity warEntity = new WarEntity(
-                invaderGuild.getUUID(),
-                invadedGuild.getUUID(),
+                invaderGuild.getUuid(),
+                invadedGuild.getUuid(),
                 0,
                 0,
                 warStart,
@@ -90,39 +91,82 @@ public class WarManager {
 
     public void startWars() {
 
-        List<WarEntity> warEntities = warEntityManager.getAllWars();
 
-        warEntities.forEach((war) -> {
+        List<WarEntity> warEntities = warEntityManager.getAllWars();
+        Bukkit.broadcastMessage("Startowanie wojen " + warEntities.size());
+
+        for (WarEntity war : warEntities) {
 
             UUID invaderGuildId = war.getInvaderGuildId();
             UUID invadedGuildId = war.getInvadedGuildId();
 
-            Option<Guild> invaderGuildOption = funnyGuilds.getGuildManager().findByUuid(invaderGuildId);
-            Option<Guild> invadedGuildOption = funnyGuilds.getGuildManager().findByUuid(invadedGuildId);
+            Optional<ClanEntity> invaderClanOptional = ClanManager.getClanEntityByUUID(invaderGuildId);
+            Optional<ClanEntity> invadedClanOptional = ClanManager.getClanEntityByUUID(invadedGuildId);
 
-            if(invaderGuildOption.isPresent() && invadedGuildOption.isPresent()) {
-                Guild invaderGuild = invaderGuildOption.get();
-                Guild invadedGuild = invadedGuildOption.get();
+            Bukkit.broadcastMessage("is invader clan present " + invaderClanOptional.isPresent());
+            Bukkit.broadcastMessage("is invadedddd clan present " + invadedClanOptional.isPresent());
 
-                {
-                    Set<Guild> enemies = invaderGuild.getEnemies();
-                    enemies.add(invadedGuild);
-                    invaderGuild.setEnemies(enemies);
-                }
-                {
-                    Set<Guild> enemies = invadedGuild.getEnemies();
-                    enemies.add(invaderGuild);
-                    invadedGuild.setEnemies(enemies);
-                }
+            if (invaderClanOptional.isPresent() && invadedClanOptional.isPresent()) {
+                Bukkit.broadcastMessage("test1");
+                ClanEntity invaderClan = invaderClanOptional.get();
+                ClanEntity invadedClan = invadedClanOptional.get();
+                Bukkit.broadcastMessage("test2");
 
-                invaderGuild.getOnlineMembers().forEach(onlinePlayer -> onlinePlayer.sendMessage(Messages.YOUR_WAR_WITH_CLAN_XXXX_HAS_STARTED(invadedGuild.getTag())));
-                invadedGuild.getOnlineMembers().forEach(onlinePlayer -> onlinePlayer.sendMessage(Messages.YOUR_WAR_WITH_CLAN_XXXX_HAS_STARTED(invaderGuild.getTag())));
+
+                Set<UUID> invaderEnemies = invaderClan.getEnemiesUUIDs();
+                Bukkit.broadcastMessage("test2.1 - " + invaderEnemies.size());
+                invaderEnemies.add(invadedClan.getUuid());
+                Bukkit.broadcastMessage("test2.2");
+                invaderClan.setEnemiesUUIDs(invaderEnemies);
+
+                Bukkit.broadcastMessage("test3");
+
+
+                Set<UUID> invadedClanEnemies = invadedClan.getEnemiesUUIDs();
+                invadedClanEnemies.add(invaderClan.getUuid());
+                invadedClan.setEnemiesUUIDs(invadedClanEnemies);
+
+
+                Bukkit.broadcastMessage("test4");
+
+                Bukkit.broadcastMessage("invaderzy " + invaderClan.getMembersUUIDs().size());
+                invaderClan.getMembersUUIDs().forEach(uuid -> {
+                    Bukkit.broadcastMessage("invaderzy");
+                    Player player = Bukkit.getPlayer(uuid);
+                    if(player != null) {
+                        player.sendMessage(Messages.YOUR_WAR_WITH_CLAN_XXXX_HAS_STARTED(invadedClan.getTag()));
+                    }
+                });
+                Bukkit.broadcastMessage("test5");
+
+                Bukkit.broadcastMessage("invadedzi " + invadedClan.getMembersUUIDs().size());
+                invadedClan.getMembersUUIDs().forEach(uuid -> {
+                    Bukkit.broadcastMessage("invadedzi");
+
+                    Player player = Bukkit.getPlayer(uuid);
+                    if(player != null) {
+                        player.sendMessage(Messages.YOUR_WAR_WITH_CLAN_XXXX_HAS_STARTED(invaderClan.getTag()));
+                    }
+                });
+                Bukkit.broadcastMessage("test6");
+                ClanManager.updateClan(invaderClan);
+                ClanManager.updateClan(invadedClan);
+                Bukkit.broadcastMessage("test7");
+                war.setActive(true);
+                warEntityManager.createOrUpdateWar(war);
+
+                Bukkit.broadcastMessage("Klan " + invaderClan.getTag() + " i " + invadedClan.getTag() + " sa");
+
+            } else {
+                Bukkit.broadcastMessage("Klan u nie ma");
             }
-            war.setActive(true);
-            warEntityManager.createOrUpdateWar(war);
-        });
+
+        }
     }
     public void endWars() {
+
+        Bukkit.broadcastMessage("Zakonczanie wojen");
+
         List<WarEntity> warEntities = warEntityManager.getAllWars();
 
         warEntities.forEach(war -> {
@@ -189,9 +233,6 @@ public class WarManager {
 
     public Optional<WarEntity> getActiveWarOfGuilds(UUID guild1Id, UUID guild2Id) {
 
-
-
-
         Set<WarEntity> warEntityByGuildIds = warEntityManager.getWarByGuildIds(guild1Id, guild2Id, true, false);
 
         if(!warEntityByGuildIds.isEmpty()) return warEntityByGuildIds.stream().findFirst();
@@ -211,31 +252,40 @@ public class WarManager {
         String invaderTag = "ERROR";
         String invadedTag = "ERROR";
 
-        GuildManager guildManager = funnyGuilds.getGuildManager();
+        Optional<ClanEntity> invaderOptionalClan = ClanManager.getClanEntityByUUID(warEntity.getInvaderGuildId());
+        if(invaderOptionalClan.isPresent()) invaderTag = invaderOptionalClan.get().getTag();
 
-        Option<Guild> invaderOptionalGuild = guildManager.findByUuid(warEntity.getInvaderGuildId());
-        if(invaderOptionalGuild.isPresent()) invaderTag = invaderOptionalGuild.get().getTag();
+        Optional<ClanEntity> invadedOptionalClan = ClanManager.getClanEntityByUUID(warEntity.getInvadedGuildId());
+        if(invadedOptionalClan.isPresent()) invadedTag = invadedOptionalClan.get().getTag();
 
-        Option<Guild> invadedOptionalGuild = guildManager.findByUuid(warEntity.getInvadedGuildId());
-        if(invadedOptionalGuild.isPresent()) invadedTag = invadedOptionalGuild.get().getTag();
-
-        if(invaderOptionalGuild.isPresent() && invadedOptionalGuild.isPresent()) {
-            Guild invaderGuild = invaderOptionalGuild.get();
-            Guild invadedGuild = invadedOptionalGuild.get();
+        if(invaderOptionalClan.isPresent() && invadedOptionalClan.isPresent()) {
+            ClanEntity invaderGuild = invaderOptionalClan.get();
+            ClanEntity invadedGuild = invadedOptionalClan.get();
 
             {
-                Set<Guild> enemies = invaderGuild.getEnemies();
-                enemies.remove(invadedGuild);
-                invaderGuild.setEnemies(enemies);
+                Set<UUID> enemies = invaderGuild.getEnemiesUUIDs();
+                enemies.remove(invadedGuild.getUuid());
+                invaderGuild.setEnemiesUUIDs(enemies);
             }
             {
-                Set<Guild> enemies = invadedGuild.getEnemies();
-                enemies.remove(invaderGuild);
-                invadedGuild.setEnemies(enemies);
+                Set<UUID> enemies = invadedGuild.getEnemiesUUIDs();
+                enemies.remove(invaderGuild.getUuid());
+                invadedGuild.setEnemiesUUIDs(enemies);
             }
-
-            invaderGuild.getOnlineMembers().forEach(onlinePlayer -> onlinePlayer.sendMessage(Messages.YOUR_WAR_WITH_CLAN_XXXX_HAS_ENDED(invadedGuild.getTag())));
-            invadedGuild.getOnlineMembers().forEach(onlinePlayer -> onlinePlayer.sendMessage(Messages.YOUR_WAR_WITH_CLAN_XXXX_HAS_ENDED(invaderGuild.getTag())));
+            invaderGuild.getMembersUUIDs().forEach(uuid -> {
+                Player player = Bukkit.getPlayer(uuid);
+                if(player != null) {
+                    player.sendMessage(Messages.YOUR_WAR_WITH_CLAN_XXXX_HAS_ENDED(invaderGuild.getTag()));
+                }
+            });
+            invaderGuild.getMembersUUIDs().forEach(uuid -> {
+                Player player = Bukkit.getPlayer(uuid);
+                if(player != null) {
+                    player.sendMessage(Messages.YOUR_WAR_WITH_CLAN_XXXX_HAS_ENDED(invadedGuild.getTag()));
+                }
+            });
+            ClanManager.updateClan(invaderGuild);
+            ClanManager.updateClan(invadedGuild);
         }
 
         WarRecordEntity invaderRecord = new WarRecordEntity(
@@ -260,23 +310,25 @@ public class WarManager {
 
         if(looserGuildUUID != null) {
 
-            Option<Guild> byUuid = guildManager.findByUuid(looserGuildUUID);
+            Optional<ClanEntity> byUuid = ClanManager.getClanEntityByUUID(looserGuildUUID);
 
             if(byUuid.isPresent()){
-                Guild guild = byUuid.get();
-                int oldLives = guild.getLives();
-                oldLives--;
-                guild.setLives(oldLives);
-                Bukkit.getServer().getPluginManager().callEvent(new GuildLivesChangeEvent(FunnyEvent.EventCause.COMBAT, null, guild, oldLives));
+                ClanEntity guild = byUuid.get();
+                int newLives = guild.getLives();
+                newLives--;
+                guild.setLives(newLives);
+                Bukkit.getServer().getPluginManager().callEvent(new ClanLivesChangeEvent(guild, newLives));
             }
         }
         warEntity.setActive(false);
         warEntity.setFinished(true);
 
         warEntityManager.deleteWarById(warEntity.getId());
+
     }
 
 
+    // Nagroda za wojne
     public void collectReward(Player player, WarRecordEntity warRecord) {
         warRecord.setRewardCollected(true);
         warRecordEntityManager.createOrUpdateWarRecordEntity(warRecord);

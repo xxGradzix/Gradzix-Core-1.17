@@ -69,7 +69,7 @@ public class PlayerAbilities {
         plugin.getCommand("resetumiejetnosci").setExecutor(new ResetUmiejetnosci());
 
         plugin.getServer().getPluginManager().registerEvents(new DamageListener(), plugin);
-        plugin.getServer().getPluginManager().registerEvents(new IncreasedDropAbilityOnBlockBreak(), plugin);
+//        plugin.getServer().getPluginManager().registerEvents(new IncreasedDropAbilityOnBlockBreak(), plugin);
         plugin.getServer().getPluginManager().registerEvents(new PlayerKillRankingIncrease(), plugin);
         plugin.getServer().getPluginManager().registerEvents(new RefreshOnJoin(), plugin);
 

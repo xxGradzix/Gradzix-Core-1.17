@@ -174,12 +174,12 @@
             <version>1.18.28</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>net.dzikoysk.funnyguilds</groupId>
-            <artifactId>plugin</artifactId>
-            <version>4.12.1-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>net.dzikoysk.funnyguilds</groupId>-->
+<!--            <artifactId>plugin</artifactId>-->
+<!--            <version>4.12.1-SNAPSHOT</version>-->
+<!--            <scope>provided</scope>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>com.comphenix.protocol</groupId>
             <artifactId>ProtocolLib</artifactId>

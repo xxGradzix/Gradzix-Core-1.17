@@ -11,7 +11,6 @@ import me.xxgradzix.gradzixcore.incognito.data.database.entities.IncognitoModeEn
 import me.xxgradzix.gradzixcore.incognito.data.database.managers.IncognitoAdminEntityManager;
 import me.xxgradzix.gradzixcore.incognito.data.database.managers.IncognitoModeEntityManager;
 import me.xxgradzix.gradzixcore.incognito.manages.IncognitoModeManager;
-//import me.xxgradzix.gradzixcore.incognito.manages.IncognitoModeManager;
 
 import java.sql.SQLException;
 
@@ -42,7 +41,7 @@ public class Incognito {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        new IncognitoModeManager(incognitoModeEntityManager, incognitoAdminEntityManager);
+//        new IncognitoModeManager(incognitoModeEntityManager, incognitoAdminEntityManager);
 
         plugin.getCommand("incognito").setExecutor(new IncognitoCommand());
         plugin.getCommand("incognitoAdmin").setExecutor(new AddIncognitoAdminCommand(incognitoAdminEntityManager));

@@ -4,7 +4,6 @@ import me.xxgradzix.gradzixcore.clansExtension.data.database.entities.ClanPerk;
 import me.xxgradzix.gradzixcore.clansExtension.data.database.entities.ClanPerksEntity;
 import me.xxgradzix.gradzixcore.clansExtension.data.database.entities.PerkModifierEntity;
 import me.xxgradzix.gradzixcore.clansExtension.data.database.managers.PerkModifierEntityManager;
-import net.dzikoysk.funnyguilds.guild.Guild;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;

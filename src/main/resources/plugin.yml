@@ -191,3 +191,13 @@ commands:
 
   kosz:
     description: otwiera kosz
+
+
+  test:
+    description: test
+
+  zaloz:
+    description: zaloz konto
+
+  dolacz:
+    description: dolacz do klanu

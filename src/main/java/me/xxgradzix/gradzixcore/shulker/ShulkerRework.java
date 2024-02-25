@@ -32,7 +32,6 @@ public class ShulkerRework implements Listener {
 
     private final HashMap<UUID, ShulkerUser> shulkers = new HashMap<>();
 
-    private NamespacedKey key;
     private final Gradzix_Core plugin;
 
     public ShulkerRework(Gradzix_Core plugin) {
@@ -40,7 +39,7 @@ public class ShulkerRework implements Listener {
     }
 
     public void onEnable() {
-//        plugin.getServer().getPluginManager().registerEvents(new ShulkerRework(plugin), plugin);
+        plugin.getServer().getPluginManager().registerEvents(new ShulkerRework(plugin), plugin);
     }
 
     public void onDisable() {
@@ -64,7 +63,6 @@ public class ShulkerRework implements Listener {
         ItemStack item = event.getItem();
         if (item == null)
             return;
-        event.setCancelled(true);
         if (event.getHand() == null) {
             return;
         }
@@ -158,8 +156,6 @@ public class ShulkerRework implements Listener {
         ItemStack item = event.getItemDrop().getItemStack();
 //        if (!Tag.SHULKER_BOXES.isTagged((Keyed)item.getType()))
 //            return;
-        if (!item.getItemMeta().getPersistentDataContainer().has(this.key, PersistentDataType.BYTE))
-            return;
         event.setCancelled(false);
         event.getItemDrop().remove();
         event.getPlayer().closeInventory();
@@ -189,7 +185,6 @@ public class ShulkerRework implements Listener {
 //                give = true;
 //            }
             ItemMeta itemMeta = itemStack.getItemMeta();
-            itemMeta.getPersistentDataContainer().remove(this.key);
             BlockStateMeta meta = (BlockStateMeta)itemMeta;
             ShulkerBox shulker = (ShulkerBox)meta.getBlockState();
             shulker.getInventory().setContents(event.getInventory().getContents());

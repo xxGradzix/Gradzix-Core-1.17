@@ -5,6 +5,7 @@ import me.xxgradzix.gradzixcore.clansCore.data.database.entities.UserEntity;
 import me.xxgradzix.gradzixcore.clansCore.exceptions.*;
 import me.xxgradzix.gradzixcore.clansCore.managers.ClanManager;
 import me.xxgradzix.gradzixcore.clansCore.managers.UserManager;
+import me.xxgradzix.gradzixcore.clansCore.messages.Messages;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -21,7 +22,7 @@ public class KickCommand implements CommandExecutor {
         if(!(sender instanceof Player)) return false;
 
         if(args.length != 1) {
-            sender.sendMessage("Użycie: /wyrzuc <nick>");
+            sender.sendMessage(Messages.KICK_COMMAND_USAGE);
             return false;
         }
 
@@ -30,7 +31,7 @@ public class KickCommand implements CommandExecutor {
         Optional<ClanEntity> leaderClan = ClanManager.getClanEntityByLeader(UserManager.getOrCreateUserEntity(player));
 
         if(!leaderClan.isPresent()) {
-            player.sendMessage("Tylko lider może wyrzucić gracza z klanu");
+            player.sendMessage(Messages.YOU_DONT_HAVE_PERMISSION_TO_DO_THIS);
             return false;
         }
 
@@ -38,15 +39,15 @@ public class KickCommand implements CommandExecutor {
         Optional<UserEntity> userEntityByNick = UserManager.getUserEntityByNick(nick);
 
         if(!userEntityByNick.isPresent()) {
-            player.sendMessage("Gracz " + nick + " nie istnieje");
+            player.sendMessage(Messages.PLAYER_DOES_NOT_EXISTS(nick));
             return false;
         }
 
         try {
             ClanManager.removeMemberFromClan(leaderClan.get().getUuid(), Bukkit.getPlayer(nick));
-            player.sendMessage("Gracz " + nick + " został wyrzucony z klanu");
+            player.sendMessage(Messages.YOU_KICKED_PLAYER(nick));
         } catch (ThisClanDoesNotExists | ThisUserDoesNotBelongToThisClan e) {
-            player.sendMessage("Ten gracz nie należy do twojego klanu");
+            player.sendMessage(Messages.PLAYER_DOES_BELONG_TO_YOUR_CLAN(nick));
             return false;
         }
 

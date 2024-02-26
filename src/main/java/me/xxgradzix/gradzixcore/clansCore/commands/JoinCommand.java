@@ -5,6 +5,7 @@ import me.xxgradzix.gradzixcore.clansCore.exceptions.ClanWithThisUUIDDoesNotExis
 import me.xxgradzix.gradzixcore.clansCore.exceptions.ThisUserAlreadyBelongsToAnotherClan;
 import me.xxgradzix.gradzixcore.clansCore.exceptions.ThisUserAlreadyBelongsToThisClan;
 import me.xxgradzix.gradzixcore.clansCore.managers.ClanManager;
+import me.xxgradzix.gradzixcore.clansCore.messages.Messages;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -20,7 +21,7 @@ public class JoinCommand implements CommandExecutor {
         if(!(sender instanceof Player)) return false;
 
         if(args.length != 1) {
-            sender.sendMessage("Użycie: /dolacz <tag>");
+            sender.sendMessage(Messages.JOIN_COMMAND_USAGE);
             return false;
         }
 
@@ -31,25 +32,25 @@ public class JoinCommand implements CommandExecutor {
         Optional<ClanEntity> clan = ClanManager.getClanEntityByTag(tag);
 
         if(!clan.isPresent()) {
-            player.sendMessage("Klan z tagiem " + tag + " nie istnieje");
+            player.sendMessage(Messages.CLAN_WITH_THIS_TAG_DOES_NOT_EXISTS);
             return false;
         }
 
         if(!ClanManager.isPlayerInvitedToClan(player, clan.get().getUuid())) {
-            player.sendMessage("Nie zostałeś zaproszony do tego klanu");
+            player.sendMessage(Messages.YOU_WERE_NOT_INVITED_TO_THIS_CLAN);
             return false;
         }
 
         try {
             ClanManager.addMemberToClan(clan.get().getUuid(), player);
         } catch (ThisUserAlreadyBelongsToAnotherClan e) {
-            player.sendMessage("Należysz już do innego klanu");
+            player.sendMessage(Messages.YOU_BELONG_TO_ANOTHER_CLAN);
             return false;
         } catch (ClanWithThisUUIDDoesNotExists e) {
-            player.sendMessage("Nie znaleziono takiej gildi, przepraszamy");
+            player.sendMessage(Messages.CLAN_WITH_THIS_TAG_DOES_NOT_EXISTS);
             return false;
         } catch (ThisUserAlreadyBelongsToThisClan e) {
-            player.sendMessage("Należysz już do tego klanu");
+            player.sendMessage(Messages.YOU_BELONG_TO_THIS_CLAN);
         }
 
         return true;

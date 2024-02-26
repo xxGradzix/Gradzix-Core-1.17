@@ -7,6 +7,7 @@ import me.xxgradzix.gradzixcore.clansCore.exceptions.ThisUserAlreadyBelongsToAno
 import me.xxgradzix.gradzixcore.clansCore.exceptions.ThisUserAlreadyBelongsToThisClan;
 import me.xxgradzix.gradzixcore.clansCore.managers.ClanManager;
 import me.xxgradzix.gradzixcore.clansCore.managers.UserManager;
+import me.xxgradzix.gradzixcore.clansCore.messages.Messages;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -23,7 +24,7 @@ public class InviteToClanCommand implements CommandExecutor {
         if(!(sender instanceof Player)) return false;
 
         if(args.length != 1) {
-            sender.sendMessage("Użycie: /zapros <nick>");
+            sender.sendMessage(Messages.INVITE_COMMAND_USAGE);
             return false;
         }
 
@@ -34,7 +35,7 @@ public class InviteToClanCommand implements CommandExecutor {
         Optional<ClanEntity> clanEntityByClanMember = ClanManager.getClanEntityByClanMember(userEntity);
 
         if(!clanEntityByClanMember.isPresent()) {
-            player.sendMessage("Nie należysz do żadnego klanu");
+            player.sendMessage(Messages.YOU_DONT_BELONG_TO_ANY_CLAN);
             return false;
         }
 
@@ -43,11 +44,11 @@ public class InviteToClanCommand implements CommandExecutor {
         try {
             invited = Bukkit.getPlayer(nick);
         } catch (Exception e) {
-            player.sendMessage("Gracz " + nick + " nie jest online");
+            player.sendMessage(Messages.PLAYER_IS_NOT_ONLINE(nick));
             return false;
         }
         if(invited == null) {
-            player.sendMessage("Gracz " + nick + " nie jest online");
+            player.sendMessage(Messages.PLAYER_IS_NOT_ONLINE(nick));
             return false;
         }
 

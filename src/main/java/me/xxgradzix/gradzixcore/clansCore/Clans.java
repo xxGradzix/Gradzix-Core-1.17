@@ -3,9 +3,7 @@ package me.xxgradzix.gradzixcore.clansCore;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 import me.xxgradzix.gradzixcore.Gradzix_Core;
-import me.xxgradzix.gradzixcore.clansCore.commands.JoinCommand;
-import me.xxgradzix.gradzixcore.clansCore.commands.TestCommand;
-import me.xxgradzix.gradzixcore.clansCore.commands.CreateClanCommand;
+import me.xxgradzix.gradzixcore.clansCore.commands.*;
 import me.xxgradzix.gradzixcore.clansCore.data.database.entities.ClanEntity;
 import me.xxgradzix.gradzixcore.clansCore.data.database.entities.UserEntity;
 import me.xxgradzix.gradzixcore.clansCore.data.database.managers.ClanEntityManager;
@@ -58,7 +56,15 @@ public class Clans {
     public void onEnable() {
 
         plugin.getCommand("zaloz").setExecutor(new CreateClanCommand());
+        plugin.getCommand("usun").setExecutor(new DeleteCommand());
+        plugin.getCommand("zapros").setExecutor(new InviteToClanCommand());
         plugin.getCommand("dolacz").setExecutor(new JoinCommand());
+        plugin.getCommand("wyrzuc").setExecutor(new KickCommand());
+        plugin.getCommand("opusc").setExecutor(new LeaveCommand());
+        plugin.getCommand("gracz").setExecutor(new PlayerInfoCommand());
+        plugin.getCommand("klan").setExecutor(new ClanInfoCommand());
+
+
         plugin.getCommand("test").setExecutor(new TestCommand());
 
 //        plugin.getServer().getPluginManager().registerEvents(new GuildLoseLivesEvent(funnyGuilds), plugin);

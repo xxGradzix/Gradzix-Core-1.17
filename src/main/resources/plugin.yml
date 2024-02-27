@@ -199,5 +199,23 @@ commands:
   zaloz:
     description: zaloz konto
 
+  usun:
+    description: usun konto
+
+  zapros:
+    description: zapros gracza do klanu
+
   dolacz:
     description: dolacz do klanu
+
+  wyrzuc:
+    description: wyrzuc gracza z klanu
+
+  opusc:
+    description: opusc klan
+
+  gracz:
+    description: pokazuje informacje o graczu
+
+  klan:
+    description: pokazuje informacje o klanie

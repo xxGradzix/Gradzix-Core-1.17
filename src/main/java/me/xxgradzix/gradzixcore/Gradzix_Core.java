@@ -5,6 +5,7 @@ import com.j256.ormlite.support.ConnectionSource;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import lombok.Getter;
+import me.clip.placeholderapi.PlaceholderAPI;
 import me.xxgradzix.gradzixcore.adminPanel.Panel;
 import me.xxgradzix.gradzixcore.afkRegion.AfkRegion;
 import me.xxgradzix.gradzixcore.binds.Binds;

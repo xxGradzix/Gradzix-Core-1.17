@@ -44,6 +44,9 @@ public class UserManager {
         return userEntityOptional;
     }
 
+    public static void updateUserEntity(UserEntity userEntity) {
+        userEntityManager.createOrUpdateUserEntity(userEntity);
+    }
     private static UserEntity createUser(Player player) {
 
         UserEntity userEntity = new UserEntity(player.getUniqueId(), player.getName());

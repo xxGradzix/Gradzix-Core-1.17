@@ -35,6 +35,18 @@ public class UserEntity implements Serializable {
     @DatabaseField
     private int deaths;
 
+    public void setPoints(int points) {
+        this.points = points;
+    }
+
+    public void setKills(int kills) {
+        this.kills = kills;
+    }
+
+    public void setDeaths(int deaths) {
+        this.deaths = deaths;
+    }
+
     public UUID getUuid() {
         return uuid;
     }

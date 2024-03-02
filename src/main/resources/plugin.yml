@@ -6,6 +6,8 @@ authors: [xxGradzix]
 
 depend: [WorldGuard, WorldEdit, ProtocolLib, DecentHolograms]
 
+softdepend: [PlaceholderAPI]
+
 commands:
   givezdrapka:
     description: Daje 1 zdrapke

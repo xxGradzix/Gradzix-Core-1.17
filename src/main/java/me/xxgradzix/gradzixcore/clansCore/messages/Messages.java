@@ -6,12 +6,12 @@ import org.bukkit.ChatColor;
 
 public class Messages {
 
-    public static final String LEAVE_COMMAND_USAGE = ChatColor.GRAY + "Użycie:" + ChatColor.RED + " /opusc";
-    public static final String JOIN_COMMAND_USAGE = ChatColor.GRAY + "Użycie:" + ChatColor.RED + " /dolacz <tag>";
-    public static final String INVITE_COMMAND_USAGE = ChatColor.GRAY + "Użycie:" + ChatColor.RED + " /zapros <nick>";
-    public static final String KICK_COMMAND_USAGE = ChatColor.GRAY + "Użycie:" + ChatColor.RED + " /wyrzuc <nick>";
-    public static final String CREATE_CLAN_COMMAND_USAGE = ChatColor.GRAY + "Użycie:" + ChatColor.RED + " /zaloz <nazwa> <tag>";
-    public static final String DELETE_CLAN_COMMAND_USAGE = ChatColor.GRAY + "Użycie:" + ChatColor.RED + " /usun";
+    public static final String LEAVE_COMMAND_USAGE = ChatColor.GRAY + "Użycie:" + ChatColor.RED + " /klan opusc";
+    public static final String JOIN_COMMAND_USAGE = ChatColor.GRAY + "Użycie:" + ChatColor.RED + " /klan dolacz <tag>";
+    public static final String INVITE_COMMAND_USAGE = ChatColor.GRAY + "Użycie:" + ChatColor.RED + " /klan zapros <nick>";
+    public static final String KICK_COMMAND_USAGE = ChatColor.GRAY + "Użycie:" + ChatColor.RED + " /klan wyrzuc <nick>";
+    public static final String CREATE_CLAN_COMMAND_USAGE = ChatColor.GRAY + "Użycie:" + ChatColor.RED + " /klan zaloz <tag> <nazwa>";
+    public static final String DELETE_CLAN_COMMAND_USAGE = ChatColor.GRAY + "Użycie:" + ChatColor.RED + " /klan usun";
     public static final String THIS_PLAYER_DOES_NOT_BELONG_TO_THIS_CLAN = ChatColor.RED + "Ten gracz nie należy do tego klanu";
     public static final String CLAN_WITH_THIS_TAG_ALREADY_EXISTS = ChatColor.RED + "Klan z takim tagiem już istnieje";
     public static final String CLAN_WITH_THIS_TAG_DOES_NOT_EXISTS = ChatColor.RED + "Klan z takim tagiem nie istnieje";
@@ -20,7 +20,10 @@ public class Messages {
     public static final String YOU_WERE_NOT_INVITED_TO_THIS_CLAN = ChatColor.RED + "Nie zostałeś zaproszony do tego klanu";
     public static final String YOU_BELONG_TO_ANOTHER_CLAN = ChatColor.RED + "Należysz już do innego klanu";
     public static final String PLAYER_INFO_COMMAND_USAGE = ChatColor.GRAY + "Użycie:" + ChatColor.RED + " /gracz <nick>";
-    public static final String CLAN_INFO_COMMAND_USAGE = ChatColor.GRAY + "Użycie:" + ChatColor.RED + " /klan <nick>";
+    public static final String CLAN_INFO_COMMAND_USAGE = ChatColor.GRAY + "Użycie:" + ChatColor.RED + " /klan info <tag>";
+    public static final String ONLY_LEADER_CANT_DELETE_CLAN = ChatColor.RED + "Tylko lider klanu może usunąć klan";
+    public static final String DELETE_CLAN_SUCCESSFUL = ChatColor.GREEN + "Pomyślnie usunąłeś swój klan";
+    public static final String CLAN_WITH_THIS_NAME_ALREADY_EXISTS = ChatColor.RED + "Klan z taką nazwą już istnieje";
     public static String YOU_BELONG_TO_THIS_CLAN = ChatColor.GREEN + "Należysz już do tego klanu";
 
     public static String SUCCESFULLY_REMOVED_PLAYER_FROM_CLAN(String nick) { return ChatColor.GRAY + "Usunąłeś gracza " + ChatColor.RED + nick + ChatColor.GRAY + " z klanu";}
@@ -66,7 +69,7 @@ public class Messages {
 
         sb.append(ChatColor.GRAY).append("Punkty: ").append(ChatColor.GREEN).append(targetClan.getPoints()).append("\n");
         sb.append(ChatColor.GRAY).append("Życia: ").append(ChatColor.GREEN).append(targetClan.getLives()).append("\n");
-        sb.append(ChatColor.GRAY).append("Ilość członków: ").append(ChatColor.GREEN).append(targetClan.getMembers().size()).append("\n");
+        sb.append(ChatColor.GRAY).append("Ilość członków: ").append(ChatColor.GREEN).append(targetClan.getMembersUUIDs().size()).append("\n");
 
 
         return sb.toString();

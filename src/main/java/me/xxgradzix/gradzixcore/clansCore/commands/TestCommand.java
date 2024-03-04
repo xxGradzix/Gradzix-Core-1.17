@@ -7,6 +7,7 @@ import me.xxgradzix.gradzixcore.clansCore.data.database.managers.UserEntityManag
 import me.xxgradzix.gradzixcore.clansCore.exceptions.*;
 import me.xxgradzix.gradzixcore.clansCore.managers.ClanManager;
 import me.xxgradzix.gradzixcore.clansCore.managers.TeamManager;
+import me.xxgradzix.gradzixcore.clansCore.managers.UserManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -23,17 +24,34 @@ public class TestCommand implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
 
-        Scoreboard scoreboard = Clans.SCOREBOARD;
+//        for(ClanEntity clanEntity : ClanManager.getAllClans()) {
+//            TeamManager.updateEntities(clanEntity);
+//        }
+//
+//        Scoreboard scoreboard = Clans.SCOREBOARD;
+//
+//
+//        for (Team team : scoreboard.getTeams()) {
+//            Bukkit.broadcastMessage("Team: " + team.getName());
+//            Bukkit.broadcastMessage("======================");
+//            for (String entry : team.getEntries()) {
+//                Bukkit.broadcastMessage("Entry: " + entry);
+//            }
+//            Bukkit.broadcastMessage("======================");
+//        }
+
+        UserEntity userEntity = UserManager.getOrCreateUserEntity((Player) sender);
+
+        ClanManager.getClanEntityOfMember(userEntity).ifPresent(clanEntity -> {
+            Bukkit.broadcastMessage("adadadada Clan: " + clanEntity.getTag());
+        });
+        ClanManager.getClanEntityByLeader(userEntity).ifPresent(clanEntity -> {
+            Bukkit.broadcastMessage("Leader Clan: " + clanEntity.getTag());
+        });
+
+//        ClanManager.add
 
 
-        for (Team team : scoreboard.getTeams()) {
-            Bukkit.broadcastMessage("Team: " + team.getName());
-            Bukkit.broadcastMessage("======================");
-            for (String entry : team.getEntries()) {
-                Bukkit.broadcastMessage("Entry: " + entry);
-            }
-            Bukkit.broadcastMessage("======================");
-        }
 
 
 

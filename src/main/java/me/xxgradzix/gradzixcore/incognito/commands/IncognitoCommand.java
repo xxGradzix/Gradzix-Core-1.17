@@ -44,7 +44,7 @@ public class IncognitoCommand implements CommandExecutor {
             return true;
         }
         addCooldown(player.getUniqueId());
-//        IncognitoModeManager.toggleIncognitoMode(player);
+        IncognitoModeManager.toggleIncognitoMode(player);
 
 
         return true;

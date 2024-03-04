@@ -1,4 +1,4 @@
-package me.xxgradzix.gradzixcore.clansCore.data.database;
+package me.xxgradzix.gradzixcore.clansCore.data.database.utills;
 
 import com.j256.ormlite.field.FieldType;
 import com.j256.ormlite.field.SqlType;
@@ -15,21 +15,21 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
-public class MembersSetPersister extends StringType {
+public class UUIDSetPersister extends StringType {
 
-    private static final MembersSetPersister INSTANCE = new MembersSetPersister();
+    private static final UUIDSetPersister INSTANCE = new UUIDSetPersister();
 
-    private MembersSetPersister() {
+    private UUIDSetPersister() {
         super(SqlType.STRING, new Class<?>[] { Set.class });
     }
 
-    public static MembersSetPersister getSingleton() {
+    public static UUIDSetPersister getSingleton() {
         return INSTANCE;
     }
 
     @Override
     public Object javaToSqlArg(FieldType fieldType, Object javaObject) {
-        Set<UserEntity> myFieldClass = (Set<UserEntity>) javaObject;
+        Set<UUID> myFieldClass = (Set<UUID>) javaObject;
         return myFieldClass != null ? getJsonFromSet(myFieldClass) : null;
     }
 
@@ -42,14 +42,12 @@ public class MembersSetPersister extends StringType {
         }
     }
 
-    private String getJsonFromSet(Set<UserEntity> members) {
+    private String getJsonFromSet(Set<UUID> members) {
         try {
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             BukkitObjectOutputStream dataOutput = new BukkitObjectOutputStream(outputStream);
 
-
             dataOutput.writeObject(members);
-
 
             dataOutput.close();
 
@@ -59,13 +57,17 @@ public class MembersSetPersister extends StringType {
         }
     }
 
-    private Set<UserEntity> getSetFromJson(String data) throws IOException {
+    private Set<UUID> getSetFromJson(String data) throws IOException {
         try {
             ByteArrayInputStream inputStream = new ByteArrayInputStream(Base64Coder.decodeLines(data));
             BukkitObjectInputStream dataInput = new BukkitObjectInputStream(inputStream);
 
-            Set<UserEntity> members = (Set<UserEntity>) dataInput.readObject();
-
+            Set<UUID> members = (Set<UUID>) dataInput.readObject();
+//            Set<UserEntity> members = new HashSet<>();
+//            int size = dataInput.readInt();
+//            for (int i = 0; i < size; i++) {
+//                members.add((UserEntity) dataInput.readObject());
+//            }
             dataInput.close();
             return members;
         } catch (ClassNotFoundException e) {

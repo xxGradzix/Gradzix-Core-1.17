@@ -1,4 +1,4 @@
-package me.xxgradzix.gradzixcore.clansCore.commands;
+package me.xxgradzix.gradzixcore.clansCore.commands.deprecatedCommands;
 
 import me.xxgradzix.gradzixcore.clansCore.exceptions.ClanWithThisNameAlreadyExists;
 import me.xxgradzix.gradzixcore.clansCore.exceptions.ClanWithThisTagAlreadyExists;

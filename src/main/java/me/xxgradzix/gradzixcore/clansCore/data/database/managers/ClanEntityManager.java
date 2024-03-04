@@ -12,6 +12,7 @@ import me.xxgradzix.gradzixcore.clansCore.exceptions.ThisUserAlreadyBelongsToAno
 import me.xxgradzix.gradzixcore.clansCore.exceptions.ThisUserAlreadyIsALeaderOfAnotherClan;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -100,15 +101,15 @@ public class ClanEntityManager {
         }
     }
     public Optional<ClanEntity> getClanEntityByMember(UserEntity member) {
-        try {
-            List<ClanEntity> clanEntitiesByMember = entityDao.queryForAll();
-            for (ClanEntity clanEntity : clanEntitiesByMember) {
-                if(clanEntity.getMembers().contains(member)) return Optional.of(clanEntity);
-            }
-            return Optional.empty();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+
+        List<ClanEntity> clanEntitiesByMember = getAllClanEntities();
+
+        for (ClanEntity clanEntity : clanEntitiesByMember) {
+
+            if(clanEntity.getMembersUUIDs().contains(member.getUuid()) || clanEntity.getLeader().equals(member)) return Optional.of(clanEntity);
         }
+        return Optional.empty();
+
     }
 
     public List<ClanEntity> getAllClanEntities() {
@@ -126,4 +127,11 @@ public class ClanEntityManager {
         }
     }
 
+    public ArrayList<ClanEntity> getAllClans() {
+        try {
+            return (ArrayList<ClanEntity>) entityDao.queryForAll();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

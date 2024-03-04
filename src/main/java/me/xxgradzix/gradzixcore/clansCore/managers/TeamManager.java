@@ -2,12 +2,12 @@ package me.xxgradzix.gradzixcore.clansCore.managers;
 
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.ProtocolLibrary;
-import com.comphenix.protocol.ProtocolManager;
 import com.comphenix.protocol.events.InternalStructure;
 import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.events.PacketEvent;
 import com.comphenix.protocol.wrappers.WrappedChatComponent;
+import me.clip.placeholderapi.PlaceholderAPI;
 import me.xxgradzix.gradzixcore.Gradzix_Core;
 import me.xxgradzix.gradzixcore.clansCore.Clans;
 import me.xxgradzix.gradzixcore.clansCore.data.database.entities.ClanEntity;
@@ -19,19 +19,17 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
-import java.lang.reflect.InvocationTargetException;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Optional;
+import java.util.UUID;
 
 public class TeamManager {
 
     private static final Scoreboard scoreboard = Clans.SCOREBOARD;
     private static JavaPlugin plugin = Gradzix_Core.getInstance();
 
-    private static void updateEntities(ClanEntity entity) {
-        addEntities(entity);
+    public static void updateEntities(ClanEntity entity) {
         removeEntities(entity);
+        addEntities(entity);
     }
 
 //    public static void changePrefixes() {
@@ -44,10 +42,6 @@ public class TeamManager {
 //                if(teamName == null) return;
 //                Team team = scoreboard.getTeam(teamName);
 //                if(team == null) return;
-//
-//
-//
-//                Bukkit.broadcastMessage("Opt str: " + packet.getOptionalStructures().size() + " bool: " + (packet.getOptionalStructures().size() == 1 ? packet.getOptionalStructures().read(0).isPresent() : "null"));
 //
 //                Player observer = event.getPlayer();
 //
@@ -68,16 +62,13 @@ public class TeamManager {
 //                        InternalStructure struct = optStruct.get();
 //                        struct.getChatComponents().write(2, WrappedChatComponent.fromText(newPrefix));//Team Suffix
 //                        packet.getOptionalStructures().write(0, Optional.of(struct));
-//
-//                        Bukkit.broadcastMessage("Gracz " + player.getName() + " ma nowy prefix: " + newPrefix + " ktory powinien byc widoczny dla " + observer.getName());
-//                    } else Bukkit.broadcastMessage("cos sie jebnelo dla widoku " + observer.getName());
+//                    }
 //
 //                }
 //            }
 //
 //        });
 //    }
-
 //    private static ChatColor getSuffixColor(Player observer, Player player) {
 //        Team observerTeam = observer.getScoreboard().getEntryTeam(observer.getName());
 //
@@ -102,45 +93,30 @@ public class TeamManager {
 //
 //    }
 
-    private static Team addEntities(ClanEntity entity) {
+    private static void addEntities(ClanEntity entity) {
 
-        Team team = getRefreshTeam(entity);
+        Optional<Team> optionalTeam = getTeam(entity);
+        if (!optionalTeam.isPresent()) return;
 
-        for (UserEntity member : entity.getMembers()) {
-            if (team.hasEntry(member.getName()))
-                continue;
-            team.addEntry(member.getName());
+        Team team = optionalTeam.get();
+
+        for (UUID memberUUID : entity.getMembersUUIDs()) {
+            Optional<UserEntity> member = UserManager.getUserEntityByUUID(memberUUID);
+            if (member.isPresent() && !team.hasEntry(member.get().getName())) team.addEntry(member.get().getName());
         }
-
-
-        return team;
 
     }
 
     private static void removeEntities(ClanEntity entity) {
-
-        Team entryTeam = getRefreshTeam(entity);
-
-        for (String entry : entryTeam.getEntries()) {
-            if (entity.getMembers().stream().noneMatch(member -> member.getName().equals(entry))) {
-                entryTeam.removeEntry(entry);
-            }
-        }
-
+        Optional<Team> optionalTeam = getTeam(entity);
+        if (!optionalTeam.isPresent()) return;
+        Team team = optionalTeam.get();
+        for (String entry : team.getEntries()) team.removeEntry(entry);
     }
-
-//    public static void refreshTeams() {
-//        Bukkit.getScheduler().runTaskTimer(plugin, () -> {
-//            for (ClanEntity entity : Clans.getClanEntityManager().getAllClanEntities()) {
-//                Team team = getTeam(entity);
-//
-//                team.setOption(Team.Option.COLLISION_RULE, Team.OptionStatus.NEVER);
-//            }
-//        }, 0, 20 * 10L);
-//      }
 
     public static void removeTeam(ClanEntity entity) {
         Team entryTeam = scoreboard.getTeam(entity.getTag());
+
         if (entryTeam != null) {
             try {
                 entryTeam.unregister();
@@ -150,31 +126,31 @@ public class TeamManager {
     }
 
     public static void refreshTeam(ClanEntity entity) {
-        getRefreshTeam(entity);
+        createOrUpdateTeam(entity);
     }
 
-    private static Team getRefreshTeam(ClanEntity entity) {
+    private static Team createOrUpdateTeam(ClanEntity entity) {
 
-        Team entryTeam = scoreboard.getTeam(entity.getTag());
+        Optional<Team> optionalTeam = getTeam(entity);
 
-        if(entryTeam != null) {
-            try {
-                entryTeam.unregister();
-            } catch (IllegalStateException ignored) {
-            }
+        Team team;
+        if(!optionalTeam.isPresent()) {
+            team = scoreboard.registerNewTeam(entity.getTag());
+        } else {
+            team = optionalTeam.get();
         }
 
-        entryTeam = scoreboard.registerNewTeam(entity.getTag());
-
-        entryTeam.setSuffix(ChatColor.DARK_GRAY + " [" + ChatColor.GRAY + entity.getTag() + ChatColor.DARK_GRAY + "]");
-
-        entryTeam.setOption(Team.Option.COLLISION_RULE, Team.OptionStatus.NEVER);
-
-        entryTeam.setAllowFriendlyFire(entity.isPvp());
+        team.setSuffix(ChatColor.DARK_GRAY + " [" + ChatColor.GRAY + entity.getTag() + ChatColor.DARK_GRAY + "]");
+        team.setOption(Team.Option.COLLISION_RULE, Team.OptionStatus.NEVER);
+        team.setAllowFriendlyFire(entity.isPvp());
 
         updateEntities(entity);
 
-        return entryTeam;
+        return team;
+    }
+
+    private static Optional<Team> getTeam(ClanEntity entity) {
+        return Optional.ofNullable(scoreboard.getTeam(entity.getTag()));
     }
 
 }

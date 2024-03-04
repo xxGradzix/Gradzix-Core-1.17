@@ -2,14 +2,16 @@ package me.xxgradzix.gradzixcore.clansCore;
 
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
-import me.clip.placeholderapi.PlaceholderAPI;
 import me.xxgradzix.gradzixcore.Gradzix_Core;
 import me.xxgradzix.gradzixcore.clansCore.commands.*;
+import me.xxgradzix.gradzixcore.clansCore.commands.deprecatedCommands.*;
 import me.xxgradzix.gradzixcore.clansCore.data.database.entities.ClanEntity;
 import me.xxgradzix.gradzixcore.clansCore.data.database.entities.UserEntity;
 import me.xxgradzix.gradzixcore.clansCore.data.database.managers.ClanEntityManager;
 import me.xxgradzix.gradzixcore.clansCore.data.database.managers.UserEntityManager;
+import me.xxgradzix.gradzixcore.clansCore.listeners.OnJoinCreateUser;
 import me.xxgradzix.gradzixcore.clansCore.placeholders.PlayerPointsPlaceholder;
+import me.xxgradzix.gradzixcore.clansCore.placeholders.PlayerTagPlaceholder;
 import org.bukkit.Bukkit;
 import org.bukkit.scoreboard.Scoreboard;
 
@@ -58,19 +60,14 @@ public class Clans {
     public void onEnable() {
 
         new PlayerPointsPlaceholder().register();
+        new PlayerTagPlaceholder().register();
 
-        plugin.getCommand("zaloz").setExecutor(new CreateClanCommand());
-        plugin.getCommand("usun").setExecutor(new DeleteCommand());
-        plugin.getCommand("zapros").setExecutor(new InviteToClanCommand());
-        plugin.getCommand("dolacz").setExecutor(new JoinCommand());
-        plugin.getCommand("wyrzuc").setExecutor(new KickCommand());
-        plugin.getCommand("opusc").setExecutor(new LeaveCommand());
-        plugin.getCommand("gracz").setExecutor(new PlayerInfoCommand());
-        plugin.getCommand("klan").setExecutor(new ClanInfoCommand());
 
+        plugin.getCommand("klan").setExecutor(new ClanCommand());
 
         plugin.getCommand("test").setExecutor(new TestCommand());
 
+        plugin.getServer().getPluginManager().registerEvents(new OnJoinCreateUser(), plugin);
 //        plugin.getServer().getPluginManager().registerEvents(new GuildLoseLivesEvent(funnyGuilds), plugin);
 
     }

@@ -216,10 +216,10 @@ public final class Gradzix_Core extends JavaPlugin {
             shulkerRework = new ShulkerRework(this);
             shulkerRework.onEnable();
         }
-//        if (incognito == null) {
-//            incognito = new Incognito(this, connectionSource);
-//            incognito.onEnable();
-//        }
+        if (incognito == null) {
+            incognito = new Incognito(this, connectionSource);
+            incognito.onEnable();
+        }
         if (playerPerks == null) {
             playerPerks = new PlayerPerks(this, connectionSource);
             playerPerks.onEnable();
@@ -237,10 +237,10 @@ public final class Gradzix_Core extends JavaPlugin {
             warps.onEnable();
         }
 
-//        if (clansExtension == null) {
-//            clansExtension = new ClansExtension(this, connectionSource, funnyGuilds);
-//            clansExtension.onEnable();
-//        }
+        if (clansExtension == null) {
+            clansExtension = new ClansExtension(this, connectionSource);
+            clansExtension.onEnable();
+        }
         if (clans == null) {
             clans = new Clans(this, connectionSource);
             clans.onEnable();

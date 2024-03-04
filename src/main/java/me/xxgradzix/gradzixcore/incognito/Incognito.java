@@ -41,7 +41,7 @@ public class Incognito {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-//        new IncognitoModeManager(incognitoModeEntityManager, incognitoAdminEntityManager);
+        new IncognitoModeManager(incognitoModeEntityManager, incognitoAdminEntityManager);
 
         plugin.getCommand("incognito").setExecutor(new IncognitoCommand());
         plugin.getCommand("incognitoAdmin").setExecutor(new AddIncognitoAdminCommand(incognitoAdminEntityManager));

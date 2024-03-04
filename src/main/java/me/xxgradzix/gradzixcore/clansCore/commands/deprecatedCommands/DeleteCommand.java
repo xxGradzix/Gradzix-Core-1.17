@@ -1,11 +1,15 @@
-package me.xxgradzix.gradzixcore.clansCore.commands;
+package me.xxgradzix.gradzixcore.clansCore.commands.deprecatedCommands;
 
+import me.xxgradzix.gradzixcore.clansCore.data.database.entities.ClanEntity;
 import me.xxgradzix.gradzixcore.clansCore.exceptions.*;
 import me.xxgradzix.gradzixcore.clansCore.managers.ClanManager;
+import me.xxgradzix.gradzixcore.clansCore.managers.UserManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import java.util.Optional;
 
 public class DeleteCommand implements CommandExecutor {
 
@@ -23,7 +27,12 @@ public class DeleteCommand implements CommandExecutor {
 
 
         try {
-            ClanManager.removeClan(player);
+            Optional<ClanEntity> clanEntityOptional = ClanManager.getClanEntityOfMember(UserManager.getOrCreateUserEntity(player));
+            if (!clanEntityOptional.isPresent()) {
+                player.sendMessage("Nie jesteś w klanie");
+                return false;
+            }
+            ClanManager.removeClanOfPlayerByPlayer(player);
         } catch (ThisUserIsNotALeader e) {
             player.sendMessage("Musisz być liderem klanu, aby móc go usunąć");
             return false;

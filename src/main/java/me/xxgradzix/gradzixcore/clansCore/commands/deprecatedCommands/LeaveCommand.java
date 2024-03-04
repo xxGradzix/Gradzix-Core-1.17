@@ -1,4 +1,4 @@
-package me.xxgradzix.gradzixcore.clansCore.commands;
+package me.xxgradzix.gradzixcore.clansCore.commands.deprecatedCommands;
 
 import me.xxgradzix.gradzixcore.clansCore.data.database.entities.ClanEntity;
 import me.xxgradzix.gradzixcore.clansCore.data.database.entities.UserEntity;
@@ -41,6 +41,7 @@ public class LeaveCommand implements CommandExecutor {
         }
 
         ClanManager.removeMemberFromClan(player);
+
 
         return true;
     }

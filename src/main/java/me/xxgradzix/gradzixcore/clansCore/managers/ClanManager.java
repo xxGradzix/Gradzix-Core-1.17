@@ -1,6 +1,5 @@
 package me.xxgradzix.gradzixcore.clansCore.managers;
 
-import com.j256.ormlite.dao.ForeignCollection;
 import me.xxgradzix.gradzixcore.Gradzix_Core;
 import me.xxgradzix.gradzixcore.clansCore.Clans;
 import me.xxgradzix.gradzixcore.clansCore.data.database.entities.ClanEntity;
@@ -12,7 +11,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.sql.SQLException;
 import java.util.*;
 
 public class ClanManager {
@@ -75,7 +73,7 @@ public class ClanManager {
         TeamManager.refreshTeam(clanEntity);
 
     }
-    public static void removeClan(Player player) throws ThisUserIsNotALeader {
+    public static void removeClanOfPlayerByPlayer(Player player) throws ThisUserIsNotALeader {
 
         UserEntity userEntity = UserManager.getOrCreateUserEntity(player);
 
@@ -87,8 +85,12 @@ public class ClanManager {
 
         clanEntityManager.deleteClanEntityByUUID(clanEntity.getUuid());
 
-        TeamManager.refreshTeam(clanEntity);
+        TeamManager.removeTeam(clanEntity);
+    }
 
+    public static void removeClan(ClanEntity clanEntity) {
+        clanEntityManager.deleteClanEntityByUUID(clanEntity.getUuid());
+        TeamManager.removeTeam(clanEntity);
     }
 
     public static void addMemberToClan(UUID clanUUID, Player player) throws ThisUserAlreadyBelongsToAnotherClan, ClanWithThisUUIDDoesNotExists, ThisUserAlreadyBelongsToThisClan {
@@ -105,12 +107,12 @@ public class ClanManager {
         Optional<ClanEntity> clanEntityByLeader = clanEntityManager.getClanEntityByLeader(userEntity);
         if(clanEntityByMember.isPresent() || clanEntityByLeader.isPresent()) throw new ThisUserAlreadyBelongsToAnotherClan();
 
-        Set<UserEntity> members = clanEntity.getMembers();
+        Set<UUID> members = clanEntity.getMembersUUIDs();
 
-        if(members.contains(userEntity)) throw new ThisUserAlreadyBelongsToThisClan();
+        if(members.contains(userEntity.getUuid())) throw new ThisUserAlreadyBelongsToThisClan();
 
-        members.add(userEntity);
-        clanEntity.setMembers(members);
+        members.add(userEntity.getUuid());
+        clanEntity.setMembersUUIDs(members);
 
 
         clanEntityManager.updateClanEntity(clanEntity);
@@ -130,12 +132,12 @@ public class ClanManager {
 
         UserEntity userToKick = UserManager.getOrCreateUserEntity(player);
 
-        Set<UserEntity> members = clanEntity.getMembers();
+        Set<UUID> members = clanEntity.getMembersUUIDs();
 
-        if(!members.contains(userToKick)) throw new ThisUserDoesNotBelongToThisClan();
+        if(!members.contains(userToKick.getUuid())) throw new ThisUserDoesNotBelongToThisClan();
 
-        members.remove(userEntity);
-        clanEntity.setMembers(members);
+        members.remove(userEntity.getUuid());
+        clanEntity.setMembersUUIDs(members);
 
         clanEntityManager.updateClanEntity(clanEntity);
 
@@ -151,9 +153,9 @@ public class ClanManager {
 
         ClanEntity clanEntity = clanEntityOptional.get();
 
-        Set<UserEntity> members = clanEntity.getMembers();
-        members.remove(userEntity);
-        clanEntity.setMembers(members);
+        Set<UUID> members = clanEntity.getMembersUUIDs();
+        members.remove(userEntity.getUuid());
+        clanEntity.setMembersUUIDs(members);
 
         clanEntityManager.updateClanEntity(clanEntity);
 
@@ -183,4 +185,7 @@ public class ClanManager {
     }
 
 
+    public static ArrayList<ClanEntity> getAllClans() {
+        return clanEntityManager.getAllClans();
+    }
 }

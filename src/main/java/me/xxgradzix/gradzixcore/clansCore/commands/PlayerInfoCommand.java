@@ -16,7 +16,9 @@ import java.util.Optional;
 public class PlayerInfoCommand implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
+
         if(!(sender instanceof Player)) return false;
+
         Player player = (Player) sender;
         if(args.length != 1) {
             player.sendMessage(Messages.PLAYER_INFO_COMMAND_USAGE);

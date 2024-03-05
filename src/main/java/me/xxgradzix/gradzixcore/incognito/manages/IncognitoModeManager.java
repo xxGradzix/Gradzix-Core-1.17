@@ -249,9 +249,9 @@ public class IncognitoModeManager {
 
         if(clanEntity.equals(observerClan)) return "§a"; // gracz i obserwator maja ta sama gildie = zielony
 
-        if(clanEntity.getAllies().contains(observerClan)) return "§9"; // gracz i obserwator maja sojusznice = niebieski
+        if(clanEntity.getAlliesUUIDs().contains(observerClan.getUuid())) return "§9"; // gracz i obserwator maja sojusznice = niebieski
 
-        if(clanEntity.getEnemies().contains(observerClan)) return "§c"; // gracz i obserwator maja wrogow = czerwony
+        if(clanEntity.getEnemiesUUIDs().contains(observerClan.getUuid())) return "§c"; // gracz i obserwator maja wrogow = czerwony
 
         return "";
     }

@@ -23,6 +23,12 @@ public class ClanEntity implements Serializable {
         HashSet<UUID> startingMembers = new HashSet<>();
         startingMembers.add(leader.getUuid());
         this.membersUUIDs = startingMembers;
+
+        HashSet<UUID> startingEnemies = new HashSet<>();
+        this.enemiesUUIDs = startingEnemies;
+        HashSet<UUID> startingAllies = new HashSet<>();
+        this.alliesUUIDs = startingAllies;
+
         this.points = Clans.DEFAULT_POINTS;
         this.lives = Clans.DEFAULT_LIVES;
         this.born = System.currentTimeMillis();
@@ -59,15 +65,27 @@ public class ClanEntity implements Serializable {
     @Setter
     private Set<UUID> membersUUIDs;
 
-    @DatabaseField(persisterClass = ClanSetPersister.class, columnDefinition = "TEXT")
-    @Getter
-    @Setter
-    private Set<ClanEntity> enemies;
+    public void setMembersUUIDs(Set<UUID> membersUUIDs) {
+        this.membersUUIDs = membersUUIDs;
+    }
 
-    @DatabaseField(persisterClass = ClanSetPersister.class, columnDefinition = "TEXT")
+    @DatabaseField(persisterClass = UUIDSetPersister.class, columnDefinition = "TEXT")
     @Getter
     @Setter
-    private Set<ClanEntity> allies;
+    private Set<UUID> enemiesUUIDs;
+
+    public void setEnemiesUUIDs(Set<UUID> enemiesUUIDs) {
+        this.enemiesUUIDs = enemiesUUIDs;
+    }
+
+    @DatabaseField(persisterClass = UUIDSetPersister.class, columnDefinition = "TEXT")
+    @Getter
+    @Setter
+    private Set<UUID> alliesUUIDs;
+
+    public void setAlliesUUIDs(Set<UUID> alliesUUIDs) {
+        this.alliesUUIDs = alliesUUIDs;
+    }
 
     @DatabaseField
     @Getter
@@ -88,6 +106,12 @@ public class ClanEntity implements Serializable {
     @Setter
     private boolean pvp;
 
-
+    @Override
+    public boolean equals(Object obj) {
+        if(obj == null) return false;
+        if(!(obj instanceof ClanEntity)) return false;
+        ClanEntity clanEntity = (ClanEntity) obj;
+        return clanEntity.getUuid().equals(this.getUuid());
+    }
 }
 

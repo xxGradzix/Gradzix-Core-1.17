@@ -62,7 +62,7 @@ public class ClanEntityManager {
 
     public Optional<ClanEntity> getClanEntityByUUID(UUID uuid) {
         try {
-            return Optional.of(entityDao.queryForId(uuid));
+            return Optional.ofNullable(entityDao.queryForId(uuid));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -71,7 +71,7 @@ public class ClanEntityManager {
         try {
             List<ClanEntity> clanEntitiesByTag = entityDao.queryForEq("tag", tag);
             if(clanEntitiesByTag.isEmpty()) return Optional.empty();
-            if(clanEntitiesByTag.size() == 1) return Optional.of(clanEntitiesByTag.get(0));
+            if(clanEntitiesByTag.size() == 1) return Optional.ofNullable(clanEntitiesByTag.get(0));
             throw new IllegalStateException("There are more than one clan with the same tag: " + tag);
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -82,7 +82,7 @@ public class ClanEntityManager {
             List<ClanEntity> clanEntitiesByName = entityDao.queryForEq("name", name);
 
             if(clanEntitiesByName.isEmpty()) return Optional.empty();
-            if(clanEntitiesByName.size() == 1) return Optional.of(clanEntitiesByName.get(0));
+            if(clanEntitiesByName.size() == 1) return Optional.ofNullable(clanEntitiesByName.get(0));
 
             throw new IllegalStateException("There are more than one clan with the same name: " + name);
         } catch (SQLException e) {
@@ -94,7 +94,7 @@ public class ClanEntityManager {
         try {
             List<ClanEntity> clanEntitiesByLeader = entityDao.queryForEq("leader", leader);
             if(clanEntitiesByLeader.isEmpty()) return Optional.empty();
-            if(clanEntitiesByLeader.size() == 1) return Optional.of(clanEntitiesByLeader.get(0));
+            if(clanEntitiesByLeader.size() == 1) return Optional.ofNullable(clanEntitiesByLeader.get(0));
             throw new IllegalStateException("There are more than one clan with the same leader: " + leader.getName());
         } catch (SQLException e) {
             throw new RuntimeException(e);

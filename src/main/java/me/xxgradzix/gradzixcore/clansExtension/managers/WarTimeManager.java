@@ -35,6 +35,9 @@ public class WarTimeManager {
         ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
 
         long delay = calendar.getTimeInMillis() - System.currentTimeMillis();
+
+        Bukkit.broadcastMessage("Zacznie sie za " + delay / 1000 + " sekund");
+
         executor.schedule(new WarStartTask(warStart, warEnd), delay, TimeUnit.MILLISECONDS);
     }
 
@@ -46,7 +49,11 @@ public class WarTimeManager {
         ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
 
         long delay = calendar.getTimeInMillis() - System.currentTimeMillis();
-        executor.schedule(new WarEndTask(warStart, warEnd), delay, TimeUnit.MILLISECONDS);
+
+        Bukkit.broadcastMessage("Zakonczy sie za " + delay / 1000 + " sekund");
+
+
+        executor.schedule(new WarEndTask(), delay, TimeUnit.MILLISECONDS);
     }
 
     public void scheduleOnEnable() {
@@ -90,47 +97,40 @@ public class WarTimeManager {
     }
 
     class WarStartTask implements Runnable {
-
         private final LocalDateTime warStart;
         private final LocalDateTime warEnd;
-
         public WarStartTask(LocalDateTime warStart, LocalDateTime warEnd) {
             this.warStart = warStart;
             this.warEnd = warEnd;
         }
-
         @Override
         public void run() {
-
-            warManager.startWars();
+            Bukkit.broadcastMessage("Start run");
             Bukkit.broadcastMessage(Messages.WARS_ARE_ACTIVE);
             ClansExtension.ARE_WARS_ACTIVE = true;
-
             scheduleWarEnd(warStart, warEnd);
+            warManager.startWars();
         }
     }
 
     class WarEndTask implements Runnable {
-        private final LocalDateTime warStart;
-        private final LocalDateTime warEnd;
-
-        public WarEndTask(LocalDateTime warStart, LocalDateTime warEnd) {
-            this.warStart = warStart;
-            this.warEnd = warEnd;
-        }
+//        private final LocalDateTime warStart;
+//        private final LocalDateTime warEnd;
+//
+//        public WarEndTask(LocalDateTime warStart, LocalDateTime warEnd) {
+//            this.warStart = warStart;
+//            this.warEnd = warEnd;
+//        }
         @Override
         public void run() {
-
-            System.out.println("Akcja została wykonana!");
-
+            Bukkit.broadcastMessage("End run");
+            Bukkit.broadcastMessage(Messages.WARS_ENDED);
             ClansExtension.ARE_WARS_ACTIVE = false;
             warManager.endWars();
-            Bukkit.broadcastMessage(Messages.WARS_ENDED);
         }
     }
 
     private Calendar createCalendar(LocalDateTime dateTime) {
-
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.YEAR, dateTime.getYear());
         calendar.set(Calendar.MONTH, dateTime.getMonthValue() - 1);
@@ -142,10 +142,8 @@ public class WarTimeManager {
 
     private void assertDates(LocalDateTime warStart, LocalDateTime warEnd) {
         if(warStart.isAfter(warEnd)) throw new IllegalArgumentException("War start date cannot be after war end date");
-
         LocalDateTime now = LocalDateTime.now();
         if(warEnd.isBefore(now)) throw new IllegalArgumentException("War end date cannot be before current date");
-
     }
 
 }

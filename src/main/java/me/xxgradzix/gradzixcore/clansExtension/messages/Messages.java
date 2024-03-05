@@ -2,6 +2,8 @@ package me.xxgradzix.gradzixcore.clansExtension.messages;
 
 import org.bukkit.ChatColor;
 
+import java.time.LocalDateTime;
+
 public class Messages {
     public static final String THIS_CLAN_IS_CURRENTLY_IN_WAR = ChatColor.RED + "Ten klan ma obecnie wojne z innym klanem";
     public static final String YOU_DONT_HAVE_CLAN = ChatColor.RED + "Nie jesteś członkiem żadnego klanu";
@@ -44,5 +46,9 @@ public class Messages {
 
     public static String WAR_CANCELED_VIA_GUILD_REMOVAL(String tag) {
         return ChatColor.GREEN + "Wojna z klanem " + ChatColor.RED + tag + ChatColor.GREEN + " została anulowana gdyż gildia została usunięta!";
+    }
+
+    public static String WAR_SCHEDULED(LocalDateTime warStart, LocalDateTime warEnd) {
+        return ChatColor.GREEN + "Wojna zaplanowana na " + ChatColor.RED + warStart + ChatColor.GREEN + " do " + ChatColor.RED + warEnd;
     }
 }

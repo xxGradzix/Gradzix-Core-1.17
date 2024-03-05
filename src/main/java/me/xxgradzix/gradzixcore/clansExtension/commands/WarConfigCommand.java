@@ -1,5 +1,6 @@
 package me.xxgradzix.gradzixcore.clansExtension.commands;
 
+import me.xxgradzix.gradzixcore.clansCore.commands.ClanCommand;
 import me.xxgradzix.gradzixcore.clansExtension.data.database.entities.WarScheduleEntity;
 import me.xxgradzix.gradzixcore.clansExtension.data.database.managers.WarScheduleEntityManager;
 import me.xxgradzix.gradzixcore.clansExtension.managers.WarTimeManager;
@@ -13,6 +14,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -59,12 +61,14 @@ public class WarConfigCommand implements CommandExecutor, TabCompleter {
         warScheduleEntityManager.createWarScheduleEntity(warScheduleEntity);
 
         warTimeManager.scheduleWarStart(warStart, warEnd);
+
+        sender.sendMessage(Messages.WAR_SCHEDULED(warStart, warEnd));
+
         return true;
     }
 
     private static LocalDateTime parseDate(String[] args) throws IllegalArgumentException {
         if(args.length != 5) {
-            Bukkit.broadcastMessage("args length: " + args.length);
             throw new IllegalArgumentException();
         }
         try {
@@ -79,21 +83,19 @@ public class WarConfigCommand implements CommandExecutor, TabCompleter {
         }
     }
 
+
     @Nullable
     @Override
     public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, @NotNull String[] args) {
-        if(!command.getName().equalsIgnoreCase("wojnyconfig")) {
-            return Collections.emptyList();
-        }
 
-        List<String> completions = Collections.emptyList();
-        if(args.length == 0) {
+        List<String> completions = new ArrayList<>();
+        if(args.length == 1) {
             completions.add("schedule");
         }
-        if(args.length == 1) {
+        if(args.length == 2) {
             completions.add("start");
         }
-        if(args.length == 3) {
+        if(args.length == 4) {
             completions.add("end");
         }
         return completions;

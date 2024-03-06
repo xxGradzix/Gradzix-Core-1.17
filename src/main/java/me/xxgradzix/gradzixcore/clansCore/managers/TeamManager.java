@@ -20,6 +20,7 @@ import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 
 public class TeamManager {
@@ -32,67 +33,79 @@ public class TeamManager {
         addEntities(entity);
     }
 
-//    public static void changePrefixes() {
-//        ProtocolLibrary.getProtocolManager().addPacketListener(new PacketAdapter(plugin, PacketType.Play.Server.SCOREBOARD_TEAM) {
-//            @Override
-//            public void onPacketSending(PacketEvent event) {
-//
-//                PacketContainer packet = event.getPacket();
-//                String teamName = packet.getStrings().read(0);
-//                if(teamName == null) return;
-//                Team team = scoreboard.getTeam(teamName);
-//                if(team == null) return;
-//
-//                Player observer = event.getPlayer();
-//
-//                for (String entry : team.getEntries()) {
-//
-//                    Player player = Bukkit.getPlayer(entry);
-//
-//                    if(player == null) continue;
-//                    if(player.equals(observer)) continue;
-//
-//                    ChatColor suffixColor = getSuffixColor(observer, player);
-//                    String newPrefix = suffixColor + " newSuffix";
-//
-//                    Optional<InternalStructure> optStruct = packet.getOptionalStructures().read(0); //Team Data
-//
-//                    if (optStruct.isPresent()) {
-//
-//                        InternalStructure struct = optStruct.get();
-//                        struct.getChatComponents().write(2, WrappedChatComponent.fromText(newPrefix));//Team Suffix
-//                        packet.getOptionalStructures().write(0, Optional.of(struct));
-//                    }
-//
-//                }
-//            }
-//
-//        });
-//    }
-//    private static ChatColor getSuffixColor(Player observer, Player player) {
-//        Team observerTeam = observer.getScoreboard().getEntryTeam(observer.getName());
-//
-//        if(observerTeam == null) {
-//            Bukkit.broadcastMessage("observerTeam == null");
-//            return ChatColor.GRAY;
-//        }
-//
-//        Team playerTeam = player.getScoreboard().getEntryTeam(player.getName());
-//
-//        if(observerTeam == null) {
-//            Bukkit.broadcastMessage("playerTeam == null");
-//            return ChatColor.GRAY;
-//        }
-//
-//        if(observerTeam.equals(playerTeam)) {
-//            Bukkit.broadcastMessage("equals");
-//            return ChatColor.GREEN;
-//        }
-//        Bukkit.broadcastMessage("not equals");
-//        return ChatColor.RED;
-//
-//    }
+    public static void changePrefixes() {
+        ProtocolLibrary.getProtocolManager().addPacketListener(new PacketAdapter(plugin, PacketType.Play.Server.SCOREBOARD_TEAM) {
+            @Override
+            public void onPacketSending(PacketEvent event) {
 
+                Bukkit.broadcastMessage("packet sending --------------------");
+                Bukkit.broadcastMessage("reciever = " + event.getPlayer().getName());
+
+                PacketContainer packet = event.getPacket();
+
+                String teamName = packet.getStrings().read(0);
+                if(teamName == null) return;
+                Team team = scoreboard.getTeam(teamName);
+                if(team == null) return;
+
+                Player observer = event.getPlayer();
+
+                for (String entry : team.getEntries()) {
+
+                    Player player = Bukkit.getPlayer(entry);
+                    Bukkit.broadcastMessage("packet about player = " + player.getName());
+
+                    if(player == null) continue;
+                    if(player.equals(observer)) continue;
+
+                    ChatColor suffixColor = getSuffixColor(observer, player);
+                    String newPrefix = suffixColor + " %rel_gradzixcore_player_tag%";
+
+                    Optional<InternalStructure> optStruct = packet.getOptionalStructures().read(0); //Team Data
+
+                    if (optStruct.isPresent()) {
+
+                        InternalStructure struct = optStruct.get();
+                        struct.getChatComponents().write(2, WrappedChatComponent.fromText(PlaceholderAPI.setRelationalPlaceholders(player, observer, newPrefix)));//Team Suffix
+                        packet.getOptionalStructures().write(0, Optional.of(struct));
+                    }
+                }
+
+                Bukkit.broadcastMessage("--------------------");
+
+            }
+
+        });
+    }
+    private static ChatColor getSuffixColor(Player observer, Player player) {
+        Team observerTeam = observer.getScoreboard().getEntryTeam(observer.getName());
+
+        if(observerTeam == null) {
+            return ChatColor.GRAY;
+        }
+
+        Team playerTeam = player.getScoreboard().getEntryTeam(player.getName());
+
+        if(observerTeam == null) {
+            return ChatColor.GRAY;
+        }
+        if(observerTeam.equals(playerTeam)) {
+            return ChatColor.GREEN;
+        }
+        return ChatColor.RED;
+    }
+
+    private static void refreshAllTeams() {
+        Set<Team> teams = scoreboard.getTeams();
+        for (Team team : teams) {
+            team.unregister();
+        }
+        for(ClanEntity clanEntity : ClanManager.getAllClans()) {
+
+            createOrUpdateTeam(clanEntity);
+
+        }
+    }
     private static void addEntities(ClanEntity entity) {
 
         Optional<Team> optionalTeam = getTeam(entity);

@@ -262,7 +262,7 @@ public class ClanCommand implements CommandExecutor, TabCompleter {
             return true;
             case OPUSC:
             {
-                if(args.length != 0) {
+                if(args.length != 1) {
                     sender.sendMessage(Messages.LEAVE_COMMAND_USAGE);
                     return false;
                 }

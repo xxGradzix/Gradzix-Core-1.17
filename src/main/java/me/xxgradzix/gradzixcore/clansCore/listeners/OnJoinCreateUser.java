@@ -1,5 +1,6 @@
 package me.xxgradzix.gradzixcore.clansCore.listeners;
 
+import me.xxgradzix.gradzixcore.clansCore.Clans;
 import me.xxgradzix.gradzixcore.clansCore.data.database.entities.UserEntity;
 import me.xxgradzix.gradzixcore.clansCore.managers.UserManager;
 import org.bukkit.entity.Player;
@@ -13,5 +14,6 @@ public class OnJoinCreateUser implements Listener {
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
         UserEntity userEntity = UserManager.getOrCreateUserEntity(player);
+        player.setScoreboard(Clans.SCOREBOARD);
     }
 }

@@ -10,8 +10,8 @@ import me.xxgradzix.gradzixcore.clansCore.data.database.entities.UserEntity;
 import me.xxgradzix.gradzixcore.clansCore.data.database.managers.ClanEntityManager;
 import me.xxgradzix.gradzixcore.clansCore.data.database.managers.UserEntityManager;
 import me.xxgradzix.gradzixcore.clansCore.listeners.OnJoinCreateUser;
+import me.xxgradzix.gradzixcore.clansCore.managers.TeamManager;
 import me.xxgradzix.gradzixcore.clansCore.placeholders.PlayerPointsPlaceholder;
-import me.xxgradzix.gradzixcore.clansCore.placeholders.PlayerTagPlaceholder;
 import org.bukkit.Bukkit;
 import org.bukkit.scoreboard.Scoreboard;
 
@@ -34,7 +34,7 @@ public class Clans {
         return userEntityManager;
     }
 
-    public static final Scoreboard SCOREBOARD = Bukkit.getScoreboardManager().getMainScoreboard();
+    public static final Scoreboard SCOREBOARD = Bukkit.getScoreboardManager().getNewScoreboard();
 
     private final ConnectionSource connectionSource;
 
@@ -59,11 +59,15 @@ public class Clans {
 
     public void onEnable() {
 
+        TeamManager.changePrefixes();
+        TeamManager.refreshAllTeams();
+
         new PlayerPointsPlaceholder().register();
-        new PlayerTagPlaceholder().register();
+//        new PlayerTagPlaceholder().register();
 
 
         plugin.getCommand("klan").setExecutor(new ClanCommand());
+        plugin.getCommand("gracz").setExecutor(new PlayerInfoCommand());
 
         plugin.getCommand("test").setExecutor(new TestCommand());
 

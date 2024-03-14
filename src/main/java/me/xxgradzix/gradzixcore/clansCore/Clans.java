@@ -63,7 +63,6 @@ public class Clans {
         TeamManager.refreshAllTeams();
 
         new PlayerPointsPlaceholder().register();
-//        new PlayerTagPlaceholder().register();
 
 
         plugin.getCommand("klan").setExecutor(new ClanCommand());
@@ -72,7 +71,6 @@ public class Clans {
         plugin.getCommand("test").setExecutor(new TestCommand());
 
         plugin.getServer().getPluginManager().registerEvents(new OnJoinCreateUser(), plugin);
-//        plugin.getServer().getPluginManager().registerEvents(new GuildLoseLivesEvent(funnyGuilds), plugin);
 
     }
 

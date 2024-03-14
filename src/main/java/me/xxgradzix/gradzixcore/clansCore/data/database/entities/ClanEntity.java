@@ -17,8 +17,8 @@ public class ClanEntity implements Serializable {
 
     public ClanEntity(String name, String tag, UserEntity leader) {
 
-        this.name = name;
-        this.tag = tag;
+        this.name = name.toUpperCase();
+        this.tag = tag.toUpperCase();
         this.leader = leader;
         HashSet<UUID> startingMembers = new HashSet<>();
         startingMembers.add(leader.getUuid());

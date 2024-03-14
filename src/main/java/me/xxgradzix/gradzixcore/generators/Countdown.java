@@ -12,24 +12,15 @@ import java.util.Arrays;
 
 public class Countdown implements Runnable {
 
-    // Main class for bukkit scheduling
     private final JavaPlugin plugin;
 
-    // Our scheduled task's assigned id, needed for canceling
     private Integer assignedTaskId;
 
-    // Seconds and shiz
     private final int seconds;
     private int secondsLeft;
 
     private final Hologram hologram;
-    // Actions to perform while counting down, before and after
-//    private final Consumer<Countdown> everySecond;
-//    private final Runnable beforeTimer;
-//    private final Runnable afterTimer;
 
-    // Construct a timer, you could create multiple so for example if
-    // you do not want these "actions"
     public Countdown(final JavaPlugin plugin, final int seconds, Location location) {
 
         this.plugin = plugin;
@@ -48,10 +39,6 @@ public class Countdown implements Runnable {
 
         hologram.showAll();
 
-
-//        this.beforeTimer = beforeTimer;
-//        this.afterTimer = afterTimer;
-//        this.everySecond = everySecond;
     }
 
     public static String format(final long mills) {
@@ -81,35 +68,33 @@ public class Countdown implements Runnable {
         return formattedTime.toString().trim();
     }
 
+//    @Override
+//    public void run() {
+//        if (this.secondsLeft < 1) {
+//            this.scheduleTimer();
+//            if (this.assignedTaskId != null) {
+//                Bukkit.getScheduler().cancelTask(this.assignedTaskId);
+//            }
+//            return;
+//        }
+//        DHAPI.setHologramLine(this.hologram, 0, ChatColor.GREEN+ "Ten generator odnowi sie za: " + format(this.secondsLeft * 1000));
+//        hologram.updateAll();
+//        --this.secondsLeft;
+//    }
+
     @Override
     public void run() {
-
-        // Is the timer up?
         if (this.secondsLeft < 1) {
-
-            this.scheduleTimer();
-
-            // Cancel timer
-            if (this.assignedTaskId != null) {
-                Bukkit.getScheduler().cancelTask(this.assignedTaskId);
-
+            this.secondsLeft = this.seconds; // Reset the countdown
+        } else {
+            // Only update the hologram when there are significant changes
+            if (this.secondsLeft % 5 == 0 || this.secondsLeft == this.seconds) {
+                DHAPI.setHologramLine(this.hologram, 0, ChatColor.GREEN+ "Ten generator odnowi sie za: " + format(this.secondsLeft * 1000));
+                hologram.updateAll();
             }
-
-            return;
+            --this.secondsLeft;
         }
-
-        DHAPI.setHologramLine(this.hologram, 0, ChatColor.GREEN+ "Ten generator odnowi sie za: " + format(this.secondsLeft * 1000));
-        hologram.updateAll();
-
-        // Are we just starting?
-//        if (this.secondsLeft == this.seconds)
-//            this.beforeTimer.run();
-        // Do what's supposed to happen every second
-//        this.everySecond.accept(this);
-
-        --this.secondsLeft;
     }
-
     /**
      * Gets the total seconds this timer was set to run for
      *
@@ -139,8 +124,14 @@ public class Countdown implements Runnable {
     /**
      * Schedules this instance to "run" every second
      */
+//    public void scheduleTimer() {
+//        // Initialize our assigned task's id, for later use so we can cancel
+//        this.assignedTaskId = Bukkit.getScheduler().scheduleSyncRepeatingTask(this.plugin, this, 0L, 20L);
+//    }
     public void scheduleTimer() {
-        // Initialize our assigned task's id, for later use so we can cancel
-        this.assignedTaskId = Bukkit.getScheduler().scheduleSyncRepeatingTask(this.plugin, this, 0L, 20L);
+        // If a task is already running, don't schedule a new one
+        if (this.assignedTaskId == null || Bukkit.getScheduler().isCurrentlyRunning(this.assignedTaskId)) {
+            this.assignedTaskId = Bukkit.getScheduler().scheduleSyncRepeatingTask(this.plugin, this, 0L, 20L);
+        }
     }
 }

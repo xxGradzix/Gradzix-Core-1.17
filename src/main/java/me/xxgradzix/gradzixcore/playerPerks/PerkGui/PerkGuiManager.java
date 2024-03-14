@@ -34,6 +34,7 @@ public class PerkGuiManager {
 
         List<ItemStack> perkBooks = new ArrayList<>();
         for(PerkType perkType : PerkType.values()) {
+            if(perkType == PerkType.FRAGMENT) continue;
             perkBooks.add(me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.getPerkBook(perkType));
         }
         ScrollItems scrollItems;

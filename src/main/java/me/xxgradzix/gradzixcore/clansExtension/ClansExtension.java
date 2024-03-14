@@ -9,6 +9,7 @@ import me.xxgradzix.gradzixcore.clansExtension.commands.WarConfigCommand;
 import me.xxgradzix.gradzixcore.clansExtension.commands.WarsCommand;
 import me.xxgradzix.gradzixcore.clansExtension.data.database.entities.*;
 import me.xxgradzix.gradzixcore.clansExtension.data.database.managers.*;
+import me.xxgradzix.gradzixcore.clansExtension.items.ItemManager;
 import me.xxgradzix.gradzixcore.clansExtension.listeners.GuildLoseLivesEvent;
 import me.xxgradzix.gradzixcore.clansExtension.listeners.GuildRemoveEvent;
 import me.xxgradzix.gradzixcore.clansExtension.listeners.addScore.AddWarScoreAfterKill;
@@ -50,6 +51,8 @@ public class ClansExtension {
         warScheduleEntityManager = new WarScheduleEntityManager(connectionSource);
     }
     public ClansExtension(Gradzix_Core plugin, ConnectionSource connectionSource) {
+
+        ItemManager.init();
         this.plugin = plugin;
         this.connectionSource = connectionSource;
 

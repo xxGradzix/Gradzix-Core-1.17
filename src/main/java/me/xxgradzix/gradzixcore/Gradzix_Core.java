@@ -46,7 +46,7 @@ public final class Gradzix_Core extends JavaPlugin {
 
     public static final boolean USEDB = true;
 
-    public static final long WEAKNESS_EFFECT_DURATION_TIME_SECONDS = 3;
+    public static final int WEAKNESS_EFFECT_DURATION_TIME_SECONDS = 3;
     public static final long AFK_REWARD_DELAY_SECONDS = 15L * 60;
     public static final long BOSS_SPAWN_DELAY_SECONDS = 60;
     public static final long REMOVE_BLOCKS_INTERVAL_SECONDS = 300;

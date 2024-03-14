@@ -53,13 +53,13 @@ public class WarsCommand implements CommandExecutor {
         ClanEntity playerGuild = clanOptional.get();
 
         Gui chooseWarsStatus = Gui.gui()
-                .title(Component.text("Wybierz status wojny"))
+                .title(Component.text("§8» §cWojny"))
                 .rows(1)
                 .disableAllInteractions()
                 .create();
 
-        GuiItem endedWarsButton = new GuiItem(Material.END_CRYSTAL);
-        GuiItem activeWarsButton = new GuiItem(Material.END_PORTAL_FRAME);
+        GuiItem endedWarsButton = new GuiItem(ItemManager.finishedWarsButton);
+        GuiItem activeWarsButton = new GuiItem(ItemManager.currentWarsButton);
 
         endedWarsButton.setAction(event -> {
             openEndedWarsGui(player, playerGuild);
@@ -79,7 +79,7 @@ public class WarsCommand implements CommandExecutor {
     private void openActiveWarsGui(Player player, ClanEntity clanEntity) {
 
         Gui activeWars = Gui.gui()
-                .title(Component.text("Aktywne wojny klanów"))
+                .title(Component.text("§dAktywne wojny"))
                 .rows(3)
                 .disableAllInteractions()
                 .create();
@@ -119,7 +119,7 @@ public class WarsCommand implements CommandExecutor {
         List<WarRecordEntity> allEndedWarsByGuildId = warManager.getAllEndedWarsByGuildId(clan.getUuid());
 
         allEndedWarsByGuildId.forEach(warRecord -> {
-            ItemStack warResultItem = ItemManager.endedWarResult(warRecord.getId(), warRecord.getOwnerTag(), warRecord.getEnemyTag(), warRecord.getOwnerScore(), warRecord.getEnemyScore(), warRecord.isRewardCollected());
+            ItemStack warResultItem = ItemManager.endedWarResult(warRecord.getOwnerScore(), warRecord.getEnemyScore(), warRecord.isRewardCollected());
             GuiItem warResultGuiItem = new GuiItem(warResultItem);
 
             warResultGuiItem.setAction((a) -> {

@@ -13,6 +13,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scoreboard.Team;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -92,17 +93,26 @@ public class PlayerPointsPlaceholder extends PlaceholderExpansion implements Rel
     public String onPlaceholderRequest(Player one, Player two, String identifier) {
 
         if(identifier.equalsIgnoreCase("player_tag")) {
-            return getTestString(one, two);
+            return getSuffixColor(one, two) + "";
         }
 
         return null;
     }
-    private static String getTestString(Player player, Player player2) {
+    private static ChatColor getSuffixColor(Player observer, Player player) {
+        Team observerTeam = observer.getScoreboard().getEntryTeam(observer.getName());
 
-        if(player == null || player2 == null) return "test";
-        if(player.getGameMode().equals(player2.getGameMode())) return ChatColor.GREEN + "sarazem";
-        if(!player.getGameMode().equals(player2.getGameMode())) return ChatColor.RED + "niesa";
+        if(observerTeam == null) {
+            return ChatColor.GRAY;
+        }
 
-        return "chuj";
+        Team playerTeam = player.getScoreboard().getEntryTeam(player.getName());
+
+        if(observerTeam == null) {
+            return ChatColor.GRAY;
+        }
+        if(observerTeam.equals(playerTeam)) {
+            return ChatColor.GREEN;
+        }
+        return ChatColor.RED;
     }
 }

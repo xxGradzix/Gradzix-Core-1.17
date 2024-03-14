@@ -6,7 +6,9 @@ import me.xxgradzix.gradzixcore.clansCore.exceptions.*;
 import me.xxgradzix.gradzixcore.clansCore.managers.ClanManager;
 import me.xxgradzix.gradzixcore.clansCore.managers.UserManager;
 import me.xxgradzix.gradzixcore.clansCore.messages.Messages;
+import net.milkbowl.vault.chat.Chat;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -72,6 +74,16 @@ public class ClanCommand implements CommandExecutor, TabCompleter {
         WYRZUC,
         OPUSC
     }
+    private static void sendAllUsages(Player player) {
+        player.sendMessage(ChatColor.DARK_GRAY + "------» " + ChatColor.DARK_GREEN + "Komendy Gildyjne" + ChatColor.DARK_GRAY + " «-------");
+        player.sendMessage(Messages.CLAN_INFO_COMMAND_USAGE);
+        player.sendMessage(Messages.CREATE_CLAN_COMMAND_USAGE);
+        player.sendMessage(Messages.DELETE_CLAN_COMMAND_USAGE);
+        player.sendMessage(Messages.INVITE_COMMAND_USAGE);
+        player.sendMessage(Messages.JOIN_COMMAND_USAGE);
+        player.sendMessage(Messages.KICK_COMMAND_USAGE);
+        player.sendMessage(Messages.LEAVE_COMMAND_USAGE);
+    }
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if(!(sender instanceof Player)) return false;
@@ -79,26 +91,14 @@ public class ClanCommand implements CommandExecutor, TabCompleter {
         Player player = (Player) sender;
 
         if(args.length < 1) {
-            player.sendMessage(Messages.CLAN_INFO_COMMAND_USAGE);
-            player.sendMessage(Messages.CREATE_CLAN_COMMAND_USAGE);
-            player.sendMessage(Messages.DELETE_CLAN_COMMAND_USAGE);
-            player.sendMessage(Messages.INVITE_COMMAND_USAGE);
-            player.sendMessage(Messages.JOIN_COMMAND_USAGE);
-            player.sendMessage(Messages.KICK_COMMAND_USAGE);
-            player.sendMessage(Messages.LEAVE_COMMAND_USAGE);
+            sendAllUsages(player);
             return false;
         }
         ClanSubCommand subCommand;
         try {
             subCommand = ClanSubCommand.valueOf(args[0].toUpperCase());
         } catch (IllegalArgumentException exception) {
-            player.sendMessage(Messages.CLAN_INFO_COMMAND_USAGE);
-            player.sendMessage(Messages.CREATE_CLAN_COMMAND_USAGE);
-            player.sendMessage(Messages.DELETE_CLAN_COMMAND_USAGE);
-            player.sendMessage(Messages.INVITE_COMMAND_USAGE);
-            player.sendMessage(Messages.JOIN_COMMAND_USAGE);
-            player.sendMessage(Messages.KICK_COMMAND_USAGE);
-            player.sendMessage(Messages.LEAVE_COMMAND_USAGE);
+            sendAllUsages(player);
             return false;
         }
         switch (subCommand) {
@@ -130,7 +130,7 @@ public class ClanCommand implements CommandExecutor, TabCompleter {
                     return false;
                 }
                 if (!assertName(clanName)) {
-                player.sendMessage("Nazwa klanu musi zawierać od 3 do 12 znaków i składać się z liter i cyfr oraz nie może zawierać spacji");
+                player.sendMessage("Nazwa klanu musi zawierać od 3 do 20 znaków i składać się z liter i cyfr oraz nie może zawierać spacji");
                 return false;
                 }
                 try {
@@ -284,7 +284,7 @@ public class ClanCommand implements CommandExecutor, TabCompleter {
         return false;
     }
     private boolean assertName(String name) {
-        if(name.length() > 12 || name.length() < 3) return false;
+        if(name.length() > 20 || name.length() < 3) return false;
         if(!name.matches("^[a-zA-Z0-9]*$")) return false;
         if(name.contains(" ")) return false;
         return true;

@@ -2,6 +2,7 @@ package me.xxgradzix.gradzixcore.warps.commands;
 
 import dev.triumphteam.gui.guis.Gui;
 import dev.triumphteam.gui.guis.GuiItem;
+import me.xxgradzix.gradzixcore.GlobalItemManager;
 import me.xxgradzix.gradzixcore.warps.items.ItemManager;
 import net.kyori.adventure.text.Component;
 import org.bukkit.ChatColor;
@@ -32,7 +33,7 @@ public class WarpCommand implements CommandExecutor {
                 .rows(3)
                 .create();
 
-        GuiItem blackGlass = new GuiItem(me.xxgradzix.gradzixcore.chatOptions.items.ItemManager.blackGlass);
+        GuiItem blackGlass = new GuiItem(GlobalItemManager.FILLER_GLASS_PANE);
 
         gui.getFiller().fillBetweenPoints(1, 2, 1, 8, blackGlass);
         gui.getFiller().fillBetweenPoints(3, 2, 3, 8, blackGlass);
@@ -40,7 +41,7 @@ public class WarpCommand implements CommandExecutor {
         gui.setItem(2, 1, blackGlass);
         gui.setItem(2, 9, blackGlass);
 
-        GuiItem limeGlass = new GuiItem(me.xxgradzix.gradzixcore.chatOptions.items.ItemManager.limeGlass);
+        GuiItem limeGlass = new GuiItem(GlobalItemManager.LIGHT_GLASS_PANE);
 
         gui.setItem(1, 1, limeGlass);
         gui.setItem(1, 9, limeGlass);

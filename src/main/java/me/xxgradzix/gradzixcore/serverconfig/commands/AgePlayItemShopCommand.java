@@ -111,44 +111,44 @@ public class AgePlayItemShopCommand implements CommandExecutor, TabCompleter {
         switch (service) {
             case VIP:
                 Bukkit.broadcastMessage("§7Gracz §2" + targetPlayer.getName() + " §7zakupił §eRanga VIP");
-                Bukkit.broadcastMessage("§aZakupy zrobisz na stronie §2www.ageplay.pl");
+                Bukkit.broadcastMessage("§aZakupy zrobisz na stronie §2www.unimc.pl");
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + targetPlayer.getName() + " parent set vip");
                 break;
             case SVIP:
                 Bukkit.broadcastMessage("§7Gracz §2" + targetPlayer.getName() + " §7zakupił §6Ranga SVIP");
-                Bukkit.broadcastMessage("§aZakupy zrobisz na stronie §2www.ageplay.pl");
+                Bukkit.broadcastMessage("§aZakupy zrobisz na stronie §2www.unimc.pl");
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + targetPlayer.getName() + " parent set svip");
                 break;
             case AGE:
-                Bukkit.broadcastMessage("§7Gracz §2" + targetPlayer.getName() + " §7zakupił §9Ranga AGE");
-                Bukkit.broadcastMessage("§aZakupy zrobisz na stronie §2www.ageplay.pl");
-                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + targetPlayer.getName() + " parent set age");
+                Bukkit.broadcastMessage("§7Gracz §2" + targetPlayer.getName() + " §7zakupił §3Ranga UNI");
+                Bukkit.broadcastMessage("§aZakupy zrobisz na stronie §2www.unimc.pl");
+                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + targetPlayer.getName() + " parent set uni");
                 break;
             case ZESTAW_BOGACZ:
                 Bukkit.broadcastMessage("§7Gracz §2" + targetPlayer.getName() + " §7zakupił §4Zestaw Bogacz");
-                Bukkit.broadcastMessage("§aZakupy zrobisz na stronie §2www.ageplay.pl");
-                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + targetPlayer.getName() + " parent set age");
+                Bukkit.broadcastMessage("§aZakupy zrobisz na stronie §2www.unimc.pl");
+                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + targetPlayer.getName() + " parent set uni");
                 rewardManager.addRewardToPlayer(targetPlayer.getUniqueId(), PlayerRewardsEntity.Reward.caveman_key, 10);
                 break;
             case ZESTAW_JASKINIOWCA:
-                Bukkit.broadcastMessage("§7Gracz §2" + targetPlayer.getName() + " §7zakupił §5Zestaw Jaskiniowca");
-                Bukkit.broadcastMessage("§aZakupy zrobisz na stronie §2www.ageplay.pl");
-                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + targetPlayer.getName() + " parent set age");
+                Bukkit.broadcastMessage("§7Gracz §3" + targetPlayer.getName() + " §7zakupił §5Zestaw Jaskiniowca");
+                Bukkit.broadcastMessage("§aZakupy zrobisz na stronie §3www.unimc.pl");
+                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + targetPlayer.getName() + " parent set uni");
                 rewardManager.addRewardToPlayer(targetPlayer.getUniqueId(), PlayerRewardsEntity.Reward.caveman_key, 32);
                 break;
             case ZDRAPKA:
-                Bukkit.broadcastMessage("§7Gracz §2" + targetPlayer.getName() + " §7zakupił §e§lZ§c§ld§b§lr§2§la§5§lp§6§lk§9§la");
-                Bukkit.broadcastMessage("§aZakupy zrobisz na stronie §2www.ageplay.pl");
+                Bukkit.broadcastMessage("§7Gracz §3" + targetPlayer.getName() + " §7zakupił §e§lZ§c§ld§b§lr§3§la§5§lp§6§lk§9§la");
+                Bukkit.broadcastMessage("§aZakupy zrobisz na stronie §3www.unimc.pl");
                 rewardManager.addRewardToPlayer(targetPlayer.getUniqueId(), PlayerRewardsEntity.Reward.scratchcard, amount);
                 break;
             case KLUCZ_MAGICZNA:
-                Bukkit.broadcastMessage("§7Gracz §2" + targetPlayer.getName() + " §7zakupił §dMagiczny Klucz");
-                Bukkit.broadcastMessage("§aZakupy zrobisz na stronie §2www.ageplay.pl");
+                Bukkit.broadcastMessage("§7Gracz §3" + targetPlayer.getName() + " §7zakupił §dMagiczny Klucz");
+                Bukkit.broadcastMessage("§aZakupy zrobisz na stronie §3www.unimc.pl");
                 rewardManager.addRewardToPlayer(targetPlayer.getUniqueId(), PlayerRewardsEntity.Reward.magic_key, amount);
                 break;
             case KLUCZ_JASKINIOWCA:
-                Bukkit.broadcastMessage("§7Gracz §2" + targetPlayer.getName() + " §7zakupił §cJaskiniowy Klucz");
-                Bukkit.broadcastMessage("§aZakupy zrobisz na stronie §2www.ageplay.pl");
+                Bukkit.broadcastMessage("§7Gracz §3" + targetPlayer.getName() + " §7zakupił §cJaskiniowy Klucz");
+                Bukkit.broadcastMessage("§aZakupy zrobisz na stronie §3www.unimc.pl");
                 rewardManager.addRewardToPlayer(targetPlayer.getUniqueId(), PlayerRewardsEntity.Reward.caveman_key, amount);
                 break;
         }

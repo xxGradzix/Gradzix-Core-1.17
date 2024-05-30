@@ -22,11 +22,6 @@ public class ItemManager {
     public static ItemStack shopButtonOff;
     public static ItemStack shopButtonOn;
 
-
-    public static ItemStack blackGlass;
-    public static ItemStack greenGlass;
-    public static ItemStack limeGlass;
-
     public static void init() {
 
         createDeathButtonOn();
@@ -42,9 +37,6 @@ public class ItemManager {
         createShopButtonOff();
 
 
-        createLimeGlass();
-        createBlackGlass();
-        createGreenGlass();
 
     }
 
@@ -159,34 +151,4 @@ public class ItemManager {
         shopButtonOff = item;
     }
 
-    // glass
-
-    private static void createBlackGlass() {
-
-        ItemStack item = new ItemStack(Material.BLACK_STAINED_GLASS_PANE, 1);
-        ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(" ");
-        item.setItemMeta(meta);
-
-        blackGlass = item;
-    }
-    private static void createGreenGlass() {
-
-        ItemStack item = new ItemStack(Material.GREEN_STAINED_GLASS_PANE, 1);
-        ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(" ");
-        item.setItemMeta(meta);
-
-        greenGlass = item;
-    }
-
-    private static void createLimeGlass() {
-
-        ItemStack item = new ItemStack(Material.LIME_STAINED_GLASS_PANE, 1);
-        ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(" ");
-        item.setItemMeta(meta);
-
-        limeGlass = item;
-    }
 }

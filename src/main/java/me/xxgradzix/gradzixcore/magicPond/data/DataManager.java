@@ -10,7 +10,7 @@ import java.util.HashMap;
 
 public class DataManager {
 
-    private static final boolean useDB = Gradzix_Core.USEDB;
+    private static final boolean useDB = Gradzix_Core.USE_DB;
 
     private final MagicPondEntityManager magicPondEntityManager;
 

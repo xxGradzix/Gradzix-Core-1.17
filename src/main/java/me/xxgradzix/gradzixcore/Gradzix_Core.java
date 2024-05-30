@@ -5,9 +5,9 @@ import com.j256.ormlite.support.ConnectionSource;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import lombok.Getter;
-import me.clip.placeholderapi.PlaceholderAPI;
 import me.xxgradzix.gradzixcore.adminPanel.Panel;
 import me.xxgradzix.gradzixcore.afkRegion.AfkRegion;
+import me.xxgradzix.gradzixcore.autodropsell.AutoDropSell;
 import me.xxgradzix.gradzixcore.binds.Binds;
 import me.xxgradzix.gradzixcore.chatOptions.ChatOptions;
 import me.xxgradzix.gradzixcore.clansCore.Clans;
@@ -38,13 +38,14 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.Properties;
 import java.util.logging.Logger;
 
 public final class Gradzix_Core extends JavaPlugin {
 
-    public static final boolean USEDB = true;
+    public static final boolean USE_DB = true;
+
+    public static final boolean USE_AUTO_DROP = true;
 
     public static final int WEAKNESS_EFFECT_DURATION_TIME_SECONDS = 3;
     public static final long AFK_REWARD_DELAY_SECONDS = 15L * 60;
@@ -66,6 +67,7 @@ public final class Gradzix_Core extends JavaPlugin {
     private ChatOptions chatOptions;
     private MagicFirework magicFirework;
     private PlayerSettings playerSettings;
+    private AutoDropSell autoDropSell;
     private Panel panel;
     private PlayerAbilities playerAbilities;
     private ServerConfig serverConfig;
@@ -126,11 +128,9 @@ public final class Gradzix_Core extends JavaPlugin {
     @Override
     public void onEnable()  {
         instance = this;
+        GlobalItemManager.init();
 //        funnyGuilds = FunnyGuilds.getInstance();
-        if (!LocalDate.now().isBefore(LocalDate.of(2024, 5, 30))) {
-            System.out.println("jeżeli wyświetliła się ta wiadomosc to skontaktuj sie z xxGradzix");
-            return;
-        }
+
         if (!setupEconomy() ) {
             log.severe(String.format("[%s] - Disabled due to no Vault dependency found!", getDescription().getName()));
             return;
@@ -157,9 +157,17 @@ public final class Gradzix_Core extends JavaPlugin {
             magicFirework = new MagicFirework(this);
             magicFirework.onEnable();
         }
-        if (playerSettings == null) {
-            playerSettings = new PlayerSettings(this, connectionSource);
-            playerSettings.onEnable();
+
+        if(USE_AUTO_DROP) {
+            if (autoDropSell == null) {
+                autoDropSell = new AutoDropSell(this, connectionSource);
+                autoDropSell.onEnable();
+            }
+        } else {
+            if (playerSettings == null) {
+                playerSettings = new PlayerSettings(this, connectionSource);
+                playerSettings.onEnable();
+            }
         }
         if (panel == null) {
             panel = new Panel(this, connectionSource);
@@ -176,10 +184,6 @@ public final class Gradzix_Core extends JavaPlugin {
         if (rewardSystem == null) {
             rewardSystem = new RewardSystem(this, connectionSource);
             rewardSystem.onEnable();
-        }
-        if (serverConfig == null) {
-            serverConfig = new ServerConfig(this, connectionSource);
-            serverConfig.onEnable();
         }
         if (serverConfig == null) {
             serverConfig = new ServerConfig(this, connectionSource);
@@ -245,6 +249,7 @@ public final class Gradzix_Core extends JavaPlugin {
             clans = new Clans(this, connectionSource);
             clans.onEnable();
         }
+
     }
     private boolean setupEconomy() {
         if (getServer().getPluginManager().getPlugin("Vault") == null) {

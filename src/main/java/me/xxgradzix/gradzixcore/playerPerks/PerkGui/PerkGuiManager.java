@@ -2,6 +2,7 @@ package me.xxgradzix.gradzixcore.playerPerks.PerkGui;
 
 import dev.triumphteam.gui.builder.item.ItemBuilder;
 import dev.triumphteam.gui.guis.Gui;
+import me.xxgradzix.gradzixcore.GlobalItemManager;
 import me.xxgradzix.gradzixcore.Gradzix_Core;
 import me.xxgradzix.gradzixcore.chatOptions.items.ItemManager;
 import me.xxgradzix.gradzixcore.playerPerks.PerkType;
@@ -26,8 +27,8 @@ public class PerkGuiManager {
                 .rows(3)
                 .create();
 
-        gui.getFiller().fill(ItemBuilder.from(ItemManager.blackGlass).asGuiItem());
-        gui.getFiller().fillBetweenPoints(2, 1, 2, 9, ItemBuilder.from(ItemManager.limeGlass).asGuiItem());
+        gui.getFiller().fill(ItemBuilder.from(GlobalItemManager.FILLER_GLASS_PANE).asGuiItem());
+        gui.getFiller().fillBetweenPoints(2, 1, 2, 9, ItemBuilder.from(GlobalItemManager.LIGHT_GLASS_PANE).asGuiItem());
 
 
         gui.open(player);

@@ -4,7 +4,7 @@ import me.xxgradzix.gradzixcore.Gradzix_Core;
 
 public class DataManager {
 
-    private static final boolean useDB = Gradzix_Core.USEDB;
+    private static final boolean useDB = Gradzix_Core.USE_DB;
 
 //    public static void setServerDamageMultiplier(double serverDamageMultiplier) {
 //

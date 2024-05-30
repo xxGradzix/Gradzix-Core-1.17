@@ -3,6 +3,7 @@ package me.xxgradzix.gradzixcore.scratchCard.commands;
 import dev.triumphteam.gui.builder.item.ItemBuilder;
 import dev.triumphteam.gui.guis.Gui;
 import dev.triumphteam.gui.guis.GuiItem;
+import me.xxgradzix.gradzixcore.GlobalItemManager;
 import me.xxgradzix.gradzixcore.scratchCard.items.ItemManager;
 import net.kyori.adventure.text.Component;
 import org.bukkit.command.Command;
@@ -61,7 +62,7 @@ public class ScratchCardCommand implements CommandExecutor {
             black.add(41);
             black.add(42);
 
-            GuiItem blackGlass = new GuiItem(me.xxgradzix.gradzixcore.chatOptions.items.ItemManager.blackGlass);
+            GuiItem blackGlass = new GuiItem(GlobalItemManager.FILLER_GLASS_PANE);
 
             gui.setItem(black, blackGlass);
 
@@ -82,7 +83,7 @@ public class ScratchCardCommand implements CommandExecutor {
             lime.add(43);
             lime.add(44);
 
-            GuiItem limeGlass = new GuiItem(me.xxgradzix.gradzixcore.chatOptions.items.ItemManager.limeGlass);
+            GuiItem limeGlass = new GuiItem(GlobalItemManager.LIGHT_GLASS_PANE);
 
             gui.setItem(lime, limeGlass);
 

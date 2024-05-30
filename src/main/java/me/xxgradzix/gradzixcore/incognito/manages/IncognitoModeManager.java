@@ -7,7 +7,6 @@ import com.comphenix.protocol.events.InternalStructure;
 import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.events.PacketEvent;
-import com.comphenix.protocol.utility.MinecraftReflection;
 import com.comphenix.protocol.wrappers.*;
 import me.xxgradzix.gradzixcore.Gradzix_Core;
 import me.xxgradzix.gradzixcore.clansCore.data.database.entities.ClanEntity;
@@ -18,21 +17,9 @@ import me.xxgradzix.gradzixcore.incognito.data.database.entities.IncognitoAdminE
 import me.xxgradzix.gradzixcore.incognito.data.database.entities.IncognitoModeEntity;
 import me.xxgradzix.gradzixcore.incognito.data.database.managers.IncognitoAdminEntityManager;
 import me.xxgradzix.gradzixcore.incognito.data.database.managers.IncognitoModeEntityManager;
-import net.minecraft.network.protocol.game.PacketPlayOutEntityDestroy;
-import net.minecraft.network.protocol.game.PacketPlayOutNamedEntitySpawn;
-import net.minecraft.network.protocol.game.PacketPlayOutPlayerInfo;
-import net.minecraft.server.level.EntityPlayer;
-import net.minecraft.server.network.PlayerConnection;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.craftbukkit.libs.org.apache.commons.io.IOUtils;
-import org.bukkit.craftbukkit.v1_17_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.net.URLConnection;
 import java.security.SecureRandom;
 import java.util.*;
 
@@ -94,22 +81,55 @@ public class IncognitoModeManager {
 //    }
 
     private static void refreshNick(Player player) { // refreshes nick of given player for all players
-        EntityPlayer handle = ((CraftPlayer) player).getHandle();
+//        EntityPlayer handle = ((CraftPlayer) player).getHandle();
+
+        WrappedGameProfile handle = WrappedGameProfile.fromPlayer(player);
 
         for (Player online : Bukkit.getOnlinePlayers()) {
 
-            PlayerConnection connection = ((CraftPlayer) online).getHandle().b;
+//            PlayerConnection connection = ((CraftPlayer) online).getHandle().b;
+            ProtocolManager connection = ProtocolLibrary.getProtocolManager();
 
 
-            connection.sendPacket(new PacketPlayOutPlayerInfo(
-                    PacketPlayOutPlayerInfo.EnumPlayerInfoAction.b, handle));
+//            connection.sendPacket(new PacketPlayOutPlayerInfo(
+//                    PacketPlayOutPlayerInfo.EnumPlayerInfoAction.b, handle));
+//
+//            connection.sendPacket(new PacketPlayOutPlayerInfo(
+//                    PacketPlayOutPlayerInfo.EnumPlayerInfoAction.a, handle));
+//
+//            if(!online.equals(player)) {
+//                connection.sendPacket(new PacketPlayOutEntityDestroy(handle.getId()));
+//                connection.sendPacket(new PacketPlayOutNamedEntitySpawn(handle));
+//            }
 
-            connection.sendPacket(new PacketPlayOutPlayerInfo(
-                    PacketPlayOutPlayerInfo.EnumPlayerInfoAction.a, handle));
+            ProtocolManager protocolManager = ProtocolLibrary.getProtocolManager();
+
+// Create a PacketPlayOutPlayerInfo packet for EnumPlayerInfoAction.b
+            PacketContainer packetInfoB = protocolManager.createPacket(PacketType.Play.Server.PLAYER_INFO);
+            packetInfoB.getPlayerInfoAction().write(0, EnumWrappers.PlayerInfoAction.REMOVE_PLAYER);
+            packetInfoB.getPlayerInfoDataLists().write(0, Collections.singletonList(new PlayerInfoData(handle, 0, EnumWrappers.NativeGameMode.SURVIVAL, WrappedChatComponent.fromText(handle.getName()))));
+
+// Create a PacketPlayOutPlayerInfo packet for EnumPlayerInfoAction.a
+            PacketContainer packetInfoA = protocolManager.createPacket(PacketType.Play.Server.PLAYER_INFO);
+            packetInfoA.getPlayerInfoAction().write(0, EnumWrappers.PlayerInfoAction.ADD_PLAYER);
+            packetInfoA.getPlayerInfoDataLists().write(0, Collections.singletonList(new PlayerInfoData(handle, 0, EnumWrappers.NativeGameMode.SURVIVAL, WrappedChatComponent.fromText(handle.getName()))));
+
+// Send the packets
+            protocolManager.sendServerPacket(online, packetInfoB);
+            protocolManager.sendServerPacket(online, packetInfoA);
 
             if(!online.equals(player)) {
-                connection.sendPacket(new PacketPlayOutEntityDestroy(handle.getId()));
-                connection.sendPacket(new PacketPlayOutNamedEntitySpawn(handle));
+                // Create a PacketPlayOutEntityDestroy packet
+                PacketContainer packetDestroy = protocolManager.createPacket(PacketType.Play.Server.ENTITY_DESTROY);
+                packetDestroy.getIntegerArrays().write(0, new int[] {Integer.parseInt(handle.getId())});
+
+                // Create a PacketPlayOutNamedEntitySpawn packet
+                PacketContainer packetSpawn = protocolManager.createPacket(PacketType.Play.Server.NAMED_ENTITY_SPAWN);
+                packetSpawn.getIntegers().write(0, Integer.valueOf(handle.getId()));
+
+                // Send the packets
+                protocolManager.sendServerPacket(online, packetDestroy);
+                protocolManager.sendServerPacket(online, packetSpawn);
             }
 
         }
@@ -148,35 +168,49 @@ public class IncognitoModeManager {
 
         packet.getModifier().write(2, Collections.singletonList(incognitoNick));
 
+//        for(IncognitoAdminEntity incognitoAdminEntity: incognitoAdminEntityManager.getAllIncognitoAdminEntities()) {
+//            Player observer = Bukkit.getPlayer(incognitoAdminEntity.getUuid());
+//
+//            if(observer == null) continue;
+//            if(observer.equals(player)) continue;
+//
+//            PlayerConnection connection = ((CraftPlayer) observer).getHandle().b;
+//            PlayerConnection connection2 = ((CraftPlayer) player).getHandle().b;
+//
+//
+//            if(connection == null) continue;
+//            if(connection2 == null) continue;
+//
+//            protocolManager.sendServerPacket(Bukkit.getPlayer(incognitoAdminEntity.getUuid()), packet); // Send the packet to the player = osoba oglądająca
+//        }
         for(IncognitoAdminEntity incognitoAdminEntity: incognitoAdminEntityManager.getAllIncognitoAdminEntities()) {
             Player observer = Bukkit.getPlayer(incognitoAdminEntity.getUuid());
 
             if(observer == null) continue;
             if(observer.equals(player)) continue;
-            PlayerConnection connection = ((CraftPlayer) observer).getHandle().b;
-            PlayerConnection connection2 = ((CraftPlayer) player).getHandle().b;
-            if(connection == null) continue;
-            if(connection2 == null) continue;
 
-            protocolManager.sendServerPacket(Bukkit.getPlayer(incognitoAdminEntity.getUuid()), packet); // Send the packet to the player = osoba oglądająca
+            // Send the packet to the player
+            protocolManager.sendServerPacket(observer, packet);
         }
     }
 
-    public static String getResponse(String _url){
-        try {
-            URL url;
-            url = new URL(_url);
-            URLConnection con = url.openConnection();
-            InputStream in = con.getInputStream();
-            String encoding = con.getContentEncoding();
-            encoding = encoding == null ? "UTF-8" : encoding;
-            String body = IOUtils.toString(in, encoding);
-            return body;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
+//    public static String getResponse(String _url){
+//        try {
+//            URL url;
+//            url = new URL(_url);
+//            URLConnection con = url.openConnection();
+//            InputStream in = con.getInputStream();
+//            String encoding = con.getContentEncoding();
+//            encoding = encoding == null ? "UTF-8" : encoding;
+//            String body = IOUtils.toString(in, encoding);
+//            return body;
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        return null;
+//    }
+
+
 
     private static void changeNicks() {
 

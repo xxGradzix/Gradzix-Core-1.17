@@ -28,7 +28,7 @@ public class DataManager {
     private final ItemShopPlayerBalanceEntityManager playerBalanceEntityManager;
     private final EconomyManager economyManager;
 
-    private static final boolean useDB = Gradzix_Core.USEDB;
+    private static final boolean useDB = Gradzix_Core.USE_DB;
 
     public HashMap<ItemShopCategoryEntity, List<ItemShopProductEntity>> getItemShopProductsDividedByCategories(ShopType shopType) {
 

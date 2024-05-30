@@ -6,7 +6,7 @@ import me.xxgradzix.gradzixcore.adminPanel.data.database.entities.PanelOptionsEn
 
 public class DataManager {
 
-    private static boolean useDB = Gradzix_Core.USEDB;
+    private static boolean useDB = Gradzix_Core.USE_DB;
 
     public static void setChatStatus(boolean value) {
 

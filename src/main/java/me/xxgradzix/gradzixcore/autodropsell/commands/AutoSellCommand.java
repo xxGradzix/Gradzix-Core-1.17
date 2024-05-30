@@ -1,10 +1,9 @@
-package me.xxgradzix.gradzixcore.playerSettings.commands;
+package me.xxgradzix.gradzixcore.autodropsell.commands;
 
-import me.xxgradzix.gradzixcore.playerSettings.PlayerSettings;
+import me.xxgradzix.gradzixcore.autodropsell.AutoDropSell;
+import me.xxgradzix.gradzixcore.autodropsell.listeners.BlockBreakAutoSellEvent;
 import me.xxgradzix.gradzixcore.playerSettings.data.database.entities.AutoSellEntity;
-import me.xxgradzix.gradzixcore.playerSettings.listeners.BlockBreakAutoSellEvent;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -52,18 +51,19 @@ public class AutoSellCommand implements CommandExecutor, TabCompleter {
                 player.sendMessage("§cMusisz trzymać blok w ręce!");
                 return false;
             }
-            AutoSellEntity autoSellEntity = PlayerSettings.getAutoSellEntityManager().getAutoSellEntity();
+            AutoSellEntity autoSellEntity = AutoDropSell.getAutoSellEntityManager().getAutoSellEntity();
 
             HashMap<Material, Double> itemsToSell = autoSellEntity.getItemsToSell();
             itemsToSell.put(item.getType(), priceDouble);
             autoSellEntity.setItemsToSell(itemsToSell);
 
-            PlayerSettings.getAutoSellEntityManager().updateAutoSellEntity(autoSellEntity);
+            AutoDropSell.getAutoSellEntityManager().updateAutoSellEntity(autoSellEntity);
             player.sendMessage("§aDodano blok do automatycznego sprzedawania!");
+            BlockBreakAutoSellEvent.refreshBlockPrices();
             return true;
         }
         if (args[0].equalsIgnoreCase("remove")) {
-            AutoSellEntity autoSellEntity = PlayerSettings.getAutoSellEntityManager().getAutoSellEntity();
+            AutoSellEntity autoSellEntity = AutoDropSell.getAutoSellEntityManager().getAutoSellEntity();
             HashMap<Material, Double> itemsToSell = autoSellEntity.getItemsToSell();
 
             String blockName = args[1];
@@ -76,7 +76,7 @@ public class AutoSellCommand implements CommandExecutor, TabCompleter {
             itemsToSell.remove(material);
             autoSellEntity.setItemsToSell(itemsToSell);
 
-            PlayerSettings.getAutoSellEntityManager().updateAutoSellEntity(autoSellEntity);
+            AutoDropSell.getAutoSellEntityManager().updateAutoSellEntity(autoSellEntity);
             player.sendMessage("§aUsunięto blok z automatycznego sprzedawania!");
             return true;
         }
@@ -92,7 +92,7 @@ public class AutoSellCommand implements CommandExecutor, TabCompleter {
         }
         if(args.length == 2) {
             if(args[0].equalsIgnoreCase("remove")) {
-                AutoSellEntity autoSellEntity = PlayerSettings.getAutoSellEntityManager().getAutoSellEntity();
+                AutoSellEntity autoSellEntity = AutoDropSell.getAutoSellEntityManager().getAutoSellEntity();
                 HashMap<Material, Double> itemsToSell = autoSellEntity.getItemsToSell();
                 List<String> items = new ArrayList<>();
                 for(Material item : itemsToSell.keySet()) {

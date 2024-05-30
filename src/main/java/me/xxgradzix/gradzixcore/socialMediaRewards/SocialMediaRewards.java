@@ -16,9 +16,9 @@ import java.sql.SQLException;
 public class SocialMediaRewards {
 
     public static final String TIKTOK_LINK = "https://www.tiktok.com/@majkitoja_yt/video/7185189244334247174?is_from_webapp=1&sender_device=pc&web_id=7137431783154697733";
-    public static final String YOUTUBE_LINK = "https://www.youtube.com/@AgePlayPL";
-    public static final String FACEBOOK_LINK = "https://www.facebook.com/reel/757076396169403";
-    public static final String DISCORD_LINK = "https://discord.gg/F2R6Nyu4";
+    public static final String YOUTUBE_LINK = "https://www.youtube.com/@UniMcPL";
+    public static final String FACEBOOK_LINK = "";
+    public static final String DISCORD_LINK = "https://discord.gg/548tXhxg";
     private final Gradzix_Core plugin;
     // db change
     private final ConnectionSource connectionSource;

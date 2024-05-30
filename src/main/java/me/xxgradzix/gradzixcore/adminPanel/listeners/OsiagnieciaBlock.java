@@ -23,10 +23,6 @@ public class OsiagnieciaBlock implements Listener {
                 event.setCancelled(true);
                 p.sendMessage(ChatColor.RED + "Osiagniecia są aktualnie wyłączone");
             }
-            if (message.startsWith("/boxpvp-ageplay:osiagniecia")) {
-                event.setCancelled(true);
-                p.sendMessage(ChatColor.RED + "Osiagniecia są aktualnie wyłączone");
-            }
         }
     }
 }

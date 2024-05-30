@@ -7,7 +7,7 @@ import org.bukkit.inventory.ItemStack;
 
 public class DataManager {
 
-    private static final boolean useDB = Gradzix_Core.USEDB;
+    private static final boolean useDB = Gradzix_Core.USE_DB;
 
     public static void setScratchCardItems(ItemStack[] items) {
 

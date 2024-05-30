@@ -1,5 +1,6 @@
 package me.xxgradzix.gradzixcore.serverconfig.commands;
 
+import me.xxgradzix.gradzixcore.GlobalMessagesManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -16,12 +17,12 @@ public class GammaCommand implements CommandExecutor {
     Player player = (Player)sender;
     if (!player.hasPotionEffect(PotionEffectType.NIGHT_VISION)) {
       player.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, 10000000, 1, false, false));
-      player.sendMessage("§9§lAGE§f§lPLAY §8§7Gamma została włączona.");
+      player.sendMessage(GlobalMessagesManager.PREFIX + "Gamma została włączona.");
       return false;
     } 
     if (player.hasPotionEffect(PotionEffectType.NIGHT_VISION)) {
       player.removePotionEffect(PotionEffectType.NIGHT_VISION);
-      player.sendMessage("§9§lAGE§f§lPLAY §8§7Gamma została wyłączona.");
+      player.sendMessage(GlobalMessagesManager.PREFIX + "Gamma została wyłączona.");
       return false;
     } 
     return false;

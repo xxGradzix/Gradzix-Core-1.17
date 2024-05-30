@@ -2,6 +2,7 @@ package me.xxgradzix.gradzixcore.playerPerks.PerkGui;
 
 import dev.triumphteam.gui.guis.Gui;
 import dev.triumphteam.gui.guis.GuiItem;
+import me.xxgradzix.gradzixcore.GlobalItemManager;
 import me.xxgradzix.gradzixcore.chatOptions.items.ItemManager;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -85,16 +86,13 @@ public class ScrollItems extends BukkitRunnable {
         rep++;
 
         if(rep > (itemStackList.size()*2.0)) {
-            gui.updateItem(9, ItemManager.greenGlass);
-            gui.updateItem(10, ItemManager.greenGlass);
-            gui.updateItem(11, ItemManager.greenGlass);
-            gui.updateItem(12, ItemManager.greenGlass);
-            gui.updateItem(14, ItemManager.greenGlass);
-            gui.updateItem(15, ItemManager.greenGlass);
-            gui.updateItem(16, ItemManager.greenGlass);
-            gui.updateItem(17, ItemManager.greenGlass);
+            GuiItem glass = new GuiItem(GlobalItemManager.DARK_GLASS_PANE);
+            List<GuiItem> items = new ArrayList<>();
+            items.add(glass);
+            gui.getFiller().fillBetweenPoints(2, 1, 2, 9, items);
+
             gui.updateItem(1, 5, new ItemStack(Material.HOPPER));
-            gui.updateItem(3, 5, ItemManager.limeGlass);
+            gui.updateItem(3, 5, GlobalItemManager.LIGHT_GLASS_PANE);
             if(winningSlotItem.equals(reward)) {
                 cancel();
                 player.getInventory().addItem(reward);

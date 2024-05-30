@@ -1,9 +1,10 @@
-package me.xxgradzix.gradzixcore.playerSettings.listeners;
+package me.xxgradzix.gradzixcore.autodropsell.listeners;
 
 import com.sk89q.worldedit.bukkit.BukkitAdapter;
 import com.sk89q.worldguard.WorldGuard;
 import com.sk89q.worldguard.protection.ApplicableRegionSet;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
+import me.xxgradzix.gradzixcore.autodropsell.AutoDropSell;
 import me.xxgradzix.gradzixcore.events.Events;
 import me.xxgradzix.gradzixcore.generators.Generators;
 import me.xxgradzix.gradzixcore.playerAbilities.data.DataManager;
@@ -29,7 +30,7 @@ public class BlockBreakAutoSellEvent implements Listener {
     private static HashMap<Material, Double> blockPrices = new HashMap<>();
 
     public static void refreshBlockPrices() {
-        blockPrices = PlayerSettings.getAutoSellEntityManager().getAutoSellEntity().getItemsToSell();
+        blockPrices = AutoDropSell.getAutoSellEntityManager().getAutoSellEntity().getItemsToSell();
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)

@@ -16,7 +16,7 @@ import java.util.UUID;
 
 public class DataManager {
 
-    private static boolean useDB = Gradzix_Core.USEDB;
+    private static boolean useDB = Gradzix_Core.USE_DB;
 
     public static void incrementAbilityLevel(Ability ability, Player player) {
         if(useDB) {

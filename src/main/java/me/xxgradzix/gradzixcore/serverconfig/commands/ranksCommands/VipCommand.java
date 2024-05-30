@@ -30,8 +30,8 @@ public class VipCommand implements CommandExecutor {
         player.sendMessage(ChatColor.DARK_GRAY + " - " + ChatColor.WHITE + "Zwiększony szansa na wypadanie klucza w strefie afk do §e30%");
         player.sendMessage(ChatColor.DARK_GRAY + " - " + "§e20%" + ChatColor.WHITE + " szans na trafienie fragmentu perku po zabiciu gracza");
         player.sendMessage(ChatColor.DARK_GRAY + " ");
-        player.sendMessage(ChatColor.GREEN + "Range zakupisz na stronie");
-        player.sendMessage(ChatColor.DARK_GREEN + "https://ageplay.pl/");
+        player.sendMessage(ChatColor.AQUA + "Range zakupisz na stronie");
+        player.sendMessage(ChatColor.DARK_AQUA + "https://unimc.pl/");
 
         return true;
     }

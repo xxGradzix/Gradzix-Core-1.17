@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 public class DataManager {
 
-    private static final boolean useDB = Gradzix_Core.USEDB;
+    private static final boolean useDB = Gradzix_Core.USE_DB;
 
     public static void setUpgradeItems(List<UpgradeEntity> upgradeEntities) {
 

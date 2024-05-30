@@ -3,6 +3,7 @@ package me.xxgradzix.gradzixcore.chatOptions.commands;
 import dev.triumphteam.gui.builder.item.ItemBuilder;
 import dev.triumphteam.gui.guis.Gui;
 import dev.triumphteam.gui.guis.GuiItem;
+import me.xxgradzix.gradzixcore.GlobalItemManager;
 import me.xxgradzix.gradzixcore.Gradzix_Core;
 import me.xxgradzix.gradzixcore.chatOptions.ChatOptions;
 import me.xxgradzix.gradzixcore.chatOptions.data.database.entities.ChatOptionsEntity;
@@ -106,7 +107,7 @@ public class ChatCommands implements CommandExecutor {
                 black.add(22);
                 black.add(24);
                 black.add(26);
-                GuiItem blackGlass = new GuiItem(ItemManager.blackGlass);
+                GuiItem blackGlass = new GuiItem(GlobalItemManager.FILLER_GLASS_PANE);
                 gui.setItem(black, blackGlass);
                 ArrayList<Integer> green = new ArrayList<>();
                 green.add(1);
@@ -117,7 +118,7 @@ public class ChatCommands implements CommandExecutor {
                 green.add(21);
                 green.add(23);
                 green.add(25);
-                GuiItem greenGlass = new GuiItem(ItemManager.greenGlass);
+                GuiItem greenGlass = new GuiItem(GlobalItemManager.DARK_GLASS_PANE);
                 gui.setItem(green, greenGlass);
                 ArrayList<Integer> lime = new ArrayList<>();
                 lime.add(9);
@@ -125,7 +126,7 @@ public class ChatCommands implements CommandExecutor {
                 lime.add(13);
                 lime.add(15);
                 lime.add(17);
-                GuiItem limeGlass = new GuiItem(ItemManager.limeGlass);
+                GuiItem limeGlass = new GuiItem(GlobalItemManager.LIGHT_GLASS_PANE);
                 gui.setItem(lime, limeGlass);
                 ChatOptionsEntity chatOptionsEntity = ChatOptions.getChatOptionsEntityManager().getChatOptionsEntityById(p.getUniqueId());
 

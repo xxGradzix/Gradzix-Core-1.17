@@ -6,12 +6,11 @@ import me.xxgradzix.gradzixcore.itemPickupPriorities.data.database.entities.Pick
 import me.xxgradzix.gradzixcore.itemPickupPriorities.data.database.managers.PickupPrioritiesEntityManager;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class DataManager {
 
-    private static final boolean useDB = Gradzix_Core.USEDB;
+    private static final boolean useDB = Gradzix_Core.USE_DB;
 
     public static void setItemPriorities(List<ItemStack> itemPriorities) {
 

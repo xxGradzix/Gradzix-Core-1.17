@@ -4,6 +4,7 @@ import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 import me.xxgradzix.gradzixcore.Gradzix_Core;
 import me.xxgradzix.gradzixcore.autodropsell.commands.AutoSellCommand;
+import me.xxgradzix.gradzixcore.autodropsell.commands.MinerCommand;
 import me.xxgradzix.gradzixcore.autodropsell.listeners.BlockBreakAutoSellEvent;
 import me.xxgradzix.gradzixcore.playerSettings.data.database.entities.AutoSellEntity;
 import me.xxgradzix.gradzixcore.playerSettings.data.database.managers.AutoSellEntityManager;
@@ -18,10 +19,6 @@ public class AutoDropSell {
 
 
     private static AutoSellEntityManager autoSellEntityManager;
-
-    public static AutoSellEntityManager getAutoSellEntityManager() {
-        return autoSellEntityManager;
-    }
 
     public void configureDB() throws SQLException {
         TableUtils.createTableIfNotExists(connectionSource, AutoSellEntity.class);
@@ -40,9 +37,9 @@ public class AutoDropSell {
             throw new RuntimeException(e);
         }
 
-        plugin.getCommand("autosprzedaz").setExecutor(new AutoSellCommand());
-        plugin.getServer().getPluginManager().registerEvents(new BlockBreakAutoSellEvent(), plugin);
-        BlockBreakAutoSellEvent.refreshBlockPrices();
+        plugin.getCommand("autosprzedaz").setExecutor(new AutoSellCommand(autoSellEntityManager));
+        plugin.getCommand("gornik").setExecutor(new MinerCommand(autoSellEntityManager));
+        plugin.getServer().getPluginManager().registerEvents(new BlockBreakAutoSellEvent(autoSellEntityManager), plugin);
 
     }
 

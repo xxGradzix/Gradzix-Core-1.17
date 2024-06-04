@@ -62,7 +62,7 @@ public class ScratchCardCommand implements CommandExecutor {
             black.add(41);
             black.add(42);
 
-            GuiItem blackGlass = new GuiItem(GlobalItemManager.FILLER_GLASS_PANE);
+            GuiItem blackGlass = GlobalItemManager.FILLER_GLASS_PANE_GUI_ITEM;
 
             gui.setItem(black, blackGlass);
 
@@ -83,7 +83,7 @@ public class ScratchCardCommand implements CommandExecutor {
             lime.add(43);
             lime.add(44);
 
-            GuiItem limeGlass = new GuiItem(GlobalItemManager.LIGHT_GLASS_PANE);
+            GuiItem limeGlass = GlobalItemManager.LIGHT_GLASS_PANE_GUI_ITEM;
 
             gui.setItem(lime, limeGlass);
 

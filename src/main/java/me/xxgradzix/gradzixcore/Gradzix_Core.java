@@ -5,6 +5,7 @@ import com.j256.ormlite.support.ConnectionSource;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import lombok.Getter;
+import me.xxgradzix.gradzixcore.VPLNShop.VPLNShop;
 import me.xxgradzix.gradzixcore.adminPanel.Panel;
 import me.xxgradzix.gradzixcore.afkRegion.AfkRegion;
 import me.xxgradzix.gradzixcore.autodropsell.AutoDropSell;
@@ -27,6 +28,7 @@ import me.xxgradzix.gradzixcore.serverconfig.ServerConfig;
 import me.xxgradzix.gradzixcore.shulker.ShulkerRework;
 import me.xxgradzix.gradzixcore.socialMediaRewards.SocialMediaRewards;
 import me.xxgradzix.gradzixcore.upgradeItem.Ulepsz;
+import me.xxgradzix.gradzixcore.villagerUpgradeShop.VillagerUpgradeShop;
 import me.xxgradzix.gradzixcore.warps.Warps;
 import me.xxgradzix.gradzixcore.webRemover.WebRemover;
 import net.milkbowl.vault.economy.Economy;
@@ -46,6 +48,10 @@ public final class Gradzix_Core extends JavaPlugin {
     public static final boolean USE_DB = true;
 
     public static final boolean USE_AUTO_DROP = true;
+
+    public static final boolean GUILD_WARS = false;
+
+    public static final boolean USE_CUSTOM_CLANS = false;
 
     public static final int WEAKNESS_EFFECT_DURATION_TIME_SECONDS = 3;
     public static final long AFK_REWARD_DELAY_SECONDS = 15L * 60;
@@ -86,7 +92,9 @@ public final class Gradzix_Core extends JavaPlugin {
     private WebRemover webRemover;
     private AfkRegion afkRegion;
     private Warps warps;
+    private VPLNShop vplnShop;
     private ClansExtension clansExtension;
+    private VillagerUpgradeShop villagerUpgradeShop;
 
     private ConnectionSource connectionSource;
 
@@ -240,15 +248,28 @@ public final class Gradzix_Core extends JavaPlugin {
             warps = new Warps(this, connectionSource);
             warps.onEnable();
         }
+        if (vplnShop == null) {
+            vplnShop = new VPLNShop(this, connectionSource);
+            vplnShop.onEnable();
+        }
+        if (villagerUpgradeShop == null) {
+            villagerUpgradeShop = new VillagerUpgradeShop(this, connectionSource);
+            villagerUpgradeShop.onEnable();
+        }
 
-        if (clansExtension == null) {
-            clansExtension = new ClansExtension(this, connectionSource);
-            clansExtension.onEnable();
+        if(USE_CUSTOM_CLANS) {
+            if(GUILD_WARS) {
+                if (clansExtension == null) {
+                    clansExtension = new ClansExtension(this, connectionSource);
+                    clansExtension.onEnable();
+                }
+            }
+            if (clans == null) {
+                clans = new Clans(this, connectionSource);
+                clans.onEnable();
+            }
         }
-        if (clans == null) {
-            clans = new Clans(this, connectionSource);
-            clans.onEnable();
-        }
+
 
     }
     private boolean setupEconomy() {

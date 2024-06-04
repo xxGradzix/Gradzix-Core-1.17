@@ -63,7 +63,7 @@ public class ServerConfig {
 
         plugin.getCommand("setserverdamagemultiplier").setExecutor(new SetDamageCommand());
         plugin.getCommand("bazar").setExecutor(new ActionHouseRenameCommand());
-        plugin.getCommand("ais").setExecutor(new AgePlayItemShopCommand());
+//        plugin.getCommand("ais").setExecutor(new AgePlayItemShopCommand());
         plugin.getCommand("setarmorattribute").setExecutor(new SetArmorAttributeOnItem());
         plugin.getCommand("gamma").setExecutor(new GammaCommand());
 
@@ -72,7 +72,7 @@ public class ServerConfig {
 
         plugin.getCommand("vip").setExecutor(new VipCommand());
         plugin.getCommand("svip").setExecutor(new SVipCommand());
-        plugin.getCommand("age").setExecutor(new AgeCommand());
+        plugin.getCommand("uni").setExecutor(new AgeCommand());
 
         ConfigServera.setup();
         ConfigServera.getCustomFile().set("damageMultiplier", 1);

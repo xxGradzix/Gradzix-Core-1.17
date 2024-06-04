@@ -1,7 +1,7 @@
 package me.xxgradzix.gradzixcore;
 
 public class GlobalMessagesManager {
-    public static String PREFIX = "§b§lUNI§3MC §8» §r§7";
+    public static String PREFIX = "§b§lUNI§3§lMC §8» §r§7";
     public static String NO_PERMISSION = PREFIX + "§cNie posiadasz uprawnień do tej komendy!";
     public static String PLAYER_ONLY = PREFIX + "§cTa komenda jest dostępna tylko dla graczy!";
     public static String INVALID_USAGE = PREFIX + "§cUżycie: %s";

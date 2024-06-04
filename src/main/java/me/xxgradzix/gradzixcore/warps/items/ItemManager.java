@@ -55,7 +55,7 @@ public class ItemManager {
     private static void createAgeSafeRegion() {
         ItemStack item = new ItemStack(Material.NETHERITE_PICKAXE);
         ItemMeta itemMeta = item.getItemMeta();
-        itemMeta.setDisplayName(ChatColor.GREEN + "Strefa bezpieczna AGE");
+        itemMeta.setDisplayName(ChatColor.GREEN + "Strefa bezpieczna UNI");
         ArrayList<String> lore = new ArrayList<>();
         lore.add(" ");
         lore.add(ChatColor.DARK_GRAY + "» " + ChatColor.GRAY + "Kliknij, aby przeteleportować się");

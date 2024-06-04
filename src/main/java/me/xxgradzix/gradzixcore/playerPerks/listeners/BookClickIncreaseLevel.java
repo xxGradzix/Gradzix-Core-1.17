@@ -1,6 +1,7 @@
 package me.xxgradzix.gradzixcore.playerPerks.listeners;
 
 import me.xxgradzix.gradzixcore.playerPerks.PerkType;
+import me.xxgradzix.gradzixcore.playerPerks.data.database.DataManager;
 import me.xxgradzix.gradzixcore.playerPerks.data.database.entities.PlayerPerksEntity;
 import me.xxgradzix.gradzixcore.playerPerks.data.database.managers.PlayerPerkEntityManager;
 import me.xxgradzix.gradzixcore.playerPerks.items.ItemManager;
@@ -117,6 +118,7 @@ public class BookClickIncreaseLevel implements Listener {
 
         }
         playerPerksEntityManager.createOrUpdatePlayerPerksEntity(playerPerksEntity);
+        DataManager.refreshPerkEntity(player);
     }
     private void removeItems(Player player, ItemStack itemStack, int amount) {
         for(int i = 0; i < amount; i++) {

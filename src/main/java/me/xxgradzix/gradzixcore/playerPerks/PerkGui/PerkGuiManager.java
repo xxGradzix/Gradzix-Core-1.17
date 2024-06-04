@@ -27,8 +27,8 @@ public class PerkGuiManager {
                 .rows(3)
                 .create();
 
-        gui.getFiller().fill(ItemBuilder.from(GlobalItemManager.FILLER_GLASS_PANE).asGuiItem());
-        gui.getFiller().fillBetweenPoints(2, 1, 2, 9, ItemBuilder.from(GlobalItemManager.LIGHT_GLASS_PANE).asGuiItem());
+        gui.getFiller().fill(GlobalItemManager.FILLER_GLASS_PANE_GUI_ITEM);
+        gui.getFiller().fillBetweenPoints(2, 1, 2, 9, GlobalItemManager.LIGHT_GLASS_PANE_GUI_ITEM);
 
 
         gui.open(player);

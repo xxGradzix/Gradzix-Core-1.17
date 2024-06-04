@@ -23,7 +23,7 @@ public class DataManager {
         }
         return playerPerksCache.get(player.getUniqueId());
     }
-    private static void refreshPerkEntity(Player player) {
+    public static void refreshPerkEntity(Player player) {
         playerPerksCache.put(player.getUniqueId(), playerPerkEntityManager.getPlayerPerksEntityById(player.getUniqueId()));
     }
 

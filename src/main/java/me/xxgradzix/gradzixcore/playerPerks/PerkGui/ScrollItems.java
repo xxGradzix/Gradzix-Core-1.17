@@ -86,13 +86,13 @@ public class ScrollItems extends BukkitRunnable {
         rep++;
 
         if(rep > (itemStackList.size()*2.0)) {
-            GuiItem glass = new GuiItem(GlobalItemManager.DARK_GLASS_PANE);
+            GuiItem glass = GlobalItemManager.DARK_GLASS_PANE_GUI_ITEM;
             List<GuiItem> items = new ArrayList<>();
             items.add(glass);
             gui.getFiller().fillBetweenPoints(2, 1, 2, 9, items);
 
             gui.updateItem(1, 5, new ItemStack(Material.HOPPER));
-            gui.updateItem(3, 5, GlobalItemManager.LIGHT_GLASS_PANE);
+            gui.updateItem(3, 5, GlobalItemManager.LIGHT_GLASS_PANE_GUI_ITEM);
             if(winningSlotItem.equals(reward)) {
                 cancel();
                 player.getInventory().addItem(reward);

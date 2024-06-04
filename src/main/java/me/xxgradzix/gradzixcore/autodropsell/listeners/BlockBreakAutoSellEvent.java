@@ -10,6 +10,7 @@ import me.xxgradzix.gradzixcore.generators.Generators;
 import me.xxgradzix.gradzixcore.playerAbilities.data.DataManager;
 import me.xxgradzix.gradzixcore.playerSettings.EconomyManager;
 import me.xxgradzix.gradzixcore.playerSettings.PlayerSettings;
+import me.xxgradzix.gradzixcore.playerSettings.data.database.managers.AutoSellEntityManager;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -29,8 +30,15 @@ public class BlockBreakAutoSellEvent implements Listener {
 
     private static HashMap<Material, Double> blockPrices = new HashMap<>();
 
+    private static AutoSellEntityManager autoSellEntityManager;
+
+    public BlockBreakAutoSellEvent(AutoSellEntityManager autoSellEntityManager) {
+        this.autoSellEntityManager = autoSellEntityManager;
+        refreshBlockPrices();
+    }
+
     public static void refreshBlockPrices() {
-        blockPrices = AutoDropSell.getAutoSellEntityManager().getAutoSellEntity().getItemsToSell();
+        blockPrices = autoSellEntityManager.getAutoSellEntity().getItemsToSell();
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
@@ -48,7 +56,7 @@ public class BlockBreakAutoSellEvent implements Listener {
 
         Block block = event.getBlock();
 
-//        if(!isLocationInGeneratorRegion(block.getLocation())) return;
+        if(!isLocationInGeneratorRegion(block.getLocation())) return;
 
         ItemStack itemInHand = event.getPlayer().getInventory().getItemInMainHand();
 
@@ -66,7 +74,6 @@ public class BlockBreakAutoSellEvent implements Listener {
 
         double totalPrice = finalDropAmount * itemPrice;
 
-        p.sendMessage(String.valueOf(totalPrice));
         EconomyManager economy = new EconomyManager();
         economy.depositMoney(p, totalPrice);
 

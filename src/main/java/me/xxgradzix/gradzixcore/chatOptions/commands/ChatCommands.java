@@ -107,7 +107,7 @@ public class ChatCommands implements CommandExecutor {
                 black.add(22);
                 black.add(24);
                 black.add(26);
-                GuiItem blackGlass = new GuiItem(GlobalItemManager.FILLER_GLASS_PANE);
+                GuiItem blackGlass = GlobalItemManager.FILLER_GLASS_PANE_GUI_ITEM;
                 gui.setItem(black, blackGlass);
                 ArrayList<Integer> green = new ArrayList<>();
                 green.add(1);
@@ -118,7 +118,7 @@ public class ChatCommands implements CommandExecutor {
                 green.add(21);
                 green.add(23);
                 green.add(25);
-                GuiItem greenGlass = new GuiItem(GlobalItemManager.DARK_GLASS_PANE);
+                GuiItem greenGlass = GlobalItemManager.DARK_GLASS_PANE_GUI_ITEM;
                 gui.setItem(green, greenGlass);
                 ArrayList<Integer> lime = new ArrayList<>();
                 lime.add(9);
@@ -126,7 +126,7 @@ public class ChatCommands implements CommandExecutor {
                 lime.add(13);
                 lime.add(15);
                 lime.add(17);
-                GuiItem limeGlass = new GuiItem(GlobalItemManager.LIGHT_GLASS_PANE);
+                GuiItem limeGlass = GlobalItemManager.LIGHT_GLASS_PANE_GUI_ITEM;
                 gui.setItem(lime, limeGlass);
                 ChatOptionsEntity chatOptionsEntity = ChatOptions.getChatOptionsEntityManager().getChatOptionsEntityById(p.getUniqueId());
 

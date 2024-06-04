@@ -22,7 +22,7 @@ public class GiveItemsBackWithPriorities implements Listener {
 
 
     private enum AgePlayGroups {
-        GRACZ, VIP, SVIP, AGE
+        GRACZ, VIP, SVIP, UNI
     }
 
     @EventHandler
@@ -73,8 +73,8 @@ public class GiveItemsBackWithPriorities implements Listener {
     }
     private AgePlayGroups getPlayerGroup(User player) {
         switch (player.getPrimaryGroup()) {
-            case "age":
-                return AgePlayGroups.AGE;
+            case "uni":
+                return AgePlayGroups.UNI;
             case "svip":
                 return AgePlayGroups.SVIP;
             case "vip":
@@ -102,7 +102,7 @@ public class GiveItemsBackWithPriorities implements Listener {
                 return 0.3;
             case SVIP:
                 return 0.4;
-            case AGE:
+            case UNI:
                 return 0.5;
             default:
                 return 0.2;

@@ -25,6 +25,7 @@ commands:
 
   ustawienia:
     description: otwiera okno ustawien automatycznej sprzedaży i auto wymiany
+    permission: gradzixcore.ustawienia
 
   wymianaustawienia:
     description: otwiera gui ustawien wymiany
@@ -73,9 +74,9 @@ commands:
     permission: serverConfig.setpriorities
     usage: /setpriorities
 
-  ais:
-    description: Komenda dla itemshopu
-    permission: serverConfig.ais
+#  ais:
+#    description: Komenda dla itemshopu
+#    permission: serverConfig.ais
 
   odbierz:
     description: odbiera nagrode
@@ -188,24 +189,39 @@ commands:
   svip:
     description: otwiera svip menu
 
-  age:
+  uni:
     description: otwiera age menu
 
   kosz:
     description: otwiera kosz
 
 
-  test:
-    description: test
+#  test:
+#    description: test
 
-  gracz:
-    description: pokazuje informacje o graczu
-
-  klan:
-    description: pokazuje informacje o klanie
-    aliases:
-      - k
+#  gracz:
+#    description: pokazuje informacje o graczu
+#
+#  klan:
+#    description: pokazuje informacje o klanie
+#    aliases:
+#      - k
 
   autosprzedaz:
     description:
     permission: gradzixcore.autosprzedaz
+
+  gornik:
+    description: pokazuje cene blokow w autosprzedazy
+    permission: gradzixcore.gornik
+
+  vplnshop:
+    description: otwiera sklep
+
+  dodajvpln:
+    description: dodaje vpln
+    permission: gradzixcore.dodajvpln
+
+  upgradeshop:
+    description: tworzy sklepy ulepszec
+    permission: gradzixcore.upgradeshop

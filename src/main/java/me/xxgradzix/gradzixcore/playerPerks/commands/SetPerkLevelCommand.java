@@ -1,6 +1,7 @@
 package me.xxgradzix.gradzixcore.playerPerks.commands;
 
 import me.xxgradzix.gradzixcore.playerPerks.PerkType;
+import me.xxgradzix.gradzixcore.playerPerks.data.database.DataManager;
 import me.xxgradzix.gradzixcore.playerPerks.data.database.entities.PlayerPerksEntity;
 import me.xxgradzix.gradzixcore.playerPerks.data.database.managers.PlayerPerkEntityManager;
 import org.bukkit.Bukkit;
@@ -68,6 +69,8 @@ public class SetPerkLevelCommand implements CommandExecutor, TabCompleter {
         playerPerksEntity.setPerkLevel(perkType, perkLevel);
 
         playerPerkEntityManager.createOrUpdatePlayerPerksEntity(playerPerksEntity);
+
+        DataManager.refreshPerkEntity(player);
 
         if(ADDITIONAL_HEARTS.equals(perkType)) {
             player.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(20 + perkLevel);

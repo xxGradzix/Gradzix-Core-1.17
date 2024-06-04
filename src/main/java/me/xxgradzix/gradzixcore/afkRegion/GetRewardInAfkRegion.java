@@ -65,7 +65,7 @@ public class GetRewardInAfkRegion {
     }
     private static double getPlayerRewardChance(User player) {
         switch (player.getPrimaryGroup()) {
-            case "age":
+            case "uni":
                 return 0.5;
             case "svip":
                 return 0.4;

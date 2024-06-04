@@ -69,8 +69,6 @@ public class Clans {
         plugin.getCommand("klan").setExecutor(new ClanCommand());
         plugin.getCommand("gracz").setExecutor(new PlayerInfoCommand());
 
-        plugin.getCommand("test").setExecutor(new TestCommand());
-
         plugin.getServer().getPluginManager().registerEvents(new OnJoinCreateUser(), plugin);
         plugin.getServer().getPluginManager().registerEvents(new PointsChange(), plugin);
 

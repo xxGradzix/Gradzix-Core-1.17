@@ -33,7 +33,7 @@ public class WarpCommand implements CommandExecutor {
                 .rows(3)
                 .create();
 
-        GuiItem blackGlass = new GuiItem(GlobalItemManager.FILLER_GLASS_PANE);
+        GuiItem blackGlass = GlobalItemManager.FILLER_GLASS_PANE_GUI_ITEM;
 
         gui.getFiller().fillBetweenPoints(1, 2, 1, 8, blackGlass);
         gui.getFiller().fillBetweenPoints(3, 2, 3, 8, blackGlass);
@@ -41,7 +41,7 @@ public class WarpCommand implements CommandExecutor {
         gui.setItem(2, 1, blackGlass);
         gui.setItem(2, 9, blackGlass);
 
-        GuiItem limeGlass = new GuiItem(GlobalItemManager.LIGHT_GLASS_PANE);
+        GuiItem limeGlass = GlobalItemManager.LIGHT_GLASS_PANE_GUI_ITEM;
 
         gui.setItem(1, 1, limeGlass);
         gui.setItem(1, 9, limeGlass);

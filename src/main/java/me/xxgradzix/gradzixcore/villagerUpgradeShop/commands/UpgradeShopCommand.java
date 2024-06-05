@@ -3,7 +3,10 @@ package me.xxgradzix.gradzixcore.villagerUpgradeShop.commands;
 import dev.triumphteam.gui.guis.Gui;
 import dev.triumphteam.gui.guis.GuiItem;
 import me.xxgradzix.gradzixcore.GlobalMessagesManager;
+import me.xxgradzix.gradzixcore.villagerUpgradeShop.VillagerUpgradeShop;
 import me.xxgradzix.gradzixcore.villagerUpgradeShop.database.DataManager;
+import me.xxgradzix.gradzixcore.villagerUpgradeShop.database.entities.VillagerUpgradeShopEntity;
+import me.xxgradzix.gradzixcore.villagerUpgradeShop.database.entities.VillagerUpgradeShopProductEntity;
 import me.xxgradzix.gradzixcore.villagerUpgradeShop.items.ItemManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -38,7 +41,7 @@ public class UpgradeShopCommand implements CommandExecutor {
         if(args.length == 1) {
             String arg1 = args[0];
             if(arg1.equalsIgnoreCase("editor")) {
-
+                openShopsGui(player);
 
             }
             return true;
@@ -60,20 +63,36 @@ public class UpgradeShopCommand implements CommandExecutor {
         return true;
 
     }
-
     private void openShopsGui(Player player) {
         Gui gui = new Gui(6, "Sklepy");
 
+        dataManager.getAllShopEntities().forEach((shop) -> {
+            GuiItem shopItem = ItemManager.createUpgradeShopItem(shop.getName());
+
+            shopItem.setAction(event -> {
+                openEditor(player, shop);
+            });
+
+            gui.addItem(shopItem);
+        });
 
 
         gui.open(player);
     }
 
-    private void openEditor(Player player) {
+    private void openEditor(Player player, VillagerUpgradeShopEntity shop) {
 
-        Gui gui = new Gui(6, "Edytor sklepu");
+        Gui gui = new Gui(6, "Edytor sklepu: " + shop.getName());
 
-        List<GuiItem> items = new ArrayList<>();
+        shop.getProducts().forEach((product) -> {
+            GuiItem productItem = ItemManager.createShowItem(product.getItem(), product.getPrice(), product.getNeededItem(), product.getShopSlot(), shop.getName());
+
+            productItem.setAction(event -> {
+                Bukkit.broadcastMessage("Edytuj produkt");
+            });
+
+            gui.addItem(productItem);
+        });
 
 
 
@@ -93,6 +112,9 @@ public class UpgradeShopCommand implements CommandExecutor {
 
         });
 
+        gui.setItem(5, 5, addProductItemButton);
+
+        gui.open(player);
     }
 
     private GuiItem createButtonWithOptionsEditor() {

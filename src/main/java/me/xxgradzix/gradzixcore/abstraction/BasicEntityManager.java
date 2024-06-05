@@ -28,6 +28,9 @@ public abstract class BasicEntityManager<T, ID> {
     public void deleteEntity(T entity) throws SQLException {
         entityDao.delete(entity);
     }
+    public void deleteEntityById(ID id) throws SQLException {
+        entityDao.deleteById(id);
+    }
 
     public T getEntityById(ID id) throws SQLException {
         return entityDao.queryForId(id);

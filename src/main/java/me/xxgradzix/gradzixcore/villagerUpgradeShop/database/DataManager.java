@@ -8,6 +8,7 @@ import me.xxgradzix.gradzixcore.VPLNShop.data.database.managers.VPLNAccountsMana
 import me.xxgradzix.gradzixcore.VPLNShop.data.database.managers.VPLNItemShopOrdersManager;
 import me.xxgradzix.gradzixcore.villagerUpgradeShop.VillagerUpgradeShop;
 import me.xxgradzix.gradzixcore.villagerUpgradeShop.database.entities.VillagerUpgradeShopEntity;
+import me.xxgradzix.gradzixcore.villagerUpgradeShop.database.entities.VillagerUpgradeShopProductEntity;
 import me.xxgradzix.gradzixcore.villagerUpgradeShop.database.managers.VillagerUpgradeShopEntityManager;
 import me.xxgradzix.gradzixcore.villagerUpgradeShop.database.managers.VillagerUpgradeShopProductEntityManager;
 import org.bukkit.Bukkit;
@@ -54,4 +55,34 @@ public class DataManager {
     }
 
 
+    public List<VillagerUpgradeShopEntity> getAllShopEntities() {
+        if(useDB) {
+            try {
+                return villagerUpgradeShopEntityManager.getAllEntities();
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return Collections.emptyList();
+    }
+    public void deleteVillagerUpgradeShopProductEntity(Long id) {
+        if(useDB) {
+            try {
+                villagerUpgradeShopProductEntityManager.deleteEntityById(id);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void createOrUpdateVillagerUpgradeShopProductEntity(VillagerUpgradeShopProductEntity product) {
+        if(useDB) {
+            try {
+                villagerUpgradeShopProductEntityManager.createOrUpdateEntity(product);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }

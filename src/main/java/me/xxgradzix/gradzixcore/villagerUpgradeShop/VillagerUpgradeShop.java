@@ -2,23 +2,10 @@ package me.xxgradzix.gradzixcore.villagerUpgradeShop;
 
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
-import lombok.Getter;
 import me.xxgradzix.gradzixcore.Gradzix_Core;
-import me.xxgradzix.gradzixcore.serverconfig.commands.*;
-import me.xxgradzix.gradzixcore.serverconfig.commands.ranksCommands.AgeCommand;
-import me.xxgradzix.gradzixcore.serverconfig.commands.ranksCommands.SVipCommand;
-import me.xxgradzix.gradzixcore.serverconfig.commands.ranksCommands.VipCommand;
-import me.xxgradzix.gradzixcore.serverconfig.data.configfiles.ConfigServera;
-import me.xxgradzix.gradzixcore.serverconfig.data.database.entities.ServerConfigEntity;
-import me.xxgradzix.gradzixcore.serverconfig.data.database.managers.ServerConfigEntityManager;
-import me.xxgradzix.gradzixcore.serverconfig.listeners.BlockGrief;
-import me.xxgradzix.gradzixcore.serverconfig.listeners.BlockPlacingBlocks;
-import me.xxgradzix.gradzixcore.serverconfig.listeners.FortuneSheers;
-import me.xxgradzix.gradzixcore.serverconfig.listeners.VanishingPotionBottle;
-import me.xxgradzix.gradzixcore.serverconfig.listeners.elytraAndFireworkBlock.ElytraAndFallDamageDecrease;
-import me.xxgradzix.gradzixcore.serverconfig.listeners.elytraAndFireworkBlock.OnTotemBreakBlockFirework;
-import me.xxgradzix.gradzixcore.serverconfig.listeners.protectionEnchantRework.DamageEvent;
+import me.xxgradzix.gradzixcore.playerSettings.EconomyManager;
 import me.xxgradzix.gradzixcore.villagerUpgradeShop.commands.UpgradeShopCommand;
+import me.xxgradzix.gradzixcore.villagerUpgradeShop.commands.UpgradeShopEditorCommand;
 import me.xxgradzix.gradzixcore.villagerUpgradeShop.database.DataManager;
 import me.xxgradzix.gradzixcore.villagerUpgradeShop.database.entities.VillagerUpgradeShopEntity;
 import me.xxgradzix.gradzixcore.villagerUpgradeShop.database.entities.VillagerUpgradeShopProductEntity;
@@ -27,7 +14,6 @@ import me.xxgradzix.gradzixcore.villagerUpgradeShop.database.managers.VillagerUp
 import me.xxgradzix.gradzixcore.villagerUpgradeShop.items.ItemManager;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 public class VillagerUpgradeShop {
 
@@ -53,8 +39,6 @@ public class VillagerUpgradeShop {
 
     public void onEnable() {
 
-        ItemManager.init();
-
         try {
             configureDB();
         } catch (SQLException e) {
@@ -62,10 +46,11 @@ public class VillagerUpgradeShop {
         }
 
         dataManager = new DataManager(villagerUpgradeShopEntityManager, villagerUpgradeShopProductEntityManager);
-
+        new ItemManager(dataManager);
 //        plugin.getServer().getPluginManager().registerEvents(new BlockGrief(), plugin);
 
         plugin.getCommand("upgradeshop").setExecutor(new UpgradeShopCommand(dataManager));
+        plugin.getCommand("upgradeshopeditor").setExecutor(new UpgradeShopEditorCommand(dataManager));
 
     }
 

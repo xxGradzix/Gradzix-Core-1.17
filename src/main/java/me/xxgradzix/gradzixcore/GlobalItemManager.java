@@ -8,9 +8,11 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class GlobalItemManager {
 
+    public static GuiItem HOPPER_GUI_ITEM;
     private static ItemStack FILLER_GLASS_PANE;
     private static ItemStack DARK_GLASS_PANE;
     private static ItemStack LIGHT_GLASS_PANE;
+    private static ItemStack HOPPER;
 
     public static ItemStack NEXT_PAGE_ITEM;
     public static ItemStack PREVIOUS_PAGE_ITEM;
@@ -24,6 +26,7 @@ public class GlobalItemManager {
         createBlackGlass();
         createDarkGlass();
         createLightGlass();
+        createHopper();
 
         createNextPage();
         createPreviousPage();
@@ -31,6 +34,7 @@ public class GlobalItemManager {
         FILLER_GLASS_PANE_GUI_ITEM = new GuiItem(FILLER_GLASS_PANE);
         DARK_GLASS_PANE_GUI_ITEM = new GuiItem(DARK_GLASS_PANE);
         LIGHT_GLASS_PANE_GUI_ITEM = new GuiItem(LIGHT_GLASS_PANE);
+        HOPPER_GUI_ITEM = new GuiItem(HOPPER);
     }
 
     private static void createBlackGlass() {
@@ -41,6 +45,15 @@ public class GlobalItemManager {
         item.setItemMeta(meta);
 
         FILLER_GLASS_PANE = item;
+    }
+    private static void createHopper() {
+
+        ItemStack item = new ItemStack(Material.HOPPER, 1);
+        ItemMeta meta = item.getItemMeta();
+        meta.setDisplayName(" ");
+        item.setItemMeta(meta);
+
+        HOPPER = item;
     }
     private static void createDarkGlass() {
 

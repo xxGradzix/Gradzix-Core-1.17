@@ -215,13 +215,19 @@ commands:
     description: pokazuje cene blokow w autosprzedazy
     permission: gradzixcore.gornik
 
-  vplnshop:
+  portfel:
     description: otwiera sklep
 
   dodajvpln:
     description: dodaje vpln
     permission: gradzixcore.dodajvpln
 
-  upgradeshop:
+  upgradeshopeditor:
     description: tworzy sklepy ulepszec
     permission: gradzixcore.upgradeshop
+
+  upgradeshop:
+    description: otwiera sklep
+
+  pomoc:
+    description: okno pomocy

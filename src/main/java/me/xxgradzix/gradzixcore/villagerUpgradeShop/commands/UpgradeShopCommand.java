@@ -2,26 +2,28 @@ package me.xxgradzix.gradzixcore.villagerUpgradeShop.commands;
 
 import dev.triumphteam.gui.guis.Gui;
 import dev.triumphteam.gui.guis.GuiItem;
+import me.xxgradzix.gradzixcore.GlobalItemManager;
 import me.xxgradzix.gradzixcore.GlobalMessagesManager;
-import me.xxgradzix.gradzixcore.villagerUpgradeShop.VillagerUpgradeShop;
+import me.xxgradzix.gradzixcore.globalStatic.EconomyManager;
 import me.xxgradzix.gradzixcore.villagerUpgradeShop.database.DataManager;
 import me.xxgradzix.gradzixcore.villagerUpgradeShop.database.entities.VillagerUpgradeShopEntity;
 import me.xxgradzix.gradzixcore.villagerUpgradeShop.database.entities.VillagerUpgradeShopProductEntity;
 import me.xxgradzix.gradzixcore.villagerUpgradeShop.items.ItemManager;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
-public class UpgradeShopCommand implements CommandExecutor {
-    
+public class UpgradeShopCommand implements CommandExecutor, TabCompleter {
+
     private DataManager dataManager;
 
     public UpgradeShopCommand(DataManager dataManager) {
@@ -39,120 +41,93 @@ public class UpgradeShopCommand implements CommandExecutor {
         Player player = (Player) sender;
 
         if(args.length == 1) {
-            String arg1 = args[0];
-            if(arg1.equalsIgnoreCase("editor")) {
-                openShopsGui(player);
+            String shopName = args[0];
 
+
+            Optional<VillagerUpgradeShopEntity> shopEntityByName = dataManager.getShopEntityByName(shopName);
+            if(!shopEntityByName.isPresent()) {
+                player.sendMessage("§cSklep o podanej nazwie nie istnieje!");
+                return true;
             }
+
+            VillagerUpgradeShopEntity shop = shopEntityByName.get();
+
+            Gui gui = new Gui(6, "§3§lUlepszenie uzbrojenia");
+
+            gui.disableAllInteractions();
+
+            gui.getFiller().fillBetweenPoints(1, 3, 1, 4, GlobalItemManager.FILLER_GLASS_PANE_GUI_ITEM);
+            gui.getFiller().fillBetweenPoints(1, 6, 1, 7, GlobalItemManager.FILLER_GLASS_PANE_GUI_ITEM);
+            gui.getFiller().fillBetweenPoints(6, 3, 6, 4, GlobalItemManager.FILLER_GLASS_PANE_GUI_ITEM);
+            gui.getFiller().fillBetweenPoints(6, 6, 6, 7, GlobalItemManager.FILLER_GLASS_PANE_GUI_ITEM);
+
+
+            gui.setItem(3, 1, GlobalItemManager.FILLER_GLASS_PANE_GUI_ITEM);
+            gui.setItem(3, 9, GlobalItemManager.FILLER_GLASS_PANE_GUI_ITEM);
+            gui.setItem(4, 1, GlobalItemManager.FILLER_GLASS_PANE_GUI_ITEM);
+            gui.setItem(4, 9, GlobalItemManager.FILLER_GLASS_PANE_GUI_ITEM);
+
+            gui.setItem(1, 2, GlobalItemManager.DARK_GLASS_PANE_GUI_ITEM);
+            gui.setItem(6, 2, GlobalItemManager.DARK_GLASS_PANE_GUI_ITEM);
+
+            gui.setItem(1, 8, GlobalItemManager.DARK_GLASS_PANE_GUI_ITEM);
+            gui.setItem(6, 8, GlobalItemManager.DARK_GLASS_PANE_GUI_ITEM);
+
+            gui.setItem(2, 1, GlobalItemManager.DARK_GLASS_PANE_GUI_ITEM);
+            gui.setItem(2, 9, GlobalItemManager.DARK_GLASS_PANE_GUI_ITEM);
+
+            gui.setItem(5, 1, GlobalItemManager.DARK_GLASS_PANE_GUI_ITEM);
+            gui.setItem(5, 9, GlobalItemManager.DARK_GLASS_PANE_GUI_ITEM);
+
+            gui.setItem(1, 1, GlobalItemManager.LIGHT_GLASS_PANE_GUI_ITEM);
+            gui.setItem(6, 1, GlobalItemManager.LIGHT_GLASS_PANE_GUI_ITEM);
+
+            gui.setItem(1, 9, GlobalItemManager.LIGHT_GLASS_PANE_GUI_ITEM);
+            gui.setItem(6, 9, GlobalItemManager.LIGHT_GLASS_PANE_GUI_ITEM);
+
+            for(VillagerUpgradeShopProductEntity product : shop.getProducts()) {
+                GuiItem item = ItemManager.createProductGuiItem(product, shop.getName());
+                item.setAction((action) -> {
+                    action.setCancelled(true);
+
+                    if (player.getInventory().firstEmpty() == -1) {
+                        player.sendMessage("§cNie masz wystarczająco miejsca w ekwipunku!");
+                        return;
+                    }
+
+                    if(product.getNeededItem() != null && !player.getInventory().containsAtLeast(product.getNeededItem(), 1)) {
+                        player.sendMessage("§cNie masz wymaganego przedmiotu!");
+                        return;
+                    }
+                    if(EconomyManager.getBalance(player) < product.getPrice()) {
+                        player.sendMessage("§cNie masz wystarczająco pieniędzy!");
+                        return;
+                    }
+                    if(product.getNeededItem() != null) player.getInventory().removeItem(product.getNeededItem());
+
+                    EconomyManager.withdrawMoney(player, product.getPrice());
+                    player.getInventory().addItem(product.getItem());
+                    player.sendMessage("§aZakupiono produkt!");
+
+                });
+
+                gui.setItem(product.getShopSlot() - 1, item);
+            }
+
+            gui.open(player);
+
+
             return true;
         }
-        if(args.length == 2) {
-            String arg1 = args[0];
-            String arg2 = args[1];
-
-            if(arg1.equalsIgnoreCase("create")) {
-
-                dataManager.createUpgradeShop(arg2);
-
-            }
-            return true;
-        }
-
-
-
         return true;
-
-    }
-    private void openShopsGui(Player player) {
-        Gui gui = new Gui(6, "Sklepy");
-
-        dataManager.getAllShopEntities().forEach((shop) -> {
-            GuiItem shopItem = ItemManager.createUpgradeShopItem(shop.getName());
-
-            shopItem.setAction(event -> {
-                openEditor(player, shop);
-            });
-
-            gui.addItem(shopItem);
-        });
-
-
-        gui.open(player);
     }
 
-    private void openEditor(Player player, VillagerUpgradeShopEntity shop) {
-
-        Gui gui = new Gui(6, "Edytor sklepu: " + shop.getName());
-
-        shop.getProducts().forEach((product) -> {
-            GuiItem productItem = ItemManager.createShowItem(product.getItem(), product.getPrice(), product.getNeededItem(), product.getShopSlot(), shop.getName());
-
-            productItem.setAction(event -> {
-                Bukkit.broadcastMessage("Edytuj produkt");
-            });
-
-            gui.addItem(productItem);
-        });
-
-
-
-        GuiItem addProductItemButton = ItemManager.createAddItemButton();
-
-        addProductItemButton.setAction(event -> {
-            ItemStack item = event.getCursor();
-
-            if(item.getType() == Material.AIR) {
-                player.sendMessage(GlobalMessagesManager.PREFIX + "§cTrzymaj przedmiot w ręce aby dodać go do sklepu");
-                return;
-            }
-
-
-
-            // TODO add item to shop
-
-        });
-
-        gui.setItem(5, 5, addProductItemButton);
-
-        gui.open(player);
+    @Nullable
+    @Override
+    public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, @NotNull String[] args) {
+        if(args.length == 1) {
+            return dataManager.getAllShopEntities().stream().map(VillagerUpgradeShopEntity::getName).collect(Collectors.toList());
+        }
+        return null;
     }
-
-    private GuiItem createButtonWithOptionsEditor() {
-        GuiItem shop = ItemManager.createShowItem(new ItemStack(Material.DIAMOND), 100.0, new ItemStack(Material.GOLD_INGOT), 1, "shop");
-
-        shop.setAction(event -> {
-
-            boolean itemInCursor = event.getCursor() != null && event.getCursor().getType() != Material.AIR ;
-            boolean shiftClick = event.isShiftClick();
-            boolean rightClick = event.isRightClick();
-            boolean leftClick = event.isLeftClick();
-
-
-            if(itemInCursor) {
-                Bukkit.broadcastMessage("dodaj item potrzebny do ulepszenia");
-                return;
-            }
-
-            if (shiftClick && rightClick) {
-                Bukkit.broadcastMessage("USUN");
-                return;
-            }
-
-            if (!shiftClick && leftClick) {
-                Bukkit.broadcastMessage("ustaw slot");
-                return;
-            }
-            if (rightClick && !shiftClick) {
-                Bukkit.broadcastMessage("ustaw cene");
-                return;
-            }
-
-
-
-        });
-
-
-        return shop;
-    }
-
 }

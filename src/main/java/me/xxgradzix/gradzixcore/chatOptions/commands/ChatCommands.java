@@ -156,7 +156,7 @@ public class ChatCommands implements CommandExecutor {
                     addCooldown(p.getUniqueId(), ButtonType.DEATH);
                     finalChatOptionsEntity.setShowDeathMessages(true);
                     p.sendMessage(ChatColor.RED + "Włączyłeś wiadomości o śmierci");
-                    gui.updateItem(action.getSlot(), deathButtonOff);
+                    gui.setItem(action.getSlot(), deathButtonOff);
                 });
 
                 deathButtonOff.setAction((action) -> {
@@ -167,7 +167,7 @@ public class ChatCommands implements CommandExecutor {
                     addCooldown(p.getUniqueId(), ButtonType.DEATH);
                     finalChatOptionsEntity.setShowDeathMessages(false);
                     p.sendMessage(ChatColor.RED + "Wyłączyłeś wiadomości o śmierci");
-                    gui.updateItem(action.getSlot(), deathButtonOn);
+                    gui.setItem(action.getSlot(), deathButtonOn);
                 });
 
                 if(chatOptionsEntity.isShowDeathMessages()) {
@@ -185,13 +185,13 @@ public class ChatCommands implements CommandExecutor {
                 scratchCardOn.setAction((action) -> {
                     finalChatOptionsEntity.setShowScratchCardMessages(true);
                     p.sendMessage(ChatColor.RED + "Włączyłeś wiadomości o dropie ze zdrapki");
-                    gui.updateItem(action.getSlot(), scratchCardOff);
+                    gui.setItem(action.getSlot(), scratchCardOff);
                 });
 
                 scratchCardOff.setAction((action) -> {
                     finalChatOptionsEntity.setShowScratchCardMessages(false);
                     p.sendMessage(ChatColor.RED + "Wyłączyłeś wiadomości o dropie ze zdrapki");
-                    gui.updateItem(action.getSlot(), scratchCardOn);
+                    gui.setItem(action.getSlot(), scratchCardOn);
                 });
 
                 if(chatOptionsEntity.isShowScratchCardMessages()) {
@@ -214,7 +214,7 @@ public class ChatCommands implements CommandExecutor {
                     addCooldown(p.getUniqueId(), ButtonType.CHAT);
                     finalChatOptionsEntity.setShowChatMessages(true);
                     p.sendMessage(ChatColor.RED + "Włączyłeś wiadomości z chatu");
-                    gui.updateItem(action.getSlot(), chatButtonOff);
+                    gui.setItem(action.getSlot(), chatButtonOff);
                 });
 
                 chatButtonOff.setAction((action) -> {
@@ -225,7 +225,7 @@ public class ChatCommands implements CommandExecutor {
                     addCooldown(p.getUniqueId(), ButtonType.CHAT);
                     finalChatOptionsEntity.setShowChatMessages(false);
                     p.sendMessage(ChatColor.RED + "Wyłączyłeś wiadomości z chatu");
-                    gui.updateItem(action.getSlot(), chatButtonOn);
+                    gui.setItem(action.getSlot(), chatButtonOn);
                 });
 
                 if(chatOptionsEntity.isShowChatMessages()) {
@@ -248,7 +248,7 @@ public class ChatCommands implements CommandExecutor {
                     addCooldown(p.getUniqueId(), ButtonType.SHOP);
                     finalChatOptionsEntity.setShowShopMessages(true);
                     p.sendMessage(ChatColor.RED + "Funkcjonalność chwilowo niedostępna");
-                    gui.updateItem(action.getSlot(), shopButtonOff);
+                    gui.setItem(action.getSlot(), shopButtonOff);
                 });
 
                 shopButtonOff.setAction((action) -> {
@@ -259,7 +259,7 @@ public class ChatCommands implements CommandExecutor {
                     addCooldown(p.getUniqueId(), ButtonType.SHOP);
                     finalChatOptionsEntity.setShowShopMessages(false);
                     p.sendMessage(ChatColor.RED + "Funkcjonalność chwilowo niedostępna");
-                    gui.updateItem(action.getSlot(), shopButtonOn);
+                    gui.setItem(action.getSlot(), shopButtonOn);
                 });
 
                 if(chatOptionsEntity.isShowShopMessages()) {

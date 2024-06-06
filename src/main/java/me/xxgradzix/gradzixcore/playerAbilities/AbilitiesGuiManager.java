@@ -153,7 +153,7 @@ public class AbilitiesGuiManager {
 
                 removeItems(p, me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.perkFragment, requiredAmount);
 
-                gui.updateItem(action.getSlot(), drop1);
+                gui.setItem(action.getSlot(), drop1);
 
                 DataManager.incrementAbilityLevel(Ability.DROP, p);
 
@@ -167,7 +167,7 @@ public class AbilitiesGuiManager {
 
                 removeItems(p, me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.perkFragment, requiredAmount);
 
-                gui.updateItem(action.getSlot(), drop2);
+                gui.setItem(action.getSlot(), drop2);
 
                 DataManager.incrementAbilityLevel(Ability.DROP, p);
 
@@ -181,7 +181,7 @@ public class AbilitiesGuiManager {
 
                 removeItems(p, me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.perkFragment, requiredAmount);
 
-                gui.updateItem(action.getSlot(), drop3);
+                gui.setItem(action.getSlot(), drop3);
                 DataManager.incrementAbilityLevel(Ability.DROP, p);
 
             } else {
@@ -194,7 +194,7 @@ public class AbilitiesGuiManager {
 
                 removeItems(p, me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.perkFragment, requiredAmount);
 
-                gui.updateItem(action.getSlot(), drop4);
+                gui.setItem(action.getSlot(), drop4);
 //                    UmiejetnosciConfigFile.incrementDropLevel(p);
                 DataManager.incrementAbilityLevel(Ability.DROP, p);
 
@@ -246,7 +246,7 @@ public class AbilitiesGuiManager {
 
                 removeItems(p, me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.perkFragment, requiredAmount);
 
-                gui.updateItem(action.getSlot(), rank1);
+                gui.setItem(action.getSlot(), rank1);
 
 
                 DataManager.incrementAbilityLevel(Ability.RANK, p);
@@ -262,7 +262,7 @@ public class AbilitiesGuiManager {
 
                 removeItems(p, me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.perkFragment, requiredAmount);
 
-                gui.updateItem(action.getSlot(), rank2);
+                gui.setItem(action.getSlot(), rank2);
 
                 DataManager.incrementAbilityLevel(Ability.RANK, p);
             } else {
@@ -275,7 +275,7 @@ public class AbilitiesGuiManager {
 
                 removeItems(p, me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.perkFragment, requiredAmount);
 
-                gui.updateItem(action.getSlot(), rank3);
+                gui.setItem(action.getSlot(), rank3);
                 DataManager.incrementAbilityLevel(Ability.RANK, p);
 
             } else {
@@ -288,7 +288,7 @@ public class AbilitiesGuiManager {
 
                 removeItems(p, me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.perkFragment, requiredAmount);
 
-                gui.updateItem(action.getSlot(), rank4);
+                gui.setItem(action.getSlot(), rank4);
                 DataManager.incrementAbilityLevel(Ability.RANK, p);
 
             } else {

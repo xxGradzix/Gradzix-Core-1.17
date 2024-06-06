@@ -2,16 +2,20 @@ package me.xxgradzix.gradzixcore.VPLNShop.managers;
 
 import dev.triumphteam.gui.guis.Gui;
 import dev.triumphteam.gui.guis.GuiItem;
+import me.xxgradzix.gradzixcore.GlobalItemManager;
 import me.xxgradzix.gradzixcore.VPLNShop.data.DataManager;
 import me.xxgradzix.gradzixcore.VPLNShop.items.ItemManager;
+import me.xxgradzix.gradzixcore.VPLNShop.messages.Messages;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
+import static me.xxgradzix.gradzixcore.VPLNShop.messages.Messages.AMOUNT_TO_LOW_ERROR;
 import static org.bukkit.Bukkit.getConsoleSender;
 import static org.bukkit.Bukkit.getServer;
 
@@ -38,16 +42,16 @@ public class VPLNShop {
 
     public void openVPLNShop(Player player) {
         Gui gui = Gui.gui()
-                .title(Component.text("VPLN Shop"))
+                .title(Component.text(ChatColor.AQUA + "" + ChatColor.BOLD + "Sklep VPLN" + ChatColor.RESET + ChatColor.GRAY + " (/potfel)"))
                 .rows(5)
                 .disableAllInteractions()
                 .create();
 
-        GuiItem vipItem = new GuiItem(ItemManager.vipShowcaseItem);
-        GuiItem svipItem = new GuiItem(ItemManager.svipShowcaseItem);
-        GuiItem uniItem = new GuiItem(ItemManager.uniShowcaseItem);
-        GuiItem magicKeyItem = new GuiItem(ItemManager.magicKeyShowcaseItem);
-        GuiItem uniKeyItem = new GuiItem(ItemManager.uniKeyShowcaseItem);
+        GuiItem vipItem = ItemManager.createVipShowcaseGuiItem(dataManager.getPlayerVPLNAmount(player));
+        GuiItem svipItem = ItemManager.createSvipShowcaseItem(dataManager.getPlayerVPLNAmount(player));
+        GuiItem uniItem = ItemManager.createUniShowcaseItem(dataManager.getPlayerVPLNAmount(player));
+        GuiItem magicKeyItem = ItemManager.createMagicKeyShowcaseItem(dataManager.getPlayerVPLNAmount(player));
+        GuiItem uniKeyItem = ItemManager.createUniKeyShowcaseItem(dataManager.getPlayerVPLNAmount(player));
 
         vipItem.setAction(event -> {
             confirmPurchase(player, VIP, 1);
@@ -70,12 +74,39 @@ public class VPLNShop {
             gui.close(player);
         });
 
-        gui.setItem(2, 2, vipItem);
-        gui.setItem(2, 4, svipItem);
-        gui.setItem(2, 6, uniItem);
-        gui.setItem(3, 3, magicKeyItem);
-        gui.setItem(3, 7, uniKeyItem);
+        gui.setItem(2, 3, vipItem);
+        gui.setItem(2, 5, svipItem);
+        gui.setItem(2, 7, uniItem);
+        gui.setItem(3, 4, magicKeyItem);
+        gui.setItem(3, 6, uniKeyItem);
         gui.setItem(4, 5, backButton);
+
+        gui.getFiller().fillBetweenPoints(1, 3, 1, 4, GlobalItemManager.FILLER_GLASS_PANE_GUI_ITEM);
+        gui.getFiller().fillBetweenPoints(1, 6, 1, 7, GlobalItemManager.FILLER_GLASS_PANE_GUI_ITEM);
+        gui.getFiller().fillBetweenPoints(6, 3, 6, 4, GlobalItemManager.FILLER_GLASS_PANE_GUI_ITEM);
+        gui.getFiller().fillBetweenPoints(6, 6, 6, 7, GlobalItemManager.FILLER_GLASS_PANE_GUI_ITEM);
+
+
+        gui.setItem(3, 1, GlobalItemManager.FILLER_GLASS_PANE_GUI_ITEM);
+        gui.setItem(3, 9, GlobalItemManager.FILLER_GLASS_PANE_GUI_ITEM);
+
+        gui.setItem(1, 2, GlobalItemManager.DARK_GLASS_PANE_GUI_ITEM);
+        gui.setItem(5, 2, GlobalItemManager.DARK_GLASS_PANE_GUI_ITEM);
+
+        gui.setItem(1, 8, GlobalItemManager.DARK_GLASS_PANE_GUI_ITEM);
+        gui.setItem(5, 8, GlobalItemManager.DARK_GLASS_PANE_GUI_ITEM);
+
+        gui.setItem(2, 1, GlobalItemManager.DARK_GLASS_PANE_GUI_ITEM);
+        gui.setItem(2, 9, GlobalItemManager.DARK_GLASS_PANE_GUI_ITEM);
+
+        gui.setItem(4, 1, GlobalItemManager.DARK_GLASS_PANE_GUI_ITEM);
+        gui.setItem(4, 9, GlobalItemManager.DARK_GLASS_PANE_GUI_ITEM);
+
+        gui.setItem(1, 1, GlobalItemManager.LIGHT_GLASS_PANE_GUI_ITEM);
+        gui.setItem(5, 1, GlobalItemManager.LIGHT_GLASS_PANE_GUI_ITEM);
+
+        gui.setItem(1, 9, GlobalItemManager.LIGHT_GLASS_PANE_GUI_ITEM);
+        gui.setItem(5, 9, GlobalItemManager.LIGHT_GLASS_PANE_GUI_ITEM);
 
         gui.open(player);
     }
@@ -100,46 +131,70 @@ public class VPLNShop {
         GuiItem subtractSixteen = new GuiItem(new ItemStack(Material.RED_STAINED_GLASS_PANE, 16));
         GuiItem set1 = new GuiItem(new ItemStack(Material.RED_STAINED_GLASS_PANE, 1));
 
+        ItemStack item = new ItemStack(ItemManager.magicKeyShowcaseItem);
+
+        gui.setItem(2, 5, ItemManager.getShowcaseItem(item, currentAmount.get(), getTotalPrice(keyType, currentAmount.get())));
+
+
         addOne.setAction(event -> {
             if(currentAmount.get() + 1 >= 64){
-                player.sendMessage("You can't buy more than 64 keys at once.");
+                player.sendMessage(Messages.AMOUNT_TO_HIGH_ERROR);
                 return;
             }
             currentAmount.getAndIncrement();
+            item.setAmount(currentAmount.get());
+            gui.setItem(2, 5, ItemManager.getShowcaseItem(item, currentAmount.get(), getTotalPrice(keyType, currentAmount.get())));
+
             gui.update();
         });
         addSixteen.setAction(event -> {
             if(currentAmount.get() + 16 > 64){
-                player.sendMessage("You can't buy more than 64 keys at once.");
+                player.sendMessage(Messages.AMOUNT_TO_HIGH_ERROR);
                 return;
             }
             currentAmount.getAndAdd(16);
+            item.setAmount(currentAmount.get());
+            gui.setItem(2, 5, ItemManager.getShowcaseItem(item, currentAmount.get(), getTotalPrice(keyType, currentAmount.get())));
+
             gui.update();
         });
         set64.setAction(event -> {
             currentAmount.set(64);
+            item.setAmount(currentAmount.get());
+            gui.setItem(2, 5, ItemManager.getShowcaseItem(item, currentAmount.get(), getTotalPrice(keyType, currentAmount.get())));
+
             gui.update();
         });
         subtractOne.setAction(event -> {
             if(currentAmount.get() - 1 <= 0){
-                player.sendMessage("You can't buy less than 1 key.");
+                player.sendMessage(AMOUNT_TO_LOW_ERROR);
                 return;
             }
             currentAmount.getAndDecrement();
+            item.setAmount(currentAmount.get());
+            gui.setItem(2, 5, ItemManager.getShowcaseItem(item, currentAmount.get(), getTotalPrice(keyType, currentAmount.get())));
+
             gui.update();
         });
         subtractSixteen.setAction(event -> {
             if(currentAmount.get() - 16 <= 0){
-                player.sendMessage("You can't buy less than 1 key.");
+                player.sendMessage(AMOUNT_TO_LOW_ERROR);
                 return;
             }
             currentAmount.getAndAdd(-16);
+            item.setAmount(currentAmount.get());
+            gui.setItem(2, 5, ItemManager.getShowcaseItem(item, currentAmount.get(), getTotalPrice(keyType, currentAmount.get())));
+
             gui.update();
         });
         set1.setAction(event -> {
             currentAmount.set(1);
+            item.setAmount(currentAmount.get());
+            gui.setItem(2, 5, ItemManager.getShowcaseItem(item, currentAmount.get(), getTotalPrice(keyType, currentAmount.get())));
+
             gui.update();
         });
+
 
         gui.setItem(2, 2, subtractSixteen);
         gui.setItem(2, 3, subtractOne);
@@ -161,6 +216,7 @@ public class VPLNShop {
 
     }
 
+
     private void confirmPurchase(Player player, String serviceName, int amount) {
 
         Gui gui = Gui.gui()
@@ -171,7 +227,29 @@ public class VPLNShop {
 
         final Double totalPrice = getTotalPrice(serviceName, amount);
 
-        GuiItem showItem = ItemManager.getShowcaseItem(new ItemStack(Material.DIAMOND), amount, totalPrice);
+        ItemStack showcaseItem;
+        switch (serviceName) {
+            case VIP:
+                showcaseItem = ItemManager.vipShowcaseItem;
+                break;
+            case SVIP:
+                showcaseItem = ItemManager.svipShowcaseItem;
+                break;
+            case UNI:
+                showcaseItem = ItemManager.uniShowcaseItem;
+                break;
+            case MAGIC_KEY:
+                showcaseItem = ItemManager.magicKeyShowcaseItem;
+                break;
+            case UNI_KEY:
+                showcaseItem = ItemManager.uniKeyShowcaseItem;
+                break;
+            default:
+                showcaseItem = new ItemStack(Material.AIR);
+                break;
+        }
+
+        GuiItem showItem = ItemManager.getShowcaseItem(showcaseItem, amount, totalPrice);
 
         GuiItem confirm = ItemManager.createConfirmButton(getTotalPrice(serviceName, amount));
 
@@ -227,44 +305,44 @@ public class VPLNShop {
         Double playerVPLNAmount = dataManager.getPlayerVPLNAmount(player);
 
         if(playerVPLNAmount < VIP_PRICE) {
-            player.sendMessage("You don't have enough VPLN to buy this product.");
+            player.sendMessage(Messages.NOT_ENOUGH_VPLN);
             return;
         }
     dataManager.subtractVPLNAmount(player, VIP_PRICE);
         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getName() + " parent set vip");
 
-        player.sendMessage("You have successfully bought VIP rank.");
+        player.sendMessage(Messages.SUCCESSFUL_VIP_PURCHASE);
     }
     private void buySVipRank(Player player) {
         Double playerVPLNAmount = dataManager.getPlayerVPLNAmount(player);
 
         if(playerVPLNAmount < SVIP_PRICE) {
-            player.sendMessage("You don't have enough VPLN to buy this product.");
+            player.sendMessage(Messages.NOT_ENOUGH_VPLN);
             return;
         }
         dataManager.subtractVPLNAmount(player, SVIP_PRICE);
         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getName() + " parent set svip");
 
-        player.sendMessage("You have successfully bought SVIP rank.");
+        player.sendMessage(Messages.SUCCESSFUL_SVIP_PURCHASE);
     }
     private void buyUniRank(Player player) {
         Double playerVPLNAmount = dataManager.getPlayerVPLNAmount(player);
 
         if(playerVPLNAmount < UNI_PRICE) {
-            player.sendMessage("You don't have enough VPLN to buy this product.");
+            player.sendMessage(Messages.NOT_ENOUGH_VPLN);
             return;
         }
         dataManager.subtractVPLNAmount(player, UNI_PRICE);
         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getName() + " parent set uni");
 
-        player.sendMessage("You have successfully bought UNI rank.");
+        player.sendMessage(Messages.SUCCESSFUL_UNI_PURCHASE);
     }
 
     private void buyMagicKey(Player player, int amount) {
         Double playerVPLNAmount = dataManager.getPlayerVPLNAmount(player);
 
         if(playerVPLNAmount < MAGIC_KEY_PRICE * amount) {
-            player.sendMessage("You don't have enough VPLN to buy this product.");
+            player.sendMessage(Messages.NOT_ENOUGH_VPLN);
             return;
         }
         dataManager.subtractVPLNAmount(player, MAGIC_KEY_PRICE * amount);
@@ -272,13 +350,13 @@ public class VPLNShop {
                 player.getName() +
                 " magiczna " + amount);
 
-        player.sendMessage("You have successfully bought Magic Key.");
+        player.sendMessage(Messages.SUCCESSFUL_MAGIC_KEY_PURCHASE);
     }
     private void buyUniKey(Player player, int amount) {
         Double playerVPLNAmount = dataManager.getPlayerVPLNAmount(player);
 
         if(playerVPLNAmount < UNI_KEY_PRICE * amount) {
-            player.sendMessage("You don't have enough VPLN to buy this product.");
+            player.sendMessage(Messages.NOT_ENOUGH_VPLN);
             return;
         }
         dataManager.subtractVPLNAmount(player, UNI_KEY_PRICE * amount);
@@ -286,7 +364,7 @@ public class VPLNShop {
                 player.getName() +
                 " magiczna " + amount);
 
-        player.sendMessage("You have successfully bought Magic Key.");
+        player.sendMessage(Messages.SUCCESSFUL_UNI_KEY_PURCHASE);
     }
 
 

@@ -15,6 +15,8 @@ import me.xxgradzix.gradzixcore.clansCore.Clans;
 import me.xxgradzix.gradzixcore.clansExtension.ClansExtension;
 import me.xxgradzix.gradzixcore.events.Events;
 import me.xxgradzix.gradzixcore.generators.Generators;
+import me.xxgradzix.gradzixcore.globalStatic.EconomyManager;
+import me.xxgradzix.gradzixcore.globalStatic.TextInputFromChat;
 import me.xxgradzix.gradzixcore.incognito.Incognito;
 import me.xxgradzix.gradzixcore.itemPickupPriorities.ItemPickupPriorities;
 import me.xxgradzix.gradzixcore.magicFirework.MagicFirework;
@@ -136,6 +138,9 @@ public final class Gradzix_Core extends JavaPlugin {
     @Override
     public void onEnable()  {
         instance = this;
+        EconomyManager.setupEconomy();
+        Bukkit.getPluginManager().registerEvents(new TextInputFromChat(), this);
+
         GlobalItemManager.init();
 //        funnyGuilds = FunnyGuilds.getInstance();
 

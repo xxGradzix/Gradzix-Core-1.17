@@ -17,21 +17,21 @@ public class VipCommand implements CommandExecutor {
 
         Player player = (Player) sender;
 
-        player.sendMessage(ChatColor.GRAY + "Przywileje rangi " + ChatColor.YELLOW + "VIP" + ChatColor.GRAY + ":");
-        player.sendMessage(ChatColor.DARK_GRAY + " - " + ChatColor.WHITE + "Unikatowy prefix przed nickiem " + "§8[§eVIP§8]");
-        player.sendMessage(ChatColor.DARK_GRAY + " - " + ChatColor.WHITE + "Kit VIP co 24h (§e/kit§f)");
-        player.sendMessage(ChatColor.DARK_GRAY + " - " + ChatColor.WHITE + "Dostęp do (§e/hat§f)");
-        player.sendMessage(ChatColor.DARK_GRAY + " - " + ChatColor.WHITE + "Dostęp do (§e/feed§f)");
-        player.sendMessage(ChatColor.DARK_GRAY + " - " + ChatColor.WHITE + "Dostęp do (§e/repair§f)");
-        player.sendMessage(ChatColor.DARK_GRAY + " - " + ChatColor.WHITE + "Dostęp do (§e/ec§f)");
-        player.sendMessage(ChatColor.DARK_GRAY + " - " + ChatColor.WHITE + "Dostęp do (§e/wb§f)");
-        player.sendMessage(ChatColor.DARK_GRAY + " - " + ChatColor.WHITE + "Dostęp do §e§lSTREFY VIP");
-        player.sendMessage(ChatColor.DARK_GRAY + " - " + ChatColor.WHITE + "Zwiększony limit wystawiania przedmiotó na rynku (§c5)");
-        player.sendMessage(ChatColor.DARK_GRAY + " - " + ChatColor.WHITE + "Zwiększony szansa na wypadanie klucza w strefie afk do §e30%");
-        player.sendMessage(ChatColor.DARK_GRAY + " - " + "§e20%" + ChatColor.WHITE + " szans na trafienie fragmentu perku po zabiciu gracza");
+        player.sendMessage(ChatColor.GRAY + "" + ChatColor.BOLD + "Przywileje rangi " + ChatColor.YELLOW + "VIP" + ChatColor.GRAY + ":");
+        player.sendMessage(ChatColor.DARK_GRAY + " - " + ChatColor.GRAY + "Unikatowy prefix " + "§e§lVIP");
+        player.sendMessage(ChatColor.DARK_GRAY + " - " + ChatColor.GRAY + "Kit §e§lVIP§r§7 co 24h (§b§n/kit§r§7)");
+        player.sendMessage(ChatColor.DARK_GRAY + " - " + ChatColor.GRAY + "Dostęp do (§b§n/hat§r§7)");
+        player.sendMessage(ChatColor.DARK_GRAY + " - " + ChatColor.GRAY + "Dostęp do (§b§n/feed§r§7)");
+        player.sendMessage(ChatColor.DARK_GRAY + " - " + ChatColor.GRAY + "Dostęp do (§b§n/repair§r§7)");
+        player.sendMessage(ChatColor.DARK_GRAY + " - " + ChatColor.GRAY + "Dostęp do (§b§n/ec§r§7)");
+        player.sendMessage(ChatColor.DARK_GRAY + " - " + ChatColor.GRAY + "Dostęp do (§b§n/wb§r§7)");
+        player.sendMessage(ChatColor.DARK_GRAY + " - " + ChatColor.GRAY + "Dostęp do (§b§nSTREFY VIP§r§7)");
+        player.sendMessage(ChatColor.DARK_GRAY + " - " + ChatColor.GRAY + "Zwiększony limit wystawiania przedmiotó na rynku (§b§n5§r§7)");
+        player.sendMessage(ChatColor.DARK_GRAY + " - " + ChatColor.GRAY + "Zwiększony szansa na wypadanie klucza w strefie afk (§b§ndo 30%§r§7)");
+        player.sendMessage(ChatColor.DARK_GRAY + " - " + ChatColor.GRAY + "Większa szansa na trafienie fragmentu perku po zabiciu gracza (§b§n20%§r§7)");
         player.sendMessage(ChatColor.DARK_GRAY + " ");
-        player.sendMessage(ChatColor.AQUA + "Range zakupisz na stronie");
-        player.sendMessage(ChatColor.DARK_AQUA + "https://unimc.pl/");
+        player.sendMessage(ChatColor.DARK_GRAY + "Range zakupisz na stronie");
+        player.sendMessage(ChatColor.AQUA + "https://unimc.pl/");
 
         return true;
     }

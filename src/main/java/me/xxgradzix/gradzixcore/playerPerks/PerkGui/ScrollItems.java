@@ -62,7 +62,7 @@ public class ScrollItems extends BukkitRunnable {
 
                 for (int i = 0; i < 9; i++) {
                     if (newSlot == (9 + 4)) winningSlotItem = itemStackList.get(i).clone();
-                    gui.updateItem(newSlot, new GuiItem(itemStackList.get(i).clone()));
+                    gui.setItem(newSlot, new GuiItem(itemStackList.get(i).clone()));
                     newSlot += slotIncrement;
                     gui.update();
                 }
@@ -91,8 +91,11 @@ public class ScrollItems extends BukkitRunnable {
             items.add(glass);
             gui.getFiller().fillBetweenPoints(2, 1, 2, 9, items);
 
-            gui.updateItem(1, 5, new ItemStack(Material.HOPPER));
-            gui.updateItem(3, 5, GlobalItemManager.LIGHT_GLASS_PANE_GUI_ITEM);
+
+
+
+            gui.setItem(1, 5, GlobalItemManager.HOPPER_GUI_ITEM);
+            gui.setItem(3, 5, GlobalItemManager.LIGHT_GLASS_PANE_GUI_ITEM);
             if(winningSlotItem.equals(reward)) {
                 cancel();
                 player.getInventory().addItem(reward);

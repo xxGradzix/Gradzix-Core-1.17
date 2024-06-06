@@ -3,7 +3,6 @@ package me.xxgradzix.gradzixcore.clansExtension.managers;
 import me.xxgradzix.gradzixcore.clansCore.data.database.entities.ClanEntity;
 import me.xxgradzix.gradzixcore.clansCore.events.ClanLivesChangeEvent;
 import me.xxgradzix.gradzixcore.clansCore.managers.ClanManager;
-import me.xxgradzix.gradzixcore.clansCore.managers.UserManager;
 import me.xxgradzix.gradzixcore.clansExtension.ClansExtension;
 import me.xxgradzix.gradzixcore.clansExtension.data.database.entities.ClanPerk;
 import me.xxgradzix.gradzixcore.clansExtension.data.database.entities.ClanPerksEntity;
@@ -22,7 +21,6 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import javax.annotation.Nullable;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -174,7 +172,6 @@ public class WarManager {
         warEntityManager.createOrUpdateWar(warEntity);
     }
 
-    @Nullable
     public UUID getWinnerGuildUUID(WarEntity warEntity) {
 
         int invaderKills = warEntity.getInvaderScore();
@@ -188,7 +185,6 @@ public class WarManager {
 
         return null;
     }
-    @Nullable
     public UUID getLooserGuildUUID(WarEntity warEntity) {
 
         int invaderKills = warEntity.getInvaderScore();

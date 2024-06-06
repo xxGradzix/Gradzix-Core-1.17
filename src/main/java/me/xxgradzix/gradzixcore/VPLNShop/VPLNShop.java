@@ -57,7 +57,7 @@ public class VPLNShop {
 
         plugin.getServer().getPluginManager().registerEvents(new JoinListener(dataManager), plugin);
 
-        plugin.getCommand("vplnshop").setExecutor(new VPLNShopCommand(vplnShop));
+        plugin.getCommand("portfel").setExecutor(new VPLNShopCommand(vplnShop));
         plugin.getCommand("dodajvpln").setExecutor(new VPLNCommand(dataManager));
 
     }

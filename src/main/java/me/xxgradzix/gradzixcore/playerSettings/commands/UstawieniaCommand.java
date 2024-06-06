@@ -98,7 +98,7 @@ public class UstawieniaCommand implements CommandExecutor {
                 }
                 addCooldown(player.getUniqueId(),ButtonType.EXCHANGE);
                 DataManager.setAutoExchangeStatus(player, true);
-                gui.updateItem(action.getSlot(), exchangeButtonOff);
+                gui.setItem(action.getSlot(), exchangeButtonOff);
             });
             exchangeButtonOff.setAction((action) -> {
                 if(isOnCooldown(player.getUniqueId(),ButtonType.EXCHANGE)) {
@@ -107,7 +107,7 @@ public class UstawieniaCommand implements CommandExecutor {
                 }
                 addCooldown(player.getUniqueId(),ButtonType.EXCHANGE);
                 DataManager.setAutoExchangeStatus(player, false);
-                gui.updateItem(action.getSlot(), exchangeButtonOn);
+                gui.setItem(action.getSlot(), exchangeButtonOn);
             });
             if(DataManager.getAutoExchangeStatus(player)) {
                 gui.setItem(2, 4, exchangeButtonOff);
@@ -124,7 +124,7 @@ public class UstawieniaCommand implements CommandExecutor {
                 }
                 addCooldown(player.getUniqueId(),ButtonType.SELL);
                 DataManager.setAutoSellStatus(player, true);
-                gui.updateItem(action.getSlot(), sellButtonOff);
+                gui.setItem(action.getSlot(), sellButtonOff);
             });
             sellButtonOff.setAction((action) -> {
                 if(isOnCooldown(player.getUniqueId(),ButtonType.SELL)) {
@@ -133,7 +133,7 @@ public class UstawieniaCommand implements CommandExecutor {
                 }
                 addCooldown(player.getUniqueId(),ButtonType.SELL);
                 DataManager.setAutoSellStatus(player, false);
-                gui.updateItem(action.getSlot(), sellButtonOn);
+                gui.setItem(action.getSlot(), sellButtonOn);
             });
             if(DataManager.getAutoSellStatus(player)) {
                 gui.setItem(2, 6, sellButtonOff);

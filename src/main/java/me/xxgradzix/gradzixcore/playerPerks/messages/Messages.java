@@ -24,14 +24,14 @@ public class Messages {
     public static void sendPerksLevelsToPlayer(Player player, PlayerPerksEntity playerPerksEntity) {
         player.sendMessage(ChatColor.GRAY + "*----------------------------*");
         player.sendMessage("§8» §7Twoje Perki§8: ");
-        player.sendMessage("§8» §ePerk Siły§8: §2+" + playerPerksEntity.getPerkTypeLevel(PerkType.STRENGTH) + "§f% §7obrażeń");
+        player.sendMessage("§8» §ePerk Siły§8: §e+" + playerPerksEntity.getPerkTypeLevel(PerkType.STRENGTH) + "§f% §7obrażeń");
         player.sendMessage("§8» §2Perk Trucizny§8: §2+" + playerPerksEntity.getPerkTypeLevel(PerkType.POISON) + "§f% §7szansy na zatrucie");
-        player.sendMessage("§8» §6Perk Odporności§8: §2+" + playerPerksEntity.getPerkTypeLevel(PerkType.RESISTANCE) + "§f% §7odporności na uzyskanie odporności");
-        player.sendMessage("§8» §cPerk Kradzieży Zdrowia§8: §2+" + playerPerksEntity.getPerkTypeLevel(PerkType.LIFE_STEAL) + "§f% §7szansy na kradzież zdrowia");
-        player.sendMessage("§8» §dPerk Osłabienia§8: §2+" + playerPerksEntity.getPerkTypeLevel(PerkType.WEAKNESS) + "§f% §7szansy na osłabienie wroga");
-        player.sendMessage("§8» §4Perk Życia§8: §2+" + playerPerksEntity.getPerkTypeLevel(PerkType.ADDITIONAL_HEARTS) + " §7serc");
-        player.sendMessage("§8» §5Perk Spowolnienia§8: §2+" + playerPerksEntity.getPerkTypeLevel(PerkType.SLOWNESS) + "§f% §7szansy na spowolnienie wroga");
-        player.sendMessage("§8» §bPerk Fragmentów§8: §2+" + playerPerksEntity.getPerkTypeLevel(PerkType.PERK_FRAGMENT_DROP) + "§f% §7szansy na spowolnienie wroga");
+        player.sendMessage("§8» §6Perk Odporności§8: §6+" + playerPerksEntity.getPerkTypeLevel(PerkType.RESISTANCE) + "§f% §7odporności na uzyskanie odporności");
+        player.sendMessage("§8» §cPerk Kradzieży Zdrowia§8: §c+" + playerPerksEntity.getPerkTypeLevel(PerkType.LIFE_STEAL) + "§f% §7szansy na kradzież zdrowia");
+        player.sendMessage("§8» §dPerk Osłabienia§8: §d+" + playerPerksEntity.getPerkTypeLevel(PerkType.WEAKNESS) + "§f% §7szansy na osłabienie wroga");
+        player.sendMessage("§8» §4Perk Życia§8: §4+" + playerPerksEntity.getPerkTypeLevel(PerkType.ADDITIONAL_HEARTS) + " §7serc");
+        player.sendMessage("§8» §5Perk Spowolnienia§8: §5+" + playerPerksEntity.getPerkTypeLevel(PerkType.SLOWNESS) + "§f% §7szansy na spowolnienie wroga");
+        player.sendMessage("§8» §bPerk Fragmentów§8: §b+" + playerPerksEntity.getPerkTypeLevel(PerkType.PERK_FRAGMENT_DROP) + "§f% §7szansy na spowolnienie wroga");
         player.sendMessage("*----------------------------*");
     }
 }

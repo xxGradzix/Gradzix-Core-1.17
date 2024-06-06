@@ -42,7 +42,7 @@ public class PanelCommand implements CommandExecutor {
 
                 p.sendMessage(ChatColor.RED + "Włączyłeś wiadomości na chat");
 
-                gui.updateItem(action.getSlot(), chatOff);
+                gui.setItem(action.getSlot(), chatOff);
             });
 
             chatOff.setAction((action) -> {
@@ -59,7 +59,7 @@ public class PanelCommand implements CommandExecutor {
                     }
                     Bukkit.broadcastMessage(ChatColor.GREEN + "Chat został wyczyszczony.");
 
-                gui.updateItem(action.getSlot(), chatOn);
+                gui.setItem(action.getSlot(), chatOn);
             });
 
             if(DataManager.getChatStatus()) {
@@ -79,7 +79,7 @@ public class PanelCommand implements CommandExecutor {
 
                 p.sendMessage(ChatColor.RED + "Włączyłeś zdrapki");
 
-                gui.updateItem(action.getSlot(), scratchCardOff);
+                gui.setItem(action.getSlot(), scratchCardOff);
             });
 
             scratchCardOff.setAction((action) -> {
@@ -89,7 +89,7 @@ public class PanelCommand implements CommandExecutor {
                 p.sendMessage(ChatColor.RED + "Wyłączyłeś zdrapki");
 
 
-                gui.updateItem(action.getSlot(), scratchCardOn);
+                gui.setItem(action.getSlot(), scratchCardOn);
             });
 
             if(DataManager.getScratchCardStatus()) {
@@ -110,7 +110,7 @@ public class PanelCommand implements CommandExecutor {
 
                 p.sendMessage(ChatColor.RED + "Włączyłeś kity");
 
-                gui.updateItem(action.getSlot(), kitsOff);
+                gui.setItem(action.getSlot(), kitsOff);
             });
 
             kitsOff.setAction((action) -> {
@@ -120,7 +120,7 @@ public class PanelCommand implements CommandExecutor {
                 p.sendMessage(ChatColor.RED + "Wyłączyłeś kity");
 
 
-                gui.updateItem(action.getSlot(), kitsOn);
+                gui.setItem(action.getSlot(), kitsOn);
             });
 
             if(DataManager.getKitStatus()) {
@@ -141,7 +141,7 @@ public class PanelCommand implements CommandExecutor {
 
                 p.sendMessage(ChatColor.RED + "Włączyłeś osiagniecia");
 
-                gui.updateItem(action.getSlot(), achievementsOff);
+                gui.setItem(action.getSlot(), achievementsOff);
             });
 
             achievementsOff.setAction((action) -> {
@@ -151,7 +151,7 @@ public class PanelCommand implements CommandExecutor {
                 p.sendMessage(ChatColor.RED + "Wyłączyłeś osiagniecia");
 
 
-                gui.updateItem(action.getSlot(), achievementsOn);
+                gui.setItem(action.getSlot(), achievementsOn);
             });
 
             if(DataManager.getAchievementStatus()) {

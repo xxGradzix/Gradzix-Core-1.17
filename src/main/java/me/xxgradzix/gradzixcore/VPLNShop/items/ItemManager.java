@@ -1,7 +1,10 @@
 package me.xxgradzix.gradzixcore.VPLNShop.items;
 
+import dev.triumphteam.gui.guis.Gui;
 import dev.triumphteam.gui.guis.GuiItem;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -24,55 +27,120 @@ public class ItemManager {
         createCancelButton();
         createBuyButton();
 
-        createVipShowcaseItem();
-        createSvipShowcaseItem();
-        createUniShowcaseItem();
-        createMagicKeyShowcaseItem();
-        createUniKeyShowcaseItem();
+//        createVipShowcaseItem();
+//        createSvipShowcaseItem();
+//        createUniShowcaseItem();
+//        createMagicKeyShowcaseItem();
+//        createUniKeyShowcaseItem();
 
 
     }
 
-    private static void createVipShowcaseItem() {
+    public static GuiItem createVipShowcaseGuiItem(double balance) {
         ItemStack vipItem = new ItemStack(Material.IRON_CHESTPLATE);
         ItemMeta vipItemMeta = vipItem.getItemMeta();
-        vipItemMeta.setDisplayName("§bVIP");
+        vipItemMeta.setDisplayName(ChatColor.GRAY + "" + ChatColor.BOLD + "Ranga " + ChatColor.YELLOW + "VIP");
+        ArrayList<String> lore = new ArrayList<>();
+
+        lore.add(" ");
+        lore.add(ChatColor.GRAY + "" + ChatColor.BOLD + "Przywileje rangi " + ChatColor.YELLOW + "VIP" + ChatColor.GRAY + ":");
+        lore.add(ChatColor.DARK_GRAY + " - " + ChatColor.GRAY + "Unikatowy prefix " + "§e§lVIP");
+        lore.add(ChatColor.DARK_GRAY + " - " + ChatColor.GRAY + "Kit §e§lVIP§r§7 co 24h (§b§n/kit§r§7)");
+        lore.add(ChatColor.DARK_GRAY + " - " + ChatColor.GRAY + "Dostęp do (§b§n/hat§r§7)");
+        lore.add(ChatColor.DARK_GRAY + " - " + ChatColor.GRAY + "Dostęp do (§b§n/feed§r§7)");
+        lore.add(ChatColor.DARK_GRAY + " - " + ChatColor.GRAY + "Dostęp do (§b§n/repair§r§7)");
+        lore.add(ChatColor.DARK_GRAY + " - " + ChatColor.GRAY + "Dostęp do (§b§n/ec§r§7)");
+        lore.add(ChatColor.DARK_GRAY + " - " + ChatColor.GRAY + "Dostęp do (§b§n/wb§r§7)");
+        lore.add(ChatColor.DARK_GRAY + " - " + ChatColor.GRAY + "Dostęp do (§b§nSTREFY VIP§r§7)");
+        lore.add(ChatColor.DARK_GRAY + " - " + ChatColor.GRAY + "Zwiększony limit wystawiania przedmiotó na rynku (§b§n5§r§7)");
+        lore.add(ChatColor.DARK_GRAY + " - " + ChatColor.GRAY + "Zwiększony szansa na wypadanie klucza w strefie afk (§b§ndo 30%§r§7)");
+        lore.add(ChatColor.DARK_GRAY + " - " + ChatColor.GRAY + "Większa szansa na trafienie fragmentu perku po zabiciu gracza (§b§n20%§r§7)");
+        vipItemMeta.setLore(lore);
         vipItem.setItemMeta(vipItemMeta);
-        vipShowcaseItem = vipItem;
+        vipItemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        vipItem.setItemMeta(vipItemMeta);
+        return new GuiItem(vipItem);
     }
-    private static void createSvipShowcaseItem() {
+    public static GuiItem createSvipShowcaseItem(double balance) {
         ItemStack svipItem = new ItemStack(Material.DIAMOND_CHESTPLATE);
         ItemMeta svipItemMeta = svipItem.getItemMeta();
-        svipItemMeta.setDisplayName("§bSVIP");
+        svipItemMeta.setDisplayName(ChatColor.GRAY + "" + ChatColor.BOLD + "Ranga " + ChatColor.GOLD + "SVIP");
+        ArrayList<String> lore = new ArrayList<>();
+
+        lore.add(" ");
+        lore.add(ChatColor.GRAY + "" + ChatColor.BOLD + "Przywileje rangi " + ChatColor.GOLD + "SVIP" + ChatColor.GRAY + ":");
+        lore.add(ChatColor.DARK_GRAY + " - " + ChatColor.GRAY + "Unikatowy prefix " + "§6§lSVIP");
+        lore.add(ChatColor.DARK_GRAY + " - " + ChatColor.GRAY + "Kit §6§lSVIP§r§7 co 24h (§b§n/kit§r§7)");
+        lore.add(ChatColor.DARK_GRAY + " - " + ChatColor.GRAY + "Dostęp do (§b§n/hat§r§7)");
+        lore.add(ChatColor.DARK_GRAY + " - " + ChatColor.GRAY + "Dostęp do (§b§n/feed§r§7)");
+        lore.add(ChatColor.DARK_GRAY + " - " + ChatColor.GRAY + "Dostęp do (§b§n/repair§r§7)");
+        lore.add(ChatColor.DARK_GRAY + " - " + ChatColor.GRAY + "Dostęp do (§b§n/ec§r§7)");
+        lore.add(ChatColor.DARK_GRAY + " - " + ChatColor.GRAY + "Dostęp do (§b§n/wb§r§7)");
+        lore.add(ChatColor.DARK_GRAY + " - " + ChatColor.GRAY + "Dostęp do (§b§nSTREFY SVIP§r§7)");
+        lore.add(ChatColor.DARK_GRAY + " - " + ChatColor.GRAY + "Zwiększony limit wystawiania przedmiotó na rynku (§b§n10§r§7)");
+        lore.add(ChatColor.DARK_GRAY + " - " + ChatColor.GRAY + "Zwiększony szansa na wypadanie klucza w strefie afk (§b§ndo 40%§r§7)");
+        lore.add(ChatColor.DARK_GRAY + " - " + ChatColor.GRAY + "Większa szansa na trafienie fragmentu perku po zabiciu gracza (§b§n50%§r§7)");
+        svipItemMeta.setLore(lore);
+        svipItemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         svipItem.setItemMeta(svipItemMeta);
-        svipShowcaseItem = svipItem;
+        return  new GuiItem(svipItem);
     }
-    private static void createUniShowcaseItem() {
+    public static GuiItem createUniShowcaseItem(double balance) {
         ItemStack uniItem = new ItemStack(Material.NETHERITE_CHESTPLATE);
         ItemMeta uniItemMeta = uniItem.getItemMeta();
-        uniItemMeta.setDisplayName("§bUNI");
+        uniItemMeta.setDisplayName(ChatColor.GRAY + "" + ChatColor.BOLD + "Ranga " + ChatColor.AQUA + "UNI");
+
+        ArrayList<String> lore = new ArrayList<>();
+
+        lore.add(" ");
+        lore.add(ChatColor.GRAY + "" + ChatColor.BOLD + "Przywileje rangi " + ChatColor.AQUA + "UNI" + ChatColor.GRAY + ":");
+        lore.add(ChatColor.DARK_GRAY + " - " + ChatColor.GRAY + "Unikatowy prefix " + "§b§lUNI");
+        lore.add(ChatColor.DARK_GRAY + " - " + ChatColor.GRAY + "Kit §b§lUNI§r§7 co 24h (§b§n/kit§r§7)");
+        lore.add(ChatColor.DARK_GRAY + " - " + ChatColor.GRAY + "Dostęp do (§b§n/hat§r§7)");
+        lore.add(ChatColor.DARK_GRAY + " - " + ChatColor.GRAY + "Dostęp do (§b§n/feed§r§7)");
+        lore.add(ChatColor.DARK_GRAY + " - " + ChatColor.GRAY + "Dostęp do (§b§n/repair§r§7)");
+        lore.add(ChatColor.DARK_GRAY + " - " + ChatColor.GRAY + "Dostęp do (§b§n/ec§r§7)");
+        lore.add(ChatColor.DARK_GRAY + " - " + ChatColor.GRAY + "Dostęp do (§b§n/wb§r§7)");
+        lore.add(ChatColor.DARK_GRAY + " - " + ChatColor.GRAY + "Dostęp do (§b§nSTREFY UNI§r§7)");
+        lore.add(ChatColor.DARK_GRAY + " - " + ChatColor.GRAY + "Zwiększony limit wystawiania przedmiotó na rynku (§b§n15§r§7)");
+        lore.add(ChatColor.DARK_GRAY + " - " + ChatColor.GRAY + "Zwiększony szansa na wypadanie klucza w strefie afk (§b§ndo 50%§r§7)");
+        lore.add(ChatColor.DARK_GRAY + " - " + ChatColor.GRAY + "Większa szansa na trafienie fragmentu perku po zabiciu gracza (§b§n50%§r§7)");
+        uniItemMeta.setLore(lore);
+        uniItemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         uniItem.setItemMeta(uniItemMeta);
-        uniShowcaseItem = uniItem;
+        return new GuiItem(uniItem);
     }
-    private static void createMagicKeyShowcaseItem() {
-        ItemStack magicKeyItem = new ItemStack(Material.TRIPWIRE_HOOK);
+    public static GuiItem createMagicKeyShowcaseItem(double balance) {
+        ItemStack magicKeyItem = new ItemStack(Material.NAME_TAG);
         ItemMeta magicKeyItemMeta = magicKeyItem.getItemMeta();
-        magicKeyItemMeta.setDisplayName("§bKlucz Magiczny");
+        magicKeyItemMeta.setDisplayName("§7§lKlucz do §5§lMagiczna skrzynia§7§l!");
+        ArrayList<String> lore = new ArrayList<>();
+        lore.add("§7Dzięki niemu możesz otworzyć §5§lMagiczna skrzynia§7§l!");
+        lore.add("§7Skrzynie znajdziesz na §f/warp skrzynia§7!");
+        magicKeyItemMeta.setLore(lore);
         magicKeyItem.setItemMeta(magicKeyItemMeta);
-        magicKeyShowcaseItem = magicKeyItem;
+
+        return new GuiItem(magicKeyItem);
     }
-    private static void createUniKeyShowcaseItem() {
-        ItemStack uniKeyItem = new ItemStack(Material.TRIPWIRE_HOOK);
+    public static GuiItem createUniKeyShowcaseItem(double price) {
+        ItemStack uniKeyItem = new ItemStack(Material.NAME_TAG);
         ItemMeta uniKeyItemMeta = uniKeyItem.getItemMeta();
-        uniKeyItemMeta.setDisplayName("§bKlucz UNI");
+        uniKeyItemMeta.setDisplayName("§7§lKlucz do §b§lUNIBOX§7§l!");
+        ArrayList<String> lore = new ArrayList<>();
+        lore.add("§7Dzięki niemu możesz otworzyć §b§lUNIBOX§7§l!");
+        lore.add("§7Skrzynie znajdziesz na §f/warp skrzynia§7!");
+        uniKeyItemMeta.setLore(lore);
         uniKeyItem.setItemMeta(uniKeyItemMeta);
-        uniKeyShowcaseItem = uniKeyItem;
+        return new GuiItem(uniKeyItem);
     }
 
 
     public static GuiItem getShowcaseItem(ItemStack item, int amount, double price) {
 
+
         ItemStack showItem = new ItemStack(item);
+
+        item.setAmount(amount);
 
         ItemMeta itemMeta = showItem.getItemMeta();
 
@@ -104,7 +172,7 @@ public class ItemManager {
     private static void createBuyButton() {
         ItemStack addOneButton = new ItemStack(Material.LIME_DYE);
         ItemMeta addOneButtonMeta = addOneButton.getItemMeta();
-        addOneButtonMeta.setDisplayName("§aDodaj 1");
+        addOneButtonMeta.setDisplayName("§aKup");
         addOneButton.setItemMeta(addOneButtonMeta);
         buyButtonGuiItem = new GuiItem(addOneButton);
     }

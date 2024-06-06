@@ -1,5 +1,7 @@
 package me.xxgradzix.gradzixcore.villagerUpgradeShop.database;
 
+import com.j256.ormlite.dao.BaseForeignCollection;
+import com.j256.ormlite.dao.ForeignCollection;
 import me.xxgradzix.gradzixcore.Gradzix_Core;
 import me.xxgradzix.gradzixcore.VPLNShop.data.database.VPLNOrderDTO;
 import me.xxgradzix.gradzixcore.VPLNShop.data.database.entities.VPLNAccountEntity;
@@ -22,9 +24,7 @@ import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class DataManager {
 
@@ -44,7 +44,6 @@ public class DataManager {
             try {
                 VillagerUpgradeShopEntity villagerUpgradeShop = VillagerUpgradeShopEntity.builder()
                         .name(name)
-                        .products(new ArrayList<>())
                         .build();
 
                 villagerUpgradeShopEntityManager.createOrUpdateEntity(villagerUpgradeShop);
@@ -84,5 +83,16 @@ public class DataManager {
                 e.printStackTrace();
             }
         }
+    }
+
+    public Optional<VillagerUpgradeShopEntity> getShopEntityByName(String shopName) {
+        if(useDB) {
+            try {
+                return villagerUpgradeShopEntityManager.getAllEntitiesByField("name",shopName).stream().findAny();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return Optional.empty();
     }
 }

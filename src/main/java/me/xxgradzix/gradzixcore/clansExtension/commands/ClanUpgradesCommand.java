@@ -98,7 +98,7 @@ public class ClanUpgradesCommand implements CommandExecutor {
 
         });
 
-        gui.updateItem(row, column, clanPerkButton);
+        gui.setItem(row, column, clanPerkButton);
         gui.update();
     }
     private boolean takePriceAndIncreasePerkLevel(Player player, ClanEntity clanEntity, ClanPerk perk) throws IllegalArgumentException {

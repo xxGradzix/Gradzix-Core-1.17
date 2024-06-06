@@ -2,6 +2,7 @@ package me.xxgradzix.gradzixcore.VPLNShop.commands;
 
 import me.xxgradzix.gradzixcore.VPLNShop.data.DataManager;
 import me.xxgradzix.gradzixcore.VPLNShop.data.database.VPLNOrderDTO;
+import me.xxgradzix.gradzixcore.VPLNShop.messages.Messages;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
@@ -29,9 +30,9 @@ public class VPLNCommand implements CommandExecutor {
         String playerName = args[0];
         String amount = args[1];
 
-        int amountInt;
+        double amountDouble;
         try {
-            amountInt = Integer.parseInt(amount);
+            amountDouble = Double.parseDouble(amount);
         } catch (NumberFormatException e) {
             sender.sendMessage("§cPodana kwota nie jest liczba!");
             return true;
@@ -40,12 +41,14 @@ public class VPLNCommand implements CommandExecutor {
 
         VPLNOrderDTO dto = VPLNOrderDTO.builder()
                 .orderCreator(sender.getName())
-                .VPLNAmount(amountInt)
+                .VPLNAmount(amountDouble)
                 .orderStatus("PENDING")
                 .playerName(playerName)
                 .build();
 
         dataManager.createNewVPLNOrder(dto);
+
+        Bukkit.broadcastMessage(Messages.playerBoughtVpln(playerName, amountDouble));
 
         return true;
     }

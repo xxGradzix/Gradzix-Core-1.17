@@ -193,6 +193,7 @@ public class IncognitoModeManager {
                     displayName = getIncognitoNickColor(observer, player) + incognitoModeEntity.getIncognitoNick();
                     profile = profile.withName(displayName);
                     PlayerInfoData newPlayerInfoData = new PlayerInfoData(profile, playerInfoData.getPing(), playerInfoData.getGameMode(), WrappedChatComponent.fromText(displayName));
+
                     newPlayerInfoData.getProfile().getProperties().removeAll("textures");
                     newPlayerInfoData.getProfile().getProperties().put("textures", getSkin());
                     newPlayerInfoDataList.add(newPlayerInfoData);

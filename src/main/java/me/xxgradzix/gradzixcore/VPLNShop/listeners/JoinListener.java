@@ -22,9 +22,7 @@ public class JoinListener implements Listener {
         Player player = event.getPlayer();
 
         Bukkit.getScheduler().runTaskLater(Gradzix_Core.getInstance(), () -> {
-            if(player != null) {
-                player.sendMessage("§aOtrzymales nowe zamowienie VPLN! Sprawdz dostepne zamowienia w sklepie!");
-            }
+
             dataManager.collectAllPendingOrders(player);
         }, 20L * 3);
 

@@ -5,7 +5,7 @@ import com.j256.ormlite.table.TableUtils;
 import lombok.Getter;
 import me.xxgradzix.gradzixcore.Gradzix_Core;
 import me.xxgradzix.gradzixcore.serverconfig.commands.*;
-import me.xxgradzix.gradzixcore.serverconfig.commands.ranksCommands.AgeCommand;
+import me.xxgradzix.gradzixcore.serverconfig.commands.ranksCommands.UniCommand;
 import me.xxgradzix.gradzixcore.serverconfig.commands.ranksCommands.SVipCommand;
 import me.xxgradzix.gradzixcore.serverconfig.commands.ranksCommands.VipCommand;
 import me.xxgradzix.gradzixcore.serverconfig.data.configfiles.ConfigServera;
@@ -18,6 +18,7 @@ import me.xxgradzix.gradzixcore.serverconfig.listeners.elytraAndFireworkBlock.On
 import me.xxgradzix.gradzixcore.serverconfig.listeners.protectionEnchantRework.DamageEvent;
 import me.xxgradzix.gradzixcore.serverconfig.listeners.FortuneSheers;
 import me.xxgradzix.gradzixcore.serverconfig.listeners.VanishingPotionBottle;
+import org.bukkit.command.defaults.HelpCommand;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -72,7 +73,8 @@ public class ServerConfig {
 
         plugin.getCommand("vip").setExecutor(new VipCommand());
         plugin.getCommand("svip").setExecutor(new SVipCommand());
-        plugin.getCommand("uni").setExecutor(new AgeCommand());
+        plugin.getCommand("pomoc").setExecutor(new NewHelpCommand());
+        plugin.getCommand("uni").setExecutor(new UniCommand());
 
         ConfigServera.setup();
         ConfigServera.getCustomFile().set("damageMultiplier", 1);

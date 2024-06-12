@@ -3,14 +3,11 @@ package me.xxgradzix.gradzixcore.itemShop.command;
 import dev.triumphteam.gui.guis.Gui;
 import dev.triumphteam.gui.guis.GuiItem;
 import lombok.RequiredArgsConstructor;
-import lombok.Value;
 import me.xxgradzix.gradzixcore.itemShop.ItemShop;
 import me.xxgradzix.gradzixcore.itemShop.data.DataManager;
-import me.xxgradzix.gradzixcore.itemShop.data.database.entities.ItemShopCategoryEntity;
 import me.xxgradzix.gradzixcore.itemShop.data.database.entities.ItemShopProductEntity;
 import me.xxgradzix.gradzixcore.itemShop.data.database.enums.ShopType;
 import me.xxgradzix.gradzixcore.itemShop.items.ItemManager;
-import me.xxgradzix.gradzixcore.itemShop.managers.EconomyManager;
 import net.kyori.adventure.text.Component;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -18,10 +15,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 @RequiredArgsConstructor
 public class ItemShopCommand implements CommandExecutor {
@@ -130,7 +123,10 @@ public class ItemShopCommand implements CommandExecutor {
 
             productGuiItem.setAction((productAction) -> {
 
-                if()
+                if(!dataManager.canAfford(player, shopType, price)) {
+                    player.sendMessage("§cNie stać cię na ten produkt!");
+                    return;
+                }
                 if(dataManager.subtractMoneyFromPlayer(player, shopType, price)) {
                     ItemStack item = product.getProduct();
                     if (player.getInventory().firstEmpty() != -1) {

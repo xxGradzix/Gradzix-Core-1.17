@@ -9,13 +9,8 @@ import me.xxgradzix.gradzixcore.VPLNShop.messages.Messages;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 
-import java.util.concurrent.atomic.AtomicInteger;
-
-import static me.xxgradzix.gradzixcore.VPLNShop.messages.Messages.AMOUNT_TO_LOW_ERROR;
 import static org.bukkit.Bukkit.getConsoleSender;
 import static org.bukkit.Bukkit.getServer;
 
@@ -60,13 +55,15 @@ public class VPLNShop {
                 .disableAllInteractions()
                 .create();
 
-        GuiItem vipItem = ItemManager.createVipShowcaseGuiItem(dataManager.getPlayerVPLNAmount(player), 1);
-        GuiItem svipItem = ItemManager.createSvipShowcaseItem(dataManager.getPlayerVPLNAmount(player), 1);
-        GuiItem uniItem = ItemManager.createUniShowcaseItem(dataManager.getPlayerVPLNAmount(player), 1);
-        GuiItem magicKeyItem = ItemManager.createMagicKeyShowcaseItem(dataManager.getPlayerVPLNAmount(player), 1);
-        GuiItem uniKeyItem = ItemManager.createUniKeyShowcaseItem(dataManager.getPlayerVPLNAmount(player),1 );
-        GuiItem fragmentItem = ItemManager.createFragmentShowcaseItem(dataManager.getPlayerVPLNAmount(player), 1);
-        GuiItem scratchCardItem = ItemManager.createScratchCardShowcaseItem(dataManager.getPlayerVPLNAmount(player), 1);
+        double balance = dataManager.getPlayerVPLNAmount(player);
+
+        GuiItem vipItem = ItemManager.createVipShowcaseGuiItem(balance, getTotalPrice(Service.VIP, 1), 1);
+        GuiItem svipItem = ItemManager.createSvipShowcaseItem(balance, getTotalPrice(Service.SVIP, 1), 1);
+        GuiItem uniItem = ItemManager.createUniShowcaseItem(balance, getTotalPrice(Service.UNI, 1), 1);
+        GuiItem magicKeyItem = ItemManager.createMagicKeyShowcaseItem(balance, getTotalPrice(Service.MAGIC_KEY, 1), 1);
+        GuiItem uniKeyItem = ItemManager.createUniKeyShowcaseItem(balance, getTotalPrice(Service.UNI_KEY, 1), 1 );
+        GuiItem fragmentItem = ItemManager.createFragmentShowcaseItem(balance, getTotalPrice(Service.FRAGMENT, 1), 1);
+        GuiItem scratchCardItem = ItemManager.createScratchCardShowcaseItem(balance, getTotalPrice(Service.SCRATCH_CARD, 1), 1);
 
         vipItem.setAction(event -> {
             confirmPurchase(player, Service.VIP, 1);
@@ -358,25 +355,25 @@ public class VPLNShop {
         GuiItem showcaseItem;
         switch (service) {
             case VIP:
-                showcaseItem = ItemManager.createVipShowcaseGuiItem(balance, amount);
+                showcaseItem = ItemManager.createVipShowcaseGuiItem(balance, getTotalPrice(service, amount), amount);
                 break;
             case SVIP:
-                showcaseItem = ItemManager.createSvipShowcaseItem(balance, amount);
+                showcaseItem = ItemManager.createSvipShowcaseItem(balance, getTotalPrice(service, amount), amount);
                 break;
             case UNI:
-                showcaseItem = ItemManager.createUniShowcaseItem(balance, amount);
+                showcaseItem = ItemManager.createUniShowcaseItem(balance, getTotalPrice(service, amount), amount);
                 break;
             case MAGIC_KEY:
-                showcaseItem = ItemManager.createMagicKeyShowcaseItem(balance, amount);
+                showcaseItem = ItemManager.createMagicKeyShowcaseItem(balance, getTotalPrice(service, amount), amount);
                 break;
             case UNI_KEY:
-                showcaseItem = ItemManager.createUniKeyShowcaseItem(balance, amount);
+                showcaseItem = ItemManager.createUniKeyShowcaseItem(balance, getTotalPrice(service, amount), amount);
                 break;
             case FRAGMENT:
-                showcaseItem = ItemManager.createFragmentShowcaseItem(balance, amount);
+                showcaseItem = ItemManager.createFragmentShowcaseItem(balance, getTotalPrice(service, amount), amount);
                 break;
             case SCRATCH_CARD:
-                showcaseItem = ItemManager.createScratchCardShowcaseItem(balance, amount);
+                showcaseItem = ItemManager.createScratchCardShowcaseItem(balance, getTotalPrice(service, amount), amount);
                 break;
             default:
                 return;
@@ -445,7 +442,7 @@ public class VPLNShop {
         player.sendMessage(Messages.SUCCESSFUL_SCRATCHCARD_PURCHASE);
     }
 
-    private Double getTotalPrice(Service serviceName, int amount) {
+    public static Double getTotalPrice(Service serviceName, int amount) {
 
         switch (serviceName) {
             case VIP:

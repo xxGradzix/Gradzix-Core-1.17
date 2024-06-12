@@ -12,6 +12,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.ArrayList;
 import java.util.List;
 
+import static me.xxgradzix.gradzixcore.VPLNShop.managers.VPLNShop.getTotalPrice;
 import static me.xxgradzix.gradzixcore.magicFirework.items.ItemManager.convertColorText;
 
 public class ItemManager {
@@ -24,7 +25,7 @@ public class ItemManager {
         createBuyButton();
     }
 
-    public static GuiItem createVipShowcaseGuiItem(double balance, int amount) {
+    public static GuiItem createVipShowcaseGuiItem(double balance, double totalPrice, int amount) {
         ItemStack vipItem = new ItemStack(Material.IRON_CHESTPLATE);
         ItemMeta vipItemMeta = vipItem.getItemMeta();
         vipItemMeta.setDisplayName(ChatColor.BOLD + "" + ChatColor.YELLOW + "VIP");
@@ -33,7 +34,7 @@ public class ItemManager {
         lore.add(ChatColor.WHITE + "" + ChatColor.BOLD + "ZOBACZ PRZYWILEJE TEJ RANGI,");
         lore.add(ChatColor.WHITE + "" + ChatColor.BOLD + "WPISUJĄC " + ChatColor.YELLOW + "" + ChatColor.BOLD + "/VIP");
         lore.add(" ");
-        lore.add(ChatColor.WHITE + "" + ChatColor.BOLD + "Cena: " + ChatColor.YELLOW + VPLNShop.VIP_PRICE +  " VPLN");
+        lore.add(ChatColor.WHITE + "" + ChatColor.BOLD + "Cena: " + ChatColor.YELLOW + totalPrice +  " VPLN");
         lore.add(ChatColor.WHITE + "" + ChatColor.BOLD + "Twój stan konta: " + ChatColor.YELLOW + balance + " VPLN");
         lore.add(" ");
         lore.add(ChatColor.AQUA + "vpln doładujesz na: www.unimc.pl");
@@ -46,7 +47,7 @@ public class ItemManager {
         vipItem.setItemMeta(vipItemMeta);
         return new GuiItem(vipItem);
     }
-    public static GuiItem createSvipShowcaseItem(double balance, int amount) {
+    public static GuiItem createSvipShowcaseItem(double balance, Double totalPrice, int amount) {
         ItemStack svipItem = new ItemStack(Material.DIAMOND_CHESTPLATE);
         ItemMeta svipItemMeta = svipItem.getItemMeta();
         svipItemMeta.setDisplayName(ChatColor.BOLD + "" + ChatColor.GOLD + "SVIP");
@@ -55,7 +56,7 @@ public class ItemManager {
         lore.add(ChatColor.WHITE + "" + ChatColor.BOLD + "ZOBACZ PRZYWILEJE TEJ RANGI,");
         lore.add(ChatColor.WHITE + "" + ChatColor.BOLD + "WPISUJĄC " + ChatColor.GOLD + "" + ChatColor.BOLD + "/SVIP");
         lore.add(" ");
-        lore.add(ChatColor.WHITE + "" + ChatColor.BOLD + "Cena: " + ChatColor.YELLOW + VPLNShop.SVIP_PRICE +  " VPLN");
+        lore.add(ChatColor.WHITE + "" + ChatColor.BOLD + "Cena: " + totalPrice +  " VPLN");
         lore.add(ChatColor.WHITE + "" + ChatColor.BOLD + "Twój stan konta: " + ChatColor.YELLOW + balance + " VPLN");
         lore.add(" ");
         lore.add(ChatColor.AQUA + "vpln doładujesz na: www.unimc.pl");
@@ -68,7 +69,7 @@ public class ItemManager {
         svipItem.setItemMeta(svipItemMeta);
         return  new GuiItem(svipItem);
     }
-    public static GuiItem createUniShowcaseItem(double balance, int amount) {
+    public static GuiItem createUniShowcaseItem(double balance, Double totalPrice, int amount) {
         ItemStack uniItem = new ItemStack(Material.NETHERITE_CHESTPLATE);
         ItemMeta uniItemMeta = uniItem.getItemMeta();
         uniItemMeta.setDisplayName(ChatColor.BOLD + "" + ChatColor.AQUA + "UNI");
@@ -77,7 +78,7 @@ public class ItemManager {
         lore.add(ChatColor.WHITE + "" + ChatColor.BOLD + "ZOBACZ PRZYWILEJE TEJ RANGI,");
         lore.add(ChatColor.WHITE + "" + ChatColor.BOLD + "WPISUJĄC " + ChatColor.AQUA + "" + ChatColor.BOLD + "/UNI");
         lore.add(" ");
-        lore.add(ChatColor.WHITE + "" + ChatColor.BOLD + "Cena: " + ChatColor.YELLOW + VPLNShop.UNI_PRICE +  " VPLN");
+        lore.add(ChatColor.WHITE + "" + ChatColor.BOLD + "Cena: " + totalPrice +  " VPLN");
         lore.add(ChatColor.WHITE + "" + ChatColor.BOLD + "Twój stan konta: " + ChatColor.YELLOW + balance + " VPLN");
         lore.add(" ");
         lore.add(ChatColor.AQUA + "vpln doładujesz na: www.unimc.pl");
@@ -90,14 +91,14 @@ public class ItemManager {
         uniItem.setItemMeta(uniItemMeta);
         return new GuiItem(uniItem);
     }
-    public static GuiItem createMagicKeyShowcaseItem(double balance, int amount) {
+    public static GuiItem createMagicKeyShowcaseItem(double balance, Double totalPrice, int amount) {
         ItemStack magicKeyItem = new ItemStack(Material.NAME_TAG);
         ItemMeta magicKeyItemMeta = magicKeyItem.getItemMeta();
         magicKeyItemMeta.setDisplayName(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "MAGICZNY KLUCZ");
         ArrayList<String> lore = new ArrayList<>();
         lore.add(" ");
         lore.add(ChatColor.WHITE + "" + ChatColor.BOLD + "Ilość: " + ChatColor.YELLOW + amount);
-        lore.add(ChatColor.WHITE + "" + ChatColor.BOLD + "Cena: " + ChatColor.YELLOW + VPLNShop.MAGIC_KEY_PRICE * amount +  " VPLN");
+        lore.add(ChatColor.WHITE + "" + ChatColor.BOLD + "Cena: " + totalPrice +  " VPLN");
         lore.add(ChatColor.WHITE + "" + ChatColor.BOLD + "Twój stan konta: " + ChatColor.YELLOW + balance + " VPLN");
         lore.add(" ");
         lore.add(ChatColor.AQUA + "vpln doładujesz na: www.unimc.pl");
@@ -111,14 +112,14 @@ public class ItemManager {
 
         return new GuiItem(magicKeyItem);
     }
-    public static GuiItem createUniKeyShowcaseItem(double balance, int amount) {
+    public static GuiItem createUniKeyShowcaseItem(double balance, Double totalPrice, int amount) {
         ItemStack uniKeyItem = new ItemStack(Material.NAME_TAG);
         ItemMeta uniKeyItemMeta = uniKeyItem.getItemMeta();
         uniKeyItemMeta.setDisplayName(ChatColor.AQUA + "" + ChatColor.BOLD + "UNIBOX KLUCZ");
         ArrayList<String> lore = new ArrayList<>();
         lore.add(" ");
         lore.add(ChatColor.WHITE + "" + ChatColor.BOLD + "Ilość: " + ChatColor.YELLOW + amount);
-        lore.add(ChatColor.WHITE + "" + ChatColor.BOLD + "Cena: " + ChatColor.YELLOW + VPLNShop.UNI_KEY_PRICE * amount +  " VPLN");
+        lore.add(ChatColor.WHITE + "" + ChatColor.BOLD + "Cena: " + totalPrice +  " VPLN");
         lore.add(ChatColor.WHITE + "" + ChatColor.BOLD + "Twój stan konta: " + ChatColor.YELLOW + balance + " VPLN");
         lore.add(" ");
         lore.add(ChatColor.AQUA + "vpln doładujesz na: www.unimc.pl");
@@ -186,7 +187,7 @@ public class ItemManager {
         return new GuiItem(confirmButton);
     }
 
-    public static GuiItem createFragmentShowcaseItem(double balance, int amount) {
+    public static GuiItem createFragmentShowcaseItem(double balance, double totalPrice, int amount) {
 
         ItemStack uniKeyItem = new ItemStack(Material.PAPER);
 
@@ -197,7 +198,7 @@ public class ItemManager {
         ArrayList<String> lore = new ArrayList<>();
         lore.add(" ");
         lore.add(ChatColor.WHITE + "" + ChatColor.BOLD + "Ilość: " + ChatColor.YELLOW + amount);
-        lore.add(ChatColor.WHITE + "" + ChatColor.BOLD + "Cena: " + ChatColor.YELLOW + VPLNShop.FRAGMENT_PRICE * amount +  " VPLN");
+        lore.add(ChatColor.WHITE + "" + ChatColor.BOLD + "Cena: " + ChatColor.YELLOW + totalPrice +  " VPLN");
         lore.add(ChatColor.WHITE + "" + ChatColor.BOLD + "Twój stan konta: " + ChatColor.YELLOW + balance + " VPLN");
         lore.add(" ");
         lore.add(ChatColor.AQUA + "vpln doładujesz na: www.unimc.pl");
@@ -212,7 +213,7 @@ public class ItemManager {
         return new GuiItem(uniKeyItem);
     }
 
-    public static GuiItem createScratchCardShowcaseItem(double balance, int amount) {
+    public static GuiItem createScratchCardShowcaseItem(double balance, Double totalPrice, int amount) {
         ItemStack uniKeyItem = new ItemStack(Material.PAPER);
         ItemMeta meta = uniKeyItem.getItemMeta();
 
@@ -226,7 +227,7 @@ public class ItemManager {
 
         ArrayList<String> lore = new ArrayList<>();
         lore.add(" ");
-        lore.add(ChatColor.WHITE + "" + ChatColor.BOLD + "Cena: " + ChatColor.YELLOW + VPLNShop.SCRATCH_CARD_PRICE * amount +  " VPLN");
+        lore.add(ChatColor.WHITE + "" + ChatColor.BOLD + "Cena: " + totalPrice +  " VPLN");
         lore.add(ChatColor.WHITE + "" + ChatColor.BOLD + "Twój stan konta: " + ChatColor.YELLOW + balance + " VPLN");
         lore.add(" ");
         lore.add(ChatColor.AQUA + "vpln doładujesz na: www.unimc.pl");
@@ -249,21 +250,22 @@ public class ItemManager {
 
     public static GuiItem getKeyAmountSelectorGuiItem(VPLNShop.Service keyType, double balance, int amount) {
 
-        if(amount > 64) amount = 64;
+        int itemStackAmount = amount;
+        if(itemStackAmount > 64) itemStackAmount = 64;
         if(keyType.equals(VPLNShop.Service.MAGIC_KEY)) {
-            ItemStack itemStack = createMagicKeyShowcaseItem(balance, amount).getItemStack();
+            ItemStack itemStack = createMagicKeyShowcaseItem(balance, getTotalPrice(VPLNShop.Service.MAGIC_KEY, amount), amount).getItemStack();
 
-            itemStack.setAmount(amount);
+            itemStack.setAmount(itemStackAmount);
             return new GuiItem(itemStack);
         }
         if (keyType.equals(VPLNShop.Service.UNI_KEY)) {
-            ItemStack itemStack = createUniKeyShowcaseItem(balance, amount).getItemStack();
-            itemStack.setAmount(amount);
+            ItemStack itemStack = createUniKeyShowcaseItem(balance, getTotalPrice(VPLNShop.Service.UNI_KEY, amount), amount).getItemStack();
+            itemStack.setAmount(itemStackAmount);
             return new GuiItem(itemStack);
         }
         if(keyType.equals(VPLNShop.Service.FRAGMENT)) {
-            ItemStack itemStack = createFragmentShowcaseItem(balance, amount).getItemStack();
-            itemStack.setAmount(amount);
+            ItemStack itemStack = createFragmentShowcaseItem(balance, getTotalPrice(VPLNShop.Service.FRAGMENT, amount), amount).getItemStack();
+            itemStack.setAmount(itemStackAmount);
             return new GuiItem(itemStack);
         }
         throw new IllegalArgumentException("Invalid key type");

@@ -102,11 +102,10 @@ public class KitManager {
             return item == null || item.getType().isAir();
         }).collect(Collectors.toList()).size();
 
-        player.sendMessage(size + "");
-//        if (itemsToCollect.size() > 36 - player.getInventory().getContents().length) {
-//            player.sendMessage(Messages.INVENTORY_FULL);
-//            return;
-//        }
+        if(size < itemsToCollect.size()) {
+            player.sendMessage(Messages.INVENTORY_FULL);
+            return;
+        }
 
         // check if player has cooldown, if not collect and add cooldown to player
 

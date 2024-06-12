@@ -185,6 +185,25 @@ public class DataManager {
         }
         return entity;
     }
+    public boolean canAfford(Player player, ShopType shopType, int price) {
+        ItemShopPlayerBalanceEntity entity = getPlayerBalanceEntity(player);
+
+        switch (shopType) {
+            case TIME:
+            {
+                return entity.getTimeCoins() - price < 0;
+            }
+            case KILLS:
+            {
+                return (entity.getKillCoins() - price < 0);
+            }
+            case MONEY:
+            {
+                return (economyManager.getBalance(player) - price < 0);
+            }
+        }
+        return false;
+    }
     public void createPlayerBalanceEntityIfNotExists(Player player) {
         Optional<ItemShopPlayerBalanceEntity> optional = null;
         try {

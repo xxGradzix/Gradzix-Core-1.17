@@ -1,8 +1,8 @@
 package me.xxgradzix.gradzixcore.generators.commands;
 
 import com.sk89q.worldedit.EditSession;
+import com.sk89q.worldedit.WorldEdit;
 import com.sk89q.worldedit.bukkit.BukkitAdapter;
-import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import com.sk89q.worldedit.function.pattern.Pattern;
 import com.sk89q.worldedit.function.pattern.RandomPattern;
 import com.sk89q.worldedit.math.BlockVector3;
@@ -11,6 +11,7 @@ import com.sk89q.worldedit.regions.Region;
 import com.sk89q.worldedit.world.block.BlockType;
 import com.sk89q.worldedit.world.block.BlockTypes;
 import me.xxgradzix.gradzixcore.Gradzix_Core;
+import me.xxgradzix.gradzixcore.generators.Generators;
 import me.xxgradzix.gradzixcore.generators.data.database.entities.GeneratorEntity;
 import me.xxgradzix.gradzixcore.generators.data.database.entities.GeneratorLocationEntity;
 import me.xxgradzix.gradzixcore.generators.managers.GeneratorManager;
@@ -33,15 +34,16 @@ import java.util.stream.Collectors;
 public class RefillGenerators implements CommandExecutor {
 
     private final Gradzix_Core plugin;
-    private final WorldEditPlugin worldEdit;
     private final GeneratorManager generatorManager;
     private final BukkitScheduler scheduler = Bukkit.getScheduler();
     private static final ArrayList<Integer> taskIds = new ArrayList<>();
 
-    public RefillGenerators(Gradzix_Core plugin, WorldEditPlugin worldEdit, GeneratorManager generatorManager) {
+    private WorldEdit worldEdit;
+
+    public RefillGenerators(Gradzix_Core plugin, WorldEdit worldEdit, GeneratorManager generatorManager) {
         this.plugin = plugin;
-        this.worldEdit = worldEdit;
         this.generatorManager = generatorManager;
+        this.worldEdit = worldEdit;
         refreshRefilling();
     }
 
@@ -68,8 +70,7 @@ public class RefillGenerators implements CommandExecutor {
             List<GeneratorLocationEntity> fiveMinGenerators = new ArrayList<>(generators);
             fiveMinGenerators.removeAll(threeMinGenerators);
 
-            EditSession editSession = createGeneralEditSession(BukkitAdapter.adapt(world));
-
+//            EditSession editSession = createGeneralEditSession(BukkitAdapter.adapt(world));
             int threeMinuteTaskId = scheduler.runTaskTimer(plugin, () -> {
 
                 for(GeneratorLocationEntity generator : threeMinGenerators) {
@@ -85,7 +86,7 @@ public class RefillGenerators implements CommandExecutor {
 
                     List<Material> materials = generatorType.getMaterials();
 
-                    fillTerrain(editSession, world, minLocation, maxLocation, materials);
+                    fillTerrain(world, minLocation, maxLocation, materials);
 
                     Location location = new Location(world,(minLocation.getX() + maxLocation.getX())/2, maxLocation.getY() + 2, (minLocation.getZ() + maxLocation.getZ())/2);
                     HologramManager.addHologram(location, generatorType);
@@ -108,7 +109,7 @@ public class RefillGenerators implements CommandExecutor {
 
                     List<Material> materials = generatorType.getMaterials();
 
-                    fillTerrain(editSession, world, minLocation, maxLocation, materials);
+                    fillTerrain(world, minLocation, maxLocation, materials);
                     Location location = new Location(world,(minLocation.getX() + maxLocation.getX())/2, maxLocation.getY() + 2, (minLocation.getZ() + maxLocation.getZ())/2);
                     HologramManager.addHologram(location, generatorType);
                 }
@@ -125,21 +126,18 @@ public class RefillGenerators implements CommandExecutor {
         }
         taskIds.clear();
     }
-    private void fillTerrain(EditSession editSession, World world, Location minLocation, Location maxLocation, List<Material> materials) {
-        com.sk89q.worldedit.world.World weWorld = BukkitAdapter.adapt(world);
-        Region region = new CuboidRegion(weWorld, BlockVector3.at(minLocation.getBlockX(), minLocation.getBlockY(), minLocation.getBlockZ()), BlockVector3.at(maxLocation.getBlockX(), maxLocation.getBlockY(), maxLocation.getBlockZ()));
-        Pattern pattern = createRandomPattern(materials);
-        try {
-            editSession.setBlocks(region, pattern);
-            editSession.commit();
-            editSession.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    private void fillTerrain(World world, Location minLocation, Location maxLocation, List<Material> materials) {
+
+        com.sk89q.worldedit.world.World adaptedWorld = BukkitAdapter.adapt(world);
+
+        EditSession editSession = worldEdit.newEditSession(adaptedWorld);
+
+        Region region = new CuboidRegion(adaptedWorld, BlockVector3.at(minLocation.getBlockX(), minLocation.getBlockY(), minLocation.getBlockZ()), BlockVector3.at(maxLocation.getBlockX(), maxLocation.getBlockY(), maxLocation.getBlockZ()));
+        editSession.setBlocks(region, createRandomPattern(materials));
+        editSession.commit();
+        editSession.close();
     }
-    private EditSession createGeneralEditSession(com.sk89q.worldedit.world.World world) {
-        return worldEdit.getWorldEdit().newEditSession(world);
-    }
+
     private RandomPattern createRandomPattern(List<Material> materials) {
         RandomPattern randomPattern = new RandomPattern();
         for(Material material : materials) {

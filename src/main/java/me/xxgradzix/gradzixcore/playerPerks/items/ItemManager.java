@@ -59,10 +59,10 @@ public class ItemManager {
         ArrayList<String> lore = new ArrayList<>();
 
         lore.add(" ");
-        lore.add("§7Użycie księgi zwiększa");
-        lore.add("§7twoje obrażenia §2od 1 do 3%");
+        lore.add("§8» §7Użycie księgi zwiększa");
+        lore.add("§7twoje obrażenia §3od 1 do 3%");
         lore.add(" ");
-        lore.add("§8» §aKliknij PPM aby użyć");
+        lore.add("§8» §3§lKliknij PPM aby użyć");
         lore.add(" ");
 
         meta.setLore(lore);
@@ -83,11 +83,11 @@ public class ItemManager {
         ArrayList<String> lore = new ArrayList<>();
 
         lore.add(" ");
-        lore.add(ChatColor.GRAY + "§7Użycie księgi zwiększa");
+        lore.add(ChatColor.GRAY + "§8» §7Użycie księgi zwiększa");
         lore.add(ChatColor.GRAY + "§7szanse na otrucie");
-        lore.add(ChatColor.GRAY + "§7przeciwnika §2od 1 do 3%");
+        lore.add(ChatColor.GRAY + "§7przeciwnika §3od 1 do 3%");
         lore.add(ChatColor.GRAY + " ");
-        lore.add(ChatColor.GRAY + "§8» §aKliknij PPM aby użyć");
+        lore.add(ChatColor.GRAY + "§8» §3§lKliknij PPM aby użyć");
         lore.add(ChatColor.GRAY + " ");
 
         meta.addEnchant(Enchantment.LUCK, 1, false);
@@ -107,10 +107,10 @@ public class ItemManager {
         ArrayList<String> lore = new ArrayList<>();
 
         lore.add(" ");
-        lore.add(ChatColor.GRAY + "§7Użycie księgi zwiększa");
-        lore.add(ChatColor.GRAY + "§7twoją szanse na odporności §2od 1 do 3%");
+        lore.add(ChatColor.GRAY + "§8» §7Użycie księgi zwiększa");
+        lore.add(ChatColor.GRAY + "§7twoją szanse na odporności §3od 1 do 3%");
         lore.add(ChatColor.GRAY + " ");
-        lore.add(ChatColor.GRAY + "§8» §aKliknij PPM aby użyć");
+        lore.add(ChatColor.GRAY + "§8» §3§lKliknij PPM aby użyć");
         lore.add(ChatColor.GRAY + " ");
 
         meta.addEnchant(Enchantment.LUCK, 1, false);
@@ -130,11 +130,11 @@ public class ItemManager {
         ArrayList<String> lore = new ArrayList<>();
 
         lore.add(" ");
-        lore.add(ChatColor.GRAY + "§7Użycie księgi zwiększa");
+        lore.add(ChatColor.GRAY + "§8» §7Użycie księgi zwiększa");
         lore.add(ChatColor.GRAY + "§7szanse na odzyskanie część");
-        lore.add(ChatColor.GRAY + "§7zdrowia po ataku §2od 1 do 3%");
+        lore.add(ChatColor.GRAY + "§7zdrowia po ataku §3od 1 do 3%");
         lore.add(ChatColor.GRAY + " ");
-        lore.add(ChatColor.GRAY + "§8» §aKliknij PPM aby użyć");
+        lore.add(ChatColor.GRAY + "§8» §3§lKliknij PPM aby użyć");
         lore.add(ChatColor.GRAY + " ");
 
         meta.addEnchant(Enchantment.LUCK, 1, false);
@@ -178,11 +178,11 @@ public class ItemManager {
         ArrayList<String> lore = new ArrayList<>();
 
         lore.add(" ");
-        lore.add(ChatColor.GRAY + "§7Użycie księgi zwiększa");
-        lore.add(ChatColor.GRAY + "§7ilość serc na pasku §2od 1 do 3%");
+        lore.add(ChatColor.GRAY + "§8» §7Użycie księgi zwiększa");
+        lore.add(ChatColor.GRAY + "§7ilość serc na pasku §3od 1 do 3%");
         lore.add(ChatColor.GRAY + "serc");
         lore.add(ChatColor.GRAY + " ");
-        lore.add(ChatColor.GRAY + "§8» §aKliknij PPM aby użyć");
+        lore.add(ChatColor.GRAY + "§8» §3§lKliknij PPM aby użyć");
         lore.add(ChatColor.GRAY + " ");
 
         meta.addEnchant(Enchantment.LUCK, 1, false);
@@ -202,11 +202,11 @@ public class ItemManager {
         ArrayList<String> lore = new ArrayList<>();
 
         lore.add(" ");
-        lore.add(ChatColor.GRAY + "§7Użycie księgi zwiększa");
+        lore.add(ChatColor.GRAY + "§8» §7Użycie księgi zwiększa");
         lore.add(ChatColor.GRAY + "§7szanse na osłabienie");
-        lore.add(ChatColor.GRAY + "§7przeciwnika §2od 1 do 3%");
+        lore.add(ChatColor.GRAY + "§7przeciwnika §3od 1 do 3%");
         lore.add(ChatColor.GRAY + " ");
-        lore.add(ChatColor.GRAY + "§8» §aKliknij PPM aby użyć");
+        lore.add(ChatColor.GRAY + "§8» §3§lKliknij PPM aby użyć");
         lore.add(ChatColor.GRAY + " ");
 
         meta.addEnchant(Enchantment.LUCK, 1, false);
@@ -226,11 +226,11 @@ public class ItemManager {
         ArrayList<String> lore = new ArrayList<>();
 
         lore.add(" ");
-        lore.add(ChatColor.GRAY + "§7Użycie księgi zwiększa");
+        lore.add(ChatColor.GRAY + "§8» §7Użycie księgi zwiększa");
         lore.add(ChatColor.GRAY + "§7zdobycia ksiąg fragmentów");
-        lore.add(ChatColor.GRAY + "§7po przez zabójstwa §2od 1 do 3%");
+        lore.add(ChatColor.GRAY + "§7po przez zabójstwa §3od 1 do 3%");
         lore.add(ChatColor.GRAY + " ");
-        lore.add(ChatColor.GRAY + "§8» §aKliknij PPM aby użyć");
+        lore.add(ChatColor.GRAY + "§8» §3§lKliknij PPM aby użyć");
         lore.add(ChatColor.GRAY + " ");
 
         meta.addEnchant(Enchantment.LUCK, 1, false);
@@ -251,11 +251,11 @@ public class ItemManager {
         ArrayList<String> lore = new ArrayList<>();
 
         lore.add(" ");
-        lore.add(ChatColor.GRAY + "§7Użycie księgi zwiększa");
+        lore.add(ChatColor.GRAY + "§8» §7Użycie księgi zwiększa");
         lore.add(ChatColor.GRAY + "§7szanse na spowolnienie");
-        lore.add(ChatColor.GRAY + "§7przeciwnika §2od 1 do 3%");
+        lore.add(ChatColor.GRAY + "§7przeciwnika §3od 1 do 3%");
         lore.add(ChatColor.GRAY + " ");
-        lore.add(ChatColor.GRAY + "§8» §aKliknij PPM aby użyć");
+        lore.add(ChatColor.GRAY + "§8» §3§lKliknij PPM aby użyć");
         lore.add(ChatColor.GRAY + " ");
 
         meta.addEnchant(Enchantment.LUCK, 1, false);
@@ -271,7 +271,7 @@ public class ItemManager {
 
         ItemMeta meta = item.getItemMeta();
 
-        meta.setDisplayName(ChatColor.BOLD + "" + convertColorText("&#04aafbF&#0dadfbR&#16b0fbA&#1fb3fbG&#28b6fcM&#31b9fcE&#3abcfcN&#43bffcT &#4cc2fcK&#55c5fcS&#5ec8fdI&#67cbfdĘ&#70cefdG&#79d1fdI"));
+        meta.setDisplayName(ChatColor.BOLD + "" + convertColorText("&#642599§lF&#5E2496§lr&#582392§la&#52228F§lg&#4C218C§lm&#462089§le&#401F85§ln&#3A1E82§lt &#2D1B7B§lK&#271A78§ls&#211975§li&#1B1872§lę&#15176E§lg&#0F166B§li"));
         ArrayList<String> lore = new ArrayList<>();
 
         lore.add(" ");
@@ -292,12 +292,12 @@ public class ItemManager {
 
         ItemMeta meta = item.getItemMeta();
 
-        meta.setDisplayName(ChatColor.LIGHT_PURPLE + "§2Losowanie Ksiąg");
+        meta.setDisplayName(ChatColor.LIGHT_PURPLE + "§3Losowanie Ksiąg");
         ArrayList<String> lore = new ArrayList<>();
 
         lore.add(" ");
-        lore.add("§8» §7Można wylosować jedną z §28 ksiąg");
-        lore.add(ChatColor.GRAY + "§8» §7Koszt§8: §2100x Fragment Księgi");
+        lore.add("§8» §7Można wylosować jedną z §38 ksiąg");
+        lore.add(ChatColor.GRAY + "§8» §7Koszt§8: §3100x Fragment Księgi");
 
         meta.addEnchant(Enchantment.LUCK, 1, false);
         meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
@@ -332,11 +332,11 @@ public class ItemManager {
 
         ItemMeta meta = item.getItemMeta();
 
-        meta.setDisplayName(ChatColor.LIGHT_PURPLE + "§aTwoje Księgi");
+        meta.setDisplayName(ChatColor.LIGHT_PURPLE + "Twoje Księgi");
         ArrayList<String> lore = new ArrayList<>();
 
         lore.add(ChatColor.GRAY + " ");
-        lore.add(ChatColor.GRAY + "§8» §7Twoje ulepszenia możesz sprawdzić pod §a/perki");
+        lore.add(ChatColor.GRAY + "§8» §7Twoje ulepszenia możesz sprawdzić pod §3/perki");
 //        lore.add(ChatColor.GRAY + " ");
 
         meta.addEnchant(Enchantment.LUCK, 1, false);

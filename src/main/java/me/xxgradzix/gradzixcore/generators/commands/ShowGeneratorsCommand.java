@@ -1,13 +1,12 @@
 package me.xxgradzix.gradzixcore.generators.commands;
 
 
+import com.sk89q.worldedit.WorldEdit;
 import dev.triumphteam.gui.builder.item.ItemBuilder;
 import dev.triumphteam.gui.guis.Gui;
 import dev.triumphteam.gui.guis.GuiItem;
 import me.xxgradzix.gradzixcore.generators.data.database.entities.GeneratorEntity;
 import me.xxgradzix.gradzixcore.generators.data.database.entities.GeneratorLocationEntity;
-import me.xxgradzix.gradzixcore.generators.data.database.managers.GeneratorLocationEntityManager;
-import me.xxgradzix.gradzixcore.generators.data.database.managers.GeneratorEntityManager;
 import me.xxgradzix.gradzixcore.generators.items.ItemManager;
 import me.xxgradzix.gradzixcore.generators.managers.GeneratorManager;
 import net.kyori.adventure.text.Component;
@@ -20,8 +19,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 public class ShowGeneratorsCommand implements CommandExecutor {
-//    private final GeneratorEntityManager generatorManager;
-//    private final GeneratorLocationEntityManager generatorLocationManager;
 
     private final GeneratorManager generatorManager;
 

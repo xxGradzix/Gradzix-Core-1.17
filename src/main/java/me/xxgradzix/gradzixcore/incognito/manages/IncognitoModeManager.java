@@ -17,6 +17,7 @@ import me.xxgradzix.gradzixcore.incognito.data.database.entities.IncognitoModeEn
 import me.xxgradzix.gradzixcore.incognito.data.database.managers.IncognitoAdminEntityManager;
 import me.xxgradzix.gradzixcore.incognito.data.database.managers.IncognitoModeEntityManager;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
 import java.security.SecureRandom;
@@ -208,15 +209,18 @@ public class IncognitoModeManager {
                 .map(IncognitoAdminEntity::getUuid)
                 .anyMatch(uuid -> uuid.equals(observer.getUniqueId()));
         if(isObserverAdmin) return "";
-        UserEntity playerUser = UserManager.getOrCreateUserEntity(player);
-        UserEntity observerUser = UserManager.getOrCreateUserEntity(observer);
-        if(!ClanManager.getClanEntityOfMember(playerUser).isPresent()) return "§f"; // gracz nie ma gildii
-        if(!ClanManager.getClanEntityOfMember(observerUser).isPresent()) return "§7"; // gracz ma gildie ale obserwator nie ma = szary
-        ClanEntity clanEntity = ClanManager.getClanEntityOfMember(playerUser).get();
-        ClanEntity observerClan = ClanManager.getClanEntityOfMember(observerUser).get();
-        if(clanEntity.equals(observerClan)) return "§a"; // gracz i obserwator maja ta sama gildie = zielony
-        if(clanEntity.getAlliesUUIDs().contains(observerClan.getUuid())) return "§9"; // gracz i obserwator maja sojusznice = niebieski
-        if(clanEntity.getEnemiesUUIDs().contains(observerClan.getUuid())) return "§c"; // gracz i obserwator maja wrogow = czerwony
+        if(Gradzix_Core.USE_CUSTOM_CLANS) {
+            UserEntity playerUser = UserManager.getOrCreateUserEntity(player);
+            UserEntity observerUser = UserManager.getOrCreateUserEntity(observer);
+            if(!ClanManager.getClanEntityOfMember(playerUser).isPresent()) return "§f"; // gracz nie ma gildii
+            if(!ClanManager.getClanEntityOfMember(observerUser).isPresent()) return "§7"; // gracz ma gildie ale obserwator nie ma = szary
+            ClanEntity clanEntity = ClanManager.getClanEntityOfMember(playerUser).get();
+            ClanEntity observerClan = ClanManager.getClanEntityOfMember(observerUser).get();
+            if(clanEntity.equals(observerClan)) return "§a"; // gracz i obserwator maja ta sama gildie = zielony
+            if(clanEntity.getAlliesUUIDs().contains(observerClan.getUuid())) return "§9"; // gracz i obserwator maja sojusznice = niebieski
+            if(clanEntity.getEnemiesUUIDs().contains(observerClan.getUuid())) return "§c"; // gracz i obserwator maja wrogow = czerwony
+        }
+
         return "";
     }
 

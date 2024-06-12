@@ -1,9 +1,6 @@
 package me.xxgradzix.gradzixcore.generators.commands;
 
 
-import com.sk89q.worldedit.bukkit.WorldEditPlugin;
-import me.xxgradzix.gradzixcore.generators.data.database.entities.GeneratorEntity;
-import me.xxgradzix.gradzixcore.generators.data.database.managers.GeneratorEntityManager;
 import me.xxgradzix.gradzixcore.generators.managers.GeneratorManager;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -15,11 +12,9 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 
 public class CreateGeneratorCommand implements CommandExecutor {
-    private final WorldEditPlugin worldEdit;
     private final GeneratorManager generatorManager;
 
-    public CreateGeneratorCommand(WorldEditPlugin worldEdit, GeneratorManager generatorManager) {
-        this.worldEdit = worldEdit;
+    public CreateGeneratorCommand( GeneratorManager generatorManager) {
         this.generatorManager = generatorManager;
     }
 

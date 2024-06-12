@@ -4,7 +4,10 @@ main: me.xxgradzix.gradzixcore.Gradzix_Core
 api-version: 1.17
 authors: [xxGradzix]
 
-depend: [WorldGuard, WorldEdit, ProtocolLib, DecentHolograms]
+depend: [WorldGuard,
+         WorldEdit,
+         FastAsyncWorldEdit,
+         ProtocolLib, DecentHolograms]
 
 softdepend: [PlaceholderAPI]
 
@@ -231,3 +234,14 @@ commands:
 
   pomoc:
     description: okno pomocy
+
+  kit:
+    description: otwiera okno kitów
+
+  createkit:
+    description: tworzy kit
+    permission: gradzixcore.createkit
+
+  kiteditor:
+    description: edycja kita
+    permission: gradzixcore.kiteditor

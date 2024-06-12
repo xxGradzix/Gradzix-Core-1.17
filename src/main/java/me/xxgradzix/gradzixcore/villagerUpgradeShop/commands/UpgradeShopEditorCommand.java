@@ -103,7 +103,7 @@ public class UpgradeShopEditorCommand implements CommandExecutor {
 
             String numberFromName = shop.getName();
 
-            numberFromName.replace("v", "");
+            numberFromName = numberFromName.replace("v", "");
 
             int number = Integer.parseInt(numberFromName);
 

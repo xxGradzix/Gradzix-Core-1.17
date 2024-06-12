@@ -35,11 +35,11 @@ public class GiveItemsBackWithPriorities implements Listener {
         UserManager userManager = luckPerms.getUserManager();
 
         User user = userManager.getUser(victim.getUniqueId());
+        double returnPercent = 0.0;
 
-
-        if(user == null) return;
-
-        double returnPercent = getPlayerReturnPercent(user);
+        if(user == null) {
+            returnPercent = getPlayerReturnPercent(user);
+        }
 
         List<ItemStack> inventoryItems = Arrays.asList(victim.getInventory().getContents());
 
@@ -59,7 +59,6 @@ public class GiveItemsBackWithPriorities implements Listener {
             itemsForVictim.add(itemsToReturn.get(randomIndex));
             itemsToReturn.remove(randomIndex);
         }
-
 
         returnItems.put(victim.getUniqueId(), itemsForVictim);
         event.getDrops().clear();

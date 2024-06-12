@@ -2,7 +2,6 @@ package me.xxgradzix.gradzixcore;
 
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.support.ConnectionSource;
-import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import lombok.Getter;
 import me.xxgradzix.gradzixcore.VPLNShop.VPLNShop;
@@ -19,6 +18,8 @@ import me.xxgradzix.gradzixcore.globalStatic.EconomyManager;
 import me.xxgradzix.gradzixcore.globalStatic.TextInputFromChat;
 import me.xxgradzix.gradzixcore.incognito.Incognito;
 import me.xxgradzix.gradzixcore.itemPickupPriorities.ItemPickupPriorities;
+import me.xxgradzix.gradzixcore.itemShop.ItemShop;
+import me.xxgradzix.gradzixcore.kits.Kits;
 import me.xxgradzix.gradzixcore.magicFirework.MagicFirework;
 import me.xxgradzix.gradzixcore.magicPond.MagicPond;
 import me.xxgradzix.gradzixcore.playerAbilities.PlayerAbilities;
@@ -38,6 +39,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -88,7 +90,7 @@ public final class Gradzix_Core extends JavaPlugin {
     private MagicPond magicPond;
     private ShulkerRework shulkerRework;
     private SocialMediaRewards socialMediaRewards;
-//    private ItemShop itemShop;
+    private ItemShop itemShop;
     private Incognito incognito;
     private PlayerPerks playerPerks;
     private WebRemover webRemover;
@@ -97,6 +99,7 @@ public final class Gradzix_Core extends JavaPlugin {
     private VPLNShop vplnShop;
     private ClansExtension clansExtension;
     private VillagerUpgradeShop villagerUpgradeShop;
+    private Kits kits;
 
     private ConnectionSource connectionSource;
 
@@ -208,8 +211,10 @@ public final class Gradzix_Core extends JavaPlugin {
         }
 
         if (generators == null) {
-            generators = new Generators(this, getWorldEdit(), getWorldGuard(), connectionSource);
-            generators.onEnable();
+            if (generators == null) {
+                generators = new Generators(Gradzix_Core.getInstance(), getWorldGuard(), connectionSource);
+                generators.onEnable();
+            }
         }
         if (events == null) {
             events = new Events(this, connectionSource);
@@ -229,14 +234,14 @@ public final class Gradzix_Core extends JavaPlugin {
             socialMediaRewards = new SocialMediaRewards(this, connectionSource);
             socialMediaRewards.onEnable();
         }
-        if (shulkerRework == null) {
-            shulkerRework = new ShulkerRework(this);
-            shulkerRework.onEnable();
-        }
-        if (incognito == null) {
-            incognito = new Incognito(this, connectionSource);
-            incognito.onEnable();
-        }
+//        if (shulkerRework == null) {
+//            shulkerRework = new ShulkerRework(this);
+//            shulkerRework.onEnable();
+//        }
+//        if (incognito == null) {
+//            incognito = new Incognito(this, connectionSource);
+//            incognito.onEnable();
+//        }
         if (playerPerks == null) {
             playerPerks = new PlayerPerks(this, connectionSource);
             playerPerks.onEnable();
@@ -260,6 +265,15 @@ public final class Gradzix_Core extends JavaPlugin {
         if (villagerUpgradeShop == null) {
             villagerUpgradeShop = new VillagerUpgradeShop(this, connectionSource);
             villagerUpgradeShop.onEnable();
+        }
+        if (kits == null) {
+            kits = new Kits(this, connectionSource);
+            kits.onEnable();
+        }
+
+        if (itemShop == null) {
+            itemShop = new ItemShop(this, connectionSource);
+            itemShop.onEnable();
         }
 
         if(USE_CUSTOM_CLANS) {
@@ -291,11 +305,6 @@ public final class Gradzix_Core extends JavaPlugin {
     public static Economy getEconomy() {
         return econ;
     }
-    private WorldEditPlugin getWorldEdit() {
-        Plugin p = Bukkit.getServer().getPluginManager().getPlugin("WorldEdit");
-        if (p instanceof WorldEditPlugin) return (WorldEditPlugin) p;
-        else return null;
-    }
     public static WorldGuardPlugin getWorldGuard() {
         Plugin p = Bukkit.getServer().getPluginManager().getPlugin("WorldGuard");
         if (p instanceof WorldGuardPlugin) return (WorldGuardPlugin) p;
@@ -304,9 +313,11 @@ public final class Gradzix_Core extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        if (shulkerRework == null) {
-            shulkerRework = new ShulkerRework(this);
+        if (shulkerRework != null) {
             shulkerRework.onDisable();
+        }
+        if (serverConfig != null) {
+            serverConfig.onDisable();
         }
     }
 }

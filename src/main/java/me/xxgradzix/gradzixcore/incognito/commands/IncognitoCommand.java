@@ -2,7 +2,6 @@ package me.xxgradzix.gradzixcore.incognito.commands;
 
 
 import me.xxgradzix.gradzixcore.Gradzix_Core;
-import me.xxgradzix.gradzixcore.chatOptions.commands.ChatCommands;
 import me.xxgradzix.gradzixcore.incognito.manages.IncognitoModeManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

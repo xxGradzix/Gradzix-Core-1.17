@@ -11,13 +11,10 @@ import me.xxgradzix.gradzixcore.serverconfig.commands.ranksCommands.VipCommand;
 import me.xxgradzix.gradzixcore.serverconfig.data.configfiles.ConfigServera;
 import me.xxgradzix.gradzixcore.serverconfig.data.database.entities.ServerConfigEntity;
 import me.xxgradzix.gradzixcore.serverconfig.data.database.managers.ServerConfigEntityManager;
-import me.xxgradzix.gradzixcore.serverconfig.listeners.BlockGrief;
-import me.xxgradzix.gradzixcore.serverconfig.listeners.BlockPlacingBlocks;
+import me.xxgradzix.gradzixcore.serverconfig.listeners.*;
 import me.xxgradzix.gradzixcore.serverconfig.listeners.elytraAndFireworkBlock.ElytraAndFallDamageDecrease;
 import me.xxgradzix.gradzixcore.serverconfig.listeners.elytraAndFireworkBlock.OnTotemBreakBlockFirework;
 import me.xxgradzix.gradzixcore.serverconfig.listeners.protectionEnchantRework.DamageEvent;
-import me.xxgradzix.gradzixcore.serverconfig.listeners.FortuneSheers;
-import me.xxgradzix.gradzixcore.serverconfig.listeners.VanishingPotionBottle;
 import org.bukkit.command.defaults.HelpCommand;
 
 import java.sql.SQLException;
@@ -55,6 +52,7 @@ public class ServerConfig {
 
         plugin.getServer().getPluginManager().registerEvents(new ElytraAndFallDamageDecrease(), plugin);
         plugin.getServer().getPluginManager().registerEvents(new FortuneSheers(), plugin);
+        plugin.getServer().getPluginManager().registerEvents(new AnvilClick(), plugin);
         plugin.getServer().getPluginManager().registerEvents(new BlockGrief(), plugin);
         BlockPlacingBlocks blockPlacingBlocks = new BlockPlacingBlocks(plugin);
         blockPlacingBlocks.runTaskTimer(plugin, 0L, 20L * Gradzix_Core.REMOVE_BLOCKS_INTERVAL_SECONDS);
@@ -83,6 +81,9 @@ public class ServerConfig {
 
         ConfigServera.save();
 
+    }
+    public void onDisable() {
+        BlockPlacingBlocks.removeBlocks();
     }
 
 }

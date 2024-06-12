@@ -3,6 +3,8 @@ package me.xxgradzix.gradzixcore.itemShop.command;
 import dev.triumphteam.gui.guis.Gui;
 import dev.triumphteam.gui.guis.GuiItem;
 import lombok.RequiredArgsConstructor;
+import lombok.Value;
+import me.xxgradzix.gradzixcore.itemShop.ItemShop;
 import me.xxgradzix.gradzixcore.itemShop.data.DataManager;
 import me.xxgradzix.gradzixcore.itemShop.data.database.entities.ItemShopCategoryEntity;
 import me.xxgradzix.gradzixcore.itemShop.data.database.entities.ItemShopProductEntity;
@@ -34,68 +36,101 @@ public class ItemShopCommand implements CommandExecutor {
 
         Player player = (Player) sender;
 
-        chooseShopType(player);
+        chooseProduct(player, ShopType.MONEY);
 
         return false;
     }
-    public void chooseShopType(Player player) {
-        Gui chooseShopType = Gui.gui()
-                .title(Component.text("Wybierz Typ sklepu"))
-                .rows(3)
-                .disableAllInteractions()
-                .create();
-        GuiItem timeShop = new GuiItem(ItemManager.timeCoinShopButton);
-        GuiItem killsShop = new GuiItem(ItemManager.killCoinShopButton);
-        GuiItem moneyShop = new GuiItem(ItemManager.moneyShopButton);
-        timeShop.setAction((a) -> {
-            chooseProductCategory(player, ShopType.TIME);
-        });
-        killsShop.setAction((a) -> {
-            chooseProductCategory(player, ShopType.KILLS);
-        });
-        moneyShop.setAction((a) -> {
-            chooseProductCategory(player, ShopType.MONEY);
-        });
-        chooseShopType.setItem(2, 3, timeShop);
-        chooseShopType.setItem(2, 5, killsShop);
-        chooseShopType.setItem(2, 7, moneyShop);
-        chooseShopType.open(player);
-    }
-    public void chooseProductCategory(Player player, ShopType shopType) {
-        Gui chooseCategoryGui = Gui.gui()
-                .title(Component.text("Wybierz kategorie!"))
-                .rows(3)
-                .disableAllInteractions()
-                .create();
+//    public void chooseShopType(Player player) {
+//        Gui chooseShopType = Gui.gui()
+//                .title(Component.text("Wybierz Typ sklepu"))
+//                .rows(3)
+//                .disableAllInteractions()
+//                .create();
+//        GuiItem timeShop = new GuiItem(ItemManager.timeCoinShopButton);
+//        GuiItem killsShop = new GuiItem(ItemManager.killCoinShopButton);
+//        GuiItem moneyShop = new GuiItem(ItemManager.moneyShopButton);
+//        timeShop.setAction((a) -> {
+//            chooseProductCategory(player, ShopType.TIME);
+//        });
+//        killsShop.setAction((a) -> {
+//            chooseProductCategory(player, ShopType.KILLS);
+//        });
+//        moneyShop.setAction((a) -> {
+//            chooseProductCategory(player, ShopType.MONEY);
+//        });
+//        chooseShopType.setItem(2, 3, timeShop);
+//        chooseShopType.setItem(2, 5, killsShop);
+//        chooseShopType.setItem(2, 7, moneyShop);
+//        chooseShopType.open(player);
+//    }
+//    public void chooseProductCategory(Player player, ShopType shopType) {
+//
+//        Gui chooseCategoryGui = Gui.gui()
+//                .title(Component.text("Wybierz kategorie!"))
+//                .rows(3)
+//                .disableAllInteractions()
+//                .create();
+//
+////        chooseCategoryGui.setCloseGuiAction((a) -> chooseShopType(player));
+//        HashMap<ItemShopCategoryEntity, List<ItemShopProductEntity>> productsInCategories = dataManager.getItemShopProductsDividedByCategories(shopType);
+//
+//        for(ItemShopCategoryEntity categoryEntity : productsInCategories.keySet()){
+//
+//            GuiItem categoryGuiItem = new GuiItem(ItemManager.createCategoryButton(categoryEntity.getName()));
+//
+//            categoryGuiItem.setAction((categoryAction) -> {
+//                chooseProductFromCategory(player, productsInCategories.getOrDefault(categoryEntity, new ArrayList<>()), shopType);
+//            });
+//
+//            chooseCategoryGui.addItem(categoryGuiItem);
+//        }
+//        chooseCategoryGui.open(player);
+//    }
+//    private void chooseProductFromCategory(Player player, List<ItemShopProductEntity> productEntities, ShopType shopType) {
+//        Gui chooseProductGui = Gui.gui()
+//                .title(Component.text("Wybierz produkt!"))
+//                .rows(3)
+//                .disableAllInteractions()
+//                .create();
+//        for(ItemShopProductEntity product : productEntities) {
+//            int price = product.getCost();
+//
+//            GuiItem productGuiItem = new GuiItem(ItemManager.createProductButton(product.getProduct(), price));
+//
+//            productGuiItem.setAction((productAction) -> {
+//
+//                if(dataManager.subtractMoneyFromPlayer(player, shopType, price)) {
+//                    ItemStack item = product.getProduct();
+//                    if (player.getInventory().firstEmpty() != -1) {
+//                        player.getInventory().addItem(item);
+//                    } else {
+//                        player.getWorld().dropItemNaturally(player.getLocation(), item);
+//                    }
+//                }
+//
+//            });
+//            chooseProductGui.addItem(productGuiItem);
+//        }
+//
+//        chooseProductGui.open(player);
+//    }
+    private void chooseProduct(Player player, ShopType shopType) {
 
-//        chooseCategoryGui.setCloseGuiAction((a) -> chooseShopType(player));
-        HashMap<ItemShopCategoryEntity, List<ItemShopProductEntity>> productsInCategories = dataManager.getItemShopProductsDividedByCategories(shopType);
-
-        for(ItemShopCategoryEntity categoryEntity : productsInCategories.keySet()){
-
-            GuiItem categoryGuiItem = new GuiItem(ItemManager.createCategoryButton(categoryEntity.getName()));
-
-            categoryGuiItem.setAction((categoryAction) -> {
-                chooseProductFromCategory(player, productsInCategories.getOrDefault(categoryEntity, new ArrayList<>()), shopType);
-            });
-
-            chooseCategoryGui.addItem(categoryGuiItem);
-        }
-        chooseCategoryGui.open(player);
-    }
-    private void chooseProductFromCategory(Player player, List<ItemShopProductEntity> productEntities, ShopType shopType) {
         Gui chooseProductGui = Gui.gui()
                 .title(Component.text("Wybierz produkt!"))
-                .rows(3)
+                .rows(ItemShop.SHOP_SIZE)
                 .disableAllInteractions()
                 .create();
-        for(ItemShopProductEntity product : productEntities) {
+
+        for(ItemShopProductEntity product : dataManager.getItemShopProductsByShopType(shopType)) {
+
             int price = product.getCost();
 
             GuiItem productGuiItem = new GuiItem(ItemManager.createProductButton(product.getProduct(), price));
 
             productGuiItem.setAction((productAction) -> {
 
+                if()
                 if(dataManager.subtractMoneyFromPlayer(player, shopType, price)) {
                     ItemStack item = product.getProduct();
                     if (player.getInventory().firstEmpty() != -1) {
@@ -106,7 +141,7 @@ public class ItemShopCommand implements CommandExecutor {
                 }
 
             });
-            chooseProductGui.addItem(productGuiItem);
+            chooseProductGui.setItem(product.getSlot(), productGuiItem);
         }
 
         chooseProductGui.open(player);

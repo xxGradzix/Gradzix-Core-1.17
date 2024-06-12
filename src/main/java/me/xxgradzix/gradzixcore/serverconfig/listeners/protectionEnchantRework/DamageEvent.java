@@ -31,7 +31,7 @@ public class DamageEvent implements Listener {
 
         double baseDamage = event.getDamage();
 
-        double damageReduction = protLevel * 0.17;
+        double damageReduction = protLevel * 0.13;
 
         double newDamage = baseDamage - damageReduction;
 

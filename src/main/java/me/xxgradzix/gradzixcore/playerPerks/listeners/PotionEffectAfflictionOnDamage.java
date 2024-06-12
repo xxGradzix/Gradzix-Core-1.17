@@ -32,7 +32,11 @@ public class PotionEffectAfflictionOnDamage implements Listener {
         }
         if(shouldApplyEffect(DataManager.getPerkEntity(damager).getPerkTypeLevel(PerkType.LIFE_STEAL))) {
             double damage = event.getDamage();
-            damager.setHealth(damager.getHealth() + (damage / 2));
+            double healthToSEt = (damager.getHealth() + (damage / 2));
+            if(healthToSEt > 20) {
+                healthToSEt = 20;
+            }
+            damager.setHealth(healthToSEt);
         }
         if(shouldApplyEffect(DataManager.getPerkEntity(damager).getPerkTypeLevel(PerkType.RESISTANCE))) {
             damager.addPotionEffect(PotionEffectType.DAMAGE_RESISTANCE.createEffect(20*3, 1));

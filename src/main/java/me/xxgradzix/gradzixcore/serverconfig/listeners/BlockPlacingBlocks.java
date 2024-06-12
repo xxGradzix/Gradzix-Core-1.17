@@ -16,7 +16,7 @@ import java.util.Set;
 public class BlockPlacingBlocks extends BukkitRunnable implements Listener {
 
     ArrayList<Material> blockTypes = new ArrayList<>();
-    private final Set<Location> placedBlocks = new HashSet<>();
+    private static Set<Location> placedBlocks = new HashSet<>();
 
     private final Gradzix_Core plugin;
 
@@ -27,16 +27,17 @@ public class BlockPlacingBlocks extends BukkitRunnable implements Listener {
     }
     @Override
     public void run() {
+        removeBlocks();
+        Bukkit.broadcastMessage(ChatColor.GREEN + "Usunięto bloki z mapy");
+    }
+    public static void removeBlocks() {
         for (Location location : placedBlocks) {
             Block block = location.getBlock();
-            // Sprawdź, czy blok nadal istnieje i czy nie został zmieniony
             if (block.getType() != org.bukkit.Material.AIR && placedBlocks.contains(location)) {
-                // Usuń blok
                 block.setType(org.bukkit.Material.AIR);
 
             }
         }
-        Bukkit.broadcastMessage(ChatColor.GREEN + "Usunięto bloki z mapy");
     }
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent event) {

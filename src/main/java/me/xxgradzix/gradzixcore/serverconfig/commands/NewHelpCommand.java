@@ -10,7 +10,7 @@ public class NewHelpCommand implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
 
-        sender.sendMessage(convertColorText("&#69E9FF&l✪ Przydatne komendy:"));
+        sender.sendMessage(convertColorText("&#69E9FF§l✪ Przydatne komendy:"));
         sender.sendMessage(convertColorText("&#555555〉&#42C8EF§l/klan &#555555-&#C9E4DE wszelkie informacje dotyczące klanów."));
         sender.sendMessage(convertColorText("&#555555〉&#42C8EF§l/gracz <nick> &#555555-&#C9E4DE informacje o podanym graczu."));
         sender.sendMessage(convertColorText("&#555555〉&#42C8EF§l/wymiana <nick> &#555555-&#C9E4DE wysyła zaproszenie do gracza o wymianę."));

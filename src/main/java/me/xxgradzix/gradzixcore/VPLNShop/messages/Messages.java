@@ -12,6 +12,8 @@ public class Messages {
     public static final String SUCCESSFUL_VIP_PURCHASE = ChatColor.GREEN + "Pomyślnie zakupiono rangę §e§lVIP!";
     public static final String AMOUNT_TO_LOW_ERROR = ChatColor.RED + "Podana kwota jest za niska!";
     public static final String AMOUNT_TO_HIGH_ERROR = ChatColor.RED + "Podana kwota jest za wysoka!";
+    public static final String SUCCESSFUL_SCRATCHCARD_PURCHASE = ChatColor.GREEN + "Pomyślnie zakupiono §6§lKartę zdrapkę!";
+    public static final String SUCCESSFUL_FRAGMENT_PURCHASE = ChatColor.GREEN + "Pomyślnie zakupiono §6§lFragment perku!";
 
     public static String playerBoughtVpln(String nickname, Double vplnAmount) {
         return ChatColor.GRAY + "Gracz " +ChatColor.AQUA + nickname + ChatColor.GRAY + " zakupił doładowanie " + ChatColor.GREEN + vplnAmount + " VPLN!\n" +

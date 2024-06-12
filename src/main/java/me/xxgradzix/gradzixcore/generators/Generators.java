@@ -1,8 +1,9 @@
 package me.xxgradzix.gradzixcore.generators;
 
+import com.fastasyncworldedit.core.Fawe;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
-import com.sk89q.worldedit.bukkit.WorldEditPlugin;
+import com.sk89q.worldedit.WorldEdit;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import me.xxgradzix.gradzixcore.Gradzix_Core;
 import me.xxgradzix.gradzixcore.generators.commands.CreateGeneratorCommand;
@@ -25,7 +26,7 @@ public final class Generators {
 
     private final Gradzix_Core plugin;
     private final ConnectionSource connectionSource;
-    private final WorldEditPlugin worldEditPlugin;
+    public WorldEdit worldEdit = Fawe.instance().getWorldEdit();
     private final WorldGuardPlugin worldGuardPlugin;
 
     private GeneratorEntityManager generatorEntityManager;
@@ -39,9 +40,8 @@ public final class Generators {
         generatorLocationEntityManager = new GeneratorLocationEntityManager(connectionSource);
     }
 
-    public Generators(Gradzix_Core plugin, WorldEditPlugin worldEditPlugin, WorldGuardPlugin worldGuardPlugin, ConnectionSource connectionSource) {
+    public Generators(Gradzix_Core plugin, WorldGuardPlugin worldGuardPlugin, ConnectionSource connectionSource) {
         this.plugin = plugin;
-        this.worldEditPlugin = worldEditPlugin;
         this.connectionSource = connectionSource;
         this.worldGuardPlugin = worldGuardPlugin;
     }
@@ -58,9 +58,9 @@ public final class Generators {
         ItemManager.init();
 //        plugin.getServer().getPluginManager().registerEvents(new PrioritiesGuiClick(), plugin);
         plugin.getCommand("showGenerators").setExecutor(new ShowGeneratorsCommand(generatorManager));
-        plugin.getCommand("refreshGenerators").setExecutor(new RefillGenerators(plugin, worldEditPlugin, generatorManager));
-        plugin.getCommand("createGenerator").setExecutor(new CreateGeneratorCommand(worldEditPlugin, generatorManager));
-        plugin.getCommand("setGenerator").setExecutor(new SetGeneratorCommand(worldEditPlugin, generatorManager));
+        plugin.getCommand("refreshGenerators").setExecutor(new RefillGenerators(plugin, worldEdit, generatorManager));
+        plugin.getCommand("createGenerator").setExecutor(new CreateGeneratorCommand(generatorManager));
+        plugin.getCommand("setGenerator").setExecutor(new SetGeneratorCommand(generatorManager));
     }
 
     public void onDisable() {

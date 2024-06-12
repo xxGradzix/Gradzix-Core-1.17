@@ -2,8 +2,10 @@ package me.xxgradzix.gradzixcore.generators.commands;
 
 import com.sk89q.worldedit.IncompleteRegionException;
 import com.sk89q.worldedit.bukkit.BukkitAdapter;
+import com.sk89q.worldedit.bukkit.BukkitPlayer;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import com.sk89q.worldedit.regions.Region;
+import com.sk89q.worldedit.session.SessionOwner;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.protection.managers.storage.StorageException;
 import me.xxgradzix.gradzixcore.generators.Generators;
@@ -12,6 +14,7 @@ import me.xxgradzix.gradzixcore.generators.data.database.entities.GeneratorLocat
 import me.xxgradzix.gradzixcore.generators.data.database.managers.GeneratorLocationEntityManager;
 import me.xxgradzix.gradzixcore.generators.data.database.managers.GeneratorEntityManager;
 import me.xxgradzix.gradzixcore.generators.managers.GeneratorManager;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -31,11 +34,9 @@ import java.util.stream.Collectors;
 
 public class SetGeneratorCommand implements CommandExecutor, TabCompleter {
 
-    private final WorldEditPlugin worldEdit;
     private final GeneratorManager generatorManager;
 
-    public SetGeneratorCommand(WorldEditPlugin worldEdit, GeneratorManager generatorManager) {
-        this.worldEdit = worldEdit;
+    public SetGeneratorCommand(GeneratorManager generatorManager) {
         this.generatorManager = generatorManager;
     }
 
@@ -47,9 +48,10 @@ public class SetGeneratorCommand implements CommandExecutor, TabCompleter {
         Player player = (Player) sender;
 
         Region selection;
+        BukkitPlayer bukkitPlayer = BukkitAdapter.adapt(player);
 
         try {
-            selection = worldEdit.getSession(player).getSelection();
+            selection = bukkitPlayer.getSelection();
         } catch (IncompleteRegionException e) {
             player.sendMessage("Musisz najpierw zaznaczyc teren generatora");
             return false;
@@ -65,14 +67,6 @@ public class SetGeneratorCommand implements CommandExecutor, TabCompleter {
         }
 
         String userInputName = args[0];
-//        long userInputId;
-
-        try {
-//            userInputId = Long.parseLong(args[0]);
-        } catch (NumberFormatException e) {
-            player.sendMessage("Musisz podać id generatora");
-            return false;
-        }
 
         Optional<GeneratorEntity> optionalGenerator = generatorManager.getGeneratorByName(userInputName);
 

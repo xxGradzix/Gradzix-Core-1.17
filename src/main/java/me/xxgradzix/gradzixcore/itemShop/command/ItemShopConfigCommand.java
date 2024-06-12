@@ -3,6 +3,7 @@ package me.xxgradzix.gradzixcore.itemShop.command;
 import dev.triumphteam.gui.guis.Gui;
 import dev.triumphteam.gui.guis.GuiItem;
 import lombok.RequiredArgsConstructor;
+import me.xxgradzix.gradzixcore.itemShop.ItemShop;
 import me.xxgradzix.gradzixcore.itemShop.data.DataManager;
 import me.xxgradzix.gradzixcore.itemShop.data.database.entities.ItemShopCategoryEntity;
 import me.xxgradzix.gradzixcore.itemShop.data.database.entities.ItemShopProductEntity;
@@ -29,6 +30,8 @@ import java.util.Optional;
 
 @RequiredArgsConstructor
 public class ItemShopConfigCommand implements CommandExecutor, TabCompleter {
+
+
 
     private final DataManager dataManager;
     @Override
@@ -59,25 +62,13 @@ public class ItemShopConfigCommand implements CommandExecutor, TabCompleter {
         }
         String entityType = args[2].toLowerCase();
 
-        if(!"product".equalsIgnoreCase(entityType) && !"category".equalsIgnoreCase(entityType)) {
-            player.sendMessage("Mozesz wykonac tylko akcje create albo delete");
+        if(!"product".equalsIgnoreCase(entityType)) {
+            player.sendMessage("Mozesz wykonac tylko tworzyc i usuwac produkty");
             return false;
         }
 
         if("create".equalsIgnoreCase(action)) {
-            if("category".equalsIgnoreCase(entityType)) {
-                if(args.length < 4) {
-                    player.sendMessage("Musisz podac nazwe nowej kategorii");
-                    return false;
-                }
-                String categoryName = args[3].toLowerCase();
-                try {
-                    dataManager.createCategory(categoryName, shopType);
-                    player.sendMessage("You created category " + categoryName + " in " + shopType.name() + " shop");
-                } catch (InstanceAlreadyExistsException e) {
-                    player.sendMessage("Category with name " + categoryName + " and shoptype " + shopType.name() + " already exists");
-                }
-            }
+
             if("product".equalsIgnoreCase(entityType)) {
                 if(args.length < 4) {
                     player.sendMessage("Musisz podac cene produktu");
@@ -88,20 +79,33 @@ public class ItemShopConfigCommand implements CommandExecutor, TabCompleter {
                 try {
                     price = Integer.parseInt(stringPrice);
                 } catch (Exception e) {
-                    player.sendMessage("Cena musi byc typu integer");
+                    player.sendMessage("Cena musi byc liczbą");
                     return false;
                 }
-                ItemStack item = player.getInventory().getItemInMainHand();
-                chooseCategoryToPutProductIn(player, shopType, item, price);
+//                if(args.length < 5) {
+//                    player.sendMessage("Musisz podac cene produktu");
+//                    return false;
+//                }
+//                String stringSlot = args[3].toLowerCase();
+//                int slot;
+//                try {
+//                    slot = Integer.parseInt(stringPrice);
+//                } catch (Exception e) {
+//                    player.sendMessage("Slot musi byc liczbą");
+//                    return false;
+//                }
+//                ItemStack item = player.getInventory().getItemInMainHand();
+                selectSlotAndCreateProduct(player, shopType, price);
+//                dataManager.createProduct(item, price, shopType, slot);
             }
         }
         if("delete".equalsIgnoreCase(action)) {
-            if("category".equalsIgnoreCase(entityType)) {
-
-                chooseCategoryToRemove(player, shopType);
-            }
+//            if("category".equalsIgnoreCase(entityType)) {
+//
+//                chooseCategoryToRemove(player, shopType);
+//            }
             if("product".equalsIgnoreCase(entityType)) {
-                chooseCategoryToRemoveProducts(player, shopType);
+                chooseProductToRemoveFromShopType(player, shopType);
             }
         }
 
@@ -109,104 +113,128 @@ public class ItemShopConfigCommand implements CommandExecutor, TabCompleter {
         return false;
     }
 
-    private void chooseCategoryToRemove(Player player, ShopType shopType) {
-        Gui chooseCategoryGui = Gui.gui()
-                .title(Component.text("Wybierz kategorie do ktora chcesz usunac!"))
-                .rows(3)
+    private void selectSlotAndCreateProduct(Player player, ShopType shopType, int price) {
+        Gui selectSlotGui = Gui.gui()
+                .title(Component.text("Wybierz slot w ktorym chcesz umiescic produkt!"))
+                .rows(ItemShop.SHOP_SIZE)
                 .disableAllInteractions()
                 .create();
-        List<ItemShopCategoryEntity> categories = dataManager.getItemShopCategoriesByShopType(shopType);
-        player.sendMessage(categories.toString());
-        for(ItemShopCategoryEntity category : categories) {
-            GuiItem guiItem = new GuiItem(ItemManager.createCategoryButton(category.getName()));
-            guiItem.setAction((a) -> {
-                dataManager.deleteCategory(category);
-                chooseCategoryGui.close(player);
-                player.sendMessage("usunales kategorie " + category.getName());
-            });
-            chooseCategoryGui.addItem(guiItem);
-        }
-        chooseCategoryGui.open(player);
-    }
 
-    private void chooseCategoryToPutProductIn(Player player, ShopType shopType, ItemStack item, int price) {
-        Gui chooseCategoryGui = Gui.gui()
-                .title(Component.text("Wybierz kategorie do ktorej chcesz umiescic produkt!"))
-                .rows(3)
-                .disableAllInteractions()
-                .create();
-        List<ItemShopCategoryEntity> categories = dataManager.getItemShopCategoriesByShopType(shopType);
-
-        for(ItemShopCategoryEntity categoryEntity : categories){
-
-            GuiItem categoryGuiItem = new GuiItem(ItemManager.createCategoryButton(categoryEntity.getName()));
-            categoryGuiItem.setAction((a) -> {
-                try {
-                    dataManager.createProduct(shopType, categoryEntity.getName(), item, price);
-                } catch (NoSuchObjectException e) {
-                    player.sendMessage("Ta kategoria nie istnieje w tym sklepie");
-                } catch (IllegalArgumentException e) {
-                    player.sendMessage("Musisz trzymac przedmiot w rece");
-                }
-                chooseCategoryGui.close(player);
-            });
-            chooseCategoryGui.addItem(categoryGuiItem);
-        }
-        chooseCategoryGui.open(player);
-    }
-
-    public void chooseShopTypeToRemove(Player player) {
-        Gui chooseShopType = Gui.gui()
-                .title(Component.text("Wybierz typ sklepu z ktorego chcesz usunac produkty!"))
-                .rows(3)
-                .disableAllInteractions()
-                .create();
-        GuiItem timeShop = new GuiItem(ItemManager.timeCoinShopButton);
-        GuiItem killsShop = new GuiItem(ItemManager.killCoinShopButton);
-        GuiItem moneyShop = new GuiItem(ItemManager.moneyShopButton);
-
-        timeShop.setAction((a) -> {
-            chooseCategoryToRemoveProducts(player, ShopType.TIME);
+        dataManager.getItemShopProductsByShopType(shopType).forEach(product -> {
+            selectSlotGui.setItem(product.getSlot(), new GuiItem(product.getProduct().clone()));
         });
-        killsShop.setAction((a) -> {
-            chooseCategoryToRemoveProducts(player, ShopType.KILLS);
+
+        selectSlotGui.setDefaultClickAction(event -> {
+            ItemStack item = event.getCurrentItem();
+            if(item != null && !item.getType().equals(Material.AIR)) {
+                player.sendMessage("Slot nie moze byc zajety");
+                return;
+            }
+            dataManager.createProduct(player.getInventory().getItemInMainHand(), price, shopType, event.getSlot());
+            selectSlotGui.close(player);
         });
-        moneyShop.setAction((a) -> {
-            chooseCategoryToRemoveProducts(player, ShopType.MONEY);
-        });
-        chooseShopType.setItem(2, 3, timeShop);
-        chooseShopType.setItem(2, 5, killsShop);
-        chooseShopType.setItem(2, 7, timeShop);
-        chooseShopType.open(player);
+        selectSlotGui.open(player);
+
     }
-    public void chooseCategoryToRemoveProducts(Player player, ShopType shopType) {
-        Gui chooseCategoryGui = Gui.gui()
-                .title(Component.text("Wybierz kategorie z ktorej chcesz usunac produkty!"))
-                .rows(3)
-                .disableAllInteractions()
-                .create();
 
-        HashMap<ItemShopCategoryEntity, List<ItemShopProductEntity>> productsInCategories = dataManager.getItemShopProductsDividedByCategories(shopType);
+//    private void chooseCategoryToRemove(Player player, ShopType shopType) {
+//        Gui chooseCategoryGui = Gui.gui()
+//                .title(Component.text("Wybierz kategorie do ktora chcesz usunac!"))
+//                .rows(3)
+//                .disableAllInteractions()
+//                .create();
+//        List<ItemShopCategoryEntity> categories = dataManager.getItemShopCategoriesByShopType(shopType);
+//        player.sendMessage(categories.toString());
+//        for(ItemShopCategoryEntity category : categories) {
+//            GuiItem guiItem = new GuiItem(ItemManager.createCategoryButton(category.getName()));
+//            guiItem.setAction((a) -> {
+//                dataManager.deleteCategory(category);
+//                chooseCategoryGui.close(player);
+//                player.sendMessage("usunales kategorie " + category.getName());
+//            });
+//            chooseCategoryGui.addItem(guiItem);
+//        }
+//        chooseCategoryGui.open(player);
+//    }
 
-        for(ItemShopCategoryEntity categoryEntity : productsInCategories.keySet()){
-
-            GuiItem categoryGuiItem = new GuiItem(ItemManager.createCategoryButton(categoryEntity.getName()));
-
-            categoryGuiItem.setAction((categoryAction) -> {
-                chooseProductToRemoveFromCategory(player, productsInCategories.getOrDefault(categoryEntity, new ArrayList<>()));
-            });
-            chooseCategoryGui.addItem(categoryGuiItem);
-        }
-        chooseCategoryGui.open(player);
-    }
-    private void chooseProductToRemoveFromCategory(Player player, List<ItemShopProductEntity> productEntities) {
+//    private void chooseCategoryToPutProductIn(Player player, ShopType shopType, ItemStack item, int price) {
+//        Gui chooseCategoryGui = Gui.gui()
+//                .title(Component.text("Wybierz kategorie do ktorej chcesz umiescic produkt!"))
+//                .rows(3)
+//                .disableAllInteractions()
+//                .create();
+//        List<ItemShopCategoryEntity> categories = dataManager.getItemShopCategoriesByShopType(shopType);
+//
+//        for(ItemShopCategoryEntity categoryEntity : categories){
+//
+//            GuiItem categoryGuiItem = new GuiItem(ItemManager.createCategoryButton(categoryEntity.getName()));
+//            categoryGuiItem.setAction((a) -> {
+//                try {
+//                    dataManager.createProduct();
+//                } catch (NoSuchObjectException e) {
+//                    player.sendMessage("Ta kategoria nie istnieje w tym sklepie");
+//                } catch (IllegalArgumentException e) {
+//                    player.sendMessage("Musisz trzymac przedmiot w rece");
+//                }
+//                chooseCategoryGui.close(player);
+//            });
+//            chooseCategoryGui.addItem(categoryGuiItem);
+//        }
+//        chooseCategoryGui.open(player);
+//    }
+//
+//    public void chooseShopTypeToRemove(Player player) {
+//        Gui chooseShopType = Gui.gui()
+//                .title(Component.text("Wybierz typ sklepu z ktorego chcesz usunac produkty!"))
+//                .rows(3)
+//                .disableAllInteractions()
+//                .create();
+//        GuiItem timeShop = new GuiItem(ItemManager.timeCoinShopButton);
+//        GuiItem killsShop = new GuiItem(ItemManager.killCoinShopButton);
+//        GuiItem moneyShop = new GuiItem(ItemManager.moneyShopButton);
+//
+//        timeShop.setAction((a) -> {
+//            chooseCategoryToRemoveProducts(player, ShopType.TIME);
+//        });
+//        killsShop.setAction((a) -> {
+//            chooseCategoryToRemoveProducts(player, ShopType.KILLS);
+//        });
+//        moneyShop.setAction((a) -> {
+//            chooseCategoryToRemoveProducts(player, ShopType.MONEY);
+//        });
+//        chooseShopType.setItem(2, 3, timeShop);
+//        chooseShopType.setItem(2, 5, killsShop);
+//        chooseShopType.setItem(2, 7, timeShop);
+//        chooseShopType.open(player);
+//    }
+//    public void chooseCategoryToRemoveProducts(Player player, ShopType shopType) {
+//        Gui chooseCategoryGui = Gui.gui()
+//                .title(Component.text("Wybierz kategorie z ktorej chcesz usunac produkty!"))
+//                .rows(3)
+//                .disableAllInteractions()
+//                .create();
+//
+//        HashMap<ItemShopCategoryEntity, List<ItemShopProductEntity>> productsInCategories = dataManager.getItemShopProductsDividedByCategories(shopType);
+//
+//        for(ItemShopCategoryEntity categoryEntity : productsInCategories.keySet()){
+//
+//            GuiItem categoryGuiItem = new GuiItem(ItemManager.createCategoryButton(categoryEntity.getName()));
+//
+//            categoryGuiItem.setAction((categoryAction) -> {
+//                chooseProductToRemoveFromCategory(player, productsInCategories.getOrDefault(categoryEntity, new ArrayList<>()));
+//            });
+//            chooseCategoryGui.addItem(categoryGuiItem);
+//        }
+//        chooseCategoryGui.open(player);
+//    }
+    private void chooseProductToRemoveFromShopType(Player player, ShopType shopType) {
         Gui chooseProductGui = Gui.gui()
                 .title(Component.text("Wybierz produkt do usuniecia!"))
                 .rows(3)
                 .disableAllInteractions()
                 .create();
 
-        for(ItemShopProductEntity product : productEntities) {
+        for(ItemShopProductEntity product : dataManager.getItemShopProductsByShopType(shopType)) {
 
             GuiItem productGuiItem = new GuiItem(product.getProduct().clone());
 
@@ -214,14 +242,19 @@ public class ItemShopConfigCommand implements CommandExecutor, TabCompleter {
                 chooseProductGui.removeItem(productGuiItem);
                 dataManager.deleteProduct(product);
             });
-            chooseProductGui.addItem(productGuiItem);
+
+            if(chooseProductGui.getGuiItem(product.getSlot()) == null)
+                chooseProductGui.setItem(product.getSlot(), productGuiItem);
+            else {
+                chooseProductGui.addItem(productGuiItem);
+            }
         }
         chooseProductGui.open(player);
     }
 
-    private void deleteCategory(ItemShopCategoryEntity itemShopCategoryEntity) {
-        dataManager.deleteCategory(itemShopCategoryEntity);
-    }
+//    private void deleteCategory(ItemShopCategoryEntity itemShopCategoryEntity) {
+//        dataManager.deleteCategory(itemShopCategoryEntity);
+//    }
 
 
     @Nullable

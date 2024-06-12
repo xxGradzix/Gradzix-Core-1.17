@@ -1,19 +1,23 @@
 package me.xxgradzix.gradzixcore.playerPerks.listeners;
 
+import me.xxgradzix.gradzixcore.Gradzix_Core;
 import me.xxgradzix.gradzixcore.playerPerks.PerkType;
 import me.xxgradzix.gradzixcore.playerPerks.data.database.DataManager;
 import me.xxgradzix.gradzixcore.playerPerks.data.database.managers.PlayerPerkEntityManager;
 import me.xxgradzix.gradzixcore.playerPerks.items.ItemManager;
 import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.model.user.User;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
-import java.util.Random;
+import java.util.*;
 
 public class DropFragmentOnKill implements Listener {
+
+    private static HashMap<UUID, Set<UUID>> killedPlayers = new HashMap<>();
 
     @EventHandler
     public void onKill(PlayerDeathEvent event) {
@@ -23,6 +27,9 @@ public class DropFragmentOnKill implements Listener {
 
         if(killer == null) return;
 
+        Set<UUID> killedPlayersSet = killedPlayers.getOrDefault(killer.getUniqueId(), new HashSet<>());
+
+        if(killedPlayersSet.contains(dead.getUniqueId())) return;
 
         double chance = 0.1;
 
@@ -31,7 +38,7 @@ public class DropFragmentOnKill implements Listener {
             chance = getPlayerRewardChance(user);
         }
 
-        chance += (DataManager.getPerkEntity(killer).getPerkTypeLevel(PerkType.PERK_FRAGMENT_DROP) / 100);
+        chance += ((double) DataManager.getPerkEntity(killer).getPerkTypeLevel(PerkType.PERK_FRAGMENT_DROP) / 100);
 
         if(!(shouldDrop(chance))) return;
 
@@ -40,6 +47,14 @@ public class DropFragmentOnKill implements Listener {
         } else {
             killer.getWorld().dropItemNaturally(killer.getLocation(), ItemManager.perkFragment);
         }
+
+        killedPlayersSet.add(dead.getUniqueId());
+        killedPlayers.put(killer.getUniqueId(), killedPlayersSet);
+        Bukkit.getScheduler().runTaskLaterAsynchronously(Gradzix_Core.getInstance(), () -> {
+            killedPlayersSet.remove(dead.getUniqueId());
+            killedPlayers.put(killer.getUniqueId(), killedPlayersSet);
+        }, 20 * 60 * 30);
+
     }
     private static double getPlayerRewardChance(User player) {
         switch (player.getPrimaryGroup()) {

@@ -4,6 +4,7 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import lombok.Getter;
 import me.xxgradzix.gradzixcore.playerPerks.PerkType;
+import me.xxgradzix.gradzixcore.playerPerks.PlayerPerks;
 
 import java.util.Random;
 import java.util.UUID;
@@ -57,31 +58,31 @@ public class PlayerPerksEntity {
     public void increasePerkLevelRandomly(PerkType perkType) throws RuntimeException {
         switch (perkType) {
                 case STRENGTH: {
-                    if(strengthLevel >= 100) throw new RuntimeException("Strength level already have maximum value");
+                    if(strengthLevel >= PlayerPerks.STRENGTH_MAX_LEVEL) throw new RuntimeException("Strength level already have maximum value");
                     int additionalPercent = generateRandomNumber(1, 3);
                     strengthLevel += additionalPercent;
-                    if(strengthLevel > 100) strengthLevel = 100;
+                    if(strengthLevel > PlayerPerks.STRENGTH_MAX_LEVEL) strengthLevel = PlayerPerks.STRENGTH_MAX_LEVEL;
                 }
                 break;
                 case POISON: {
-                    if(poisonLevel >= 10) throw new RuntimeException("Poison level already have maximum value");
+                    if(poisonLevel >= PlayerPerks.POISON_MAX_LEVEL) throw new RuntimeException("Poison level already have maximum value");
                     int additionalPercent = generateRandomNumber(1, 2);
                     poisonLevel += additionalPercent;
-                    if(poisonLevel > 10) poisonLevel = 10;
+                    if(poisonLevel > PlayerPerks.POISON_MAX_LEVEL) poisonLevel = PlayerPerks.POISON_MAX_LEVEL;
                 }
                 break;
                 case RESISTANCE: {
-                    if (resistanceLevel >= 50) throw new RuntimeException("Resistance level already have maximum value");
+                    if (resistanceLevel >= PlayerPerks.RESISTANCE_MAX_LEVEL) throw new RuntimeException("Resistance level already have maximum value");
                     int additionalPercent = generateRandomNumber(1, 3);
                     resistanceLevel += additionalPercent;
-                    if(resistanceLevel > 50) resistanceLevel = 50;
+                    if(resistanceLevel > PlayerPerks.RESISTANCE_MAX_LEVEL) resistanceLevel = PlayerPerks.RESISTANCE_MAX_LEVEL;
                 }
                 break;
                 case LIFE_STEAL: {
-                    if (lifeStealLevel >= 30) throw new RuntimeException("Life steal level already have maximum value");
+                    if (lifeStealLevel >= PlayerPerks.LIFE_STEAL_MAX_LEVEL) throw new RuntimeException("Life steal level already have maximum value");
                     int additionalPercent = generateRandomNumber(1, 3);
                     lifeStealLevel += additionalPercent;
-                    if(lifeStealLevel > 30) lifeStealLevel = 30;
+                    if(lifeStealLevel > PlayerPerks.LIFE_STEAL_MAX_LEVEL) lifeStealLevel = PlayerPerks.LIFE_STEAL_MAX_LEVEL;
                 }
                 break;
 //                case SICKNESS: {
@@ -92,30 +93,30 @@ public class PlayerPerksEntity {
 //                }
 //                break;
                 case ADDITIONAL_HEARTS: {
-                    if (additionalHeartsLevel >= 4) throw new RuntimeException("Additional hearts level already have maximum value");
+                    if (additionalHeartsLevel >= PlayerPerks.ADDITIONAL_HEARTS_MAX_LEVEL) throw new RuntimeException("Additional hearts level already have maximum value");
                     int additionalHeart = 1;
                     additionalHeartsLevel += additionalHeart;
-                    if(additionalHeartsLevel > 4) additionalHeartsLevel = 4;
+                    if(additionalHeartsLevel > PlayerPerks.ADDITIONAL_HEARTS_MAX_LEVEL) additionalHeartsLevel = PlayerPerks.ADDITIONAL_HEARTS_MAX_LEVEL;
                 }
                 break;
                 case SLOWNESS: {
-                    if (slownessLevel >= 50) throw new RuntimeException("Slowness level already have maximum value");
+                    if (slownessLevel >= PlayerPerks.SLOWNESS_MAX_LEVEL) throw new RuntimeException("Slowness level already have maximum value");
                     int additionalPercent = generateRandomNumber(1, 3);
                     slownessLevel += additionalPercent;
-                    if(slownessLevel > 50) slownessLevel = 50;
+                    if(slownessLevel > PlayerPerks.SLOWNESS_MAX_LEVEL) slownessLevel = PlayerPerks.SLOWNESS_MAX_LEVEL;
                 }
                 break;
                 case WEAKNESS: {
-                    if (weaknessLevel >= 10) throw new RuntimeException("Weakness level already have maximum value");
+                    if (weaknessLevel >= PlayerPerks.WEAKNESS_MAX_LEVEL) throw new RuntimeException("Weakness level already have maximum value");
                     int additionalPercent = generateRandomNumber(1, 2);
                     weaknessLevel += additionalPercent;
-                    if(weaknessLevel > 10) slownessLevel = 10;
+                    if(weaknessLevel > PlayerPerks.WEAKNESS_MAX_LEVEL) slownessLevel = PlayerPerks.WEAKNESS_MAX_LEVEL;
                 }
                 case PERK_FRAGMENT_DROP: {
-                    if (fragmentDropLevel >= 20) throw new RuntimeException("Fragment drop level already have maximum value");
+                    if (fragmentDropLevel >= PlayerPerks.PERK_FRAGMENT_DROP_MAX_LEVEL) throw new RuntimeException("Fragment drop level already have maximum value");
                     int additionalPercent = generateRandomNumber(1, 3);
                     fragmentDropLevel += additionalPercent;
-                    if(fragmentDropLevel > 20) fragmentDropLevel = 20;
+                    if(fragmentDropLevel > PlayerPerks.PERK_FRAGMENT_DROP_MAX_LEVEL) fragmentDropLevel = PlayerPerks.PERK_FRAGMENT_DROP_MAX_LEVEL;
                 }
                 break;
         }

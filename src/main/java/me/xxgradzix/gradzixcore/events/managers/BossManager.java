@@ -13,9 +13,7 @@ import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.PiglinBrute;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -33,6 +31,7 @@ public class BossManager {
         boss = location.getWorld().spawn(location, PiglinBrute.class);
 
         boss.setCustomName(ChatColor.RED + "BOSS");
+        boss.setCustomNameVisible(true);
         boss.setImmuneToZombification(true);
         setAttributes();
         try {
@@ -77,17 +76,17 @@ public class BossManager {
         AttributeInstance healthAttribute = boss.getAttribute(Attribute.GENERIC_MAX_HEALTH);
 
         if (healthAttribute != null) {
-            double customHealth = 1000.0;
+            double customHealth = 5000.0;
             healthAttribute.setBaseValue(customHealth);
         }
         AttributeInstance attackAttribute = boss.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE);
         if (attackAttribute != null) {
-            double customAttack = 20;
+            double customAttack = 80;
             attackAttribute.setBaseValue(customAttack);
         }
         AttributeInstance speedAttribute = boss.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED);
         if (speedAttribute != null) {
-            double customSpeed = 0.4;
+            double customSpeed = 0.42;
             speedAttribute.setBaseValue(customSpeed);
         }
         boss.setHealth(boss.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
@@ -121,9 +120,9 @@ public class BossManager {
             location.add(x, 0, z);
 
             if(i%2 == 0) {
-                location.getWorld().dropItem(location, new ItemStack(Material.GOLD_INGOT, 1));
+                location.getWorld().dropItem(location, me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.perkFragment);
             } else {
-                location.getWorld().dropItem(location, new ItemStack(Material.IRON_INGOT, 1));
+                location.getWorld().dropItem(location, ItemManager.mainReward);
             }
 
             location.subtract(x, 0, z);
@@ -132,13 +131,51 @@ public class BossManager {
     public static void giveFullReward(Player player) {
         player.sendMessage(Messages.YOU_KILLED_BOSS);
 //        Bukkit.broadcastMessage(Messages.PLAYER_X_TOOK_BOSS_SHARDS);
-        ItemStack reward = ItemManager.mainReward;
+        ItemStack reward = new ItemStack(ItemManager.mainReward);
         reward.setAmount(16);
         if(player.getInventory().firstEmpty() != -1) {
             player.getInventory().addItem(reward);
         } else {
             player.getWorld().dropItem(player.getLocation(), reward);
         }
-        player.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 20, 1));
+        player.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 20 * 20, 1));
+    }
+
+    private static void explosion(Location location) {
+        location.getWorld().createExplosion(location, 15.0f);
+    }
+
+    public static void spawnMinions() {
+//        for (int i = 0; i < 5; i++) {
+            Location location = boss.getLocation();
+            location.add(Math.random() * 10 - 5, 0, Math.random() * 10 - 5);
+            Piglin minion = location.getWorld().spawn(location, Piglin.class);
+            minion.setBaby();
+            minion.setImmuneToZombification(true);
+            minion.setCustomName(ChatColor.RED + "MINION");
+            minion.setCustomNameVisible(true);
+
+            AttributeInstance healthAttribute = minion.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+
+            if (healthAttribute != null) {
+                double customHealth = 400.0;
+                healthAttribute.setBaseValue(customHealth);
+            }
+
+            AttributeInstance attackAttribute = minion.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE);
+
+            if (attackAttribute != null) {
+                double customAttribute = 30.0;
+                attackAttribute.setBaseValue(customAttribute);
+            }
+
+            AttributeInstance speedAttribute = boss.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED);
+            if (speedAttribute != null) {
+                double customSpeed = 1.0;
+                speedAttribute.setBaseValue(customSpeed);
+            }
+
+            minion.setHealth(boss.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
+//        }
     }
 }

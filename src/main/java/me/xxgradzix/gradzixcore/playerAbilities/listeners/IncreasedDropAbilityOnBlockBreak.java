@@ -37,6 +37,8 @@ public class IncreasedDropAbilityOnBlockBreak implements Listener {
 
         int fortuneLevel = itemInHand.getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS);
 
+
+
         int afterFortuneAmount = fortuneLevel > 0 ? 1 + (int) (Math.random() * (fortuneLevel + 2)) : 1;
 
         double playerAbilityLevelModifier = DataManager.getDropAbilityModifier(p);

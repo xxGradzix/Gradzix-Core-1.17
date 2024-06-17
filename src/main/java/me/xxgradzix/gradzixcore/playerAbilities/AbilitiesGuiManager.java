@@ -60,7 +60,7 @@ public class AbilitiesGuiManager {
 //            GuiItem sila4 = ItemBuilder.from(ItemManager.sila4).asGuiItem();
 //
 //            sila0.setAction((action) -> {
-//                int requiredAmount = 64;
+//                int requiredAmount = 50;
 //                if(p.getInventory().containsAtLeast(me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.perkFragment, requiredAmount)) {
 //
 //                    removeItems(p, me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.perkFragment, requiredAmount);
@@ -74,7 +74,7 @@ public class AbilitiesGuiManager {
 //                }
 //            });
 //            sila1.setAction((action) -> {
-//                int requiredAmount = 128;
+//                int requiredAmount = 100;
 //                if(p.getInventory().containsAtLeast(me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.perkFragment, requiredAmount)) {
 //
 //                    removeItems(p, me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.perkFragment, requiredAmount);
@@ -148,7 +148,7 @@ public class AbilitiesGuiManager {
         GuiItem drop4 = ItemBuilder.from(ItemManager.createDropByLevel(4)).asGuiItem();
 
         drop0.setAction((action) -> {
-            int requiredAmount = 64;
+            int requiredAmount = 50;
             if(p.getInventory().containsAtLeast(me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.perkFragment, requiredAmount)) {
 
                 removeItems(p, me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.perkFragment, requiredAmount);
@@ -156,13 +156,14 @@ public class AbilitiesGuiManager {
                 gui.setItem(action.getSlot(), drop1);
 
                 DataManager.incrementAbilityLevel(Ability.DROP, p);
+                p.sendMessage(ChatColor.GREEN + "Zwiększono poziom umiejętności");
 
             } else {
                 p.sendMessage(ChatColor.RED + "Nie masz wystarczającej ilości odłamków");
             }
         });
         drop1.setAction((action) -> {
-            int requiredAmount = 128;
+            int requiredAmount = 100;
             if(p.getInventory().containsAtLeast(me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.perkFragment, requiredAmount)) {
 
                 removeItems(p, me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.perkFragment, requiredAmount);
@@ -170,26 +171,28 @@ public class AbilitiesGuiManager {
                 gui.setItem(action.getSlot(), drop2);
 
                 DataManager.incrementAbilityLevel(Ability.DROP, p);
+                p.sendMessage(ChatColor.GREEN + "Zwiększono poziom umiejętności");
 
             } else {
                 p.sendMessage(ChatColor.RED + "Nie masz wystarczającej ilości odłamków");
             }
         });
         drop2.setAction((action) -> {
-            int requiredAmount = 192;
+            int requiredAmount = 150;
             if(p.getInventory().containsAtLeast(me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.perkFragment, requiredAmount)) {
 
                 removeItems(p, me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.perkFragment, requiredAmount);
 
                 gui.setItem(action.getSlot(), drop3);
                 DataManager.incrementAbilityLevel(Ability.DROP, p);
+                p.sendMessage(ChatColor.GREEN + "Zwiększono poziom umiejętności");
 
             } else {
                 p.sendMessage(ChatColor.RED + "Nie masz wystarczającej ilości odłamków");
             }
         });
         drop3.setAction((action) -> {
-            int requiredAmount = 256;
+            int requiredAmount = 200;
             if(p.getInventory().containsAtLeast(me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.perkFragment, requiredAmount)) {
 
                 removeItems(p, me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.perkFragment, requiredAmount);
@@ -197,6 +200,7 @@ public class AbilitiesGuiManager {
                 gui.setItem(action.getSlot(), drop4);
 //                    UmiejetnosciConfigFile.incrementDropLevel(p);
                 DataManager.incrementAbilityLevel(Ability.DROP, p);
+                p.sendMessage(ChatColor.GREEN + "Zwiększono poziom umiejętności");
 
 
             } else {
@@ -241,7 +245,7 @@ public class AbilitiesGuiManager {
         GuiItem rank4 = ItemBuilder.from(ItemManager.createRankByLevel(4)).asGuiItem();
 
         rank0.setAction((action) -> {
-            int requiredAmount = 64;
+            int requiredAmount = 50;
             if(p.getInventory().containsAtLeast(me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.perkFragment, requiredAmount)) {
 
                 removeItems(p, me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.perkFragment, requiredAmount);
@@ -257,7 +261,7 @@ public class AbilitiesGuiManager {
             }
         });
         rank1.setAction((action) -> {
-            int requiredAmount = 128;
+            int requiredAmount = 100;
             if(p.getInventory().containsAtLeast(me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.perkFragment, requiredAmount)) {
 
                 removeItems(p, me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.perkFragment, requiredAmount);
@@ -270,7 +274,7 @@ public class AbilitiesGuiManager {
             }
         });
         rank2.setAction((action) -> {
-            int requiredAmount = 192;
+            int requiredAmount = 150;
             if(p.getInventory().containsAtLeast(me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.perkFragment, requiredAmount)) {
 
                 removeItems(p, me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.perkFragment, requiredAmount);
@@ -283,7 +287,7 @@ public class AbilitiesGuiManager {
             }
         });
         rank3.setAction((action) -> {
-            int requiredAmount = 256;
+            int requiredAmount = 200;
             if(p.getInventory().containsAtLeast(me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.perkFragment, requiredAmount)) {
 
                 removeItems(p, me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.perkFragment, requiredAmount);

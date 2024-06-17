@@ -49,7 +49,7 @@ public class SocialMediaRewards {
         ItemManager.init();
 
         plugin.getServer().getPluginManager().registerEvents(new LinkClickEvent(), plugin);
-        plugin.getCommand("nagroda").setExecutor(new NagrodaCommand(dataManager, plugin));
+//        plugin.getCommand("nagroda").setExecutor(new NagrodaCommand(dataManager, plugin));
 
 
     }

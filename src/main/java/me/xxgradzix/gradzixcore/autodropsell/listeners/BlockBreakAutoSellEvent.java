@@ -4,12 +4,10 @@ import com.sk89q.worldedit.bukkit.BukkitAdapter;
 import com.sk89q.worldguard.WorldGuard;
 import com.sk89q.worldguard.protection.ApplicableRegionSet;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
-import me.xxgradzix.gradzixcore.autodropsell.AutoDropSell;
 import me.xxgradzix.gradzixcore.events.Events;
 import me.xxgradzix.gradzixcore.generators.Generators;
+import me.xxgradzix.gradzixcore.globalStatic.EconomyManager;
 import me.xxgradzix.gradzixcore.playerAbilities.data.DataManager;
-import me.xxgradzix.gradzixcore.playerSettings.EconomyManager;
-import me.xxgradzix.gradzixcore.playerSettings.PlayerSettings;
 import me.xxgradzix.gradzixcore.playerSettings.data.database.managers.AutoSellEntityManager;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -58,9 +56,20 @@ public class BlockBreakAutoSellEvent implements Listener {
 
         if(!isLocationInGeneratorRegion(block.getLocation())) return;
 
+        if(block.getType().equals(Material.OAK_LOG) || block.getType().equals(Material.OAK_PLANKS)) {
+            p.getInventory().addItem(new ItemStack(block.getType(), 1));
+            return;
+        }
+
         ItemStack itemInHand = event.getPlayer().getInventory().getItemInMainHand();
 
         int fortuneLevel = itemInHand.getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS);
+
+        if(block.getType().equals(Material.LIGHT_GRAY_WOOL) || block.getType().equals(Material.PINK_WOOL) || block.getType().equals(Material.GRAY_WOOL)) {
+            if(!itemInHand.getType().equals(Material.SHEARS)) {
+                fortuneLevel = 0;
+            }
+        }
 
         int afterFortuneAmount = fortuneLevel > 0 ? 1 + (int) (Math.random() * (fortuneLevel + 2)) : 1;
 
@@ -74,8 +83,7 @@ public class BlockBreakAutoSellEvent implements Listener {
 
         double totalPrice = finalDropAmount * itemPrice;
 
-        EconomyManager economy = new EconomyManager();
-        economy.depositMoney(p, totalPrice);
+        EconomyManager.depositMoney(p, totalPrice);
 
     }
     public boolean isLocationInGeneratorRegion(Location location) {

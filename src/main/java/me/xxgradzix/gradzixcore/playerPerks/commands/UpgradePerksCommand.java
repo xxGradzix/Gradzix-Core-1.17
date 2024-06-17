@@ -7,6 +7,7 @@ import me.xxgradzix.gradzixcore.GlobalItemManager;
 import me.xxgradzix.gradzixcore.Gradzix_Core;
 import me.xxgradzix.gradzixcore.playerAbilities.AbilitiesGuiManager;
 import me.xxgradzix.gradzixcore.playerPerks.PerkGui.PerkGuiManager;
+import me.xxgradzix.gradzixcore.playerPerks.PlayerPerks;
 import me.xxgradzix.gradzixcore.playerPerks.data.database.managers.PlayerPerkEntityManager;
 import me.xxgradzix.gradzixcore.playerPerks.items.ItemManager;
 import me.xxgradzix.gradzixcore.playerPerks.messages.Messages;
@@ -71,7 +72,7 @@ public class UpgradePerksCommand implements CommandExecutor {
         GuiItem perks = ItemBuilder.from(ItemManager.perksItemButton).asGuiItem();
         perks.setAction(event -> {
 
-            if(!player.getInventory().containsAtLeast(ItemManager.perkFragment, 50)) {
+            if(!player.getInventory().containsAtLeast(ItemManager.perkFragment, PlayerPerks.FRAGMENT_COST)) {
                 player.sendMessage(ChatColor.RED + "Nie posiadasz wystarczającej ilości fragmentów perku");
                 return;
             }

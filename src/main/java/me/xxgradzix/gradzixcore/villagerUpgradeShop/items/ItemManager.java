@@ -67,7 +67,7 @@ public class ItemManager {
         if (product.getNeededItem() != null) {
             lore.add("§7Prezedmiot potrzebny do ulepszenia: §b" + product.getNeededItem().getItemMeta().getDisplayName());
         }
-        lore.add("§7Cena ulepszenia: §b" + product.getPrice());
+        lore.add("§7Cena ulepszenia: §b" + product.getPrice() + "$");
 
         meta.setLore(lore);
         item.setItemMeta(meta);
@@ -128,7 +128,7 @@ public class ItemManager {
             }
 
             if (!shiftClick && leftClick && !itemInCursor) {
-                Bukkit.broadcastMessage(ChatColor.AQUA + "Podaj slot: ");
+                player.sendMessage(ChatColor.AQUA + "Podaj slot: ");
                 gui.close(event.getWhoClicked());
                 TextInputFromChat.getPlayerInput(event.getWhoClicked().getUniqueId()).thenAccept(message -> {
                     product.setShopSlot(Integer.parseInt(message));
@@ -145,7 +145,7 @@ public class ItemManager {
                 TextInputFromChat.getPlayerInput(event.getWhoClicked().getUniqueId()).thenAccept(message -> {
                     product.setPrice(Double.parseDouble(message));
                     dataManager.createOrUpdateVillagerUpgradeShopProductEntity(product);
-                    Bukkit.broadcastMessage("Cena ustawiona na: " + message);
+                    player.sendMessage("Cena ustawiona na: " + message);
 
                     Bukkit.getScheduler().runTaskLater(Gradzix_Core.getInstance(), () -> {
                         UpgradeShopEditorCommand.openEditor(player, product.getShopEntity());

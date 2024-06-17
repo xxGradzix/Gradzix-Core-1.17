@@ -2,6 +2,7 @@ package me.xxgradzix.gradzixcore.itemShop.data;
 
 import lombok.RequiredArgsConstructor;
 import me.xxgradzix.gradzixcore.Gradzix_Core;
+import me.xxgradzix.gradzixcore.globalStatic.EconomyManager;
 import me.xxgradzix.gradzixcore.itemShop.data.database.entities.ItemShopCategoryEntity;
 import me.xxgradzix.gradzixcore.itemShop.data.database.entities.ItemShopPlayerBalanceEntity;
 import me.xxgradzix.gradzixcore.itemShop.data.database.entities.ItemShopProductEntity;
@@ -9,7 +10,6 @@ import me.xxgradzix.gradzixcore.itemShop.data.database.enums.ShopType;
 import me.xxgradzix.gradzixcore.itemShop.data.database.managers.ItemShopCategoryEntityManager;
 import me.xxgradzix.gradzixcore.itemShop.data.database.managers.ItemShopPlayerBalanceEntityManager;
 import me.xxgradzix.gradzixcore.itemShop.data.database.managers.ItemShopProductEntityManager;
-import me.xxgradzix.gradzixcore.itemShop.managers.EconomyManager;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -28,8 +28,6 @@ public class DataManager {
 //    private final ItemShopCategoryEntityManager categoryEntityManager;
     private final ItemShopProductEntityManager productEntityManager;
     private final ItemShopPlayerBalanceEntityManager playerBalanceEntityManager;
-
-    private final EconomyManager economyManager;
 
     private static final boolean useDB = Gradzix_Core.USE_DB;
 
@@ -160,7 +158,7 @@ public class DataManager {
             }
             case MONEY:
             {
-                return economyManager.withdrawMoney(player, price);
+                return EconomyManager.withdrawMoney(player, price);
             }
         }
         return false;
@@ -199,7 +197,7 @@ public class DataManager {
             }
             case MONEY:
             {
-                return (economyManager.getBalance(player) - price < 0);
+                return (EconomyManager.getBalance(player) - price < 0);
             }
         }
         return false;
@@ -248,7 +246,7 @@ public class DataManager {
             }
             case MONEY:
             {
-                return economyManager.depositMoney(player, price);
+                return EconomyManager.depositMoney(player, price);
             }
         }
         return false;
@@ -266,7 +264,7 @@ public class DataManager {
             }
             case MONEY:
             {
-                return (int) economyManager.getBalance(player);
+                return (int) EconomyManager.getBalance(player);
             }
         }
         return -1;

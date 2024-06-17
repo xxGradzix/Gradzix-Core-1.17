@@ -21,4 +21,8 @@ public class Messages {
                 ChatColor.GOLD + "www.unimc.pl";
     }
 
+    public static String discordRewardVpln(String playerName, double amountDouble) {
+        return ChatColor.GRAY + "Gracz " + ChatColor.AQUA + playerName + ChatColor.GRAY + " odebrał nagrode z discorda\n" +
+                ChatColor.AQUA + "Nagrode odbierzesz na: " + ChatColor.DARK_AQUA + "dc.unimc.pl";
+    }
 }

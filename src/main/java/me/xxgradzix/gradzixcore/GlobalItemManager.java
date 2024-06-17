@@ -67,7 +67,7 @@ public class GlobalItemManager {
 
     private static void createLightGlass() {
 
-        ItemStack item = new ItemStack(Material.LIGHT_BLUE_STAINED_GLASS_PANE, 1);
+        ItemStack item = new ItemStack(Material.CYAN_STAINED_GLASS_PANE, 1);
         ItemMeta meta = item.getItemMeta();
         meta.setDisplayName(" ");
         item.setItemMeta(meta);

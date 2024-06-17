@@ -5,6 +5,7 @@ import com.j256.ormlite.table.TableUtils;
 import lombok.Getter;
 import me.xxgradzix.gradzixcore.Gradzix_Core;
 import me.xxgradzix.gradzixcore.serverconfig.commands.*;
+import me.xxgradzix.gradzixcore.serverconfig.commands.ranksCommands.RanksCommand;
 import me.xxgradzix.gradzixcore.serverconfig.commands.ranksCommands.UniCommand;
 import me.xxgradzix.gradzixcore.serverconfig.commands.ranksCommands.SVipCommand;
 import me.xxgradzix.gradzixcore.serverconfig.commands.ranksCommands.VipCommand;
@@ -45,13 +46,15 @@ public class ServerConfig {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        ItemManager.init();
 
         plugin.getServer().getPluginManager().registerEvents(new DamageEvent(), plugin);
+        plugin.getServer().getPluginManager().registerEvents(new ElytraSwaperBlock(), plugin);
         plugin.getServer().getPluginManager().registerEvents(new VanishingPotionBottle(plugin), plugin);
-        plugin.getServer().getPluginManager().registerEvents(new OnTotemBreakBlockFirework(), plugin);
+//        plugin.getServer().getPluginManager().registerEvents(new OnTotemBreakBlockFirework(), plugin);
 
         plugin.getServer().getPluginManager().registerEvents(new ElytraAndFallDamageDecrease(), plugin);
-        plugin.getServer().getPluginManager().registerEvents(new FortuneSheers(), plugin);
+//        plugin.getServer().getPluginManager().registerEvents(new FortuneSheers(), plugin);
         plugin.getServer().getPluginManager().registerEvents(new AnvilClick(), plugin);
         plugin.getServer().getPluginManager().registerEvents(new BlockGrief(), plugin);
         BlockPlacingBlocks blockPlacingBlocks = new BlockPlacingBlocks(plugin);
@@ -67,6 +70,8 @@ public class ServerConfig {
         plugin.getCommand("gamma").setExecutor(new GammaCommand());
 
         plugin.getCommand("kosz").setExecutor(new BinCommand());
+        plugin.getCommand("discord").setExecutor(new DiscordCommand());
+        plugin.getCommand("rangi").setExecutor(new RanksCommand());
 
 
         plugin.getCommand("vip").setExecutor(new VipCommand());

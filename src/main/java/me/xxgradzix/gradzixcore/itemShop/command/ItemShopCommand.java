@@ -3,6 +3,8 @@ package me.xxgradzix.gradzixcore.itemShop.command;
 import dev.triumphteam.gui.guis.Gui;
 import dev.triumphteam.gui.guis.GuiItem;
 import lombok.RequiredArgsConstructor;
+import me.xxgradzix.gradzixcore.GlobalItemManager;
+import me.xxgradzix.gradzixcore.globalStatic.EconomyManager;
 import me.xxgradzix.gradzixcore.itemShop.ItemShop;
 import me.xxgradzix.gradzixcore.itemShop.data.DataManager;
 import me.xxgradzix.gradzixcore.itemShop.data.database.entities.ItemShopProductEntity;
@@ -115,6 +117,14 @@ public class ItemShopCommand implements CommandExecutor {
                 .disableAllInteractions()
                 .create();
 
+        chooseProductGui.getFiller().fillBorder(GlobalItemManager.FILLER_GLASS_PANE_GUI_ITEM);
+
+        chooseProductGui.setItem(1, 1, GlobalItemManager.LIGHT_GLASS_PANE_GUI_ITEM);
+        chooseProductGui.setItem(1, 9, GlobalItemManager.LIGHT_GLASS_PANE_GUI_ITEM);
+        chooseProductGui.setItem(3, 1, GlobalItemManager.LIGHT_GLASS_PANE_GUI_ITEM);
+        chooseProductGui.setItem(3, 9, GlobalItemManager.LIGHT_GLASS_PANE_GUI_ITEM);
+
+
         for(ItemShopProductEntity product : dataManager.getItemShopProductsByShopType(shopType)) {
 
             int price = product.getCost();
@@ -123,7 +133,7 @@ public class ItemShopCommand implements CommandExecutor {
 
             productGuiItem.setAction((productAction) -> {
 
-                if(!dataManager.canAfford(player, shopType, price)) {
+                if(EconomyManager.getBalance(player) < price) {
                     player.sendMessage("§cNie stać cię na ten produkt!");
                     return;
                 }

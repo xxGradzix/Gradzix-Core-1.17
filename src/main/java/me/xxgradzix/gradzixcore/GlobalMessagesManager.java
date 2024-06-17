@@ -11,4 +11,24 @@ public class GlobalMessagesManager {
     public static String INVALID_BLOCK = PREFIX + "§cMusisz trzymać blok w ręce!";
     public static String INVALID_PRICE = PREFIX + "§cPodana cena jest nieprawidłowa!";
 
+
+    public static String secondsToTimeFormat(int seconds) {
+        int minutes = seconds / 60;
+        int sec = seconds % 60;
+        int hours = minutes / 60;
+        minutes %= 60;
+        StringBuilder sb = new StringBuilder();
+        if(hours > 0) {
+            sb.append(hours).append(" godzin ");
+        }
+        if(minutes > 0) {
+            sb.append(minutes).append(" minut ");
+        }
+        if(sec > 0) {
+            sb.append(sec).append(" sekund");
+        }
+
+        return sb.toString();
+    }
+
 }

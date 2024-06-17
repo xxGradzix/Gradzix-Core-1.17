@@ -17,7 +17,20 @@ import java.sql.SQLException;
 
 public class PlayerPerks {
 
+    public static final int STRENGTH_MAX_LEVEL = 20;
+    public static final int POISON_MAX_LEVEL = 10;
+    public static final int RESISTANCE_MAX_LEVEL = 20;
+    public static final int LIFE_STEAL_MAX_LEVEL = 10;
+    public static final int ADDITIONAL_HEARTS_MAX_LEVEL = 4;
+    public static final int WEAKNESS_MAX_LEVEL = 10;
+    public static final int SLOWNESS_MAX_LEVEL = 10;
+    public static final int PERK_FRAGMENT_DROP_MAX_LEVEL = 20;
+
     private final Gradzix_Core plugin;
+
+    public static final int FRAGMENT_COST = 100;
+
+
 
     // db change
     private final ConnectionSource connectionSource;
@@ -50,6 +63,7 @@ public class PlayerPerks {
 
         plugin.getServer().getPluginManager().registerEvents(new BookClickIncreaseLevel(playerPerksEntityManager), plugin);
         plugin.getServer().getPluginManager().registerEvents(new PotionEffectAfflictionOnDamage(), plugin);
+        plugin.getServer().getPluginManager().registerEvents(new ResistanceEffectOnDamage(), plugin);
         plugin.getServer().getPluginManager().registerEvents(new StrengthPerkIncreaseDamage(), plugin);
         plugin.getServer().getPluginManager().registerEvents(new SetHeartsOnJoin(), plugin);
         plugin.getServer().getPluginManager().registerEvents(new DropFragmentOnKill(), plugin);

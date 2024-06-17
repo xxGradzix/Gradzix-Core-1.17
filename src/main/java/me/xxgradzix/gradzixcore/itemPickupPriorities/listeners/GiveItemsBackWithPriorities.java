@@ -37,7 +37,7 @@ public class GiveItemsBackWithPriorities implements Listener {
         User user = userManager.getUser(victim.getUniqueId());
         double returnPercent = 0.0;
 
-        if(user == null) {
+        if(user != null) {
             returnPercent = getPlayerReturnPercent(user);
         }
 
@@ -93,7 +93,13 @@ public class GiveItemsBackWithPriorities implements Listener {
 
         Player player = e.getPlayer();
 
-        addItemsWithPriorities(player, itemsToGive);
+        for (ItemStack item : itemsToGive) {
+            if (player.getInventory().firstEmpty() != -1) {
+                player.getInventory().addItem(item);
+            } else {
+                player.getWorld().dropItem(player.getLocation(), item);
+            }
+        }
     }
     private double getPlayerReturnPercent(User player) {
         switch (getPlayerGroup(player)) {

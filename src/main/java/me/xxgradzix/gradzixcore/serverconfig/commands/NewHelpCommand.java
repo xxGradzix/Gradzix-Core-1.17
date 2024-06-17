@@ -22,6 +22,7 @@ public class NewHelpCommand implements CommandExecutor {
         sender.sendMessage(convertColorText("&#555555〉&#42C8EF§l/gamma &#555555-&#C9E4DE możliwość widzenia w ciemności."));
         sender.sendMessage(convertColorText("&#555555〉&#42C8EF§l/sklep &#555555-&#C9E4DE sklep za $ oraz monety czasu."));
         sender.sendMessage(convertColorText("&#555555〉&#42C8EF§l/gornik &#555555-&#C9E4DE cena bloków do sprzedaży."));
+        sender.sendMessage(convertColorText("&#555555〉&#42C8EF§l/portfel &#555555-&#C9E4DE otwiera sklep za VPLN."));
 
         // paragragh sign §
 

@@ -34,6 +34,7 @@ import me.xxgradzix.gradzixcore.upgradeItem.Ulepsz;
 import me.xxgradzix.gradzixcore.villagerUpgradeShop.VillagerUpgradeShop;
 import me.xxgradzix.gradzixcore.warps.Warps;
 import me.xxgradzix.gradzixcore.webRemover.WebRemover;
+import net.dzikoysk.funnyguilds.FunnyGuilds;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
@@ -58,7 +59,8 @@ public final class Gradzix_Core extends JavaPlugin {
     public static final boolean USE_CUSTOM_CLANS = false;
 
     public static final int WEAKNESS_EFFECT_DURATION_TIME_SECONDS = 3;
-    public static final long AFK_REWARD_DELAY_SECONDS = 15L * 60;
+    public static final long BIG_AFK_REWARD_DELAY_SECONDS = 15L * 60;
+    public static final long SMALL_AFK_REWARD_DELAY_SECONDS = (1 * 60L);
     public static final long BOSS_SPAWN_DELAY_SECONDS = 60;
     public static final long REMOVE_BLOCKS_INTERVAL_SECONDS = 300;
     public static final long FAST_GENERATOR_REGENERATION_TIME_SECONDS = 180;
@@ -145,7 +147,6 @@ public final class Gradzix_Core extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new TextInputFromChat(), this);
 
         GlobalItemManager.init();
-//        funnyGuilds = FunnyGuilds.getInstance();
 
         if (!setupEconomy() ) {
             log.severe(String.format("[%s] - Disabled due to no Vault dependency found!", getDescription().getName()));
@@ -234,10 +235,10 @@ public final class Gradzix_Core extends JavaPlugin {
             socialMediaRewards = new SocialMediaRewards(this, connectionSource);
             socialMediaRewards.onEnable();
         }
-//        if (shulkerRework == null) {
-//            shulkerRework = new ShulkerRework(this);
-//            shulkerRework.onEnable();
-//        }
+        if (shulkerRework == null) {
+            shulkerRework = new ShulkerRework(this);
+            shulkerRework.onEnable();
+        }
 //        if (incognito == null) {
 //            incognito = new Incognito(this, connectionSource);
 //            incognito.onEnable();

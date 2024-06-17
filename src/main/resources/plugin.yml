@@ -115,13 +115,12 @@ commands:
     description: pokazuje nagrody z jeziorka
     permission: jeziorko.nagrodyzjeziorka
 
-  nagroda:
-    description: otwiera gui nagrod
-    permission: rewards.nagroda
+#  nagroda:
+#    description: otwiera gui nagrod
+#    permission: rewards.nagroda
 
-  itemshop:
+  sklep:
     description: otwiera item shop
-    permission: itemshop.itemshop
 
   itemshopconfig:
     description: item shop config
@@ -241,6 +240,14 @@ commands:
   createkit:
     description: tworzy kit
     permission: gradzixcore.createkit
+
+  discord:
+    aliases:
+      - nagroda
+    description: otwiera discord
+
+  rangi:
+    description: otwiera gui rang
 
   kiteditor:
     description: edycja kita

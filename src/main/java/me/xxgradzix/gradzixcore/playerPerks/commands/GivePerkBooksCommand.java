@@ -18,7 +18,7 @@ public class GivePerkBooksCommand implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
         if (!(sender instanceof Player)) {
-//            sender.sendMessage();
+            sender.sendMessage();
             return true;
         }
         Player player = (Player) sender;

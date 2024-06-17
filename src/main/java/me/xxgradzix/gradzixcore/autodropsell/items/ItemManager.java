@@ -18,7 +18,7 @@ public class ItemManager {
         List<String> lore = new ArrayList<>();
 
         lore.add(" ");
-        lore.add("§7Cena sprzedaży: §b" + price);
+        lore.add("§7Cena sprzedaży: §b" + price + "$");
 
         meta.setLore(lore);
         autoSellItem.setItemMeta(meta);

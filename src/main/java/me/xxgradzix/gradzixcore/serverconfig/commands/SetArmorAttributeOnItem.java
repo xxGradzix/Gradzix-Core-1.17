@@ -35,7 +35,6 @@ public class SetArmorAttributeOnItem implements CommandExecutor {
 
         itemMeta.addAttributeModifier(Attribute.GENERIC_ARMOR, new AttributeModifier(UUID.randomUUID(), "genericarmor", 3.0, AttributeModifier.Operation.ADD_NUMBER, EquipmentSlot.HEAD));
         itemMeta.addAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS, new AttributeModifier(UUID.randomUUID(), "armortoughtness", 3.0, AttributeModifier.Operation.ADD_NUMBER, EquipmentSlot.HEAD));
-        itemMeta.addAttributeModifier(Attribute.GENERIC_KNOCKBACK_RESISTANCE, new AttributeModifier(UUID.randomUUID(), "knockbackresistance", 1, AttributeModifier.Operation.ADD_NUMBER, EquipmentSlot.HEAD));
         player.sendMessage("Dodano atrybuty do przedmiotu");
         item.setItemMeta(itemMeta);
 

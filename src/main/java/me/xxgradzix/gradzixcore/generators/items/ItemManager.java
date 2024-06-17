@@ -2,6 +2,7 @@ package me.xxgradzix.gradzixcore.generators.items;
 
 import me.xxgradzix.gradzixcore.generators.data.database.entities.GeneratorEntity;
 import me.xxgradzix.gradzixcore.generators.data.database.entities.GeneratorLocationEntity;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
@@ -9,6 +10,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ItemManager {
 
@@ -39,6 +41,8 @@ public class ItemManager {
 
         generatorTypeButton = item;
     }
+
+
     private static void createGeneratorLocationsButton() {
 
         ItemStack item = new ItemStack(Material.FILLED_MAP, 1);

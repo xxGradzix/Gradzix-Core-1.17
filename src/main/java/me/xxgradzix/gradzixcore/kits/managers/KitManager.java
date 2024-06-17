@@ -24,7 +24,7 @@ public class KitManager {
     private static final int KIT_PREVIEW_ROWS = 5;
     private static DataManager dataManager;
 
-    private static HashMap<Player, HashMap<String, Long>> playerCooldowns = new HashMap<>();
+    private static HashMap<UUID, HashMap<String, Long>> playerCooldowns = new HashMap<>();
 
     public KitManager(DataManager dataManager) {
         this.dataManager = dataManager;
@@ -82,6 +82,33 @@ public class KitManager {
                 .disableAllInteractions()
                 .create();
 
+        gui.getFiller().fillBetweenPoints(1, 3, 1, 4, GlobalItemManager.FILLER_GLASS_PANE_GUI_ITEM);
+        gui.getFiller().fillBetweenPoints(1, 6, 1, 7, GlobalItemManager.FILLER_GLASS_PANE_GUI_ITEM);
+        gui.getFiller().fillBetweenPoints(5, 3, 5, 4, GlobalItemManager.FILLER_GLASS_PANE_GUI_ITEM);
+        gui.getFiller().fillBetweenPoints(5, 6, 5, 7, GlobalItemManager.FILLER_GLASS_PANE_GUI_ITEM);
+
+
+        gui.setItem(3, 1, GlobalItemManager.FILLER_GLASS_PANE_GUI_ITEM);
+        gui.setItem(3, 9, GlobalItemManager.FILLER_GLASS_PANE_GUI_ITEM);
+
+        gui.setItem(1, 2, GlobalItemManager.DARK_GLASS_PANE_GUI_ITEM);
+        gui.setItem(5, 2, GlobalItemManager.DARK_GLASS_PANE_GUI_ITEM);
+
+        gui.setItem(1, 8, GlobalItemManager.DARK_GLASS_PANE_GUI_ITEM);
+        gui.setItem(5, 8, GlobalItemManager.DARK_GLASS_PANE_GUI_ITEM);
+
+        gui.setItem(2, 1, GlobalItemManager.DARK_GLASS_PANE_GUI_ITEM);
+        gui.setItem(2, 9, GlobalItemManager.DARK_GLASS_PANE_GUI_ITEM);
+
+        gui.setItem(4, 1, GlobalItemManager.DARK_GLASS_PANE_GUI_ITEM);
+        gui.setItem(4, 9, GlobalItemManager.DARK_GLASS_PANE_GUI_ITEM);
+
+        gui.setItem(1, 1, GlobalItemManager.LIGHT_GLASS_PANE_GUI_ITEM);
+        gui.setItem(5, 1, GlobalItemManager.LIGHT_GLASS_PANE_GUI_ITEM);
+
+        gui.setItem(1, 9, GlobalItemManager.LIGHT_GLASS_PANE_GUI_ITEM);
+        gui.setItem(5, 9, GlobalItemManager.LIGHT_GLASS_PANE_GUI_ITEM);
+
         for (ItemInKitEntity itemInKitEntity : kit.getKitItems()) {
             if(itemInKitEntity.getItemStack() == null) continue;
             if(itemInKitEntity.getSlot() == -1) {
@@ -109,13 +136,13 @@ public class KitManager {
 
         // check if player has cooldown, if not collect and add cooldown to player
 
-        HashMap<String, Long> playerCooldown = playerCooldowns.getOrDefault(player, new HashMap<>());
+        HashMap<String, Long> playerCooldown = playerCooldowns.getOrDefault(player.getUniqueId(), new HashMap<>());
 
         Long orDefault = playerCooldown.getOrDefault(kit.getKitName(), 0L);
 
         if(orDefault < System.currentTimeMillis() || player.isOp()) {
-            playerCooldown.put(kit.getKitName(), System.currentTimeMillis() + kit.getCooldownSeconds() * 1000);
-            playerCooldowns.put(player, playerCooldown);
+            playerCooldown.put(kit.getKitName(), System.currentTimeMillis() + kit.getCooldownSeconds() * 1000L);
+            playerCooldowns.put(player.getUniqueId(), playerCooldown);
 
             for (ItemStack item : itemsToCollect) {
                 player.getInventory().addItem(item);
@@ -128,7 +155,7 @@ public class KitManager {
             player.sendMessage(Messages.KIT_COOLDOWN.replace("{hours}", String.valueOf(hours)).replace("{minutes}", String.valueOf(minutes)).replace("{seconds}", String.valueOf(seconds)));
         }
 
-        playerCooldowns.put(player, playerCooldown);
+        playerCooldowns.put(player.getUniqueId(), playerCooldown);
     }
     public static void createKit(Player player, String kitName) {
         dataManager.createKit(kitName, Arrays.asList(player.getInventory().getContents()));

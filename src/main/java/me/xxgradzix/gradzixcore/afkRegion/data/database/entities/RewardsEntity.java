@@ -22,10 +22,14 @@ public class RewardsEntity {
     @DatabaseField(persisterClass = ItemStackClassPersister.class, columnDefinition = "TEXT")
     private ItemStack smallReward;
 
+    @DatabaseField
+    private Double smallRewardMoney;
+
     public RewardsEntity(ItemStack bigReward, ItemStack smallReward) {
         this.id = 1;
         this.bigReward = bigReward;
         this.smallReward = smallReward;
+        this.smallRewardMoney = 1.0;
     }
 
     public RewardsEntity() {
@@ -51,6 +55,13 @@ public class RewardsEntity {
     public ItemStack getSmallReward() {
         return smallReward;
     }
+    public Double getSmallRewardMoney() {
+        return smallRewardMoney;
+    }
+    public void setSmallRewardMoney(Double smallRewardMoney) {
+        this.smallRewardMoney = smallRewardMoney;
+    }
+
 
     public void setSmallReward(ItemStack smallReward) {
         this.smallReward = smallReward;

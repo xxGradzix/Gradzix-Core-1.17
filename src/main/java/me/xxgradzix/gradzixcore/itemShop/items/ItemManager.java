@@ -35,7 +35,7 @@ public class ItemManager {
             lore = new ArrayList<>();
         }
         lore.add(" ");
-        lore.add(ChatColor.GRAY + "Cena tego przedmiotu to: " + ChatColor.GREEN + price);
+        lore.add(ChatColor.GRAY + "Cena tego przedmiotu to: " + ChatColor.GREEN + price + "$");
         meta.setLore(lore);
         item.setItemMeta(meta);
         return item;

@@ -1,6 +1,6 @@
 package me.xxgradzix.gradzixcore.playerSettings.listeners;
 
-import me.xxgradzix.gradzixcore.playerSettings.EconomyManager;
+import me.xxgradzix.gradzixcore.globalStatic.EconomyManager;
 import me.xxgradzix.gradzixcore.playerSettings.data.DataManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -29,8 +29,7 @@ public class BlockBreakSell implements Listener {
 
                 player.getInventory().removeItem(keyItem);
 
-                EconomyManager economy = new EconomyManager();
-                economy.depositMoney(player, itemPrice);
+                EconomyManager.depositMoney(player, itemPrice);
 
                 if(keyItem.getItemMeta().hasDisplayName()) {
                     player.sendMessage("§7Sprzedałeś przedmiot " + keyItem.getItemMeta().getDisplayName() + " za §2" + itemPrice + "$");

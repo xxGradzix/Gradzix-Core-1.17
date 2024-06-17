@@ -24,8 +24,7 @@ public class ItemManager {
 
         ArrayList<String> lore = new ArrayList<>();
         lore.add("");
-        lore.add("Służy do ulepszania XXX");
-        lore.add("");
+        lore.add(ChatColor.LIGHT_PURPLE + "Służy do wymiany na przedmioty");
 
         meta.setLore(lore);
 

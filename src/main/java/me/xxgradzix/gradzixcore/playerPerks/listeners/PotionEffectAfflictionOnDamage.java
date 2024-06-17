@@ -4,6 +4,7 @@ import me.xxgradzix.gradzixcore.playerPerks.PerkType;
 import me.xxgradzix.gradzixcore.playerPerks.data.database.DataManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -16,6 +17,9 @@ public class PotionEffectAfflictionOnDamage implements Listener {
 
     @EventHandler
     public void onPlayerDamage(EntityDamageByEntityEvent event) {
+
+        if (event.isCancelled()) return;
+
         if(!(event.getEntity() instanceof Player)) return;
         if(!(event.getDamager() instanceof Player)) return;
 
@@ -38,10 +42,9 @@ public class PotionEffectAfflictionOnDamage implements Listener {
             }
             damager.setHealth(healthToSEt);
         }
-        if(shouldApplyEffect(DataManager.getPerkEntity(damager).getPerkTypeLevel(PerkType.RESISTANCE))) {
-            damager.addPotionEffect(PotionEffectType.DAMAGE_RESISTANCE.createEffect(20*3, 1));
-        }
-
+//        if(shouldApplyEffect(DataManager.getPerkEntity(damager).getPerkTypeLevel(PerkType.RESISTANCE))) {
+//            damager.addPotionEffect(PotionEffectType.DAMAGE_RESISTANCE.createEffect(20*3, 1));
+//        }
     }
     private static boolean shouldApplyEffect(int chance) {
         Random random = new Random();

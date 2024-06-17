@@ -53,7 +53,7 @@ public class DropFragmentOnKill implements Listener {
         Bukkit.getScheduler().runTaskLaterAsynchronously(Gradzix_Core.getInstance(), () -> {
             killedPlayersSet.remove(dead.getUniqueId());
             killedPlayers.put(killer.getUniqueId(), killedPlayersSet);
-        }, 20 * 60 * 30);
+        }, 20 * 60 * 5);
 
     }
     private static double getPlayerRewardChance(User player) {

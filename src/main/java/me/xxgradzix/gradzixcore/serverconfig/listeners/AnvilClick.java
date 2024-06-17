@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.ItemStack;
 
 public class AnvilClick implements Listener {
 
@@ -21,8 +22,14 @@ public class AnvilClick implements Listener {
         event.setCancelled(true);
         Player player = event.getPlayer();
 
-        player.performCommand("repair all");
-        player.sendMessage(GlobalMessagesManager.PREFIX + "Naprawiono wszystkie przedmioty!");
+        ItemStack itemStack = player.getInventory().getItemInMainHand();
+
+        if (itemStack == null) return;
+        if (itemStack.getType() == Material.AIR) return;
+
+        itemStack.setDurability((short) 0);
+
+        player.sendMessage(GlobalMessagesManager.PREFIX + "Naprawiono przedmiot!");
 
         // some code
     }

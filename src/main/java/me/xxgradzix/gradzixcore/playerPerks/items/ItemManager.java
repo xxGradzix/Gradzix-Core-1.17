@@ -1,6 +1,7 @@
 package me.xxgradzix.gradzixcore.playerPerks.items;
 
 import me.xxgradzix.gradzixcore.playerPerks.PerkType;
+import me.xxgradzix.gradzixcore.playerPerks.PlayerPerks;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -297,7 +298,7 @@ public class ItemManager {
 
         lore.add(" ");
         lore.add("§8» §7Można wylosować jedną z §38 ksiąg");
-        lore.add(ChatColor.GRAY + "§8» §7Koszt§8: §3100x Fragment Księgi");
+        lore.add(ChatColor.GRAY + "§8» §7Koszt§8: §3" + PlayerPerks.FRAGMENT_COST +"x Fragment Księgi");
 
         meta.addEnchant(Enchantment.LUCK, 1, false);
         meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);

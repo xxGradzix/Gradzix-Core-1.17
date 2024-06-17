@@ -39,9 +39,13 @@ public class AfkRegion {
 
     private static ItemStack smallReward = new ItemStack(Material.DIAMOND);
     private static ItemStack bigReward = new ItemStack(Material.DIAMOND);
+    private static Double smallRewardMoney = 1.0;
 
     public static ItemStack getSmallReward() {
         return smallReward;
+    }
+    public static Double getSmallRewardMoney() {
+        return smallRewardMoney;
     }
     public static ItemStack getBigReward() {
         return bigReward;
@@ -49,6 +53,7 @@ public class AfkRegion {
     public static void updateRewards() {
         smallReward = rewardsEntityManager.getRewardsEntity().getSmallReward();
         bigReward = rewardsEntityManager.getRewardsEntity().getBigReward();
+        smallRewardMoney = rewardsEntityManager.getRewardsEntity().getSmallRewardMoney();
     }
 
     public void onEnable() {
@@ -60,6 +65,7 @@ public class AfkRegion {
         }
 
         updateRewards();
+        GetRewardInAfkRegion.startCounterForAllPlayers();
 
         plugin.getServer().getPluginManager().registerEvents(new EnterRegionListener(), plugin);
         plugin.getCommand("setAfkReward").setExecutor(new SetRewardCommand(rewardsEntityManager));

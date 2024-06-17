@@ -30,6 +30,15 @@ public class VPLNCommand implements CommandExecutor {
         String playerName = args[0];
         String amount = args[1];
 
+        boolean isDiscord = false;
+
+        if(args.length == 3) {
+            String reason = args[2];
+            if(reason.equalsIgnoreCase("discord")) {
+                isDiscord = true;
+            }
+        }
+
         double amountDouble;
         try {
             amountDouble = Double.parseDouble(amount);
@@ -38,9 +47,13 @@ public class VPLNCommand implements CommandExecutor {
             return true;
         }
 
+        String orderCreator = sender.getName();
+        if(isDiscord) {
+            orderCreator = "DISCORD";
+        }
 
         VPLNOrderDTO dto = VPLNOrderDTO.builder()
-                .orderCreator(sender.getName())
+                .orderCreator(orderCreator)
                 .VPLNAmount(amountDouble)
                 .orderStatus("PENDING")
                 .playerName(playerName)
@@ -48,7 +61,13 @@ public class VPLNCommand implements CommandExecutor {
 
         dataManager.createNewVPLNOrder(dto);
 
-        Bukkit.broadcastMessage(Messages.playerBoughtVpln(playerName, amountDouble));
+        if(isDiscord) {
+            Bukkit.broadcastMessage(Messages.discordRewardVpln(playerName, amountDouble));
+        } else {
+            Bukkit.broadcastMessage(Messages.playerBoughtVpln(playerName, amountDouble));
+
+        }
+
 
         return true;
     }

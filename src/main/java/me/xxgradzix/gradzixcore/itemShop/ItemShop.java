@@ -16,7 +16,6 @@ import me.xxgradzix.gradzixcore.itemShop.data.database.managers.ItemShopProductE
 import me.xxgradzix.gradzixcore.itemShop.items.ItemManager;
 import me.xxgradzix.gradzixcore.itemShop.listeners.OnPlayerJoinCreateBalanceEntity;
 import me.xxgradzix.gradzixcore.itemShop.listeners.OnPlayerKillAddPoint;
-import me.xxgradzix.gradzixcore.itemShop.managers.EconomyManager;
 
 import java.sql.SQLException;
 
@@ -33,7 +32,6 @@ public class ItemShop {
     private ItemShopCategoryEntityManager itemShopCategoryEntityManager;
     private ItemShopProductEntityManager itemShopProductEntityManager;
     private ItemShopPlayerBalanceEntityManager itemShopPlayerBalanceEntityManager;
-    private EconomyManager economyManager;
     public void configureDB() throws SQLException {
 
         TableUtils.createTableIfNotExists(connectionSource, ItemShopProductEntity.class);
@@ -57,10 +55,9 @@ public class ItemShop {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        economyManager = new EconomyManager();
-        dataManager = new DataManager(itemShopProductEntityManager, itemShopPlayerBalanceEntityManager, economyManager);
+        dataManager = new DataManager(itemShopProductEntityManager, itemShopPlayerBalanceEntityManager);
 
-        plugin.getCommand("itemShop").setExecutor(new ItemShopCommand(dataManager));
+        plugin.getCommand("sklep").setExecutor(new ItemShopCommand(dataManager));
         plugin.getCommand("itemShopConfig").setExecutor(new ItemShopConfigCommand(dataManager));
         plugin.getCommand("stankonta").setExecutor(new ItemShopBalanceCommand(dataManager));
 

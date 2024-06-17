@@ -21,7 +21,10 @@ public class EnterRegionListener implements Listener {
 
         if(!event.getRegionName().startsWith(AfkRegion.afkRegionName)) return;
         showPlayersInAfkRegion(player);
-        GetRewardInAfkRegion.startCounterForPlayer(player);
+//        GetRewardInAfkRegion.startCounterForPlayer(player);
+
+        GetRewardInAfkRegion.playerEnterAfkRegion(player);
+
     }
     @EventHandler
     public void onPlayerLeftAfkRegion(RegionLeftEvent event) {
@@ -31,7 +34,9 @@ public class EnterRegionListener implements Listener {
         if(!event.getRegionName().startsWith(AfkRegion.afkRegionName)) return;
 
         showPlayerOutsideAfkRegion(player);
-        GetRewardInAfkRegion.cancelPlayerTask(player);
+//        GetRewardInAfkRegion.cancelPlayerTask(player);
+
+            GetRewardInAfkRegion.playerLeaveAfkRegion(player);
     }
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {

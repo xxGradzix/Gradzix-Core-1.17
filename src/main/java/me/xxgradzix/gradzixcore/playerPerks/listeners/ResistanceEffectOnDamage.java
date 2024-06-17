@@ -17,9 +17,9 @@ import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
 
-public class WeaknessEffectAfflictionOnDamage implements Listener {
+public class ResistanceEffectOnDamage implements Listener {
 
-    private static Map<UUID, Integer> weakenedPlayers = new HashMap<>();
+    private static Map<UUID, Integer> resistanePlayers = new HashMap<>();
 
     private final BukkitScheduler scheduler = Bukkit.getScheduler();
 
@@ -31,27 +31,25 @@ public class WeaknessEffectAfflictionOnDamage implements Listener {
         if(!(event.getDamager() instanceof Player)) return;
 
         Player damaged = (Player) event.getEntity();
-        Player damager = (Player) event.getDamager();
 
-        if(weakenedPlayers.containsKey(damaged.getUniqueId())) {
-            event.setDamage(event.getDamage() * 1.10);
-            return;
+        if(resistanePlayers.containsKey(damaged.getUniqueId())) {
+            event.setDamage(event.getDamage() * 0.8);
         }
 
-        if(!shouldApplyEffect(DataManager.getPerkEntity(damager).getPerkTypeLevel(PerkType.WEAKNESS))) return;
+        if(!shouldApplyEffect(DataManager.getPerkEntity(damaged).getPerkTypeLevel(PerkType.RESISTANCE))) return;
 
-        if(weakenedPlayers.containsKey(damaged.getUniqueId())) {
-            scheduler.cancelTask(weakenedPlayers.get(damaged.getUniqueId()));
+        if(resistanePlayers.containsKey(damaged.getUniqueId())) {
+            scheduler.cancelTask(resistanePlayers.get(damaged.getUniqueId()));
         }
 
-        damaged.addPotionEffect(PotionEffectType.GLOWING.createEffect(20 * Gradzix_Core.WEAKNESS_EFFECT_DURATION_TIME_SECONDS, 1));
+//        damaged.addPotionEffect(PotionEffectType.GLOWING.createEffect(20 * Gradzix_Core.WEAKNESS_EFFECT_DURATION_TIME_SECONDS, 1));
 
         int taskId = scheduler.runTaskLater(Gradzix_Core.getInstance(), () -> {
-            weakenedPlayers.remove(damaged.getUniqueId());
-        }, 20 * Gradzix_Core.WEAKNESS_EFFECT_DURATION_TIME_SECONDS).getTaskId();
+            resistanePlayers.remove(damaged.getUniqueId());
+        }, 20 * 3).getTaskId();
 
-        weakenedPlayers.put(damaged.getUniqueId(), taskId);
-        damager.sendMessage(ChatColor.GREEN + "Udało Ci się nałożyć efekt osłabienia na przeciwnika!");
+        resistanePlayers.put(damaged.getUniqueId(), taskId);
+        damaged.sendMessage(ChatColor.GREEN + "Otrzymałeś efekt odporności!");
 
     }
     private static boolean shouldApplyEffect(int chance) {
@@ -60,4 +58,5 @@ public class WeaknessEffectAfflictionOnDamage implements Listener {
 
         return result <= ((double) chance / 100);
     }
+
 }

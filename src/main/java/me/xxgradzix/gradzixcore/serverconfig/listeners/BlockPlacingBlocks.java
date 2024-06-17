@@ -41,6 +41,27 @@ public class BlockPlacingBlocks extends BukkitRunnable implements Listener {
     }
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent event) {
+        if(event.getBlock().getType().equals(Material.PLAYER_HEAD)
+        || event.getBlock().getType().equals(Material.PLAYER_WALL_HEAD)
+        || event.getBlock().getType().equals(Material.CHEST)
+        || event.getBlock().getType().equals(Material.TRAPPED_CHEST)
+        || event.getBlock().getType().equals(Material.CRAFTING_TABLE)
+        || event.getBlock().getType().equals(Material.OAK_SIGN)
+        || event.getBlock().getType().equals(Material.OAK_WALL_SIGN)
+        || event.getBlock().getType().equals(Material.OAK_DOOR)
+        || event.getBlock().getType().equals(Material.OAK_TRAPDOOR)
+        || event.getBlock().getType().equals(Material.OAK_FENCE)
+        || event.getBlock().getType().equals(Material.OAK_FENCE_GATE)
+        || event.getBlock().getType().equals(Material.OAK_STAIRS)
+        || event.getBlock().getType().equals(Material.OAK_SLAB)
+        || event.getBlock().getType().equals(Material.OAK_PRESSURE_PLATE)
+        || event.getBlock().getType().equals(Material.STRIPPED_OAK_LOG)) {
+
+            event.setCancelled(true);
+            return;
+        }
+
+
 //        ArrayList<Material> blockTypes = new ArrayList<>();
         if(event.getPlayer().getGameMode().equals(GameMode.SURVIVAL)) {
             placedBlocks.add(event.getBlock().getLocation());

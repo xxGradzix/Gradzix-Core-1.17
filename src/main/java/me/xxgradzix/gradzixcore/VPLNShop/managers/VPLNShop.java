@@ -6,6 +6,7 @@ import me.xxgradzix.gradzixcore.GlobalItemManager;
 import me.xxgradzix.gradzixcore.VPLNShop.data.DataManager;
 import me.xxgradzix.gradzixcore.VPLNShop.items.ItemManager;
 import me.xxgradzix.gradzixcore.VPLNShop.messages.Messages;
+import me.xxgradzix.gradzixcore.playerPerks.PerkType;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -92,6 +93,7 @@ public class VPLNShop {
             gui.close(player);
         });
 
+
         gui.setItem(2, 3, vipItem);
         gui.setItem(2, 4, svipItem);
         gui.setItem(2, 6, uniItem);
@@ -104,8 +106,8 @@ public class VPLNShop {
 
         gui.getFiller().fillBetweenPoints(1, 3, 1, 4, GlobalItemManager.FILLER_GLASS_PANE_GUI_ITEM);
         gui.getFiller().fillBetweenPoints(1, 6, 1, 7, GlobalItemManager.FILLER_GLASS_PANE_GUI_ITEM);
-        gui.getFiller().fillBetweenPoints(6, 3, 6, 4, GlobalItemManager.FILLER_GLASS_PANE_GUI_ITEM);
-        gui.getFiller().fillBetweenPoints(6, 6, 6, 7, GlobalItemManager.FILLER_GLASS_PANE_GUI_ITEM);
+        gui.getFiller().fillBetweenPoints(5, 3, 5, 4, GlobalItemManager.FILLER_GLASS_PANE_GUI_ITEM);
+        gui.getFiller().fillBetweenPoints(5, 6, 5, 7, GlobalItemManager.FILLER_GLASS_PANE_GUI_ITEM);
 
 
         gui.setItem(3, 1, GlobalItemManager.FILLER_GLASS_PANE_GUI_ITEM);
@@ -379,7 +381,7 @@ public class VPLNShop {
                 return;
         }
 
-        GuiItem showItem = ItemManager.getShowcaseItem(showcaseItem.getItemStack(), amount, balance);
+        GuiItem showItem = ItemManager.getShowcaseItem(showcaseItem.getItemStack(), amount, getTotalPrice(service, amount));
 
         GuiItem confirm = ItemManager.createConfirmButton(getTotalPrice(service, amount));
 
@@ -427,7 +429,11 @@ public class VPLNShop {
             return;
         }
         dataManager.subtractVPLNAmount(player, FRAGMENT_PRICE * amount);
-        player.getInventory().addItem(me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.perkFragment);
+        for(int i = 0; i < amount; i++)
+            player.getInventory().addItem(me.xxgradzix.gradzixcore.playerPerks.items.ItemManager.getPerkBook(PerkType.FRAGMENT));
+
+
+
         player.sendMessage(Messages.SUCCESSFUL_FRAGMENT_PURCHASE);
     }
     private void buyScratchCard(Player player, int amount) {
@@ -525,7 +531,7 @@ public class VPLNShop {
         dataManager.subtractVPLNAmount(player, UNI_KEY_PRICE * amount);
         getServer().dispatchCommand(getConsoleSender(), "excellentcrates key give " +
                 player.getName() +
-                " magiczna " + amount);
+                " unibox " + amount);
 
         player.sendMessage(Messages.SUCCESSFUL_UNI_KEY_PURCHASE);
     }

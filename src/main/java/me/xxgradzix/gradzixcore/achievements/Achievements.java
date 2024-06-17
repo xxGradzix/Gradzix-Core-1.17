@@ -1,4 +1,4 @@
-package me.xxgradzix.gradzixcore.villagerUpgradeShop;
+package me.xxgradzix.gradzixcore.achievements;
 
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
@@ -14,22 +14,19 @@ import me.xxgradzix.gradzixcore.villagerUpgradeShop.items.ItemManager;
 
 import java.sql.SQLException;
 
-public class VillagerUpgradeShop {
+public class Achievements {
 
     private final Gradzix_Core plugin;
     private final ConnectionSource connectionSource;
 
-    private static VillagerUpgradeShopEntityManager villagerUpgradeShopEntityManager;
-    private static VillagerUpgradeShopProductEntityManager villagerUpgradeShopProductEntityManager;
+    private static AchievementsEntityManager achievementsEntityManager;
 
     public void configureDB() throws SQLException {
 
-        TableUtils.createTableIfNotExists(connectionSource, VillagerUpgradeShopEntity.class);
-        TableUtils.createTableIfNotExists(connectionSource, VillagerUpgradeShopProductEntity.class);
-        villagerUpgradeShopEntityManager = new VillagerUpgradeShopEntityManager(connectionSource);
-        villagerUpgradeShopProductEntityManager = new VillagerUpgradeShopProductEntityManager(connectionSource);
+        TableUtils.createTableIfNotExists(connectionSource, AchievementsEntity.class);
+        achievementsEntityManager = new AchievementsEntityManager(connectionSource);
     }
-    public VillagerUpgradeShop(Gradzix_Core plugin, ConnectionSource connectionSource) {
+    public Achievements(Gradzix_Core plugin, ConnectionSource connectionSource) {
         this.plugin = plugin;
         this.connectionSource = connectionSource;
     }
@@ -48,8 +45,7 @@ public class VillagerUpgradeShop {
         new ItemManager(dataManager);
 //        plugin.getServer().getPluginManager().registerEvents(new BlockGrief(), plugin);
 
-        plugin.getCommand("upgradeshop").setExecutor(new UpgradeShopCommand(dataManager));
-        plugin.getCommand("upgradeshopeditor").setExecutor(new UpgradeShopEditorCommand(dataManager));
+        plugin.getCommand("osiagniecia").setExecutor(new UpgradeShopCommand(dataManager));
 
     }
 

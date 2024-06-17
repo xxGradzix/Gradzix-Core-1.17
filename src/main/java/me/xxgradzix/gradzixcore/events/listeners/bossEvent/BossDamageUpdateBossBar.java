@@ -36,6 +36,7 @@ public class BossDamageUpdateBossBar implements Listener {
             if(healthBefore > healthMarker * healthPart && health <= healthMarker * healthPart) {
 //                Bukkit.broadcastMessage(ChatColor.RED + "Utracono co najmniej 10% maksymalnego zdrowia!");
                 BossManager.dropSmallReward();
+                BossManager.spawnMinions();
             }
 
             BossManager.updateBossBar();

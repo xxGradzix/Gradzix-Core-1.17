@@ -1,8 +1,15 @@
 package me.xxgradzix.gradzixcore.events.listeners.keyEvent;
 
+import com.sk89q.worldedit.bukkit.BukkitAdapter;
+import com.sk89q.worldguard.WorldGuard;
+import com.sk89q.worldguard.protection.ApplicableRegionSet;
+import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import me.xxgradzix.gradzixcore.events.Events;
+import me.xxgradzix.gradzixcore.generators.Generators;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
+import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -22,7 +29,10 @@ public class OnBlockBreak implements Listener {
 
         if(player.getGameMode().equals(GameMode.CREATIVE)) return;
 
+        if(!isLocationInGeneratorRegion(event.getBlock().getLocation())) return;
+
         double chance = Events.getKeyDropChance();
+
 
         if(shouldDrop(chance)) {
 
@@ -45,5 +55,21 @@ public class OnBlockBreak implements Listener {
         return result <= chance;
     }
 
+    public boolean isLocationInGeneratorRegion(Location location) {
+        World world = location.getWorld();
+        if (world == null) {
+            return false;
+        }
+
+        ApplicableRegionSet regionSet = WorldGuard.getInstance().getPlatform().getRegionContainer().createQuery().getApplicableRegions(BukkitAdapter.adapt(location));
+
+        for (ProtectedRegion region : regionSet) {
+            if (region.getId().startsWith(Generators.GENERATOR_REGION_PREFIX)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 
 }

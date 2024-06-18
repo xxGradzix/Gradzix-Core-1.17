@@ -25,6 +25,10 @@ public abstract class BasicEntityManager<T, ID> {
         entityDao.createOrUpdate(entity);
     }
 
+    public void createEntityIfNotExists(T entity) throws SQLException {
+        entityDao.createIfNotExists(entity);
+    }
+
     public void deleteEntity(T entity) throws SQLException {
         entityDao.delete(entity);
     }

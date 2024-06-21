@@ -1,10 +1,16 @@
 package me.xxgradzix.gradzixcore.itemPickupPriorities.listeners;
 
+import com.sk89q.worldedit.bukkit.BukkitAdapter;
+import com.sk89q.worldguard.WorldGuard;
+import com.sk89q.worldguard.protection.ApplicableRegionSet;
+import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import me.xxgradzix.gradzixcore.itemPickupPriorities.ItemPickupPriorities;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.model.user.User;
 import net.luckperms.api.model.user.UserManager;
+import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -29,6 +35,8 @@ public class GiveItemsBackWithPriorities implements Listener {
     public void onPlayerDeath(PlayerDeathEvent event) {
 
         Player victim = event.getEntity();
+
+        if(isLocationInEventRegion(victim.getLocation())) return;
 
         LuckPerms luckPerms = LuckPermsProvider.get();
 
@@ -113,6 +121,22 @@ public class GiveItemsBackWithPriorities implements Listener {
                 return 0.2;
 
         }
+    }
+    public boolean isLocationInEventRegion(Location location) {
+        World world = location.getWorld();
+        if (world == null) {
+            return false;
+        }
+
+        ApplicableRegionSet regionSet = WorldGuard.getInstance().getPlatform().getRegionContainer().createQuery().getApplicableRegions(BukkitAdapter.adapt(location));
+
+        for (ProtectedRegion region : regionSet) {
+            if (region.getId().startsWith("event")) {
+                return true;
+            }
+        }
+
+        return false;
     }
     private void addItemsWithPriorities(Player player, ArrayList<ItemStack> items) {
         PlayerInventory inventory = player.getInventory();

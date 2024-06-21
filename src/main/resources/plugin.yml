@@ -273,3 +273,7 @@ commands:
   kiteditor:
     description: edycja kita
     permission: gradzixcore.kiteditor
+
+  resetujDzienneWyzwania:
+    description: resetuje progres
+    permission: gradzixcore.resetujDzienneWyzwania

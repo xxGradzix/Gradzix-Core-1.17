@@ -9,6 +9,12 @@ import java.util.UUID;
 public class QuestsManagers {
 
 
+    public static void resetDailyQuests() {
+        for(QuestType questType : QuestType.values()) {
+            collectStatus.get(questType).clear();
+            questProgress.get(questType).clear();
+        }
+    }
 
     private enum CollectStatus {
         COLLECTED,

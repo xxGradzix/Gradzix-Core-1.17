@@ -2,6 +2,7 @@ package me.xxgradzix.gradzixcore.dailyQuests;
 
 import me.xxgradzix.gradzixcore.Gradzix_Core;
 import me.xxgradzix.gradzixcore.dailyQuests.commands.DailyQuestsCommand;
+import me.xxgradzix.gradzixcore.dailyQuests.commands.DailyQuestsResetCommand;
 
 public class DailyQuests {
 
@@ -22,6 +23,7 @@ public class DailyQuests {
         plugin.getServer().getPluginManager().registerEvents(new QuestListener(), plugin);
 
         plugin.getCommand("codziennewyzwanie").setExecutor(new DailyQuestsCommand());
+        plugin.getCommand("resetujDzienneWyzwania").setExecutor(new DailyQuestsResetCommand());
 
     }
 

@@ -14,8 +14,9 @@ public class OnQuitSave implements Listener {
     private DataManager dataManager;
     private AchievementManager achievementManager;
 
-    public OnQuitSave(DataManager dataManager) {
+    public OnQuitSave(DataManager dataManager, AchievementManager achievementManager) {
         this.dataManager = dataManager;
+        this.achievementManager = achievementManager;
     }
 
     @EventHandler

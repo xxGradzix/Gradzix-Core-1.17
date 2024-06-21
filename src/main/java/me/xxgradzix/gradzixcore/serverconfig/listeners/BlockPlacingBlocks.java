@@ -41,6 +41,9 @@ public class BlockPlacingBlocks extends BukkitRunnable implements Listener {
     }
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent event) {
+
+        if(event.getPlayer().getGameMode().equals(GameMode.CREATIVE)) return;
+
         if(event.getBlock().getType().equals(Material.PLAYER_HEAD)
         || event.getBlock().getType().equals(Material.PLAYER_WALL_HEAD)
         || event.getBlock().getType().equals(Material.CHEST)

@@ -11,6 +11,7 @@ import me.xxgradzix.gradzixcore.achievements.database.managers.PlayerAchievement
 import me.xxgradzix.gradzixcore.achievements.database.managers.PlayerAchievementProgressEntityManager;
 import me.xxgradzix.gradzixcore.achievements.listeners.AchievementListener;
 import me.xxgradzix.gradzixcore.achievements.listeners.OnJoinInitializePlayerAchievements;
+import me.xxgradzix.gradzixcore.achievements.listeners.OnQuitSave;
 import me.xxgradzix.gradzixcore.achievements.managers.AchievementManager;
 
 
@@ -73,6 +74,7 @@ public class Achievements {
 
         plugin.getServer().getPluginManager().registerEvents(new AchievementListener(achievementManager), plugin);
         plugin.getServer().getPluginManager().registerEvents(new OnJoinInitializePlayerAchievements(dataManager, achievementManager), plugin);
+        plugin.getServer().getPluginManager().registerEvents(new OnQuitSave(dataManager, achievementManager), plugin);
 
         plugin.getCommand("osiagniecia").setExecutor(new AchievementsCommand(achievementManager, dataManager));
 

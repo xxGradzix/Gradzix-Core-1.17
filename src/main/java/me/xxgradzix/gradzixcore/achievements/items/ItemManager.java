@@ -17,35 +17,35 @@ public class ItemManager {
 
     }
 
-    public static ItemStack createProgressQuestItem(AchievementType achievementType, int questProgress, boolean isClaimed) {
+    public static ItemStack createProgressQuestItem(AchievementType achievementType, int questProgress, boolean canClaim) {
 
         ItemStack item = null;
         ItemMeta itemMeta = null;
         int questGoal = 0;
         switch (achievementType) {
             case BLOCKS_BROKEN:
-                item = new ItemStack(Material.GRASS_BLOCK, 1);
-                itemMeta = item.getItemMeta();
-                itemMeta.setDisplayName("§2§lPostawione Bloki");
-                questGoal = Achievements.BLOCKS_BROKEN_GOAL;
-                break;
-            case BLOCKS_PLACED:
                 item = new ItemStack(Material.IRON_PICKAXE, 1);
                 itemMeta = item.getItemMeta();
                 itemMeta.setDisplayName("§1§lWykopane Bloki");
                 questGoal = Achievements.BLOCKS_PLACED_GOAL;
                 break;
-            case PLAYERS_KILLED:
-                item = new ItemStack(Material.TOTEM_OF_UNDYING, 1);
+            case BLOCKS_PLACED:
+                item = new ItemStack(Material.GRASS_BLOCK, 1);
                 itemMeta = item.getItemMeta();
-                itemMeta.setDisplayName("§6§lUżyte totemy");
-                questGoal = Achievements.PLAYERS_KILLED_GOAL;
+                itemMeta.setDisplayName("§2§lPostawione Bloki");
+                questGoal = Achievements.BLOCKS_BROKEN_GOAL;
                 break;
-            case TOTEM_OF_UNDYING:
+            case PLAYERS_KILLED:
                 item = new ItemStack(Material.TOTEM_OF_UNDYING, 1);
                 itemMeta = item.getItemMeta();
                 itemMeta.setDisplayName("§4§lZabici gracze");
                 questGoal = Achievements.TOTEM_OF_UNDYING_GOAL;
+                break;
+            case TOTEM_OF_UNDYING:
+                item = new ItemStack(Material.TOTEM_OF_UNDYING, 1);
+                itemMeta = item.getItemMeta();
+                itemMeta.setDisplayName("§6§lUżyte totemy");
+                questGoal = Achievements.PLAYERS_KILLED_GOAL;
                 break;
         }
 
@@ -64,9 +64,11 @@ public class ItemManager {
 
         lore.add(" ");
         lore.add("§7Progres: §8[" + showProgressWithBars(questProgress, questGoal) + "§8] §7" + progress + "% §7(" + questProgress + "/" + questGoal + ")");
-        lore.add("§7Status: " + (isClaimed ? "§aOdebrałeś już nagrode za to zadanie" : (isCompleted ? "§aZakończone" : "§cNieukończone")));
-        lore.add("§7Nagroda: §e1000 monet");
-        if (!isClaimed && isCompleted) {
+        lore.add("§7Status: " + (!canClaim ? "§aOdebrałeś już nagrode za to zadanie" : (isCompleted ? "§aZakończone" : "§cNieukończone")));
+//        lore.add("§7Nagroda: §e1000 monet");
+        lore.add("§7Kliknij prawym przyciskiem myszy, aby zobaczyć nagrody");
+
+        if (canClaim && isCompleted) {
             lore.add(" ");
             lore.add("§aKliknij lewy przycisk, aby odebrać nagrodę");
         }

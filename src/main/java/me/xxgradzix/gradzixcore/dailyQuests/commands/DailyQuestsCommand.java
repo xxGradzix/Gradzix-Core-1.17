@@ -6,6 +6,7 @@ import me.xxgradzix.gradzixcore.GlobalItemManager;
 import me.xxgradzix.gradzixcore.dailyQuests.QuestType;
 import me.xxgradzix.gradzixcore.dailyQuests.items.ItemManager;
 import me.xxgradzix.gradzixcore.dailyQuests.managers.QuestsManagers;
+import me.xxgradzix.gradzixcore.dailyQuests.managers.RankRewardManager;
 import net.kyori.adventure.text.Component;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -59,9 +60,16 @@ public class DailyQuestsCommand implements CommandExecutor {
 
         GuiItem blockBreakQuestItem = new GuiItem(ItemManager.createProgressQuestItem(QuestType.BLOCK_BREAKED, QuestsManagers.getQuestProgress(player.getUniqueId(), QuestType.BLOCK_BREAKED), QuestsManagers.isClaimed(player.getUniqueId(), QuestType.BLOCK_BREAKED)));
         blockBreakQuestItem.setAction((inventoryClickEvent -> {
+            if(inventoryClickEvent.isRightClick()) {
+                showRewards(player);
+                player.closeInventory();
+                return;
+            }
             if(QuestsManagers.canCollect(player.getUniqueId(), QuestType.BLOCK_BREAKED)) {
                 QuestsManagers.setCollectStatus(player.getUniqueId(), QuestType.BLOCK_BREAKED);
                 player.sendMessage(ChatColor.GREEN + "Odebrano nagrodę za misję!");
+                RankRewardManager.getRewardAccordingToRank(player);
+
             } else if(QuestsManagers.isClaimed(player.getUniqueId(), QuestType.BLOCK_BREAKED)) {
                 player.sendMessage(ChatColor.RED + "Nagroda za misje została już odebrana!");
             } else {
@@ -71,9 +79,15 @@ public class DailyQuestsCommand implements CommandExecutor {
 
         GuiItem blockPlaceQuestItem = new GuiItem(ItemManager.createProgressQuestItem(QuestType.BLOCK_PLACED, QuestsManagers.getQuestProgress(player.getUniqueId(), QuestType.BLOCK_PLACED), QuestsManagers.isClaimed(player.getUniqueId(), QuestType.BLOCK_PLACED)));
         blockPlaceQuestItem.setAction((inventoryClickEvent -> {
+            if(inventoryClickEvent.isRightClick()) {
+                showRewards(player);
+                return;
+            }
             if(QuestsManagers.canCollect(player.getUniqueId(), QuestType.BLOCK_PLACED)) {
                 QuestsManagers.setCollectStatus(player.getUniqueId(), QuestType.BLOCK_PLACED);
                 player.sendMessage(ChatColor.GREEN + "Odebrano nagrodę za misję!");
+                RankRewardManager.getRewardAccordingToRank(player);
+
             } else if(QuestsManagers.isClaimed(player.getUniqueId(), QuestType.BLOCK_PLACED)) {
                 player.sendMessage(ChatColor.RED + "Nagroda za misje została już odebrana!");
             } else {
@@ -83,9 +97,15 @@ public class DailyQuestsCommand implements CommandExecutor {
 
         GuiItem totemOfUndyingQuestItem = new GuiItem(ItemManager.createProgressQuestItem(QuestType.TOTEM_OF_UNDYING_USED, QuestsManagers.getQuestProgress(player.getUniqueId(), QuestType.TOTEM_OF_UNDYING_USED), QuestsManagers.isClaimed(player.getUniqueId(), QuestType.TOTEM_OF_UNDYING_USED)));
         totemOfUndyingQuestItem.setAction((inventoryClickEvent -> {
+            if(inventoryClickEvent.isRightClick()) {
+                showRewards(player);
+                return;
+            }
             if(QuestsManagers.canCollect(player.getUniqueId(), QuestType.TOTEM_OF_UNDYING_USED)) {
                 QuestsManagers.setCollectStatus(player.getUniqueId(), QuestType.TOTEM_OF_UNDYING_USED);
                 player.sendMessage(ChatColor.GREEN + "Odebrano nagrodę za misję!");
+                RankRewardManager.getRewardAccordingToRank(player);
+
             } else if(QuestsManagers.isClaimed(player.getUniqueId(), QuestType.TOTEM_OF_UNDYING_USED)) {
                 player.sendMessage(ChatColor.RED + "Nagroda za misje została już odebrana!");
             } else {
@@ -95,9 +115,15 @@ public class DailyQuestsCommand implements CommandExecutor {
 
         GuiItem playerKillsQuestItem = new GuiItem(ItemManager.createProgressQuestItem(QuestType.PLAYER_KILLS, QuestsManagers.getQuestProgress(player.getUniqueId(), QuestType.PLAYER_KILLS), QuestsManagers.isClaimed(player.getUniqueId(), QuestType.PLAYER_KILLS)));
         playerKillsQuestItem.setAction((inventoryClickEvent -> {
+            if(inventoryClickEvent.isRightClick()) {
+                showRewards(player);
+                return;
+            }
             if(QuestsManagers.canCollect(player.getUniqueId(), QuestType.PLAYER_KILLS)) {
                 QuestsManagers.setCollectStatus(player.getUniqueId(), QuestType.PLAYER_KILLS);
                 player.sendMessage(ChatColor.GREEN + "Odebrano nagrodę za misję!");
+                RankRewardManager.getRewardAccordingToRank(player);
+
             } else if(QuestsManagers.isClaimed(player.getUniqueId(), QuestType.PLAYER_KILLS)) {
                 player.sendMessage(ChatColor.RED + "Nagroda za misje została już odebrana!");
             } else {
@@ -116,6 +142,13 @@ public class DailyQuestsCommand implements CommandExecutor {
 
 
         return true;
+    }
+    public static void showRewards(Player player) {
+        player.sendMessage(ChatColor.GREEN + "Nagrody za codzienną misje!");
+        player.sendMessage("§3§lUNI§7: §74 kluczy do magicznej skrzyni");
+        player.sendMessage("§6§lSVIP§7: §73 kluczy do magicznej skrzyni");
+        player.sendMessage("§e§lVIP§7: §72 klucze do magicznej skrzyni");
+        player.sendMessage("§7§lGracz§7: §71 klucz do magicznej skrzyni");
     }
 
 }

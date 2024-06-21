@@ -34,7 +34,8 @@ public class EventAreaListener implements Listener {
         Player player = event.getPlayer();
 
         if(isLocationInGeneratorRegion(event.getBlock().getLocation()) && event.getBlock().getType().equals(Material.AMETHYST_BLOCK)) {
-            if(!event.getPlayer().getInventory().getItemInMainHand().isSimilar(ItemManager.pickaxeOfMoria)) {
+            if(player.getInventory().getItemInMainHand() == null || player.getInventory().getItemInMainHand().getItemMeta() == null || !player.getInventory().getItemInMainHand().getItemMeta().hasDisplayName()) return;
+            if(!ItemManager.pickaxeOfMoria.getItemMeta().getDisplayName().equals(event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getDisplayName())) {
                 event.setCancelled(true);
                 player.sendMessage("§cTen blok możesz niszczyć tylko specjlnym kilofem z Morii!");
                 return;

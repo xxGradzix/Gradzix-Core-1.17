@@ -63,7 +63,8 @@ public class ItemManager {
         lore.add(" ");
         lore.add("§7Progres: §8[" + showProgressWithBars(questProgress, questGoal) + "§8] §7" + progress + "% §7(" + questProgress + "/" + questGoal + ")");
         lore.add("§7Status: " + (isClaimed ? "§aOdebrałeś już nagrode za to zadanie" : (isCompleted ? "§aZakończone" : "§cNieukończone")));
-        lore.add("§7Nagroda: §e1000 monet");
+//        lore.add("§7Nagroda: §e1000 monet");
+        lore.add("§7Kliknij prawym przyciskiem myszy, aby zobaczyć nagrody");
         if (!isClaimed && isCompleted) {
             lore.add(" ");
             lore.add("§aKliknij lewy przycisk, aby odebrać nagrodę");

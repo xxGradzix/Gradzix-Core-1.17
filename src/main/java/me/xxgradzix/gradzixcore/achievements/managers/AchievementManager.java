@@ -21,7 +21,9 @@ public class AchievementManager {
 
     public void saveAllAchievements() {
         for (UUID uuid : playerProgress.keySet()) {
-            saveAchievements(Bukkit.getPlayer(uuid));
+            Player player = Bukkit.getPlayer(uuid);
+            if(player == null) continue;
+            saveAchievements(player);
         }
     }
 
@@ -31,10 +33,10 @@ public class AchievementManager {
 
     public void addProgress(Player player, AchievementType type, int progress) {
 
-        int currentProgress = playerProgress.get(player.getUniqueId()).get(type);
-        if(progress >= Achievements.getGoal(type)) return;
 
-        if(playerProgress.containsKey(player)) {
+        if(progress >= Achievements.getGoal(type)) return;
+        if(playerProgress.containsKey(player.getUniqueId())) {
+            int currentProgress = playerProgress.get(player.getUniqueId()).get(type);
 
             HashMap<AchievementType, Integer> playerAchievements = playerProgress.get(player.getUniqueId());
 
@@ -45,13 +47,15 @@ public class AchievementManager {
                 playerAchievements.put(type, progress);
             }
             playerProgress.put(player.getUniqueId(), playerAchievements);
+
+            if(currentProgress + progress >= Achievements.getGoal(type)) {
+                dataManager.completeAchievement(player, type);
+            }
+
         } else {
             insertProgress(player);
-            addProgress(player, type, progress);
         }
-        if(currentProgress + progress >= Achievements.getGoal(type)) {
-            dataManager.completeAchievement(player, type);
-        }
+
     }
 
     public int getProgress(Player player, AchievementType type) {

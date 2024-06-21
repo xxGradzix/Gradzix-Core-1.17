@@ -153,7 +153,7 @@ public class DataManager {
                 .filter(achievement -> achievement.getAchievementType().equals(type))
                 .findFirst()
                 .map(PlayerAchievementEntity::isAchievementCompleted)
-                .orElse(false);
+                .orElse(false) && !isAchievementClaimed(player, type);
     }
     public boolean isAchievementClaimed(Player player, AchievementType type) {
         return getPlayerAchievements(player).getAchievements().stream()

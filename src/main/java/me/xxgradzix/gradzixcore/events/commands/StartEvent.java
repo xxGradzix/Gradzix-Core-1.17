@@ -164,7 +164,7 @@ public class StartEvent implements CommandExecutor, TabCompleter {
 
                 if(timeToStart < 0) timeToStart = 0;
 
-                Bukkit.broadcastMessage(ChatColor.GRAY + "Event " + ChatColor.GREEN +"key drop " + ChatColor.GRAY + "rozpocznie sie za " + ChatColor.DARK_GRAY + timeToStart + ChatColor.GRAY + " minut");
+                Bukkit.broadcastMessage(ChatColor.GRAY + "Event " + ChatColor.GREEN +"generator " + ChatColor.GRAY + "rozpocznie sie za " + ChatColor.DARK_GRAY + timeToStart + ChatColor.GRAY + " minut");
 
                     BossBarManager.createBossBarCountDown(timeToStart * 60, ChatColor.GOLD + "Event Generator (" + generatorMultiplier + ") rozpocznie się za ", BarColor.GREEN);
 

@@ -197,8 +197,29 @@ commands:
   kosz:
     description: otwiera kosz
 
+  osiagniecia:
+    description: otwiera achievements
 
-#  test:
+  codziennewyzwanie:
+    description: codzienne wyzwanie
+    aliases:
+      - wyzwanie
+      - wyzwania
+
+  geteventitems:
+    description: daje eventowe itemy
+    permission: gradzixcore.giveEventItems
+
+  setKillDropChance:
+    description: ustawia szanse na dropienie itemow po zabiciu gracza
+    permission: gradzixcore.setKillDropChance
+
+  setDropChance:
+    description: ustawia szanse na dropienie itemow po zabiciu gracza
+    permission: gradzixcore.setKillDropChance
+
+
+  #  test:
 #    description: test
 
 #  gracz:

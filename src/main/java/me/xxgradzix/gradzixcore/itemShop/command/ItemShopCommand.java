@@ -137,6 +137,10 @@ public class ItemShopCommand implements CommandExecutor {
                     player.sendMessage("§cNie stać cię na ten produkt!");
                     return;
                 }
+                if (player.getInventory().firstEmpty() == -1) {
+                    player.sendMessage("§cNie masz wystarczająco miejsca w ekwipunku!");
+                    return;
+                }
                 if(dataManager.subtractMoneyFromPlayer(player, shopType, price)) {
                     ItemStack item = product.getProduct();
                     if (player.getInventory().firstEmpty() != -1) {

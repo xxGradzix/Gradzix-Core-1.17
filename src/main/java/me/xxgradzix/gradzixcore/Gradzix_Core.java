@@ -5,6 +5,8 @@ import com.j256.ormlite.support.ConnectionSource;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import lombok.Getter;
 import me.xxgradzix.gradzixcore.VPLNShop.VPLNShop;
+import me.xxgradzix.gradzixcore.achievements.Achievements;
+import me.xxgradzix.gradzixcore.achievements.managers.AchievementManager;
 import me.xxgradzix.gradzixcore.adminPanel.Panel;
 import me.xxgradzix.gradzixcore.afkRegion.AfkRegion;
 import me.xxgradzix.gradzixcore.autodropsell.AutoDropSell;
@@ -12,6 +14,8 @@ import me.xxgradzix.gradzixcore.binds.Binds;
 import me.xxgradzix.gradzixcore.chatOptions.ChatOptions;
 import me.xxgradzix.gradzixcore.clansCore.Clans;
 import me.xxgradzix.gradzixcore.clansExtension.ClansExtension;
+import me.xxgradzix.gradzixcore.dailyQuests.DailyQuests;
+import me.xxgradzix.gradzixcore.eventArea.EventArea;
 import me.xxgradzix.gradzixcore.events.Events;
 import me.xxgradzix.gradzixcore.generators.Generators;
 import me.xxgradzix.gradzixcore.globalStatic.EconomyManager;
@@ -90,7 +94,7 @@ public final class Gradzix_Core extends JavaPlugin {
     private Events events;
     private Binds binds;
     private MagicPond magicPond;
-    private ShulkerRework shulkerRework;
+//    private ShulkerRework shulkerRework;
     private SocialMediaRewards socialMediaRewards;
     private ItemShop itemShop;
     private Incognito incognito;
@@ -102,6 +106,9 @@ public final class Gradzix_Core extends JavaPlugin {
     private ClansExtension clansExtension;
     private VillagerUpgradeShop villagerUpgradeShop;
     private Kits kits;
+    private DailyQuests dailyQuests;
+    private Achievements achievements;
+    private EventArea eventArea;
 
     private ConnectionSource connectionSource;
 
@@ -235,10 +242,14 @@ public final class Gradzix_Core extends JavaPlugin {
             socialMediaRewards = new SocialMediaRewards(this, connectionSource);
             socialMediaRewards.onEnable();
         }
-        if (shulkerRework == null) {
-            shulkerRework = new ShulkerRework(this);
-            shulkerRework.onEnable();
+        if (dailyQuests == null) {
+            dailyQuests = new DailyQuests(this);
+            dailyQuests.onEnable();
         }
+//        if (shulkerRework == null) {
+//            shulkerRework = new ShulkerRework(this);
+//            shulkerRework.onEnable();
+//        }
 //        if (incognito == null) {
 //            incognito = new Incognito(this, connectionSource);
 //            incognito.onEnable();
@@ -275,6 +286,14 @@ public final class Gradzix_Core extends JavaPlugin {
         if (itemShop == null) {
             itemShop = new ItemShop(this, connectionSource);
             itemShop.onEnable();
+        }
+        if (achievements == null) {
+            achievements = new Achievements(this, connectionSource);
+            achievements.onEnable();
+        }
+        if (eventArea == null) {
+            eventArea = new EventArea(this);
+            eventArea.onEnable();
         }
 
         if(USE_CUSTOM_CLANS) {
@@ -314,11 +333,14 @@ public final class Gradzix_Core extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        if (shulkerRework != null) {
-            shulkerRework.onDisable();
-        }
+//        if (shulkerRework != null) {
+//            shulkerRework.onDisable();
+//        }
         if (serverConfig != null) {
             serverConfig.onDisable();
+        }
+        if (achievements != null) {
+            achievements.onDisable();
         }
     }
 }

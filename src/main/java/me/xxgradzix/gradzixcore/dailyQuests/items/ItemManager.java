@@ -1,0 +1,225 @@
+package me.xxgradzix.gradzixcore.dailyQuests.items;
+
+import me.xxgradzix.gradzixcore.dailyQuests.DailyQuests;
+import me.xxgradzix.gradzixcore.dailyQuests.QuestType;
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemFlag;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.ArrayList;
+
+public class ItemManager {
+
+    public static void init() {
+
+    }
+
+    public static ItemStack createProgressQuestItem(QuestType questType, int questProgress, boolean isClaimed) {
+
+        ItemStack item = null;
+        ItemMeta itemMeta = null;
+        int questGoal = 0;
+        switch (questType) {
+            case BLOCK_PLACED:
+                item = new ItemStack(Material.GRASS_BLOCK, 1);
+                itemMeta = item.getItemMeta();
+                itemMeta.setDisplayName("§2§lPostawione Bloki");
+                questGoal = DailyQuests.BLOCKS_PLACED_QUEST_GOAL;
+                break;
+            case BLOCK_BREAKED:
+                item = new ItemStack(Material.IRON_PICKAXE, 1);
+                itemMeta = item.getItemMeta();
+                itemMeta.setDisplayName("§1§lWykopane Bloki");
+                questGoal = DailyQuests.BLOCKS_BREAKED_QUEST_GOAL;
+                break;
+            case TOTEM_OF_UNDYING_USED:
+                item = new ItemStack(Material.TOTEM_OF_UNDYING, 1);
+                itemMeta = item.getItemMeta();
+                itemMeta.setDisplayName("§6§lUżyte totemy");
+                questGoal = DailyQuests.TOTEM_OF_UNDYING_QUEST_GOAL;
+                break;
+            case PLAYER_KILLS:
+                item = new ItemStack(Material.TOTEM_OF_UNDYING, 1);
+                itemMeta = item.getItemMeta();
+                itemMeta.setDisplayName("§4§lZabici gracze");
+                questGoal = DailyQuests.PLAYERS_KILLED_QUEST_GOAL;
+                break;
+        }
+
+        if (questProgress > questGoal) {
+            questProgress = questGoal;
+        }
+        boolean isCompleted = questProgress >= questGoal;
+
+
+
+        double progress = (double) questProgress / questGoal;
+
+        progress = Math.round(progress * 100.0) / 100.0;
+
+        ArrayList<String> lore = new ArrayList<>();
+
+        lore.add(" ");
+        lore.add("§7Progres: §8[" + showProgressWithBars(questProgress, questGoal) + "§8] §7" + progress + "% §7(" + questProgress + "/" + questGoal + ")");
+        lore.add("§7Status: " + (isClaimed ? "§aOdebrałeś już nagrode za to zadanie" : (isCompleted ? "§aZakończone" : "§cNieukończone")));
+        lore.add("§7Nagroda: §e1000 monet");
+        if (!isClaimed && isCompleted) {
+            lore.add(" ");
+            lore.add("§aKliknij lewy przycisk, aby odebrać nagrodę");
+        }
+        itemMeta.setLore(lore);
+        itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        item.setItemMeta(itemMeta);
+        return item;
+    }
+//    public static ItemStack createBlockBreakQuestItem(int questProgress, boolean isCompleted, boolean isClaimed) {
+//
+//        if(questProgress > DailyQuests.BLOCKS_BREAKED_QUEST_GOAL) {
+//            questProgress = DailyQuests.BLOCKS_BREAKED_QUEST_GOAL;
+//        }
+//
+//        int questGoal = DailyQuests.BLOCKS_BREAKED_QUEST_GOAL;
+//
+//        double progress = (double) questProgress / questGoal;
+//
+//        progress = Math.round(progress * 100.0) / 100.0;
+//
+//        ItemStack item = new ItemStack(Material.IRON_PICKAXE, 1);
+//
+//        ItemMeta itemMeta = item.getItemMeta();
+//
+//        itemMeta.setDisplayName("§1§lWykopane Bloki");
+//
+//        ArrayList<String> lore = new ArrayList<>();
+//
+//        lore.add(" ");
+//        lore.add("§7Progres: §8[" + showProgressWithBars(questProgress, questGoal) + "§8] §7" + progress + "% §7(" + questProgress + "/" + questGoal + ")");
+//        lore.add("§7Status: " + (isClaimed ? "§aOdebrałeś już nagrode za to zadanie" : (isCompleted ? "§aZakończone" : "§cNieukończone")));
+//        lore.add("§7Nagroda: §e1000 monet");
+//        if(!isClaimed && isCompleted) {
+//            lore.add(" ");
+//            lore.add("§aKliknij lewy przycisk, aby odebrać nagrodę");
+//        }
+//        itemMeta.setLore(lore);
+//        itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+//        item.setItemMeta(itemMeta);
+//
+//        return item;
+//    }
+//    public static ItemStack createBlockPlaceQuestItem(int questProgress, boolean isCompleted, boolean isClaimed) {
+//
+//        int questGoal = DailyQuests.BLOCKS_PLACED_QUEST_GOAL;
+//
+//        if(questProgress > questGoal) {
+//            questProgress = questGoal;
+//        }
+//
+//        double progress = (double) questProgress / questGoal;
+//
+//        progress = Math.round(progress * 100.0) / 100.0;
+//
+//        ItemStack item = new ItemStack(Material.GRASS_BLOCK, 1);
+//
+//        ItemMeta itemMeta = item.getItemMeta();
+//
+//        itemMeta.setDisplayName("§2§lPostawione Bloki");
+//
+//        ArrayList<String> lore = new ArrayList<>();
+//
+//        lore.add(" ");
+//        lore.add("§7Progres: §8[" + showProgressWithBars(questProgress, questGoal) + "§8] §7" + progress + "% §7(" + questProgress + "/" + questGoal + ")");
+//        lore.add("§7Status: " + (isClaimed ? "§aOdebrałeś już nagrode za to zadanie" : (isCompleted ? "§aZakończone" : "§cNieukończone")));
+//        lore.add("§7Nagroda: §e1000 monet");
+//        if(!isClaimed && isCompleted) {
+//            lore.add(" ");
+//            lore.add("§aKliknij lewy przycisk, aby odebrać nagrodę");
+//        }
+//        itemMeta.setLore(lore);
+//        itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+//        item.setItemMeta(itemMeta);
+//
+//        return item;
+//    }
+//    public static ItemStack createTotemUseQuestItem(int questProgress, boolean isCompleted, boolean isClaimed) {
+//
+//        int questGoal = DailyQuests.TOTEM_OF_UNDYING_QUEST_GOAL;
+//
+//        if (questProgress > questGoal) {
+//            questProgress = questGoal;
+//        }
+//
+//        double progress = (double) questProgress / questGoal;
+//
+//        progress = Math.round(progress * 100.0) / 100.0;
+//
+//        ItemStack item = new ItemStack(Material.TOTEM_OF_UNDYING, 1);
+//
+//        ItemMeta itemMeta = item.getItemMeta();
+//
+//        itemMeta.setDisplayName("§6§lUżyte totemy");
+//
+//        ArrayList<String> lore = new ArrayList<>();
+//
+//        lore.add(" ");
+//        lore.add("§7Progres: §8[" + showProgressWithBars(questProgress, questGoal) + "§8] §7" + progress + "% §7(" + questProgress + "/" + questGoal + ")");
+//        lore.add("§7Status: " + (isClaimed ? "§aOdebrałeś już nagrode za to zadanie" : (isCompleted ? "§aZakończone" : "§cNieukończone")));
+//        lore.add("§7Nagroda: §e1000 monet");
+//        if (!isClaimed && isCompleted) {
+//            lore.add(" ");
+//            lore.add("§aKliknij lewy przycisk, aby odebrać nagrodę");
+//        }
+//        itemMeta.setLore(lore);
+//        itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+//        item.setItemMeta(itemMeta);
+//        return item;
+//    }
+//
+//    public static ItemStack createKillPlayersQuestItem(int questProgress, boolean isCompleted, boolean isClaimed) {
+//
+//        int questGoal = DailyQuests.PLAYERS_KILLED_QUEST_GOAL;
+//
+//        if (questProgress > questGoal) {
+//            questProgress = questGoal;
+//        }
+//
+//        double progress = (double) questProgress / questGoal;
+//
+//        progress = Math.round(progress * 100.0) / 100.0;
+//
+//        ItemStack item = new ItemStack(Material.TOTEM_OF_UNDYING, 1);
+//
+//        ItemMeta itemMeta = item.getItemMeta();
+//
+//        itemMeta.setDisplayName("§4§lZabici gracze");
+//
+//        ArrayList<String> lore = new ArrayList<>();
+//
+//        lore.add(" ");
+//        lore.add("§7Progres: §8[" + showProgressWithBars(questProgress, questGoal) + "§8] §7" + progress + "% §7(" + questProgress + "/" + questGoal + ")");
+//        lore.add("§7Status: " + (isClaimed ? "§aOdebrałeś już nagrode za to zadanie" : (isCompleted ? "§aZakończone" : "§cNieukończone")));
+//        lore.add("§7Nagroda: §e1000 monet");
+//        if (!isClaimed && isCompleted) {
+//            lore.add(" ");
+//            lore.add("§aKliknij lewy przycisk, aby odebrać nagrodę");
+//        }
+//        itemMeta.setLore(lore);
+//        itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+//        item.setItemMeta(itemMeta);
+//        return item;
+//    }
+
+
+    private static String showProgressWithBars(int progress, int maxProgress) {
+        StringBuilder stringBuilder = new StringBuilder();
+        int bars = (int) Math.round((double) progress / maxProgress * 10);
+        for (int i = 0; i < bars; i++) {
+            stringBuilder.append("§a█");
+        }
+        for (int i = 0; i < 10 - bars; i++) {
+            stringBuilder.append("§7█");
+        }
+        return stringBuilder.toString();
+    }
+
+}

@@ -3,11 +3,14 @@ package me.xxgradzix.gradzixcore.events.commands;
 import me.xxgradzix.gradzixcore.Gradzix_Core;
 import me.xxgradzix.gradzixcore.events.Events;
 import me.xxgradzix.gradzixcore.events.Messages;
+import me.xxgradzix.gradzixcore.events.managers.BossBarManager;
 import me.xxgradzix.gradzixcore.events.managers.BossManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.boss.BarColor;
+import org.bukkit.boss.BarStyle;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -64,16 +67,19 @@ public class StartEvent implements CommandExecutor, TabCompleter {
 
         if(!choice.equalsIgnoreCase("START")) return false;
 
-        int timeMinutes = 2;
+        int timeOfEvent = 2;
+        int timeToStart = 0;
 
         switch (eventChoice) {
-            case KLUCZ:
-            {
+            case KLUCZ: {
                 if(!(sender instanceof Player)) {
                     sender.sendMessage("tylko gracz moze rozpoczac ten event");
                     return false;
                 }
 
+                if(args.length < 5) {
+                    sender.sendMessage("Poprawne uzycie to /events START KLUCZ [czas do startu] [czas trwania eventu] [szansa na droo klucza]");
+                }
                 ItemStack reward = ((Player) sender).getInventory().getItemInMainHand();
 
                 if(reward == null || reward.getType().equals(Material.AIR)) {
@@ -86,59 +92,143 @@ public class StartEvent implements CommandExecutor, TabCompleter {
                 if(args.length > 2) {
 
                     try {
-                        timeMinutes = Integer.parseInt(args[2]);
+                        timeToStart = Integer.parseInt(args[2]);
                     } catch (Exception ignored) {};
                 } else {
-                    sender.sendMessage("Poprawne uzycie to /events START KLUCZ [czas] [szansa]");
+                    sender.sendMessage("Poprawne uzycie to /events START KLUCZ [czas do startu] [czas trwania eventu] [szansa na droo klucza]");
+                }if(args.length > 3) {
+
+                    try {
+                        timeOfEvent = Integer.parseInt(args[3]);
+                    } catch (Exception ignored) {};
+                } else {
+                    sender.sendMessage("Poprawne uzycie to /events START KLUCZ [czas do startu] [czas trwania eventu] [szansa na droo klucza]");
                 }
 
-                if(args.length > 3) {
+                if(args.length > 4) {
                     try {
-                        chance = Double.parseDouble(args[3]);
+                        chance = Double.parseDouble(args[4]);
                         if(chance < 1) {
                             Events.setKeyDropChance(chance);
                         }
                     } catch (Exception ignored) {
-                        //todo correct command message
+                        sender.sendMessage("Poprawne uzycie to /events START KLUCZ [czas do startu] [czas trwania eventu] [szansa na droo klucza]");
                     };
-
                 }
 
-                startKeyEventTask(((Player) sender), timeMinutes, reward, chance);
+                if(timeToStart < 0) timeToStart = 0;
+
+                    Bukkit.broadcastMessage(ChatColor.GRAY + "Event " + ChatColor.GREEN +"key drop " + ChatColor.GRAY + "rozpocznie sie za " + ChatColor.DARK_GRAY + timeToStart + ChatColor.GRAY + " minut");
+                    BossBarManager.createBossBarCountDown(timeToStart * 60, ChatColor.GOLD + "Event Klucz §7(§a" + chance + "%§7) rozpocznie się za ", BarColor.GREEN);
+
+                    int finalTimeOfEvent = timeOfEvent;
+                    double finalChance = chance;
+
+                    scheduler.runTaskLater(plugin, () -> {
+                        startKeyEventTask(((Player) sender), finalTimeOfEvent, reward, finalChance);
+                    }, 20L * timeToStart * 60);
+                return true;
             }
-            break;
+
             case GENERATOR: {
-                if(args.length > 2) {
-                    try {
-                        timeMinutes = Integer.parseInt(args[2]);
-                    } catch (Exception ignored) {};
+                double generatorMultiplier = 2.0;
+                if(args.length < 5) {
+                    sender.sendMessage("Poprawne uzycie to /events START GENERATOR [czas do startu] [czas trwania eventu] [mnoznik dropu]");
+                    return false;
                 }
-                startGeneratorEventTask(timeMinutes);
+
+                try {
+                    timeToStart = Integer.parseInt(args[2]);
+                } catch (Exception ignored) {
+                    sender.sendMessage("Poprawne uzycie to /events START GENERATOR [czas do startu] [czas trwania eventu] [mnoznik dropu]");
+                    return false;
+                };
+
+                try {
+                    timeOfEvent = Integer.parseInt(args[3]);
+                } catch (Exception ignored) {
+                    sender.sendMessage("Poprawne uzycie to /events START GENERATOR [czas do startu] [czas trwania eventu] [mnoznik dropu]");
+                    return false;
+                };
+
+                try {
+                    generatorMultiplier = Double.parseDouble(args[4]);
+                    if (generatorMultiplier > 1) {
+                        Events.setGeneratorEventMultiplier(generatorMultiplier);
+                    }
+
+                } catch (Exception ignored) {
+                    sender.sendMessage("Poprawne uzycie to /events START KLUCZ [czas do startu] [czas trwania eventu] [szansa na droo klucza]");
+                    return false;
+                }
+
+                if(timeToStart < 0) timeToStart = 0;
+
+                Bukkit.broadcastMessage(ChatColor.GRAY + "Event " + ChatColor.GREEN +"key drop " + ChatColor.GRAY + "rozpocznie sie za " + ChatColor.DARK_GRAY + timeToStart + ChatColor.GRAY + " minut");
+
+                    BossBarManager.createBossBarCountDown(timeToStart * 60, ChatColor.GOLD + "Event Generator (" + generatorMultiplier + ") rozpocznie się za ", BarColor.GREEN);
+
+                    int finalTimeOfEvent = timeOfEvent;
+
+                    scheduler.runTaskLater(plugin, () -> {
+                        startGeneratorEventTask(finalTimeOfEvent);
+                    }, 20L * timeToStart * 60);
+                    return true;
+
             }
-            break;
             case JEZIORKO: {
+
+                if(args.length < 4) {
+                    sender.sendMessage("Poprawne uzycie to /events START JEZIORKO [czas do startu] [czas trwania eventu]");
+                    return false;
+                }
+
                 if(args.length > 2) {
                     try {
-                        timeMinutes = Integer.parseInt(args[2]);
+                        timeToStart = Integer.parseInt(args[2]);
+                    } catch (Exception ignored) {};
+                }if(args.length > 2) {
+                    try {
+                        timeOfEvent = Integer.parseInt(args[3]);
                     } catch (Exception ignored) {};
                 }
-                startMagicPondEventTask(timeMinutes);
+                if(timeToStart < 0) timeToStart = 0;
+
+                Bukkit.broadcastMessage(ChatColor.GRAY + "Event " + ChatColor.GREEN +"Magiczne Jeziorko " + ChatColor.GRAY + "rozpocznie sie za " + ChatColor.DARK_GRAY + timeToStart + ChatColor.GRAY + " minut");
+                BossBarManager.createBossBarCountDown(timeToStart * 60, ChatColor.GOLD + "Event Jeziorko rozpocznie się za ", BarColor.GREEN);
+
+                int finalTimeOfEvent = timeOfEvent;
+
+                scheduler.runTaskLater(plugin, () -> {
+                    startMagicPondEventTask(finalTimeOfEvent);
+                }, 20L * timeToStart * 60);
+
+                return true;
             }
-            break;
             case BOSS: {
                 if(!(sender instanceof Player)) {
                     sender.sendMessage(Messages.ONLY_PLAYER_CAN_START_BOSS_EVENT);
                     return false;
                 }
-                if(args.length > 2) {
-                    try {
-                        timeMinutes = Integer.parseInt(args[2]);
-                    } catch (Exception ignored) {};
+                if(args.length < 4) {
+                    sender.sendMessage("Poprawne uzycie to /events START BOXX [czas do startu] [czas trwania eventu]");
+                    return false;
                 }
+                try {
+                    timeToStart = Integer.parseInt(args[2]);
+                } catch (Exception ignored) {
+                };
+                try {
+                    timeOfEvent = Integer.parseInt(args[3]);
+                } catch (Exception ignored) {
+                };
+
                 Player player = (Player) sender;
                 Location bossSpawnLocation = player.getLocation();
+                if(timeToStart < 0) timeToStart = 0;
 
-                scheduleBossSpawn(timeMinutes, bossSpawnLocation);
+                BossBarManager.createBossBarCountDown(timeToStart * 60, ChatColor.GOLD + "Event Boss rozpocznie się za ", BarColor.GREEN);
+                scheduleBossSpawn(timeToStart, timeOfEvent, bossSpawnLocation);
 
             }
             break;
@@ -148,12 +238,12 @@ public class StartEvent implements CommandExecutor, TabCompleter {
 
         return true;
     }
-    private void scheduleBossSpawn(int timeMinutes, Location location) {
+    private void scheduleBossSpawn(int delay, int timeMinutes, Location location) {
         if(Events.isBossSpawned()) return;
         Bukkit.broadcastMessage(ChatColor.GRAY + "Boss pojawi sie za " + Gradzix_Core.BOSS_SPAWN_DELAY_SECONDS + " sekund");
         scheduler.runTaskLater(plugin, () -> {
             startBossEventTask(timeMinutes, location);
-        }, 20L * Gradzix_Core.BOSS_SPAWN_DELAY_SECONDS);
+        }, 20L * delay);
     }
 
     private void startGeneratorEventTask(int timeMinutes){
@@ -209,7 +299,7 @@ public class StartEvent implements CommandExecutor, TabCompleter {
 //        cancelTask(eventName);
         switch (eventName){
             case KLUCZ:{
-
+                BossBarManager.createBossBarCountDown(timeMinutes * 60, ChatColor.GOLD + "Event Klucz zakończy się za ", BarColor.GREEN);
                 id = scheduler.runTaskLaterAsynchronously(plugin, () -> {
 
                     Events.setIsKeyEventEnabled(false);
@@ -220,6 +310,7 @@ public class StartEvent implements CommandExecutor, TabCompleter {
             }
             break;
             case GENERATOR: {
+                BossBarManager.createBossBarCountDown(timeMinutes * 60, ChatColor.GOLD + "Event Generator zakończy się za ", BarColor.GREEN);
                 id = scheduler.runTaskLaterAsynchronously(plugin, () -> {
                     Events.setIsGeneratorEventEnabled(false);
                     Bukkit.broadcastMessage(ChatColor.GRAY + "Event " + ChatColor.GREEN +"generator boost " + ChatColor.GRAY + "zakończył się");
@@ -228,6 +319,7 @@ public class StartEvent implements CommandExecutor, TabCompleter {
             }
             break;
             case JEZIORKO: {
+                BossBarManager.createBossBarCountDown(timeMinutes * 60, ChatColor.GOLD + "Event Jeziorko zakończy się za ", BarColor.GREEN);
                 id = scheduler.runTaskLater(plugin, () -> {
                     Events.setIsMagicPondEventEnabled(false);
                     Bukkit.broadcastMessage(ChatColor.GRAY + "Event " + ChatColor.AQUA +"magiczne jeziorko " + ChatColor.GRAY + "zakończył się");

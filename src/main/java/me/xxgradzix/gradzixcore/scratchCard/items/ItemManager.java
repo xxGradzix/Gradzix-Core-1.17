@@ -41,7 +41,7 @@ public class ItemManager {
 
         meta.setLore(lore);
 
-        meta.addEnchant(Enchantment.LUCK, 1, false);
+        meta.addEnchant(Enchantment.DAMAGE_ALL, 1, false);
         meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         item.setItemMeta(meta);
 

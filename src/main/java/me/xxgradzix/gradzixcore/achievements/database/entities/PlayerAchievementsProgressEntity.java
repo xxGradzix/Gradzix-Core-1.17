@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.UUID;
 
-@DatabaseTable(tableName = "gradzixcore_player_achievements")
+@DatabaseTable(tableName = "gradzixcore_player_achievements_progress")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -24,41 +24,44 @@ public class PlayerAchievementsProgressEntity {
     @DatabaseField
     private String nickname;
 
-    @DatabaseField
-    private int blocksBreaked;
+//    @DatabaseField
+//    private int blocksBreaked;
+//
+//    @DatabaseField
+//    private boolean blocksBreakedCompleted;
+//
+//    @DatabaseField
+//    private int blocksPlaced;
+//
+//    @DatabaseField
+//    private boolean blocksPlacedCompleted;
+//
+//    @DatabaseField
+//    private int totemsOfUndyingUsed;
+//
+//    @DatabaseField
+//    private boolean totemsOfUndyingUsedCompleted;
+//
+//    @DatabaseField
+//    private int playerKills;
+//
+//    @DatabaseField
+//    private boolean playerKillsCompleted;
 
-    @DatabaseField
-    private boolean blocksBreakedCompleted;
-
-    @DatabaseField
-    private int blocksPlaced;
-
-    @DatabaseField
-    private boolean blocksPlacedCompleted;
-
-    @DatabaseField
-    private int totemsOfUndyingUsed;
-
-    @DatabaseField
-    private boolean totemsOfUndyingUsedCompleted;
-
-    @DatabaseField
-    private int playerKills;
-
-    @DatabaseField
-    private boolean playerKillsCompleted;
+    @ForeignCollectionField
+    private ForeignCollection<PlayerAchievementEntity> achievements;
 
     public PlayerAchievementsProgressEntity(UUID id, String nickname) {
         this.id = id;
         this.nickname = nickname;
-        this.blocksBreaked = 0;
-        this.blocksBreakedCompleted = false;
-        this.blocksPlaced = 0;
-        this.blocksPlacedCompleted = false;
-        this.totemsOfUndyingUsed = 0;
-        this.totemsOfUndyingUsedCompleted = false;
-        this.playerKills = 0;
-        this.playerKillsCompleted = false;
+//        this.blocksBreaked = 0;
+//        this.blocksBreakedCompleted = false;
+//        this.blocksPlaced = 0;
+//        this.blocksPlacedCompleted = false;
+//        this.totemsOfUndyingUsed = 0;
+//        this.totemsOfUndyingUsedCompleted = false;
+//        this.playerKills = 0;
+//        this.playerKillsCompleted = false;
     }
 }
 
